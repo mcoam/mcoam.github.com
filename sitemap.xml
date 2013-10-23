@@ -1,14 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>
     <url>
-        <loc>http://mcoam.github.io/blog/2013/10/16/prueba/</loc>
-        <lastmod>2013-10-22T23:37:06-03:00</lastmod>
-    </url>
-    <url>
-        <loc>http://mcoam.github.io/blog/2013/10/16/creating-a-github-blog-using-octopress/</loc>
-        <lastmod>2013-10-22T23:37:06-03:00</lastmod>
-    </url>
-    <url>
         <loc>http://mcoam.github.io/blog/2013/10/17/prueba-de-sitio-desde-mi-pc/</loc>
         <lastmod>2013-10-22T23:37:06-03:00</lastmod>
     </url>

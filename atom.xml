@@ -4,7 +4,7 @@
   <title><![CDATA[Bitácora]]></title>
   <link href="http://mcoam.github.io/atom.xml" rel="self"/>
   <link href="http://mcoam.github.io/"/>
-  <updated>2013-10-23T17:07:42-03:00</updated>
+  <updated>2013-10-23T17:10:38-03:00</updated>
   <id>http://mcoam.github.io/</id>
   <author>
     <name><![CDATA[Miguel Angel Coa Morales]]></name>
@@ -76,24 +76,6 @@ fsdfsdfsdfsd</p>
 
 
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Creating a Github Blog Using Octopress]]></title>
-    <link href="http://mcoam.github.io/blog/2013/10/16/creating-a-github-blog-using-octopress/"/>
-    <updated>2013-10-16T18:15:00-03:00</updated>
-    <id>http://mcoam.github.io/blog/2013/10/16/creating-a-github-blog-using-octopress</id>
-    <content type="html"><![CDATA[
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Zombie Ninjas Attack: A survivor's retrospective]]></title>
-    <link href="http://mcoam.github.io/blog/2013/10/16/prueba/"/>
-    <updated>2013-10-16T17:57:00-03:00</updated>
-    <id>http://mcoam.github.io/blog/2013/10/16/prueba</id>
-    <content type="html"><![CDATA[<p>Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una galería de textos y los mezcló de tal manera que logró hacer un libro de textos especimen. No sólo sobrevivió 500 años, sino que tambien ingresó como texto de relleno en documentos electrónicos, quedando esencialmente igual al original. Fue popularizado en los 60s con la creación de las hojas &ldquo;Letraset&rdquo;, las cuales contenian pasajes de Lorem Ipsum, y más recientemente con software de autoedición, como por ejemplo Aldus PageMaker, el cual incluye versiones de Lorem Ipsum.</p>
 ]]></content>
   </entry>
   
