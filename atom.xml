@@ -4,14 +4,49 @@
   <title><![CDATA[Bitácora]]></title>
   <link href="http://mcoam.github.io/atom.xml" rel="self"/>
   <link href="http://mcoam.github.io/"/>
-  <updated>2013-10-21T23:51:12-03:00</updated>
+  <updated>2013-10-22T23:25:18-03:00</updated>
   <id>http://mcoam.github.io/</id>
   <author>
     <name><![CDATA[Miguel Angel Coa Morales.]]></name>
     
   </author>
-  <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Cambiar Theme Octopress]]></title>
+    <link href="http://mcoam.github.io/blog/2013/10/22/cambiar-theme-octopress/"/>
+    <updated>2013-10-22T23:17:00-03:00</updated>
+    <id>http://mcoam.github.io/blog/2013/10/22/cambiar-theme-octopress</id>
+    <content type="html"><![CDATA[<p>Si deseamos cambiar el theme por defecto que instala Octopress, hacemos lo siguiente</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">cd</span> <span class="n">octopress</span>
+</span><span class='line'><span class="n">git</span> <span class="n">clone</span> <span class="nl">git:</span><span class="c1">//github.com/panks/fabric.git .themes/fabric</span>
+</span><span class='line'><span class="n">rake</span> <span class="n">install</span><span class="p">[</span><span class="err">&#39;</span><span class="n">fabric</span><span class="err">&#39;</span><span class="p">]</span>
+</span><span class='line'><span class="n">rake</span> <span class="n">generate</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<!-- more -->
+
+
+<p></p>
+
+<p>Vemos como queda</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">rake</span> <span class="n">preview</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Lo anterior borrará el antiguo theme y dejará el nuevo, si deseamos volver atrás tenemos que reinstalar el theme anterior.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Prueba nic]]></title>
@@ -26,21 +61,6 @@
 
 
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Hola Mundo]]></title>
-    <link href="http://mcoam.github.io/blog/2013/10/17/hola-mundo/"/>
-    <updated>2013-10-17T17:13:00-03:00</updated>
-    <id>http://mcoam.github.io/blog/2013/10/17/hola-mundo</id>
-    <content type="html"><![CDATA[<p>sadasdsadsad
-asdasdasdasdasdasdasdasdas
-das
-das
-da
-sd
-asdasd</p>
 ]]></content>
   </entry>
   

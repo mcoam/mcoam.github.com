@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: octopress | Bitácora]]></title>
+  <link href="http://mcoam.github.io/blog/categories/octopress/atom.xml" rel="self"/>
+  <link href="http://mcoam.github.io/"/>
+  <updated>2013-10-22T23:25:18-03:00</updated>
+  <id>http://mcoam.github.io/</id>
+  <author>
+    <name><![CDATA[Miguel Angel Coa Morales.]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Cambiar Theme Octopress]]></title>
+    <link href="http://mcoam.github.io/blog/2013/10/22/cambiar-theme-octopress/"/>
+    <updated>2013-10-22T23:17:00-03:00</updated>
+    <id>http://mcoam.github.io/blog/2013/10/22/cambiar-theme-octopress</id>
+    <content type="html"><![CDATA[<p>Si deseamos cambiar el theme por defecto que instala Octopress, hacemos lo siguiente</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">cd</span> <span class="n">octopress</span>
+</span><span class='line'><span class="n">git</span> <span class="n">clone</span> <span class="nl">git:</span><span class="c1">//github.com/panks/fabric.git .themes/fabric</span>
+</span><span class='line'><span class="n">rake</span> <span class="n">install</span><span class="p">[</span><span class="o">&amp;</span><span class="n">lsquo</span><span class="p">;</span><span class="n">fabric</span><span class="o">&amp;</span><span class="n">rsquo</span><span class="p">;]</span>
+</span><span class='line'><span class="n">rake</span> <span class="n">generate</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<!-- more -->
+
+
+<p></p>
+
+<p>Vemos como queda</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">rake</span> <span class="n">preview</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>Lo anterior borrará el antiguo theme y dejará el nuevo, si deseamos volver atrás tenemos que reinstalar el theme anterior.</p>
+]]></content>
+  </entry>
+  
+</feed>
