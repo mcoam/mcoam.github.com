@@ -7,7 +7,7 @@ categories: octopress
 ---
 Si deseamos cambiar el theme por defecto que instala Octopress, hacemos lo siguiente
 
-{% codeblock lang:objc %}
+{% codeblock %}
 cd octopress
 git clone git://github.com/panks/fabric.git .themes/fabric
 rake install['fabric']
@@ -18,7 +18,7 @@ rake generate
 
 Vemos como queda
 
-{% codeblock lang:objc %}
+{% codeblock %}
 rake preview
 {% endcodeblock %}
 
