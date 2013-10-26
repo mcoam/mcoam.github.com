@@ -4,58 +4,13 @@
   <title><![CDATA[Bitácora]]></title>
   <link href="http://mcoam.github.io/atom.xml" rel="self"/>
   <link href="http://mcoam.github.io/"/>
-  <updated>2013-10-25T22:40:18-03:00</updated>
+  <updated>2013-10-25T23:07:08-03:00</updated>
   <id>http://mcoam.github.io/</id>
   <author>
     <name><![CDATA[Miguel Angel Coa Morales]]></name>
     
   </author>
 
-  
-  <entry>
-    <title type="html"><![CDATA[Migrando data entre servidores zimbra con ImapSync]]></title>
-    <link href="http://mcoam.github.io/blog/2013/10/25/migrando-data-entre-servidores-zimbra-con-imapsync/"/>
-    <updated>2013-10-25T13:39:00-03:00</updated>
-    <id>http://mcoam.github.io/blog/2013/10/25/migrando-data-entre-servidores-zimbra-con-imapsync</id>
-    <content type="html"><![CDATA[<p>En ocaciones es necesario migrar un servidor de correos Zimbra hacia otro servidor Zimbra o simplemente deseamos migrar la data entre usuario de un mismo servidor. Bueno, para eso existe el mágico del comando imapsync. Básicamente, lo que hace este comando es conectarse entre los servidores de correos mediante el protocolo imap (también puede ser imap SSl) y migrar la data de una casilla hacia otra.
-La sintaxis del comando a utilizar dependedará de las configuraciones de los servidores Ej: si acepta conexeón texto plano, solo ssl, etc. Por defecto el comando siguiente es para una instalación estandar y con conección al puerto 143.</p>
-
-<p>El comando mágico es:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">imapsync</span> <span class="o">--</span><span class="n">buffersize</span> <span class="mi">18192000</span> <span class="o">--</span><span class="n">nosyncacls</span> <span class="o">--</span><span class="n">subscribe</span> <span class="err">\</span>
-</span><span class='line'><span class="o">--</span><span class="n">syncinternaldates</span> <span class="o">--</span><span class="n">noauthmd5</span> <span class="o">--</span><span class="n">authmech2</span> <span class="n">PLAIN</span> <span class="err">\</span>
-</span><span class='line'><span class="o">--</span><span class="n">host1</span> <span class="mf">192.168.0.5</span> <span class="o">--</span><span class="n">user1</span> <span class="n">source</span><span class="err">@</span><span class="n">domain</span><span class="p">.</span><span class="n">com</span> \
-</span><span class='line'><span class="o">--</span><span class="n">password1</span> <span class="n">SourcePassword</span> <span class="o">--</span><span class="n">host2</span> <span class="mf">192.168.0.5</span> <span class="err">\</span>
-</span><span class='line'><span class="o">--</span><span class="n">user2</span> <span class="n">destination</span><span class="err">@</span><span class="n">domain</span><span class="p">.</span><span class="n">com</span> <span class="o">--</span><span class="n">authmech2</span> <span class="n">PLAIN</span> \
-</span><span class='line'><span class="o">--</span><span class="n">password2</span> <span class="n">DestinationPassword</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Donde:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>--host1 : Es el servidor de origen
-</span><span class='line'>--user1 : Es el usuario de origen
-</span><span class='line'>--password1 : Es la password de la cuenta origen
-</span><span class='line'>--host2 : Es el servidor de destino
-</span><span class='line'>--user2 : Es el usuario de destino
-</span><span class='line'>--password2 : Es la password de la cuenta de destino</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Para más detalle del eso del comando ir al wiki de Zimbra <a href="http://wiki.zimbra.com/wiki/Guide_to_imapsync">Wiki de Zimbra</a></p>
-]]></content>
-  </entry>
   
   <entry>
     <title type="html"><![CDATA[Configurar Octopress y Github para blog]]></title>
