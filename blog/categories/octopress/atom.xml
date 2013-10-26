@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Octopress | Bitácora]]></title>
   <link href="http://mcoam.github.io/blog/categories/octopress/atom.xml" rel="self"/>
   <link href="http://mcoam.github.io/"/>
-  <updated>2013-10-25T23:18:28-03:00</updated>
+  <updated>2013-10-25T23:41:46-03:00</updated>
   <id>http://mcoam.github.io/</id>
   <author>
     <name><![CDATA[Miguel Angel Coa Morales]]></name>
@@ -27,21 +27,24 @@
 </ol>
 
 
-<p>{% codeblock lang:objc %}
-git clone git://github.com/imathis/octopress.git octopress
-cd octopress  <br/>
-{% endcodeblock %}</p>
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">git</span> <span class="n">clone</span> <span class="nl">git:</span><span class="c1">//github.com/imathis/octopress.git octopress</span>
+</span><span class='line'><span class="n">cd</span> <span class="n">octopress</span>  <span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <ol>
 <li>Instalamos el tema por default y las dependencias necesarias</li>
 </ol>
 
 
-<p>{% codeblock lang:objc %}
-gem install bundler
-bundle install
-rake install
-{% endcodeblock %}</p>
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">gem</span> <span class="n">install</span> <span class="n">bundler</span>
+</span><span class='line'><span class="n">bundle</span> <span class="n">install</span>
+</span><span class='line'><span class="n">rake</span> <span class="n">install</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <p><strong>Configuración de Github</strong></p>
 
@@ -52,9 +55,9 @@ rake install
 </ol>
 
 
-<p>{% codeblock lang:objc %}
- rake setup_github_pages
-{% endcodeblock %}</p>
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'> <span class="n">rake</span> <span class="n">setup_github_pages</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <ol>
 <li><p>Ejecutado el comando anterior nos pedirá la url del repositorio. En el caso nuestro, es <i>git@github.com:mcoam/mcoam.github.com.git</i></p></li>
@@ -62,14 +65,41 @@ rake install
 </ol>
 
 
-<p>{% codeblock lang:objc %}
-  cat ~/.ssh/id_rsa.pub
-{% endcodeblock %}</p>
+<!-- more -->
+
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'>  <span class="n">cat</span> <span class="o">~/</span><span class="p">.</span><span class="n">ssh</span><span class="o">/</span><span class="n">id_rsa</span><span class="p">.</span><span class="n">pub</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <ol>
-<li>Y le copiamos en nuestro repo en Github, Seleccionamos nuestro repo &ndash;> Setting &ndash;> Deploy Keys &ndash;> Add deploy key</li>
+<li>La copiamos en nuestro repo en Github, Seleccionamos nuestro repo &ndash;> Setting &ndash;> Deploy Keys &ndash;> Add deploy key</li>
 </ol>
 
+
+<p>Con lo realizado hasta ahora, ya tenemos nuestro sitio Octopress sincronizado con Github. Ahora, queda ver lo referente a la configuración del DNS y apuntar nuestro repositorio hacia nuestro domino real.</p>
+
+<p><strong>Configuración de DNS</strong></p>
+
+<p>En este caso es necesario configurar en registro CNAME para el host &ldquo;www&rdquo; (puede ser blog, wiki, etc) hacia el sitio de nuestro repositorio en GitHub.</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">www</span>             <span class="n">IN</span>      <span class="n">CNAME</span>   <span class="n">mcoam</span><span class="p">.</span><span class="n">github</span><span class="p">.</span><span class="n">io</span><span class="p">.</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<ol>
+<li>Y customizamos el CNAME en nuestro blog</li>
+</ol>
+
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">echo</span> <span class="o">&amp;</span><span class="n">lsquo</span><span class="p">;</span><span class="n">mcoam</span><span class="p">.</span><span class="n">github</span><span class="p">.</span><span class="n">io</span><span class="o">&amp;</span><span class="n">rsquo</span><span class="p">;</span> <span class="o">&gt;&gt;</span> <span class="n">source</span><span class="o">/</span><span class="n">CNAME</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>Con todo lo anterior realizado y configurado de forma correcta nuestro DNS, es cosa de ingresar en <i>www.your-damain.com</i> o <i>repositorio.github.com</i>. Donde la idea de es que ingresando el repo de Github se redireccione al sitio www.your-damain.com.
+Con eso ya estaría todo para correr el sitio, ahora es solo cosa de crear post y sincronizarlos con nuestro repositorio de github.</p>
+
+<p>Para más información la página de <a href="http://octopress.org/docs/deploying/github/">Octopress</a> la lleva</p>
 ]]></content>
   </entry>
   
