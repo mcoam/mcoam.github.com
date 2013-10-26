@@ -4,6 +4,7 @@ title: "Configurar Octopress y Github para blog"
 date: 2013-10-23 18:00
 comments: true
 categories: Octopress
+keywords: octopress, github, blog
 ---
 
 Si quieres montar un blog con Octopress (framework para montar blog) y Github (repo donde almacenaremos nuestro sitio) , hay que hacer lo siguiente:
