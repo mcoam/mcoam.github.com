@@ -3,12 +3,12 @@
 <html lang="en-GB">
 <head>
 	<meta charset="utf-8">
-	<title>Miguel Angel Coa Morales  | Bitácora</title>
+	<title>Migrar correos en Zimbra con imapsync  | Bitácora</title>
 
     <meta name="author" content="Miguel Angel Coa Morales">
 
     <meta name="description" content="Un blog personal">
-<meta name="keywords" content="zimbra, linux, centos, devops, puppet, opensource, virtualizar, virtualización">
+<meta name="keywords" content="zimbra, imapsynx, linux">
 
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -47,17 +47,9 @@
 
 </header>
 
-	<div id="content" class="inner">
-
-
-    <article class="post">
+	<div id="content" class="inner"><article class="post">
 	<header>
-		<h2 class="title">
-			
-			<a href="/blog/2013/10/26/migrar-correos-en-zimbra-con-imapsync/">
-			
-				Migrar Correos en Zimbra Con Imapsync</a>
-		</h2>
+		<h2 class="title">Migrar Correos en Zimbra Con Imapsync</h2>
 		<div class="meta date">
 
 
@@ -72,8 +64,7 @@
 
 <time datetime="2013-10-26T16:17:00-03:00" pubdate data-updated="true">Oct 26<span>th</span>, 2013</time></div>
 	</header>
-	<div class="entry-content">
-		<p>En ocaciones es necesario migrar un servidor de correos Zimbra hacia otro servidor Zimbra o simplemente deseamos migrar la data entre usuario de un mismo servidor. Bueno, para eso existe el mágico del comando imapsync. Básicamente, lo que hace este comando es conectarse entre los servidores de correos mediante el protocolo imap (también puede ser imap SSl) y migrar la data de una casilla hacia otra.
+	<div class="entry-content"><p>En ocaciones es necesario migrar un servidor de correos Zimbra hacia otro servidor Zimbra o simplemente deseamos migrar la data entre usuario de un mismo servidor. Bueno, para eso existe el mágico del comando imapsync. Básicamente, lo que hace este comando es conectarse entre los servidores de correos mediante el protocolo imap (también puede ser imap SSl) y migrar la data de una casilla hacia otra.
 La sintaxis del comando a utilizar dependedará de las configuraciones de los servidores Ej: si acepta conexeón texto plano, solo ssl, etc. Por defecto el comando siguiente es para una instalación estandar y con conección al puerto 143.</p>
 
 <p>El comando mágico es:</p>
@@ -111,143 +102,37 @@ La sintaxis del comando a utilizar dependedará de las configuraciones de los se
 
 
 <p>Para más detalle del uso del comando visita el <a href="http://wiki.zimbra.com/wiki/Guide_to_imapsync">Wiki de Zimbra </a></p>
-
-		
-		
-	</div>
+</div>
+	
 
 </article>
 
+	
+	<div class="share">
+		<ul>
+			<li>
+  <a href="https://twitter.com/intent/tweet?text=Migrar correos en Zimbra con imapsync by @&url=http://mcoam.github.io/blog/2013/10/26/migrar-correos-en-zimbra-con-imapsync/" title="Share Migrar correos en Zimbra con imapsync on Twitter">
+    <img src="/images/social/twitter.png" />
+  </a>
+</li>
 
-    <article class="post">
-	<header>
-		<h2 class="title">
-			
-			<a href="/blog/2013/10/23/configurar-octopress-y-github-para-blog/">
-			
-				Configurar Octopress Y Github Para Blog</a>
-		</h2>
-		<div class="meta date">
+			<li>
+  <a href="https://www.facebook.com/sharer.php?u=http://mcoam.github.io/blog/2013/10/26/migrar-correos-en-zimbra-con-imapsync/" title="Share Migrar correos en Zimbra con imapsync on Facebook">
+    <img src="/images/social/facebook.png" />
+  </a>
+</li>
 
+			<li>
+  <a href="https://plus.google.com/share?url=http://mcoam.github.io/blog/2013/10/26/migrar-correos-en-zimbra-con-imapsync/" title="Share Migrar correos en Zimbra con imapsync on Google Plus">
+    <img src="/images/social/google.png" />
+  </a>
+</li>
 
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-10-23T18:00:00-03:00" pubdate data-updated="true">Oct 23<span>rd</span>, 2013</time></div>
-	</header>
-	<div class="entry-content">
-		<p>Si quieres montar un blog con Octopress (framework para montar blog) y Github (repo donde almacenaremos nuestro sitio) , hay que hacer lo siguiente:</p>
-
-<p><strong>Descargando Octopress</strong></p>
-
-<ol>
-<li>Descargamos la versión de octopress desde Github</li>
-</ol>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">git</span> <span class="n">clone</span> <span class="nl">git:</span><span class="c1">//github.com/imathis/octopress.git octopress </span>
-</span><span class='line'><span class="n">cd</span> <span class="n">octopress</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ol>
-<li>Instalamos el tema por default y las dependencias necesarias</li>
-</ol>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">gem</span> <span class="n">install</span> <span class="n">bundler</span>
-</span><span class='line'><span class="n">bundle</span> <span class="n">install</span>
-</span><span class='line'><span class="n">rake</span> <span class="n">install</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p><strong>Configuración de Github</strong></p>
-
-<p>Lo primero es que tenemos que crear una cuenta en <a href="https://www.github.com/">Github</a>. Una vez creada la cuenta creamos un repositorio con el formtato: <i>&ldquo;nombredeusuario.github.com&rdquo;</i>,  en el caso de mi repositorio queda así: <a href="https://github.com/mcoam/mcoam.github.com">https://github.com/mcoam/mcoam.github.com</a></p>
-
-<ol>
-<li>Configurar octopress para acceder a este respositorio</li>
-</ol>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'> <span class="n">rake</span> <span class="n">setup_github_pages</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ol>
-<li><p>Ejecutado el comando anterior nos pedirá la url del repositorio. En el caso nuestro, es <i>git@github.com:mcoam/mcoam.github.com.git</i></p></li>
-<li><p>Para efectos de subir los post es necesario copiar la llave ssh de la máquina local (donde tenemos octopress) hacia nuestro sitio en Github.</p></li>
-</ol>
-
-
-
-		
-		<a href="/blog/2013/10/23/configurar-octopress-y-github-para-blog/" class="more-link">Read on &rarr;</a>
+		</ul>
 	</div>
 
-</article>
 
 
-    <article class="post">
-	<header>
-		<h2 class="title">
-			
-			<a href="/blog/2013/10/22/cambiar-theme-octopress/">
-			
-				Cambiar Theme Octopress</a>
-		</h2>
-		<div class="meta date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-10-22T23:17:00-03:00" pubdate data-updated="true">Oct 22<span>nd</span>, 2013</time></div>
-	</header>
-	<div class="entry-content">
-		<p>Si deseamos cambiar el theme por defecto que instala Octopress, hacemos lo siguiente</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>cd octopress
-</span><span class='line'>git clone git://github.com/panks/fabric.git .themes/fabric
-</span><span class='line'>rake install['fabric']
-</span><span class='line'>rake generate</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-
-		
-		<a href="/blog/2013/10/22/cambiar-theme-octopress/" class="more-link">Read on &rarr;</a>
-	</div>
-
-</article>
-
-<nav id="pagenavi">
-    
-    
-</nav>
 </div>
 	<footer id="footer" class="inner">&copy; 2013
 

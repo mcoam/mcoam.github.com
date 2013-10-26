@@ -4,13 +4,59 @@
   <title><![CDATA[Bitácora]]></title>
   <link href="http://mcoam.github.io/atom.xml" rel="self"/>
   <link href="http://mcoam.github.io/"/>
-  <updated>2013-10-25T23:41:46-03:00</updated>
+  <updated>2013-10-26T16:25:04-03:00</updated>
   <id>http://mcoam.github.io/</id>
   <author>
     <name><![CDATA[Miguel Angel Coa Morales]]></name>
     
   </author>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Migrar correos en Zimbra con imapsync]]></title>
+    <link href="http://mcoam.github.io/blog/2013/10/26/migrar-correos-en-zimbra-con-imapsync/"/>
+    <updated>2013-10-26T16:17:00-03:00</updated>
+    <id>http://mcoam.github.io/blog/2013/10/26/migrar-correos-en-zimbra-con-imapsync</id>
+    <content type="html"><![CDATA[<p>En ocaciones es necesario migrar un servidor de correos Zimbra hacia otro servidor Zimbra o simplemente deseamos migrar la data entre usuario de un mismo servidor. Bueno, para eso existe el mágico del comando imapsync. Básicamente, lo que hace este comando es conectarse entre los servidores de correos mediante el protocolo imap (también puede ser imap SSl) y migrar la data de una casilla hacia otra.
+La sintaxis del comando a utilizar dependedará de las configuraciones de los servidores Ej: si acepta conexeón texto plano, solo ssl, etc. Por defecto el comando siguiente es para una instalación estandar y con conección al puerto 143.</p>
+
+<p>El comando mágico es:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">imapsync</span> <span class="o">--</span><span class="n">buffersize</span> <span class="mi">18192000</span> <span class="o">--</span><span class="n">nosyncacls</span> <span class="o">--</span><span class="n">subscribe</span> \
+</span><span class='line'><span class="o">--</span><span class="n">syncinternaldates</span> <span class="o">--</span><span class="n">noauthmd5</span> <span class="o">--</span><span class="n">authmech2</span> <span class="n">PLAIN</span> \
+</span><span class='line'><span class="o">--</span><span class="n">host1</span> <span class="mf">192.168.0.5</span> <span class="o">--</span><span class="n">user1</span> <span class="n">source</span><span class="err">@</span><span class="n">domain</span><span class="p">.</span><span class="n">com</span> \
+</span><span class='line'><span class="o">--</span><span class="n">password1</span> <span class="n">SourcePassword</span> <span class="o">--</span><span class="n">host2</span> <span class="mf">192.168.0.5</span> \
+</span><span class='line'><span class="o">--</span><span class="n">user2</span> <span class="n">destination</span><span class="err">@</span><span class="n">domain</span><span class="p">.</span><span class="n">com</span> <span class="o">--</span><span class="n">authmech2</span> <span class="n">PLAIN</span> \
+</span><span class='line'><span class="o">--</span><span class="n">password2</span> <span class="n">DestinationPassword</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Donde:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="o">--</span><span class="n">host1</span> <span class="o">:</span> <span class="n">Es</span> <span class="n">el</span> <span class="n">servidor</span> <span class="n">de</span> <span class="n">origen</span>
+</span><span class='line'><span class="o">--</span><span class="n">user1</span> <span class="o">:</span> <span class="n">Es</span> <span class="n">el</span> <span class="n">usuario</span> <span class="n">de</span> <span class="n">origen</span>
+</span><span class='line'><span class="o">--</span><span class="n">password1</span> <span class="o">:</span> <span class="n">Es</span> <span class="n">la</span> <span class="n">password</span> <span class="n">de</span> <span class="n">la</span> <span class="n">cuenta</span> <span class="n">origen</span>
+</span><span class='line'><span class="o">--</span><span class="n">host2</span> <span class="o">:</span> <span class="n">Es</span> <span class="n">el</span> <span class="n">servidor</span> <span class="n">de</span> <span class="n">destino</span>
+</span><span class='line'><span class="o">--</span><span class="n">user2</span> <span class="o">:</span> <span class="n">Es</span> <span class="n">el</span> <span class="n">usuario</span> <span class="n">de</span> <span class="n">destino</span>
+</span><span class='line'><span class="o">--</span><span class="n">password2</span> <span class="o">:</span> <span class="n">Es</span> <span class="n">la</span> <span class="n">password</span> <span class="n">de</span> <span class="n">la</span> <span class="n">cuenta</span> <span class="n">de</span> <span class="n">destino</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Para más detalle del uso del comando visita el <a href="http://wiki.zimbra.com/wiki/Guide_to_imapsync">Wiki de Zimbra </a></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Configurar Octopress y Github para blog]]></title>
