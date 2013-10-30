@@ -4,13 +4,33 @@
   <title><![CDATA[Bitácora]]></title>
   <link href="http://mcoam.github.io/atom.xml" rel="self"/>
   <link href="http://mcoam.github.io/"/>
-  <updated>2013-10-27T21:21:22-03:00</updated>
+  <updated>2013-10-30T15:22:21-03:00</updated>
   <id>http://mcoam.github.io/</id>
   <author>
     <name><![CDATA[Miguel Angel Coa Morales]]></name>
     
   </author>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Expresiones Regulares Con Puppet]]></title>
+    <link href="http://mcoam.github.io/blog/2013/10/30/expresiones-regulares-con-puppet/"/>
+    <updated>2013-10-30T00:00:00-03:00</updated>
+    <id>http://mcoam.github.io/blog/2013/10/30/expresiones-regulares-con-puppet</id>
+    <content type="html"><![CDATA[<p>Puppet permite la declarición de nodos mediante expresiones regulares, esto permite definir dentro de una sola declaraciones &ldquo;n&rdquo; nodos, lo que nos ayudará a manejar de mejor forma nuestra administración de nodos. Por ejemplo:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">node</span> <span class="o">/</span><span class="p">.</span><span class="o">*</span><span class="err">\</span><span class="p">.</span><span class="n">example</span><span class="err">\</span><span class="p">.</span><span class="n">com</span><span class="o">/</span> <span class="n">inherits</span> <span class="n">basenode</span> <span class="p">{</span>
+</span><span class='line'>    <span class="n">class</span> <span class="n">ntp</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Lo anterior dice que, todo nodo del tipo *.example.com <i>(www.example.com, ftp.example.com, mail.example.com)</i> aplicará la <i>clase ntp</i> y heredará la <i>clase basenode</i>. Para más infomación puedes ver la doc de puppet <a href="http://docs.puppetlabs.com/puppet/2.7/reference/lang_node_definitions.html">Puppet Docs</a></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Migrar correos en Zimbra con imapsync]]></title>
