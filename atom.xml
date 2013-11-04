@@ -4,13 +4,65 @@
   <title><![CDATA[Bitácora]]></title>
   <link href="http://mcoam.github.io/atom.xml" rel="self"/>
   <link href="http://mcoam.github.io/"/>
-  <updated>2013-10-30T15:30:40-03:00</updated>
+  <updated>2013-11-04T17:56:10-03:00</updated>
   <id>http://mcoam.github.io/</id>
   <author>
     <name><![CDATA[Miguel Angel Coa Morales]]></name>
     
   </author>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Filtro de correos salientes Zimbra]]></title>
+    <link href="http://mcoam.github.io/blog/2013/11/04/filtro-de-correos-salientes-zimbra/"/>
+    <updated>2013-11-04T17:38:00-03:00</updated>
+    <id>http://mcoam.github.io/blog/2013/11/04/filtro-de-correos-salientes-zimbra</id>
+    <content type="html"><![CDATA[<p>Aveces es necesario en Zimbra &ldquo;copiar&rdquo; los correos salientes desde una casilla hacia otra cuenta (algo así como un forward). Esto en zimbra se puede realizar mediante la configuración del servicio postfix de la siguiente forma:</p>
+
+<p>Editamos el archivo</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">zimbra</span><span class="o">/</span><span class="n">postfix</span><span class="o">/</span><span class="n">conf</span><span class="o">/</span><span class="n">main</span><span class="p">.</span><span class="n">cf</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Y al principio del archivo agregamos la siguiente definición</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">sender_bcc_maps</span> <span class="o">=</span> <span class="nl">hash:</span><span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">zimbra</span><span class="o">/</span><span class="n">postfix</span><span class="o">/</span><span class="n">conf</span><span class="o">/</span><span class="n">sender_bcc</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Creamos el archivo y colocamos los permisos respectivo</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">zimbra</span><span class="o">/</span><span class="n">postfix</span><span class="o">/</span><span class="n">conf</span><span class="o">/</span><span class="n">sender_bcc</span>
+</span><span class='line'><span class="n">chown</span> <span class="n">zimbra</span><span class="p">.</span><span class="n">zimbra</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">zimbra</span><span class="o">/</span><span class="n">postfix</span><span class="o">/</span><span class="n">conf</span><span class="o">/</span><span class="n">sender_bcc</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Dentro del archivo tenemos que definir en la primera columna la cuenta de origen y la cuenta de destino a la cual le llegará una copia de los correos salientes.</p>
+
+<p> <!-- more --></p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">originAccount</span><span class="err">@</span><span class="n">example</span><span class="p">.</span><span class="n">com</span> <span class="n">destinationAccount</span><span class="err">@</span><span class="n">example</span><span class="p">.</span><span class="n">com</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Ahora, ejecutamos postmap sobre el archivo para generar el binario que leerá postfix y reiniciamos el servicio mta de zimbra</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">postmap</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">zimbra</span><span class="o">/</span><span class="n">postfix</span><span class="o">/</span><span class="n">conf</span><span class="o">/</span><span class="n">sender_bcc</span>
+</span><span class='line'><span class="n">zmcontrol</span> <span class="n">restart</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Expresiones regulares con Puppet]]></title>
