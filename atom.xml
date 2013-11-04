@@ -4,7 +4,7 @@
   <title><![CDATA[Bitácora]]></title>
   <link href="http://mcoam.github.io/atom.xml" rel="self"/>
   <link href="http://mcoam.github.io/"/>
-  <updated>2013-11-04T20:28:49-03:00</updated>
+  <updated>2013-11-04T20:30:30-03:00</updated>
   <id>http://mcoam.github.io/</id>
   <author>
     <name><![CDATA[Miguel Angel Coa Morales]]></name>
@@ -42,7 +42,7 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Dentro del archivo tenemos que definir en la primera columna la cuenta de correo &ldquo;origen&rdquo; y en la segunda cuenta de correo &ldquo;destino&rdquo; a la cual le llegará una copia de los correos salientes desde la primera.</p>
+<p>Dentro del archivo tenemos que definir en la primera columna la cuenta de correo &ldquo;origen&rdquo; y en la segunda la cuenta de correo &ldquo;destino&rdquo; a la cual le llegará una copia de los correos salientes desde la primera.</p>
 
 <p> <!-- more --></p>
 
