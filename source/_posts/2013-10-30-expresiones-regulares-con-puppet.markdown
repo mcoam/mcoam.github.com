@@ -3,7 +3,7 @@ layout: post
 title: "Expresiones regulares con Puppet"
 date: 2013-10-30 15:06
 comments: true
-categories:puppet, devops 
+categories:
 ---
 
 Puppet permite la declarición de nodos mediante expresiones regulares, esto permite definir dentro de una sola declaraciones "n" nodos, lo que nos ayudará a manejar de mejor forma nuestra administración de nodos. Por ejemplo: 
