@@ -4,13 +4,88 @@
   <title><![CDATA[Bitácora]]></title>
   <link href="http://mcoam.github.io/atom.xml" rel="self"/>
   <link href="http://mcoam.github.io/"/>
-  <updated>2013-11-04T20:30:30-03:00</updated>
+  <updated>2013-11-06T17:27:42-03:00</updated>
   <id>http://mcoam.github.io/</id>
   <author>
     <name><![CDATA[Miguel Angel Coa Morales]]></name>
     
   </author>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Script para ver quota de casilla Zimbra]]></title>
+    <link href="http://mcoam.github.io/blog/2013/11/06/script-para-ver-quota-de-casilla-zimbra/"/>
+    <updated>2013-11-06T17:14:00-03:00</updated>
+    <id>http://mcoam.github.io/blog/2013/11/06/script-para-ver-quota-de-casilla-zimbra</id>
+    <content type="html"><![CDATA[<p>A continuación un script que lista la quota que está utilizando una casilla de usuario y cuanto es la quota asignada (esto en el caso de tener) en Zimbra.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">all_account</span><span class="o">=</span><span class="err">`</span><span class="n">zmprov</span> <span class="o">-</span><span class="n">l</span> <span class="n">gaa</span><span class="err">`</span><span class="p">;</span>
+</span><span class='line'><span class="k">for</span> <span class="n">account</span> <span class="k">in</span> <span class="n">$</span><span class="p">{</span><span class="n">all_account</span><span class="p">}</span>
+</span><span class='line'><span class="k">do</span>
+</span><span class='line'>    <span class="n">mb_size</span><span class="o">=</span><span class="err">`</span><span class="n">zmmailbox</span> <span class="o">-</span><span class="n">z</span> <span class="o">-</span><span class="n">m</span> <span class="n">$</span><span class="p">{</span><span class="n">account</span><span class="p">}</span> <span class="n">gms</span><span class="err">`</span><span class="p">;</span>
+</span><span class='line'>    <span class="n">mb_quota</span><span class="o">=</span><span class="err">`</span><span class="n">zmprov</span> <span class="n">ga</span> <span class="n">$</span><span class="p">{</span><span class="n">account</span><span class="p">}</span> <span class="o">|</span><span class="n">grep</span> <span class="o">-</span><span class="n">i</span> <span class="n">zimbraMailQuota</span> <span class="o">|</span><span class="n">cut</span> <span class="o">-</span><span class="n">d</span><span class="s">&quot;:&quot;</span> <span class="o">-</span><span class="n">f2</span><span class="err">`</span>
+</span><span class='line'>    <span class="k">if</span> <span class="p">[</span> <span class="n">$mb_quota</span> <span class="o">!=</span> <span class="mi">0</span> <span class="p">];</span> <span class="n">then</span>
+</span><span class='line'>            <span class="n">echo</span> <span class="s">&quot;Mailbox size of ${account} = ${mb_size}&quot;</span>
+</span><span class='line'>            <span class="n">count</span><span class="o">=</span><span class="err">`</span><span class="n">expr</span> <span class="n">length</span> <span class="n">$mb_quota</span><span class="err">`</span>
+</span><span class='line'>            <span class="k">if</span> <span class="p">[</span> <span class="n">$count</span> <span class="o">==</span> <span class="mi">8</span> <span class="p">];</span> <span class="n">then</span>
+</span><span class='line'>                <span class="n">echo</span> <span class="s">&quot;Mailbox Quota is = `echo ${mb_quota}/1024/1024 | bc` MB &quot;</span>
+</span><span class='line'>            <span class="k">else</span>
+</span><span class='line'>                <span class="n">echo</span> <span class="s">&quot;Mailbox Quota is = `echo ${mb_quota}/1024/1024/1024 | bc` GB &quot;</span>
+</span><span class='line'>            <span class="n">fi</span>
+</span><span class='line'>    <span class="k">else</span>
+</span><span class='line'>            <span class="n">echo</span> <span class="s">&quot;Mailbox size of ${account}  = ${mb_size}&quot;</span>
+</span><span class='line'>            <span class="n">echo</span> <span class="s">&quot;The Mailbox isn&#39;t Setting Quota&quot;</span>
+</span><span class='line'>    <span class="n">fi</span>
+</span><span class='line'>    <span class="n">echo</span> <span class="s">&quot;______________________&quot;</span>
+</span><span class='line'><span class="n">done</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Lo anterior, arrojará por pantalla valores como los siguientes:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">______________________</span>
+</span><span class='line'><span class="n">Mailbox</span> <span class="n">size</span> <span class="n">of</span> <span class="n">user</span><span class="err">@</span><span class="n">example</span><span class="p">.</span><span class="n">com</span>  <span class="o">=</span> <span class="mf">281.51</span> <span class="n">MB</span>
+</span><span class='line'><span class="n">The</span> <span class="n">Mailbox</span> <span class="n">isn</span><span class="err">&#39;</span><span class="n">t</span> <span class="n">Setting</span> <span class="n">Quota</span>
+</span><span class='line'><span class="n">______________________</span>
+</span><span class='line'><span class="n">Mailbox</span> <span class="n">size</span> <span class="n">of</span> <span class="n">mflopes</span><span class="err">@</span><span class="n">dalchile</span><span class="p">.</span><span class="n">cl</span>  <span class="o">=</span> <span class="mf">1.30</span> <span class="n">GB</span>
+</span><span class='line'><span class="n">The</span> <span class="n">Mailbox</span> <span class="n">isn</span><span class="err">&#39;</span><span class="n">t</span> <span class="n">Setting</span> <span class="n">Quota</span>
+</span><span class='line'><span class="n">______________________</span>
+</span><span class='line'><span class="n">Mailbox</span> <span class="n">size</span> <span class="n">of</span> <span class="n">mcoa</span><span class="err">@</span><span class="n">libramarchile</span><span class="p">.</span><span class="n">cl</span> <span class="o">=</span> <span class="mf">718.00</span> <span class="n">KB</span>
+</span><span class='line'><span class="n">Mailbox</span> <span class="n">Quota</span> <span class="n">is</span> <span class="o">=</span> <span class="mi">10</span> <span class="n">MB</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Filtro de correos salientes Zimbra]]></title>
