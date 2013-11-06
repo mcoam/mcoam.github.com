@@ -27,7 +27,7 @@ Creamos el archivo y colocamos los permisos respectivo
 chown zimbra.zimbra /opt/zimbra/postfix/conf/sender_bcc
 {% endcodeblock %}
 
-Dentro del archivo tenemos que definir en la primera columna la cuenta de origen y la cuenta de destino a la cual le llegará una copia de los correos salientes.
+Dentro del archivo tenemos que definir en la primera columna la cuenta de correo "origen" y en la segunda la cuenta de correo "destino" a la cual le llegará una copia de los correos salientes desde la primera.
 
  <!-- more -->
 
