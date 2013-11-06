@@ -4,7 +4,7 @@
   <title><![CDATA[Bitácora]]></title>
   <link href="http://mcoam.github.io/atom.xml" rel="self"/>
   <link href="http://mcoam.github.io/"/>
-  <updated>2013-11-06T17:46:10-03:00</updated>
+  <updated>2013-11-06T19:10:03-03:00</updated>
   <id>http://mcoam.github.io/</id>
   <author>
     <name><![CDATA[Miguel Coa M.]]></name>
@@ -292,7 +292,7 @@ La sintaxis del comando a utilizar dependedará de las configuraciones de los se
 
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">echo</span> <span class="err">&#39;</span><span class="n">mcoam</span><span class="p">.</span><span class="n">github</span><span class="p">.</span><span class="n">io</span><span class="err">&#39;</span> <span class="o">&gt;&gt;</span> <span class="n">source</span><span class="o">/</span><span class="n">CNAME</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">echo</span> <span class="err">&#39;</span><span class="n">www</span><span class="p">.</span><span class="n">miguelcoa</span><span class="p">.</span><span class="n">cl</span><span class="err">&#39;</span> <span class="o">&gt;&gt;</span> <span class="n">source</span><span class="o">/</span><span class="n">CNAME</span>
 </span></code></pre></td></tr></table></div></figure>
 
 

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Octopress | Bitácora]]></title>
   <link href="http://mcoam.github.io/blog/categories/octopress/atom.xml" rel="self"/>
   <link href="http://mcoam.github.io/"/>
-  <updated>2013-11-06T17:46:10-03:00</updated>
+  <updated>2013-11-06T19:10:03-03:00</updated>
   <id>http://mcoam.github.io/</id>
   <author>
     <name><![CDATA[Miguel Coa M.]]></name>
@@ -93,7 +93,7 @@
 
 
 <p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">echo</span> <span class="o">&amp;</span><span class="n">lsquo</span><span class="p">;</span><span class="n">mcoam</span><span class="p">.</span><span class="n">github</span><span class="p">.</span><span class="n">io</span><span class="o">&amp;</span><span class="n">rsquo</span><span class="p">;</span> <span class="o">&gt;&gt;</span> <span class="n">source</span><span class="o">/</span><span class="n">CNAME</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">echo</span> <span class="o">&amp;</span><span class="n">lsquo</span><span class="p">;</span><span class="n">www</span><span class="p">.</span><span class="n">miguelcoa</span><span class="p">.</span><span class="n">cl</span><span class="o">&amp;</span><span class="n">rsquo</span><span class="p">;</span> <span class="o">&gt;&gt;</span> <span class="n">source</span><span class="o">/</span><span class="n">CNAME</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <p>Con todo lo anterior realizado y configurado de forma correcta nuestro DNS, es cosa de ingresar en <i>www.your-damain.com</i> o <i>repositorio.github.com</i>. Donde la idea de es que ingresando el repo de Github se redireccione al sitio www.your-damain.com.
