@@ -3,11 +3,11 @@
 <html lang="en-GB">
 <head>
 	<meta charset="utf-8">
-	<title>Category: linux,  | Bitácora</title>
+	<title>Tabulación con editor VIM  | Bitácora</title>
 
     <meta name="author" content="Miguel Coa M.">
 
-    <meta name="description" content="Category: linux,">
+    <meta name="description" content="Un blog personal">
 <meta name="keywords" content="zimbra, linux, centos, devops, puppet, opensource, virtualizar, virtualización">
 
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -47,49 +47,68 @@
 
 </header>
 
-	<div id="content" class="inner">
+	<div id="content" class="inner"><article class="post">
+	<header>
+		<h2 class="title">Tabulación Con Editor VIM</h2>
+		<div class="meta date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-11-27T08:32:00-03:00" pubdate data-updated="true">Nov 27<span>th</span>, 2013</time></div>
+	</header>
+	<div class="entry-content"><p>En ocasiones al copiar y pegar texto hacia una archivo que está siendo accedido por medio del editor VIM, este queda con una mala tabulación (excesivamente corrida a la derecha) al momento de pegarla. La solución para eso es que antes de pegar el texto tenemos realizar lo siguiente en la misma ventana del editor</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="nl">type:</span> <span class="n">set</span> <span class="n">paste</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Lo otro, es agregar la línea <i>set paste</i> dentro de <i>/etc/vim/vimrc</i> .</p>
+</div>
 	
 
-
-	
-	
-	<section class="archives"><h2>2013</h1>
-
-<article>
-	<h3><a href="/blog/2013/11/27/tabulacion-con-editor-vim/">Tabulación con editor VIM</a></h3>
-	<div class="meta">
-		<span class="date">Nov 27</span>
-		<span class="tags">
-
-
-	<a class='category' href='/blog/categories/linux/'>linux,</a>, <a class='category' href='/blog/categories/tips/'>tips</a>
-
-
-</span>
-	    
-	</div>
 </article>
 
-
 	
+	<div class="share">
+		<ul>
+			<li>
+  <a href="https://twitter.com/intent/tweet?text=Tabulación con editor VIM by @&url=http://mcoam.github.io/blog/2013/11/27/tabulacion-con-editor-vim/" title="Share Tabulación con editor VIM on Twitter">
+    <img src="/images/social/twitter.png" />
+  </a>
+</li>
 
+			<li>
+  <a href="https://www.facebook.com/sharer.php?u=http://mcoam.github.io/blog/2013/11/27/tabulacion-con-editor-vim/" title="Share Tabulación con editor VIM on Facebook">
+    <img src="/images/social/facebook.png" />
+  </a>
+</li>
 
-<article>
-	<h3><a href="/blog/2013/11/11/automatizando-instalaciones-redhat-slash-centos-con-quickstart/">Automatizando instalaciones RedHat/Centos con KickStart</a></h3>
-	<div class="meta">
-		<span class="date">Nov 11</span>
-		<span class="tags">
+			<li>
+  <a href="https://plus.google.com/share?url=http://mcoam.github.io/blog/2013/11/27/tabulacion-con-editor-vim/" title="Share Tabulación con editor VIM on Google Plus">
+    <img src="/images/social/google.png" />
+  </a>
+</li>
 
-
-	<a class='category' href='/blog/categories/centos/'>centos,</a>, <a class='category' href='/blog/categories/kickstart/'>kickstart</a>, <a class='category' href='/blog/categories/linux/'>linux,</a>, <a class='category' href='/blog/categories/rhel/'>rhel,</a>
-
-
-</span>
-	    
+		</ul>
 	</div>
-</article>
 
 
+
+
+<section id="comment">
+    <h2 class="title">Comments</h2>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
 </div>
 	<footer id="footer" class="inner">&copy; 2013
 
@@ -104,7 +123,10 @@
       var disqus_shortname = 'miguelcoa';
       
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://mcoam.github.io/blog/2013/11/27/tabulacion-con-editor-vim/';
+        var disqus_url = 'http://mcoam.github.io/blog/2013/11/27/tabulacion-con-editor-vim/';
+        var disqus_script = 'embed.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

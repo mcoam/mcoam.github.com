@@ -4,13 +4,29 @@
   <title><![CDATA[Bitácora]]></title>
   <link href="http://mcoam.github.io/atom.xml" rel="self"/>
   <link href="http://mcoam.github.io/"/>
-  <updated>2013-11-11T21:59:32-03:00</updated>
+  <updated>2013-11-27T08:37:57-03:00</updated>
   <id>http://mcoam.github.io/</id>
   <author>
     <name><![CDATA[Miguel Coa M.]]></name>
     
   </author>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Tabulación con editor VIM]]></title>
+    <link href="http://mcoam.github.io/blog/2013/11/27/tabulacion-con-editor-vim/"/>
+    <updated>2013-11-27T08:32:00-03:00</updated>
+    <id>http://mcoam.github.io/blog/2013/11/27/tabulacion-con-editor-vim</id>
+    <content type="html"><![CDATA[<p>En ocasiones al copiar y pegar texto hacia una archivo que está siendo accedido por medio del editor VIM, este queda con una mala tabulación (excesivamente corrida a la derecha) al momento de pegarla. La solución para eso es que antes de pegar el texto tenemos realizar lo siguiente en la misma ventana del editor</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="nl">type:</span> <span class="n">set</span> <span class="n">paste</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Lo otro, es agregar la línea <i>set paste</i> dentro de <i>/etc/vim/vimrc</i> .</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Automatizando instalaciones RedHat/Centos con KickStart]]></title>
