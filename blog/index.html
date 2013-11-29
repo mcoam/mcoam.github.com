@@ -54,6 +54,64 @@
 	<header>
 		<h2 class="title">
 			
+			<a href="/blog/2013/11/29/configurar-nagios-server-y-pnp4nagios/">
+			
+				Configurar Nagios Server Y Pnp4nagios</a>
+		</h2>
+		<div class="meta date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-11-29T10:46:00-03:00" pubdate data-updated="true">Nov 29<span>th</span>, 2013</time></div>
+	</header>
+	<div class="entry-content">
+		<p>Si tienes un servidor Nagios como plataforma de monitoreo de servidores, es posible que en alguna ocasión puedas necesitar generar reportes de la estadística (mensual, díaria, semanal, etc) para lo cual la versión open de Nagios Server no lo tiene integrado de forma nativa pero podemos solucionar con <a href="http://www.pnp4nagios.org/">pnp4nagios</a> y para realizarlo tenemos que hacer lo siguiente (asumiremos que ya tenemos nuestro Nagios Server funcionando)</p>
+
+<p>Tenemos que tener instalado en el servidor rrdtool, perl-rrdtool y una serie de paquetería</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">yum</span> <span class="n">install</span> <span class="n">libdbi</span> <span class="n">rrdtool</span> <span class="n">perl</span><span class="o">-</span><span class="n">rrdtool</span> <span class="n">ruby</span> <span class="n">xorg</span><span class="o">-</span><span class="n">x11</span><span class="o">-</span><span class="n">fonts</span><span class="o">-</span><span class="n">Type1</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Instalación php4nagios</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">wget</span> <span class="nl">http:</span><span class="c1">//downloads.sourceforge.net/project/pnp4nagios/PNP-0.6/pnp4nagios-0.6.21.tar.gz?r=http%3A%2F%2Fsourceforge.net%2Fprojects%2Fpnp4nagios%2F&amp;ts=1372937581&amp;use_mirror=jaist</span>
+</span><span class='line'><span class="n">tar</span> <span class="o">-</span><span class="n">zxvf</span> <span class="n">pnp4nagios</span><span class="o">-</span><span class="mf">0.6.21</span><span class="p">.</span><span class="n">tar</span><span class="p">.</span><span class="n">gz</span>
+</span><span class='line'><span class="n">cd</span> <span class="n">pnp4nagios</span><span class="o">-</span><span class="mf">0.6.21</span>
+</span><span class='line'><span class="p">.</span><span class="o">/</span><span class="n">configure</span> <span class="o">-</span><span class="n">prefix</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">pnp4nagios</span> <span class="o">-</span><span class="n">with</span><span class="o">-</span><span class="n">rrdtool</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">rrdtool</span> <span class="o">-</span><span class="n">with</span><span class="o">-</span><span class="n">nagios</span><span class="o">-</span><span class="n">user</span><span class="o">=</span><span class="n">nagios</span> <span class="o">-</span><span class="n">with</span><span class="o">-</span><span class="n">nagios</span><span class="o">-</span><span class="n">group</span><span class="o">=</span><span class="n">nagios</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Lo anterior generará todo el proceso de compilación lo que finalmente arrojará algo similar a lo siguiente:
+<img src="/assets/images/pnp4nagios.png"></p>
+
+<p>Y luego lo compilamos e instalamos</p>
+
+
+		
+		<a href="/blog/2013/11/29/configurar-nagios-server-y-pnp4nagios/" class="more-link">Read on &rarr;</a>
+	</div>
+
+</article>
+
+
+    <article class="post">
+	<header>
+		<h2 class="title">
+			
 			<a href="/blog/2013/11/27/tabulacion-con-editor-vim/">
 			
 				Tabulación Con Editor VIM</a>

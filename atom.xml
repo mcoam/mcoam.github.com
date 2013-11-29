@@ -4,13 +4,147 @@
   <title><![CDATA[Bitácora]]></title>
   <link href="http://mcoam.github.io/atom.xml" rel="self"/>
   <link href="http://mcoam.github.io/"/>
-  <updated>2013-11-27T08:37:57-03:00</updated>
+  <updated>2013-11-29T12:10:26-03:00</updated>
   <id>http://mcoam.github.io/</id>
   <author>
     <name><![CDATA[Miguel Coa M.]]></name>
     
   </author>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Configurar Nagios server y Pnp4nagios]]></title>
+    <link href="http://mcoam.github.io/blog/2013/11/29/configurar-nagios-server-y-pnp4nagios/"/>
+    <updated>2013-11-29T10:46:00-03:00</updated>
+    <id>http://mcoam.github.io/blog/2013/11/29/configurar-nagios-server-y-pnp4nagios</id>
+    <content type="html"><![CDATA[<p>Si tienes un servidor Nagios como plataforma de monitoreo de servidores, es posible que en alguna ocasión puedas necesitar generar reportes de la estadística (mensual, díaria, semanal, etc) para lo cual la versión open de Nagios Server no lo tiene integrado de forma nativa pero podemos solucionar con <a href="http://www.pnp4nagios.org/">pnp4nagios</a> y para realizarlo tenemos que hacer lo siguiente (asumiremos que ya tenemos nuestro Nagios Server funcionando)</p>
+
+<p>Tenemos que tener instalado en el servidor rrdtool, perl-rrdtool y una serie de paquetería</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">yum</span> <span class="n">install</span> <span class="n">libdbi</span> <span class="n">rrdtool</span> <span class="n">perl</span><span class="o">-</span><span class="n">rrdtool</span> <span class="n">ruby</span> <span class="n">xorg</span><span class="o">-</span><span class="n">x11</span><span class="o">-</span><span class="n">fonts</span><span class="o">-</span><span class="n">Type1</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Instalación php4nagios</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">wget</span> <span class="nl">http:</span><span class="c1">//downloads.sourceforge.net/project/pnp4nagios/PNP-0.6/pnp4nagios-0.6.21.tar.gz?r=http%3A%2F%2Fsourceforge.net%2Fprojects%2Fpnp4nagios%2F&amp;ts=1372937581&amp;use_mirror=jaist</span>
+</span><span class='line'><span class="n">tar</span> <span class="o">-</span><span class="n">zxvf</span> <span class="n">pnp4nagios</span><span class="o">-</span><span class="mf">0.6.21</span><span class="p">.</span><span class="n">tar</span><span class="p">.</span><span class="n">gz</span>
+</span><span class='line'><span class="n">cd</span> <span class="n">pnp4nagios</span><span class="o">-</span><span class="mf">0.6.21</span>
+</span><span class='line'><span class="p">.</span><span class="o">/</span><span class="n">configure</span> <span class="o">-</span><span class="n">prefix</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">pnp4nagios</span> <span class="o">-</span><span class="n">with</span><span class="o">-</span><span class="n">rrdtool</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">rrdtool</span> <span class="o">-</span><span class="n">with</span><span class="o">-</span><span class="n">nagios</span><span class="o">-</span><span class="n">user</span><span class="o">=</span><span class="n">nagios</span> <span class="o">-</span><span class="n">with</span><span class="o">-</span><span class="n">nagios</span><span class="o">-</span><span class="n">group</span><span class="o">=</span><span class="n">nagios</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Lo anterior generará todo el proceso de compilación lo que finalmente arrojará algo similar a lo siguiente:
+<img src="http://mcoam.github.io/assets/images/pnp4nagios.png"></p>
+
+<p>Y luego lo compilamos e instalamos</p>
+
+<!-- more -->
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">make</span> <span class="n">all</span> <span class="o">&amp;&amp;</span> <span class="n">make</span> <span class="n">install</span> <span class="o">&amp;&amp;</span> <span class="n">make</span> <span class="n">install</span><span class="o">-</span><span class="n">webconf</span> <span class="o">&amp;&amp;</span> <span class="n">make</span> <span class="n">install</span><span class="o">-</span><span class="n">config</span> <span class="o">&amp;&amp;</span> <span class="n">make</span> <span class="n">install</span><span class="o">-</span><span class="n">init</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Nos aseguramos que no tengamos ningún tipo de error en el proceso de compilación</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">Copiamos</span> <span class="n">los</span> <span class="n">archivos</span> <span class="n">de</span> <span class="n">configuraci</span><span class="err">ó</span><span class="n">n</span>
+</span><span class='line'><span class="n">cd</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">pnp4nagios</span><span class="o">/</span><span class="n">etc</span>
+</span><span class='line'><span class="n">cp</span> <span class="n">misccommands</span><span class="p">.</span><span class="n">cfg</span><span class="o">-</span><span class="n">sample</span> <span class="n">misccommands</span><span class="p">.</span><span class="n">cfg</span>
+</span><span class='line'><span class="n">cp</span> <span class="n">nagios</span><span class="p">.</span><span class="n">cfg</span><span class="o">-</span><span class="n">sample</span> <span class="n">nagios</span><span class="p">.</span><span class="n">cfg</span>
+</span><span class='line'><span class="n">cp</span> <span class="n">rra</span><span class="p">.</span><span class="n">cfg</span><span class="o">-</span><span class="n">sample</span> <span class="n">rra</span><span class="p">.</span><span class="n">cfg</span>
+</span><span class='line'><span class="n">cp</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">pnp4nagios</span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">pages</span><span class="o">/</span>
+</span><span class='line'><span class="n">cp</span> <span class="n">web_traffic</span><span class="p">.</span><span class="n">cfg</span><span class="o">-</span><span class="n">sample</span> <span class="n">web_traffic</span><span class="p">.</span><span class="n">cfg</span>
+</span><span class='line'><span class="n">cd</span> <span class="p">..</span><span class="o">/</span><span class="n">check_commands</span>
+</span><span class='line'><span class="n">cp</span> <span class="n">check_all_local_disks</span><span class="p">.</span><span class="n">cfg</span><span class="o">-</span><span class="n">sample</span>
+</span><span class='line'><span class="n">check_all_local_disks</span><span class="p">.</span><span class="n">cfg</span>
+</span><span class='line'><span class="n">cp</span> <span class="n">check_nrpe</span><span class="p">.</span><span class="n">cfg</span><span class="o">-</span><span class="n">sample</span> <span class="n">check_nrpe</span><span class="p">.</span><span class="n">cfg</span>
+</span><span class='line'><span class="n">cp</span> <span class="n">check_nwstat</span><span class="p">.</span><span class="n">cfg</span><span class="o">-</span><span class="n">sample</span> <span class="n">check_nwstat</span><span class="p">.</span><span class="n">cf</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Configuración de servicio npcd</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">chkconfig</span> <span class="o">--</span><span class="n">add</span> <span class="n">npcd</span>
+</span><span class='line'><span class="n">chkconfig</span> <span class="n">npcd</span> <span class="n">on</span>
+</span><span class='line'><span class="n">service</span> <span class="n">npcd</span> <span class="n">start</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Test pnp4nagios</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="nl">http:</span><span class="c1">//server-ip/pnp4nagios</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>
+Deberemos ver lo siguiente</p>
+
+<p><img src="http://mcoam.github.io/assets/images/pnp4nagios-environment.png"></p>
+
+<p>Como dice al final de la página, podemos eliminar el página de test</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">rm</span> <span class="o">-</span><span class="n">rf</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">pnp4nagios</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">install</span><span class="p">.</span><span class="n">php</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Configuración de apache de pnp4nagios, donde tenemos instanciar nuestro archivo de password de acceso nagios modificando el valor</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">AuthUserFile</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">nagios</span><span class="o">/</span><span class="n">passwd</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>
+Reiniciamos apache</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">service</span> <span class="n">httpd</span> <span class="n">restart</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Ahora tenemos que configurar nagios y que pueda interactuar y permitir la visualización de la gráfica. Para esto utilizaremos el modo <i>Bulk Mode with npcdmod</i> de pnp4nagios, para lo cual editamos el archivo de configuración nagios <i>/etc/nagios/nagios.cfg</i> , adicionando/moficiando los siguientes valores</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">broker_module</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">pnp4nagios</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">npcdmod</span><span class="p">.</span><span class="n">o</span> <span class="n">config_file</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">pnp4nagios</span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">npcd</span><span class="p">.</span><span class="n">cfg</span>
+</span><span class='line'><span class="n">process_performance_data</span><span class="o">=</span><span class="mi">1</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Finalmente, reiniciamos los servicios y empezará a ser reflejada la data de forma gráfica</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">service</span> <span class="n">npcd</span> <span class="n">restart</span> <span class="o">&amp;&amp;</span> <span class="n">service</span> <span class="n">nagios</span> <span class="n">restart</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><img src="http://mcoam.github.io/assets/images/webpnp4.png"></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Tabulación con editor VIM]]></title>
