@@ -4,7 +4,7 @@
   <title><![CDATA[Category: nagios | Bitácora]]></title>
   <link href="http://mcoam.github.io/blog/categories/nagios/atom.xml" rel="self"/>
   <link href="http://mcoam.github.io/"/>
-  <updated>2013-11-29T19:52:08-03:00</updated>
+  <updated>2013-11-29T21:41:16-03:00</updated>
   <id>http://mcoam.github.io/</id>
   <author>
     <name><![CDATA[Miguel Coa M.]]></name>
@@ -98,8 +98,14 @@ process_performance_data=1
 Finalmente, reiniciamos los servicios y empezará a ser reflejada la data de forma gráfica
 <code>objc
 service npcd restart &amp;&amp; service nagios restart
-</code>
-<img src="/assets/images/webpnp4.png"></p>
+</code></p>
+
+<p><img src="/assets/images/webpnp4.png"></p>
+
+<p>Referencias
+<a href="http://www.productionmonkeys.net/guides/nagios/addons/pnp4nagios">http://www.productionmonkeys.net/guides/nagios/addons/pnp4nagios</a>
+<a href="http://www.academia.edu/4142933/Install_pnp4nagios_on_Cent_OS">http://www.academia.edu/4142933/Install_pnp4nagios_on_Cent_OS</a>
+<a href="http://eldespistado.com/instalacion-nagios-pnp4nagios-check_mk-nagvis-debian-7-wheezy/">http://eldespistado.com/instalacion-nagios-pnp4nagios-check_mk-nagvis-debian-7-wheezy/</a></p>
 ]]></content>
   </entry>
   
