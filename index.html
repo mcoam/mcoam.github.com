@@ -54,6 +54,96 @@
 	<header>
 		<h2 class="title">
 			
+			<a href="/blog/2014/01/14/creando-cuentas-zimbra-desde-un-csv/">
+			
+				Creando Cuentas Zimbra Desde Un CSV</a>
+		</h2>
+		<div class="meta date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-01-14T17:38:00-03:00" pubdate data-updated="true">Jan 14<span>th</span>, 2014</time></div>
+	</header>
+	<div class="entry-content">
+		<p>El siguiente script nos permite crear las cuentas en Zimbra desde un CSV y automatizar el proceso. El CSV en donde tenemos las cuentas, tiene el siguiente formato:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">cpinera</span><span class="err">@</span><span class="n">example</span><span class="p">.</span><span class="n">com</span><span class="p">;</span><span class="n">cpinera</span><span class="p">;</span><span class="n">pinera</span><span class="p">;</span><span class="n">carlos</span>
+</span><span class='line'><span class="n">mcoa</span><span class="err">@</span><span class="n">example</span><span class="p">.</span><span class="n">com</span><span class="p">;</span><span class="n">mcoa</span><span class="p">;</span><span class="n">Coa</span><span class="p">;</span><span class="n">miguel</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Y el script</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="cp">#!/usr/bin/python</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">import</span> <span class="n">csv</span>
+</span><span class='line'><span class="n">with</span> <span class="n">open</span> <span class="p">(</span><span class="err">&#39;</span><span class="n">cuentas</span><span class="p">.</span><span class="n">csv</span><span class="err">&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">rb</span><span class="err">&#39;</span><span class="p">)</span> <span class="n">as</span> <span class="nl">f:</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="n">reader</span> <span class="o">=</span> <span class="n">csv</span><span class="p">.</span><span class="n">reader</span> <span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="sc">&#39;;&#39;</span> <span class="p">)</span> <span class="err">#</span><span class="n">delimiter</span> <span class="n">tabulador</span> <span class="err">\</span><span class="n">t</span>
+</span><span class='line'>        <span class="k">for</span> <span class="n">row</span> <span class="k">in</span> <span class="nl">reader:</span>
+</span><span class='line'>
+</span><span class='line'>                <span class="n">mail</span>     <span class="o">=</span> <span class="n">row</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</span><span class='line'>                <span class="n">name</span>     <span class="o">=</span> <span class="n">row</span> <span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+</span><span class='line'>                <span class="n">lastname</span> <span class="o">=</span> <span class="n">row</span> <span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+</span><span class='line'>                <span class="n">name2</span>    <span class="o">=</span> <span class="n">row</span> <span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">+</span> <span class="sc">&#39; &#39;</span> <span class="o">+</span> <span class="n">row</span> <span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+</span><span class='line'>
+</span><span class='line'>                <span class="n">print</span> <span class="s">&quot;ca {} 123456 displayName &#39;{}&#39; sn &#39;{}&#39; cn &#39;{}&#39;&quot;</span><span class="p">.</span><span class="n">format</span><span class="p">(</span><span class="n">mail</span><span class="p">,</span><span class="n">name2</span><span class="p">.</span><span class="n">title</span><span class="p">(),</span><span class="n">lastname</span><span class="p">.</span><span class="n">title</span><span class="p">(),</span><span class="n">name2</span><span class="p">.</span><span class="n">title</span><span class="p">())</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Lo anterior, imprimerá por pantalla lo siguiente:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">ca</span> <span class="n">cpinera</span><span class="err">@</span><span class="n">example</span><span class="p">.</span><span class="n">com</span> <span class="mi">123456</span> <span class="n">displayName</span> <span class="err">&#39;</span><span class="n">Carlos</span> <span class="n">Pinera</span><span class="err">&#39;</span> <span class="n">sn</span> <span class="err">&#39;</span><span class="n">Pinera</span><span class="err">&#39;</span> <span class="n">cn</span> <span class="err">&#39;</span><span class="n">Carlos</span> <span class="n">Pinera</span><span class="err">&#39;</span>
+</span><span class='line'><span class="n">ca</span> <span class="n">mcoa</span><span class="err">@</span><span class="n">olisur</span><span class="p">.</span><span class="n">com</span> <span class="mi">123456</span> <span class="n">displayName</span> <span class="err">&#39;</span><span class="n">Miguel</span> <span class="n">Coa</span><span class="err">&#39;</span> <span class="n">sn</span> <span class="err">&#39;</span><span class="n">Coa</span><span class="err">&#39;</span> <span class="n">cn</span> <span class="err">&#39;</span><span class="n">Miguel</span> <span class="n">Coa</span><span class="err">&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>La salida se puede mandar de forma directa dentro del script hacia un archivo y luego pasarlo por parametro al comando zmprov</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">zmprov</span> <span class="o">&lt;</span> <span class="n">zmCreateAccounts</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+		
+		
+	</div>
+
+</article>
+
+
+    <article class="post">
+	<header>
+		<h2 class="title">
+			
 			<a href="/blog/2013/11/29/configurar-nagios-server-y-pnp4nagios/">
 			
 				Configurar Nagios Server Y Pnp4nagios</a>
@@ -755,7 +845,7 @@ La sintaxis del comando a utilizar dependedará de las configuraciones de los se
 
 
 </div>
-	<footer id="footer" class="inner">&copy; 2013
+	<footer id="footer" class="inner">&copy; 2014
 
     Miguel Coa M.
 
