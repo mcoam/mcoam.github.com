@@ -43,20 +43,26 @@
         <lastmod>2014-01-14T17:54:17-03:00</lastmod>
     </url>
     <url>
+        <loc>
+            http://mcoam.github.io/blog/2014/01/15/migrando-usuarios-slash-password-postfix-to-zimbra/
+        </loc>
+        <lastmod>2014-01-15T10:06:01-03:00</lastmod>
+    </url>
+    <url>
         <loc>http://mcoam.github.io/about/</loc>
         <lastmod>2013-11-06T17:46:02-03:00</lastmod>
     </url>
     <url>
         <loc>http://mcoam.github.io/archives/</loc>
-        <lastmod>2014-01-14T17:54:17-03:00</lastmod>
+        <lastmod>2014-01-15T10:06:01-03:00</lastmod>
     </url>
     <url>
         <loc>http://mcoam.github.io/blog/archives/</loc>
-        <lastmod>2014-01-14T17:54:17-03:00</lastmod>
+        <lastmod>2014-01-15T10:06:01-03:00</lastmod>
     </url>
     <url>
         <loc>http://mcoam.github.io/blog/</loc>
-        <lastmod>2014-01-14T17:54:17-03:00</lastmod>
+        <lastmod>2014-01-15T10:06:01-03:00</lastmod>
     </url>
     <url>
         <loc>http://mcoam.github.io/contact/</loc>
@@ -64,7 +70,7 @@
     </url>
     <url>
         <loc>http://mcoam.github.io/</loc>
-        <lastmod>2014-01-14T17:54:17-03:00</lastmod>
+        <lastmod>2014-01-15T10:06:01-03:00</lastmod>
     </url>
     <url>
         <loc>http://mcoam.github.io/robots.txt</loc>
