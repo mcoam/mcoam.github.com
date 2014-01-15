@@ -4,7 +4,7 @@
   <title><![CDATA[Category: python, | Bitácora]]></title>
   <link href="http://mcoam.github.io/blog/categories/python/atom.xml" rel="self"/>
   <link href="http://mcoam.github.io/"/>
-  <updated>2014-01-15T10:06:31-03:00</updated>
+  <updated>2014-01-15T10:33:24-03:00</updated>
   <id>http://mcoam.github.io/</id>
   <author>
     <name><![CDATA[Miguel Coa M.]]></name>
@@ -18,7 +18,7 @@
     <link href="http://mcoam.github.io/blog/2014/01/15/migrando-usuarios-slash-password-postfix-to-zimbra/"/>
     <updated>2014-01-15T09:58:00-03:00</updated>
     <id>http://mcoam.github.io/blog/2014/01/15/migrando-usuarios-slash-password-postfix-to-zimbra</id>
-    <content type="html"><![CDATA[<p>El siguiente script nos pemrite migrar las password de los usuarios postfix hacia Zimbra. La idea del script es primero crear la cuenta con una password temporal y luego configurar la password, ambos valores son sacados del <i>/etc/shadow</i></p>
+    <content type="html"><![CDATA[<p>La idea del siguiente script es; primero crear la cuenta con una password temporal y luego configurar la password original del usuario, ambos valores son sacados del <i>/etc/shadow</i></p>
 
 <p>``` python</p>
 
