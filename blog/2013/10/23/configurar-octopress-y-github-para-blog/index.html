@@ -1,0 +1,238 @@
+
+<!DOCTYPE HTML>
+<html lang="en-GB">
+<head>
+	<meta charset="utf-8">
+	<title>Configurar Octopress y Github para blog  | Bitácora</title>
+
+    <meta name="author" content="Miguel Coa M.">
+
+    <meta name="description" content="Un blog personal">
+<meta name="keywords" content="octopress, github, blog">
+
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="Bitácora" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.png" rel="shortcut icon">
+	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+</head>
+
+
+
+<body>
+	<header id="header" class="inner"><h1><a href="/">Bitácora</a></h1>
+<span class="tagline">Miguel Coa M.</span>
+<nav id="main-nav"><ul class="main-navigation">
+	<li><a href="/about">About</a></li>
+	<li><a href="/archives">Archives</a></li>
+	<li><a href="/contact">Contact</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul class="main-navigation">
+	<li><a href="/about">About</a></li>
+	<li><a href="/archives">Archives</a></li>
+	<li><a href="/contact">Contact</a></li>
+</ul>
+</div>
+	</div>
+</nav>
+
+
+</header>
+
+	<div id="content" class="inner"><article class="post">
+	<header>
+		<h2 class="title">Configurar Octopress Y Github Para Blog</h2>
+		<div class="meta date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-10-23T18:00:00-03:00" pubdate data-updated="true">Oct 23<span>rd</span>, 2013</time></div>
+	</header>
+	<div class="entry-content"><p>Si quieres montar un blog con Octopress (framework para montar blog) y Github (repo donde almacenaremos nuestro sitio) , hay que hacer lo siguiente:</p>
+
+<p><strong>Descargando Octopress</strong></p>
+
+<ol>
+<li>Descargamos la versión de octopress desde Github</li>
+</ol>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">git</span> <span class="n">clone</span> <span class="nl">git:</span><span class="c1">//github.com/imathis/octopress.git octopress </span>
+</span><span class='line'><span class="n">cd</span> <span class="n">octopress</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ol>
+<li>Instalamos el tema por default y las dependencias necesarias</li>
+</ol>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">gem</span> <span class="n">install</span> <span class="n">bundler</span>
+</span><span class='line'><span class="n">bundle</span> <span class="n">install</span>
+</span><span class='line'><span class="n">rake</span> <span class="n">install</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><strong>Configuración de Github</strong></p>
+
+<p>Lo primero es que tenemos que crear una cuenta en <a href="https://www.github.com/">Github</a>. Una vez creada la cuenta creamos un repositorio con el formtato: <i>&ldquo;nombredeusuario.github.com&rdquo;</i>,  en el caso de mi repositorio queda así: <a href="https://github.com/mcoam/mcoam.github.com">https://github.com/mcoam/mcoam.github.com</a></p>
+
+<ol>
+<li>Configurar octopress para acceder a este respositorio</li>
+</ol>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'> <span class="n">rake</span> <span class="n">setup_github_pages</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ol>
+<li><p>Ejecutado el comando anterior nos pedirá la url del repositorio. En el caso nuestro, es <i>git@github.com:mcoam/mcoam.github.com.git</i></p></li>
+<li><p>Para efectos de subir los post es necesario copiar la llave ssh de la máquina local (donde tenemos octopress) hacia nuestro sitio en Github.</p></li>
+</ol>
+
+
+<!-- more -->
+
+
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'>  <span class="n">cat</span> <span class="o">~/</span><span class="p">.</span><span class="n">ssh</span><span class="o">/</span><span class="n">id_rsa</span><span class="p">.</span><span class="n">pub</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ol>
+<li>La copiamos en nuestro repo en Github, Seleccionamos nuestro repo &ndash;> Setting &ndash;> Deploy Keys &ndash;> Add deploy key</li>
+</ol>
+
+
+<p>Con lo realizado hasta ahora, ya tenemos nuestro sitio Octopress sincronizado con Github. Ahora, queda ver lo referente a la configuración del DNS y apuntar nuestro repositorio hacia nuestro domino real.</p>
+
+<p><strong>Configuración de DNS</strong></p>
+
+<p>En este caso es necesario configurar en registro CNAME para el host &ldquo;www&rdquo; (puede ser blog, wiki, etc) hacia el sitio de nuestro repositorio en GitHub.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">www</span>             <span class="n">IN</span>      <span class="n">CNAME</span>   <span class="n">mcoam</span><span class="p">.</span><span class="n">github</span><span class="p">.</span><span class="n">io</span><span class="p">.</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ol>
+<li>Y customizamos el CNAME en nuestro blog</li>
+</ol>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">echo</span> <span class="err">&#39;</span><span class="n">www</span><span class="p">.</span><span class="n">miguelcoa</span><span class="p">.</span><span class="n">cl</span><span class="err">&#39;</span> <span class="o">&gt;&gt;</span> <span class="n">source</span><span class="o">/</span><span class="n">CNAME</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Con todo lo anterior realizado y configurado de forma correcta nuestro DNS, es cosa de ingresar en <i>www.your-damain.com</i> o <i>repositorio.github.com</i>. Donde la idea de es que ingresando el repo de Github se redireccione al sitio www.your-damain.com.
+Con eso ya estaría todo para correr el sitio, ahora es solo cosa de crear post y sincronizarlos con nuestro repositorio de github.</p>
+
+<p>Para más información la página de <a href="http://octopress.org/docs/deploying/github/">Octopress</a> la lleva</p>
+</div>
+	
+
+</article>
+
+	
+	<div class="share">
+		<ul>
+			<li>
+  <a href="https://twitter.com/intent/tweet?text=Configurar Octopress y Github para blog by @&url=http://mcoam.github.io/blog/2013/10/23/configurar-octopress-y-github-para-blog/" title="Share Configurar Octopress y Github para blog on Twitter">
+    <img src="/images/social/twitter.png" />
+  </a>
+</li>
+
+			<li>
+  <a href="https://www.facebook.com/sharer.php?u=http://mcoam.github.io/blog/2013/10/23/configurar-octopress-y-github-para-blog/" title="Share Configurar Octopress y Github para blog on Facebook">
+    <img src="/images/social/facebook.png" />
+  </a>
+</li>
+
+			<li>
+  <a href="https://plus.google.com/share?url=http://mcoam.github.io/blog/2013/10/23/configurar-octopress-y-github-para-blog/" title="Share Configurar Octopress y Github para blog on Google Plus">
+    <img src="/images/social/google.png" />
+  </a>
+</li>
+
+		</ul>
+	</div>
+
+
+
+
+<section id="comment">
+    <h2 class="title">Comments</h2>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+</div>
+	<footer id="footer" class="inner">&copy; 2014
+
+    Miguel Coa M.
+
+</footer>
+	<script src="/javascripts/slash.js"></script>
+<script src="/javascripts/hyphenator.js"></script>
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'miguelcoa';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://mcoam.github.io/blog/2013/10/23/configurar-octopress-y-github-para-blog/';
+        var disqus_url = 'http://mcoam.github.io/blog/2013/10/23/configurar-octopress-y-github-para-blog/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-45157770-1']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+
+
+</body>
+</html>

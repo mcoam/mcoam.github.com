@@ -1,0 +1,160 @@
+
+<!DOCTYPE HTML>
+<html lang="en-GB">
+<head>
+	<meta charset="utf-8">
+	<title>Expresiones regulares con Puppet  | Bitácora</title>
+
+    <meta name="author" content="Miguel Coa M.">
+
+    <meta name="description" content="Un blog personal">
+<meta name="keywords" content="zimbra, linux, centos, devops, puppet, opensource, virtualizar, virtualización">
+
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="Bitácora" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.png" rel="shortcut icon">
+	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+</head>
+
+
+
+<body>
+	<header id="header" class="inner"><h1><a href="/">Bitácora</a></h1>
+<span class="tagline">Miguel Coa M.</span>
+<nav id="main-nav"><ul class="main-navigation">
+	<li><a href="/about">About</a></li>
+	<li><a href="/archives">Archives</a></li>
+	<li><a href="/contact">Contact</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul class="main-navigation">
+	<li><a href="/about">About</a></li>
+	<li><a href="/archives">Archives</a></li>
+	<li><a href="/contact">Contact</a></li>
+</ul>
+</div>
+	</div>
+</nav>
+
+
+</header>
+
+	<div id="content" class="inner"><article class="post">
+	<header>
+		<h2 class="title">Expresiones Regulares Con Puppet</h2>
+		<div class="meta date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-10-30T15:06:00-03:00" pubdate data-updated="true">Oct 30<span>th</span>, 2013</time></div>
+	</header>
+	<div class="entry-content"><p>Puppet permite la declarición de nodos mediante expresiones regulares, esto permite definir dentro de una sola declaraciones &ldquo;n&rdquo; nodos, lo que nos ayudará a manejar de mejor forma nuestra administración de nodos. Por ejemplo:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">node</span> <span class="o">/</span><span class="p">.</span><span class="o">*</span><span class="err">\</span><span class="p">.</span><span class="n">example</span><span class="err">\</span><span class="p">.</span><span class="n">com</span><span class="o">/</span> <span class="n">inherits</span> <span class="n">basenode</span> <span class="p">{</span>
+</span><span class='line'>    <span class="n">class</span> <span class="n">ntp</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Lo anterior dice que, todo nodo del tipo *.example.com <i>(www.example.com, ftp.example.com, mail.example.com)</i> aplicará la <i>clase ntp</i> y heredará la <i>clase basenode</i>. Para más infomación puedes ver la doc de puppet <a href="http://docs.puppetlabs.com/puppet/2.7/reference/lang_node_definitions.html">Puppet Docs</a></p>
+</div>
+	
+
+</article>
+
+	
+	<div class="share">
+		<ul>
+			<li>
+  <a href="https://twitter.com/intent/tweet?text=Expresiones regulares con Puppet by @&url=http://mcoam.github.io/blog/2013/10/30/expresiones-regulares-con-puppet/" title="Share Expresiones regulares con Puppet on Twitter">
+    <img src="/images/social/twitter.png" />
+  </a>
+</li>
+
+			<li>
+  <a href="https://www.facebook.com/sharer.php?u=http://mcoam.github.io/blog/2013/10/30/expresiones-regulares-con-puppet/" title="Share Expresiones regulares con Puppet on Facebook">
+    <img src="/images/social/facebook.png" />
+  </a>
+</li>
+
+			<li>
+  <a href="https://plus.google.com/share?url=http://mcoam.github.io/blog/2013/10/30/expresiones-regulares-con-puppet/" title="Share Expresiones regulares con Puppet on Google Plus">
+    <img src="/images/social/google.png" />
+  </a>
+</li>
+
+		</ul>
+	</div>
+
+
+
+
+<section id="comment">
+    <h2 class="title">Comments</h2>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+</div>
+	<footer id="footer" class="inner">&copy; 2014
+
+    Miguel Coa M.
+
+</footer>
+	<script src="/javascripts/slash.js"></script>
+<script src="/javascripts/hyphenator.js"></script>
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'miguelcoa';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://mcoam.github.io/blog/2013/10/30/expresiones-regulares-con-puppet/';
+        var disqus_url = 'http://mcoam.github.io/blog/2013/10/30/expresiones-regulares-con-puppet/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-45157770-1']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+
+
+</body>
+</html>

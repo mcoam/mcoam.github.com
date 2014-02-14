@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: zimbra, | Bitácora]]></title>
+  <link href="http://mcoam.github.io/blog/categories/zimbra/atom.xml" rel="self"/>
+  <link href="http://mcoam.github.io/"/>
+  <updated>2014-01-15T10:33:24-03:00</updated>
+  <id>http://mcoam.github.io/</id>
+  <author>
+    <name><![CDATA[Miguel Coa M.]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Migrando usuarios/password Postfix to Zimbra]]></title>
+    <link href="http://mcoam.github.io/blog/2014/01/15/migrando-usuarios-slash-password-postfix-to-zimbra/"/>
+    <updated>2014-01-15T09:58:00-03:00</updated>
+    <id>http://mcoam.github.io/blog/2014/01/15/migrando-usuarios-slash-password-postfix-to-zimbra</id>
+    <content type="html"><![CDATA[<p>La idea del siguiente script es; primero crear la cuenta con una password temporal y luego configurar la password original del usuario, ambos valores son sacados del <i>/etc/shadow</i></p>
+
+<p>``` python</p>
+
+<h1>!/usr/bin/python</h1>
+
+<h2>Miguel Coa M.</h2>
+
+<p>import csv
+with open (&lsquo;shadow&rsquo;, &lsquo;rb&rsquo;) as f:</p>
+
+<pre><code>    reader = csv.reader (f, delimiter=':' ) 
+    for row in reader:
+
+            user     = row [0]
+            passwd   = "'crypt{" + row [1] +"}'"
+
+            print "ca {}@domain.com tmpPSW".format(user)
+            print "ma {}@domain.com userPassword  {}  ".format(user,passwd)
+</code></pre>
+
+<p>```</p>
+
+<p>Y como resultado nos arrojará por pantalla</p>
+
+<p><code>python
+ca varaya@domain.com tmpPSW
+ma varaya@domain.com userPassword  'crypt{$1$6RT62jZZ$sFlv.MIII4PuKISBaap030}'
+ca cgalaz@domain.com tmpPSW
+ma cgalaz@domain.com userPassword  'crypt{$1$bAEOlC0N$4t.3zCGDb.RFc0vmxd2UB0}'
+ca ctagle@domain.com tmpPSW
+ma ctagle@domain.com userPassword  'crypt{$1$L7vlV7Me$orB2TCnqn.JeoVQpKsr6P0}'
+</code>
+Valor que los podemos almacenar en un archivo y los ejecutamos pasandolo como parámetro al comando <i>zmprov</i>. Si ya tenemos creadas las cuentas podemos comentar el primer print, para que solo las modifique.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Creando cuentas Zimbra desde un CSV]]></title>
+    <link href="http://mcoam.github.io/blog/2014/01/14/creando-cuentas-zimbra-desde-un-csv/"/>
+    <updated>2014-01-14T17:38:00-03:00</updated>
+    <id>http://mcoam.github.io/blog/2014/01/14/creando-cuentas-zimbra-desde-un-csv</id>
+    <content type="html"><![CDATA[<p>El siguiente script nos permite crear las cuentas en Zimbra desde un CSV y automatizar el proceso. El CSV en donde tenemos las cuentas, tiene el siguiente formato:</p>
+
+<p><code>objc
+cpinera@example.com;cpinera;pinera;carlos
+mcoa@example.com;mcoa;Coa;miguel
+</code></p>
+
+<p>Y el script</p>
+
+<p>``` objc</p>
+
+<h1>!/usr/bin/python</h1>
+
+<p>import csv
+with open (&lsquo;cuentas.csv&rsquo;, &lsquo;rb&rsquo;) as f:</p>
+
+<pre><code>    reader = csv.reader (f, delimiter=';' ) #delimiter tabulador \t
+    for row in reader:
+
+            mail     = row [0]
+            name     = row [3]
+            lastname = row [2]
+            name2    = row [3] + ' ' + row [2]
+
+            print "ca {} 123456 displayName '{}' sn '{}' cn '{}'".format(mail,name2.title(),lastname.title(),name2.title())
+</code></pre>
+
+<p>```</p>
+
+<p>Lo anterior, imprimerá por pantalla lo siguiente:</p>
+
+<p><code>
+ca cpinera@example.com 123456 displayName 'Carlos Pinera' sn 'Pinera' cn 'Carlos Pinera'
+ca mcoa@olisur.com 123456 displayName 'Miguel Coa' sn 'Coa' cn 'Miguel Coa'
+</code></p>
+
+<p>La salida se puede mandar de forma directa dentro del script hacia un archivo y luego pasarlo por parametro al comando zmprov</p>
+
+<p><code>
+zmprov &lt; zmCreateAccounts
+</code></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Script para ver quota de casilla Zimbra]]></title>
+    <link href="http://mcoam.github.io/blog/2013/11/06/script-para-ver-quota-de-casilla-zimbra/"/>
+    <updated>2013-11-06T17:14:00-03:00</updated>
+    <id>http://mcoam.github.io/blog/2013/11/06/script-para-ver-quota-de-casilla-zimbra</id>
+    <content type="html"><![CDATA[<p>A continuación un script que lista la quota que está utilizando una casilla de usuario y cuanto es la quota asignada (esto en el caso de tener) en Zimbra.</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">all_account</span><span class="o">=&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">zmprov</span> <span class="o">-</span><span class="n">l</span> <span class="n">gaa</span><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;</span><span class="p">;</span>
+</span><span class='line'><span class="k">for</span> <span class="n">account</span> <span class="k">in</span> <span class="n">$</span><span class="p">{</span><span class="n">all_account</span><span class="p">}</span>
+</span><span class='line'><span class="k">do</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">mb_size</span><span class="o">=</span><span class="err">`</span><span class="n">zmmailbox</span> <span class="o">-</span><span class="n">z</span> <span class="o">-</span><span class="n">m</span> <span class="n">$</span><span class="p">{</span><span class="n">account</span><span class="p">}</span> <span class="n">gms</span><span class="err">`</span><span class="p">;</span>
+</span><span class='line'><span class="n">mb_quota</span><span class="o">=</span><span class="err">`</span><span class="n">zmprov</span> <span class="n">ga</span> <span class="n">$</span><span class="p">{</span><span class="n">account</span><span class="p">}</span> <span class="o">|</span><span class="n">grep</span> <span class="o">-</span><span class="n">i</span> <span class="n">zimbraMailQuota</span> <span class="o">|</span><span class="n">cut</span> <span class="o">-</span><span class="n">d</span><span class="s">&quot;:&quot;</span> <span class="o">-</span><span class="n">f2</span><span class="err">`</span>
+</span><span class='line'><span class="k">if</span> <span class="p">[</span> <span class="n">$mb_quota</span> <span class="o">!=</span> <span class="mi">0</span> <span class="p">];</span> <span class="n">then</span>
+</span><span class='line'>        <span class="n">echo</span> <span class="s">&quot;Mailbox size of ${account} = ${mb_size}&quot;</span>
+</span><span class='line'>        <span class="n">count</span><span class="o">=</span><span class="err">`</span><span class="n">expr</span> <span class="n">length</span> <span class="n">$mb_quota</span><span class="err">`</span>
+</span><span class='line'>        <span class="k">if</span> <span class="p">[</span> <span class="n">$count</span> <span class="o">==</span> <span class="mi">8</span> <span class="p">];</span> <span class="n">then</span>
+</span><span class='line'>            <span class="n">echo</span> <span class="s">&quot;Mailbox Quota is = `echo ${mb_quota}/1024/1024 | bc` MB &quot;</span>
+</span><span class='line'>        <span class="k">else</span>
+</span><span class='line'>            <span class="n">echo</span> <span class="s">&quot;Mailbox Quota is = `echo ${mb_quota}/1024/1024/1024 | bc` GB &quot;</span>
+</span><span class='line'>        <span class="n">fi</span>
+</span><span class='line'><span class="k">else</span>
+</span><span class='line'>        <span class="n">echo</span> <span class="s">&quot;Mailbox size of ${account}  = ${mb_size}&quot;</span>
+</span><span class='line'>        <span class="n">echo</span> <span class="s">&quot;The Mailbox isn&#39;t Setting Quota&quot;</span>
+</span><span class='line'><span class="n">fi</span>
+</span><span class='line'><span class="n">echo</span> <span class="s">&quot;______________________&quot;</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">done</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>Lo anterior, arrojará por pantalla valores como los siguientes:</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">hr</span> <span class="o">/&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">Mailbox</span> <span class="n">size</span> <span class="n">of</span> <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s">&quot;&amp;#109;&amp;#97;&amp;#105;&amp;#108;&amp;#x74;&amp;#x6f;&amp;#58;&amp;#x75;&amp;#x73;&amp;#101;&amp;#114;&amp;#64;&amp;#101;&amp;#x78;&amp;#97;&amp;#109;&amp;#x70;&amp;#108;&amp;#101;&amp;#46;&amp;#x63;&amp;#111;&amp;#x6d;&quot;</span><span class="o">&gt;&amp;</span><span class="err">#</span><span class="mi">117</span><span class="p">;</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">115</span><span class="p">;</span><span class="o">&amp;</span><span class="err">#</span><span class="n">x65</span><span class="p">;</span><span class="o">&amp;</span><span class="err">#</span><span class="n">x72</span><span class="p">;</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">64</span><span class="p">;</span><span class="o">&amp;</span><span class="err">#</span><span class="n">x65</span><span class="p">;</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">120</span><span class="p">;</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">97</span><span class="p">;</span><span class="o">&amp;</span><span class="err">#</span><span class="n">x6d</span><span class="p">;</span><span class="o">&amp;</span><span class="err">#</span><span class="n">x70</span><span class="p">;</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">108</span><span class="p">;</span><span class="o">&amp;</span><span class="err">#</span><span class="n">x65</span><span class="p">;</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">46</span><span class="p">;</span><span class="o">&amp;</span><span class="err">#</span><span class="n">x63</span><span class="p">;</span><span class="o">&amp;</span><span class="err">#</span><span class="n">x6f</span><span class="p">;</span><span class="o">&amp;</span><span class="err">#</span><span class="n">x6d</span><span class="p">;</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span>  <span class="o">=</span> <span class="mf">281.51</span> <span class="n">MB</span>
+</span><span class='line'><span class="n">The</span> <span class="n">Mailbox</span> <span class="n">isn</span><span class="o">&amp;</span><span class="n">rsquo</span><span class="p">;</span><span class="n">t</span> <span class="n">Setting</span> <span class="n">Quota</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">hr</span> <span class="o">/&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">Mailbox</span> <span class="n">size</span> <span class="n">of</span> <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s">&quot;&amp;#x6d;&amp;#97;&amp;#x69;&amp;#x6c;&amp;#116;&amp;#111;&amp;#58;&amp;#x75;&amp;#115;&amp;#101;&amp;#x72;&amp;#50;&amp;#x40;&amp;#x65;&amp;#x78;&amp;#x61;&amp;#x6d;&amp;#112;&amp;#108;&amp;#x65;&amp;#x2e;&amp;#x63;&amp;#x6f;&amp;#x6d;&quot;</span><span class="o">&gt;&amp;</span><span class="err">#</span><span class="mi">117</span><span class="p">;</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">115</span><span class="p">;</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">101</span><span class="p">;</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">114</span><span class="p">;</span><span class="o">&amp;</span><span class="err">#</span><span class="n">x32</span><span class="p">;</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">64</span><span class="p">;</span><span class="o">&amp;</span><span class="err">#</span><span class="n">x65</span><span class="p">;</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">120</span><span class="p">;</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">97</span><span class="p">;</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">109</span><span class="p">;</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">112</span><span class="p">;</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">108</span><span class="p">;</span><span class="o">&amp;</span><span class="err">#</span><span class="n">x65</span><span class="p">;</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">46</span><span class="p">;</span><span class="o">&amp;</span><span class="err">#</span><span class="n">x63</span><span class="p">;</span><span class="o">&amp;</span><span class="err">#</span><span class="n">x6f</span><span class="p">;</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">109</span><span class="p">;</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span>  <span class="o">=</span> <span class="mf">1.30</span> <span class="n">GB</span>
+</span><span class='line'><span class="n">The</span> <span class="n">Mailbox</span> <span class="n">isn</span><span class="o">&amp;</span><span class="n">rsquo</span><span class="p">;</span><span class="n">t</span> <span class="n">Setting</span> <span class="n">Quota</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">hr</span> <span class="o">/&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">Mailbox</span> <span class="n">size</span> <span class="n">of</span> <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s">&quot;&amp;#109;&amp;#x61;&amp;#105;&amp;#x6c;&amp;#116;&amp;#x6f;&amp;#x3a;&amp;#x75;&amp;#115;&amp;#101;&amp;#114;&amp;#x33;&amp;#64;&amp;#x65;&amp;#x78;&amp;#97;&amp;#109;&amp;#x70;&amp;#x6c;&amp;#101;&amp;#46;&amp;#99;&amp;#111;&amp;#109;&quot;</span><span class="o">&gt;&amp;</span><span class="err">#</span><span class="mi">117</span><span class="p">;</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">115</span><span class="p">;</span><span class="o">&amp;</span><span class="err">#</span><span class="n">x65</span><span class="p">;</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">114</span><span class="p">;</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">51</span><span class="p">;</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">64</span><span class="p">;</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">101</span><span class="p">;</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">120</span><span class="p">;</span><span class="o">&amp;</span><span class="err">#</span><span class="n">x61</span><span class="p">;</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">109</span><span class="p">;</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">112</span><span class="p">;</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">108</span><span class="p">;</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">101</span><span class="p">;</span><span class="o">&amp;</span><span class="err">#</span><span class="n">x2e</span><span class="p">;</span><span class="o">&amp;</span><span class="err">#</span><span class="n">x63</span><span class="p">;</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">111</span><span class="p">;</span><span class="o">&amp;</span><span class="err">#</span><span class="n">x6d</span><span class="p">;</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span> <span class="o">=</span> <span class="mf">718.00</span> <span class="n">KB</span>
+</span><span class='line'><span class="n">Mailbox</span> <span class="n">Quota</span> <span class="n">is</span> <span class="o">=</span> <span class="mi">10</span> <span class="n">MB</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+]]></content>
+  </entry>
+  
+</feed>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: python, | Bitácora]]></title>
+  <link href="http://mcoam.github.io/blog/categories/python/atom.xml" rel="self"/>
+  <link href="http://mcoam.github.io/"/>
+  <updated>2014-01-15T10:33:24-03:00</updated>
+  <id>http://mcoam.github.io/</id>
+  <author>
+    <name><![CDATA[Miguel Coa M.]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Migrando usuarios/password Postfix to Zimbra]]></title>
+    <link href="http://mcoam.github.io/blog/2014/01/15/migrando-usuarios-slash-password-postfix-to-zimbra/"/>
+    <updated>2014-01-15T09:58:00-03:00</updated>
+    <id>http://mcoam.github.io/blog/2014/01/15/migrando-usuarios-slash-password-postfix-to-zimbra</id>
+    <content type="html"><![CDATA[<p>La idea del siguiente script es; primero crear la cuenta con una password temporal y luego configurar la password original del usuario, ambos valores son sacados del <i>/etc/shadow</i></p>
+
+<p>``` python</p>
+
+<h1>!/usr/bin/python</h1>
+
+<h2>Miguel Coa M.</h2>
+
+<p>import csv
+with open (&lsquo;shadow&rsquo;, &lsquo;rb&rsquo;) as f:</p>
+
+<pre><code>    reader = csv.reader (f, delimiter=':' ) 
+    for row in reader:
+
+            user     = row [0]
+            passwd   = "'crypt{" + row [1] +"}'"
+
+            print "ca {}@domain.com tmpPSW".format(user)
+            print "ma {}@domain.com userPassword  {}  ".format(user,passwd)
+</code></pre>
+
+<p>```</p>
+
+<p>Y como resultado nos arrojará por pantalla</p>
+
+<p><code>python
+ca varaya@domain.com tmpPSW
+ma varaya@domain.com userPassword  'crypt{$1$6RT62jZZ$sFlv.MIII4PuKISBaap030}'
+ca cgalaz@domain.com tmpPSW
+ma cgalaz@domain.com userPassword  'crypt{$1$bAEOlC0N$4t.3zCGDb.RFc0vmxd2UB0}'
+ca ctagle@domain.com tmpPSW
+ma ctagle@domain.com userPassword  'crypt{$1$L7vlV7Me$orB2TCnqn.JeoVQpKsr6P0}'
+</code>
+Valor que los podemos almacenar en un archivo y los ejecutamos pasandolo como parámetro al comando <i>zmprov</i>. Si ya tenemos creadas las cuentas podemos comentar el primer print, para que solo las modifique.</p>
+]]></content>
+  </entry>
+  
+</feed>
