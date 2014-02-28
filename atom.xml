@@ -4,12 +4,13 @@
   <title><![CDATA[Bitácora]]></title>
   <link href="http://mcoam.github.io/atom.xml" rel="self"/>
   <link href="http://mcoam.github.io/"/>
-  <updated>2014-01-15T10:33:24-03:00</updated>
+  <updated>2014-02-28T11:13:14-03:00</updated>
   <id>http://mcoam.github.io/</id>
   <author>
-    <name><![CDATA[Miguel Coa M.]]></name>
+    <name><![CDATA[Miguel Angel Coa Morales]]></name>
     
   </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
 
   
   <entry>
@@ -81,8 +82,10 @@ Valor que los podemos almacenar en un archivo y los ejecutamos pasandolo como pa
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">cpinera</span><span class="err">@</span><span class="n">example</span><span class="p">.</span><span class="n">com</span><span class="p">;</span><span class="n">cpinera</span><span class="p">;</span><span class="n">pinera</span><span class="p">;</span><span class="n">carlos</span>
-</span><span class='line'><span class="n">mcoa</span><span class="err">@</span><span class="n">example</span><span class="p">.</span><span class="n">com</span><span class="p">;</span><span class="n">mcoa</span><span class="p">;</span><span class="n">Coa</span><span class="p">;</span><span class="n">miguel</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">ca</span> <span class="n">cponce</span><span class="err">@</span><span class="n">example</span><span class="p">.</span><span class="n">com</span> <span class="err">&#39;</span><span class="n">TMPpasswd</span><span class="err">&#39;</span> <span class="n">displayName</span> <span class="err">&#39;</span><span class="n">Claudia</span> <span class="n">Ponce</span><span class="err">&#39;</span> <span class="n">sn</span> <span class="err">&#39;</span><span class="n">Ponce</span><span class="err">&#39;</span> <span class="n">cn</span> <span class="err">&#39;</span><span class="n">Claudia</span> <span class="n">Ponce</span><span class="err">&#39;</span>
+</span><span class='line'><span class="n">ca</span> <span class="n">cquintana</span><span class="err">@</span><span class="n">example</span><span class="p">.</span><span class="n">com</span> <span class="err">&#39;</span><span class="n">TMPpasswd</span><span class="err">&#39;</span> <span class="n">displayName</span> <span class="err">&#39;</span><span class="n">Cristofer</span> <span class="n">Quintana</span><span class="err">&#39;</span> <span class="n">sn</span> <span class="err">&#39;</span><span class="n">Quintana</span><span class="err">&#39;</span> <span class="n">cn</span> <span class="err">&#39;</span><span class="n">Cristofer</span> <span class="n">Quintana</span><span class="err">&#39;</span>
+</span><span class='line'><span class="n">ca</span> <span class="n">ctello</span><span class="err">@</span><span class="n">example</span><span class="p">.</span><span class="n">com</span> <span class="err">&#39;</span><span class="n">TMPpasswd</span><span class="err">&#39;</span> <span class="n">displayName</span> <span class="err">&#39;</span><span class="n">Cristian</span> <span class="n">Tello</span><span class="err">&#39;</span> <span class="n">sn</span> <span class="err">&#39;</span><span class="n">Tello</span><span class="err">&#39;</span> <span class="n">cn</span> <span class="err">&#39;</span><span class="n">Cristian</span> <span class="n">Tello</span><span class="err">&#39;</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
@@ -102,20 +105,22 @@ Valor que los podemos almacenar en un archivo y los ejecutamos pasandolo como pa
 <span class='line-number'>12</span>
 <span class='line-number'>13</span>
 <span class='line-number'>14</span>
+<span class='line-number'>15</span>
 </pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="cp">#!/usr/bin/python</span>
 </span><span class='line'>
 </span><span class='line'><span class="n">import</span> <span class="n">csv</span>
-</span><span class='line'><span class="n">with</span> <span class="n">open</span> <span class="p">(</span><span class="err">&#39;</span><span class="n">cuentas</span><span class="p">.</span><span class="n">csv</span><span class="err">&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">rb</span><span class="err">&#39;</span><span class="p">)</span> <span class="n">as</span> <span class="nl">f:</span>
+</span><span class='line'><span class="n">with</span> <span class="n">open</span> <span class="p">(</span><span class="err">&#39;</span><span class="n">Europarts</span><span class="p">.</span><span class="n">csv</span><span class="err">&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">rb</span><span class="err">&#39;</span><span class="p">)</span> <span class="n">as</span> <span class="nl">f:</span>
 </span><span class='line'>
 </span><span class='line'>        <span class="n">reader</span> <span class="o">=</span> <span class="n">csv</span><span class="p">.</span><span class="n">reader</span> <span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="sc">&#39;;&#39;</span> <span class="p">)</span> <span class="err">#</span><span class="n">delimiter</span> <span class="n">tabulador</span> <span class="err">\</span><span class="n">t</span>
 </span><span class='line'>        <span class="k">for</span> <span class="n">row</span> <span class="k">in</span> <span class="nl">reader:</span>
 </span><span class='line'>
 </span><span class='line'>                <span class="n">mail</span>     <span class="o">=</span> <span class="n">row</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-</span><span class='line'>                <span class="n">name</span>     <span class="o">=</span> <span class="n">row</span> <span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+</span><span class='line'>                <span class="n">name</span>     <span class="o">=</span> <span class="n">row</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span>
 </span><span class='line'>                <span class="n">lastname</span> <span class="o">=</span> <span class="n">row</span> <span class="p">[</span><span class="mi">2</span><span class="p">]</span>
-</span><span class='line'>                <span class="n">name2</span>    <span class="o">=</span> <span class="n">row</span> <span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">+</span> <span class="sc">&#39; &#39;</span> <span class="o">+</span> <span class="n">row</span> <span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+</span><span class='line'>                <span class="n">name2</span>    <span class="o">=</span> <span class="n">row</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="sc">&#39; &#39;</span> <span class="o">+</span> <span class="n">row</span> <span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+</span><span class='line'>      <span class="n">passwd</span>    <span class="o">=</span> <span class="n">row</span> <span class="p">[</span><span class="mi">3</span><span class="p">]</span>
 </span><span class='line'>
-</span><span class='line'>                <span class="n">print</span> <span class="s">&quot;ca {} 123456 displayName &#39;{}&#39; sn &#39;{}&#39; cn &#39;{}&#39;&quot;</span><span class="p">.</span><span class="n">format</span><span class="p">(</span><span class="n">mail</span><span class="p">,</span><span class="n">name2</span><span class="p">.</span><span class="n">title</span><span class="p">(),</span><span class="n">lastname</span><span class="p">.</span><span class="n">title</span><span class="p">(),</span><span class="n">name2</span><span class="p">.</span><span class="n">title</span><span class="p">())</span>
+</span><span class='line'>      <span class="n">print</span> <span class="s">&quot;ca {0} &#39;{1}&#39; displayName &#39;{2}&#39; sn &#39;{3}&#39; cn &#39;{4}&#39;&quot;</span><span class="p">.</span><span class="n">format</span><span class="p">(</span><span class="n">mail</span><span class="p">,</span><span class="n">passwd</span><span class="p">,</span><span class="n">name2</span><span class="p">.</span><span class="n">title</span><span class="p">(),</span><span class="n">lastname</span><span class="p">.</span><span class="n">title</span><span class="p">(),</span><span class="n">name2</span><span class="p">.</span><span class="n">title</span><span class="p">())</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
@@ -123,8 +128,12 @@ Valor que los podemos almacenar en un archivo y los ejecutamos pasandolo como pa
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">ca</span> <span class="n">cpinera</span><span class="err">@</span><span class="n">example</span><span class="p">.</span><span class="n">com</span> <span class="mi">123456</span> <span class="n">displayName</span> <span class="err">&#39;</span><span class="n">Carlos</span> <span class="n">Pinera</span><span class="err">&#39;</span> <span class="n">sn</span> <span class="err">&#39;</span><span class="n">Pinera</span><span class="err">&#39;</span> <span class="n">cn</span> <span class="err">&#39;</span><span class="n">Carlos</span> <span class="n">Pinera</span><span class="err">&#39;</span>
-</span><span class='line'><span class="n">ca</span> <span class="n">mcoa</span><span class="err">@</span><span class="n">olisur</span><span class="p">.</span><span class="n">com</span> <span class="mi">123456</span> <span class="n">displayName</span> <span class="err">&#39;</span><span class="n">Miguel</span> <span class="n">Coa</span><span class="err">&#39;</span> <span class="n">sn</span> <span class="err">&#39;</span><span class="n">Coa</span><span class="err">&#39;</span> <span class="n">cn</span> <span class="err">&#39;</span><span class="n">Miguel</span> <span class="n">Coa</span><span class="err">&#39;</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">ca</span> <span class="n">cponce</span><span class="err">@</span><span class="n">example</span><span class="p">.</span><span class="n">com</span> <span class="err">&#39;</span><span class="n">TMPpasswd</span><span class="err">&#39;</span> <span class="n">displayName</span> <span class="err">&#39;</span><span class="n">Claudia</span> <span class="n">Ponce</span><span class="err">&#39;</span> <span class="n">sn</span> <span class="err">&#39;</span><span class="n">Ponce</span><span class="err">&#39;</span> <span class="n">cn</span> <span class="err">&#39;</span><span class="n">Claudia</span> <span class="n">Ponce</span><span class="err">&#39;</span>
+</span><span class='line'><span class="n">ca</span> <span class="n">cquintana</span><span class="err">@</span><span class="n">example</span><span class="p">.</span><span class="n">com</span> <span class="err">&#39;</span><span class="n">TMPpasswd</span><span class="err">&#39;</span> <span class="n">displayName</span> <span class="err">&#39;</span><span class="n">Cristofer</span> <span class="n">Quintana</span><span class="err">&#39;</span> <span class="n">sn</span> <span class="err">&#39;</span><span class="n">Quintana</span><span class="err">&#39;</span> <span class="n">cn</span> <span class="err">&#39;</span><span class="n">Cristofer</span> <span class="n">Quintana</span><span class="err">&#39;</span>
+</span><span class='line'><span class="n">ca</span> <span class="n">ctello</span><span class="err">@</span><span class="n">example</span><span class="p">.</span><span class="n">com</span> <span class="err">&#39;</span><span class="n">TMPpasswd</span><span class="err">&#39;</span> <span class="n">displayName</span> <span class="err">&#39;</span><span class="n">Cristian</span> <span class="n">Tello</span><span class="err">&#39;</span> <span class="n">sn</span> <span class="err">&#39;</span><span class="n">Tello</span><span class="err">&#39;</span> <span class="n">cn</span> <span class="err">&#39;</span><span class="n">Cristian</span> <span class="n">Tello</span><span class="err">&#39;</span>
+</span><span class='line'><span class="n">ca</span> <span class="n">eperalta</span><span class="err">@</span><span class="n">example</span><span class="p">.</span><span class="n">com</span> <span class="err">&#39;</span><span class="n">TMPpasswd</span><span class="err">&#39;</span> <span class="n">displayName</span> <span class="err">&#39;</span><span class="n">Edgar</span> <span class="n">Peralta</span><span class="err">&#39;</span> <span class="n">sn</span> <span class="err">&#39;</span><span class="n">Peralta</span><span class="err">&#39;</span> <span class="n">cn</span> <span class="err">&#39;</span><span class="n">Edgar</span> <span class="n">Peralta</span><span class="err">&#39;</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
@@ -765,7 +774,7 @@ La sintaxis del comando a utilizar dependedará de las configuraciones de los se
 
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">echo</span> <span class="err">&#39;</span><span class="n">www</span><span class="p">.</span><span class="n">miguelcoa</span><span class="p">.</span><span class="n">cl</span><span class="err">&#39;</span> <span class="o">&gt;&gt;</span> <span class="n">source</span><span class="o">/</span><span class="n">CNAME</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">echo</span> <span class="err">&#39;</span><span class="n">mcoam</span><span class="p">.</span><span class="n">github</span><span class="p">.</span><span class="n">io</span><span class="err">&#39;</span> <span class="o">&gt;&gt;</span> <span class="n">source</span><span class="o">/</span><span class="n">CNAME</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
