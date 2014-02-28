@@ -1,90 +1,55 @@
 
-<!DOCTYPE html>
-<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
-<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
-<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<!DOCTYPE HTML>
+<html lang="en-GB">
 <head>
-  <meta charset="utf-8">
-  <title>Configurar Octopress y Github para blog - Bitácora</title>
-  <meta name="author" content="Miguel Angel Coa Morales">
+	<meta charset="utf-8">
+	<title>Configurar Octopress y Github para blog  | Bitácora</title>
 
-  
-  <meta name="description" content="Si quieres montar un blog con Octopress (framework para montar blog) y Github (repo donde almacenaremos nuestro sitio) , hay que hacer lo siguiente: &hellip;">
-  <meta name="keywords" content="octopress, github, blog">
+	<meta name="author" content="Miguel Angel Coa Morales">
 
-  <!-- http://t.co/dKP3o1e -->
-  <meta name="HandheldFriendly" content="True">
-  <meta name="MobileOptimized" content="320">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Un blog personal"> <meta name="keywords" content="octopress, github, blog">
 
-  
-  <link rel="canonical" href="http://mcoam.github.io/blog/2013/10/23/configurar-octopress-y-github-para-blog">
-  <link href="/favicon.png" rel="icon">
-  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
-  <link href="/atom.xml" rel="alternate" title="Bitácora" type="application/atom+xml">
-  <script src="/javascripts/modernizr-2.0.js"></script>
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
-  <script src="/javascripts/octopress.js" type="text/javascript"></script>
-  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
-<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
-<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  
-  <script type="text/javascript">
-    var _gaq = _gaq || [];
-    _gaq.push(['_setAccount', 'UA-45157770-1']);
-    _gaq.push(['_trackPageview']);
-
-    (function() {
-      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-    })();
-  </script>
-
-
+	<link href="/atom.xml" rel="alternate" title="Bitácora" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.png" rel="shortcut icon">
+	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
 </head>
 
-<body   >
-  <header role="banner"><hgroup>
-  <h1><a href="/">Bitácora</a></h1>
-  
-    <h2>Miguel Angel Coa Morales</h2>
-  
-</hgroup>
+
+
+<body>
+	<header id="header" class="inner"><h1><a href="/">Bitácora</a></h1>
+<span class="tagline">Miguel Angel Coa Morales</span>
+<nav id="main-nav"><ul>
+	<li><a href="/about">About</a></li>
+	<li><a href="/archives">Archives</a></li>
+	<li><a href="/contact">Contact</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul>
+	<li><a href="/about">About</a></li>
+	<li><a href="/archives">Archives</a></li>
+	<li><a href="/contact">Contact</a></li>
+</ul>
+</div>
+	</div>
+</nav>
+
 
 </header>
-  <nav role="navigation"><ul class="subscription" data-subscription="rss">
-  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
-  
-</ul>
-  
-<form action="http://google.com/search" method="get">
-  <fieldset role="search">
-    <input type="hidden" name="q" value="site:mcoam.github.io" />
-    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
-  </fieldset>
-</form>
-  
-<ul class="main-navigation">
-  <li><a href="/">Blog</a></li>
-  <li><a href="/blog/archives">Archives</a></li>
-</ul>
 
-</nav>
-  <div id="main">
-    <div id="content">
-      <div>
-<article class="hentry" role="article">
-  
-  <header>
-    
-      <h1 class="entry-title">Configurar Octopress Y Github Para Blog</h1>
-    
-    
-      <p class="meta">
-        
+	<div id="content" class="inner"><article class="post">
+	<header>
+		<h2 class="title">Configurar Octopress Y Github Para Blog</h2>
+		<div class="meta date">
 
 
 
@@ -96,14 +61,9 @@
   
 
 
-<time datetime="2013-10-23T18:00:00-03:00" pubdate data-updated="true">Oct 23<span>rd</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-<div class="entry-content"><p>Si quieres montar un blog con Octopress (framework para montar blog) y Github (repo donde almacenaremos nuestro sitio) , hay que hacer lo siguiente:</p>
+<time datetime="2013-10-23T18:00:00-03:00" pubdate data-updated="true">Oct 23<span>rd</span>, 2013</time></div>
+	</header>
+	<div class="entry-content"><p>Si quieres montar un blog con Octopress (framework para montar blog) y Github (repo donde almacenaremos nuestro sitio) , hay que hacer lo siguiente:</p>
 
 <p><strong>Descargando Octopress</strong></p>
 
@@ -194,113 +154,51 @@ Con eso ya estaría todo para correr el sitio, ahora es solo cosa de crear post 
 
 <p>Para más información la página de <a href="http://octopress.org/docs/deploying/github/">Octopress</a> la lleva</p>
 </div>
+	
 
-
-  <footer>
-    <p class="meta">
-      
-  
-
-<span class="byline author vcard">Posted by <span class="fn">Miguel Angel Coa Morales</span></span>
-
-      
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-10-23T18:00:00-03:00" pubdate data-updated="true">Oct 23<span>rd</span>, 2013</time>
-      
-
-<span class="categories">
-  
-    <a class='category' href='/blog/categories/octopress/'>Octopress</a>
-  
-</span>
-
-
-    </p>
-    
-      <div class="sharing">
-  
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://mcoam.github.io/blog/2013/10/23/configurar-octopress-y-github-para-blog/" data-via="" data-counturl="http://mcoam.github.io/blog/2013/10/23/configurar-octopress-y-github-para-blog/" >Tweet</a>
-  
-  
-  
-</div>
-
-    
-    <p class="meta">
-      
-        <a class="basic-alignment left" href="/blog/2013/10/22/cambiar-theme-octopress/" title="Previous Post: Cambiar Theme Octopress">&laquo; Cambiar Theme Octopress</a>
-      
-      
-        <a class="basic-alignment right" href="/blog/2013/10/26/migrar-correos-en-zimbra-con-imapsync/" title="Next Post: Migrar correos en Zimbra con imapsync">Migrar correos en Zimbra con imapsync &raquo;</a>
-      
-    </p>
-  </footer>
 </article>
 
-  <section>
-    <h1>Comments</h1>
+	
+	<div class="share">
+		<ul>
+			<li>
+  <a href="https://twitter.com/intent/tweet?text=Configurar Octopress y Github para blog by @&url=http://mcoam.github.io/blog/2013/10/23/configurar-octopress-y-github-para-blog/" title="Share Configurar Octopress y Github para blog on Twitter">
+    <img src="/images/social/twitter.png" />
+  </a>
+</li>
+
+			<li>
+  <a href="https://www.facebook.com/sharer.php?u=http://mcoam.github.io/blog/2013/10/23/configurar-octopress-y-github-para-blog/" title="Share Configurar Octopress y Github para blog on Facebook">
+    <img src="/images/social/facebook.png" />
+  </a>
+</li>
+
+			<li>
+  <a href="https://plus.google.com/share?url=http://mcoam.github.io/blog/2013/10/23/configurar-octopress-y-github-para-blog/" title="Share Configurar Octopress y Github para blog on Google Plus">
+    <img src="/images/social/google.png" />
+  </a>
+</li>
+
+		</ul>
+	</div>
+
+
+
+
+<section id="comment">
+    <h2 class="title">Comments</h2>
     <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 </div>
-  </section>
-
-</div>
-
-<aside class="sidebar">
-  
-    <section>
-  <h1>Recent Posts</h1>
-  <ul id="recent_posts">
-    
-      <li class="post">
-        <a href="/blog/2014/01/15/migrando-usuarios-slash-password-postfix-to-zimbra/">Migrando Usuarios/password Postfix to Zimbra</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/01/14/creando-cuentas-zimbra-desde-un-csv/">Creando Cuentas Zimbra Desde Un CSV</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/11/29/configurar-nagios-server-y-pnp4nagios/">Configurar Nagios Server Y Pnp4nagios</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/11/27/tabulacion-con-editor-vim/">Tabulación Con Editor VIM</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/11/11/automatizando-instalaciones-redhat-slash-centos-con-quickstart/">Automatizando Instalaciones RedHat/Centos Con KickStart</a>
-      </li>
-    
-  </ul>
 </section>
+</div>
+	<footer id="footer" class="inner">&copy; 2014
 
-
-
-
-
-  
-</aside>
-
-
-    </div>
-  </div>
-  <footer role="contentinfo"><p>
-  Copyright &copy; 2014 - Miguel Angel Coa Morales -
-  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
-</p>
+    Miguel Angel Coa Morales
 
 </footer>
-  
+	<script src="/javascripts/slash.js"></script>
+<script src="/javascripts/hyphenator.js"></script>
+
 
 <script type="text/javascript">
       var disqus_shortname = 'miguelcoa';
@@ -313,27 +211,24 @@ Con eso ya estaría todo para correr el sitio, ahora es solo cosa de crear post 
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
       (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     }());
 </script>
 
 
 
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-45157770-1']);
+		_gaq.push(['_trackPageview']);
 
-
-
-
-  <script type="text/javascript">
-    (function(){
-      var twitterWidgets = document.createElement('script');
-      twitterWidgets.type = 'text/javascript';
-      twitterWidgets.async = true;
-      twitterWidgets.src = '//platform.twitter.com/widgets.js';
-      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
-    })();
-  </script>
-
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
 
 
 
