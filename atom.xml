@@ -4,13 +4,45 @@
   <title><![CDATA[Bitácora]]></title>
   <link href="http://mcoam.github.io/atom.xml" rel="self"/>
   <link href="http://mcoam.github.io/"/>
-  <updated>2014-02-28T12:08:43-03:00</updated>
+  <updated>2014-03-21T14:55:21-03:00</updated>
   <id>http://mcoam.github.io/</id>
   <author>
     <name><![CDATA[Miguel Angel Coa Morales]]></name>
     
   </author>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Reenviar un correo en zimbra basado en el Subject]]></title>
+    <link href="http://mcoam.github.io/blog/2014/03/21/reenviar-un-correo-en-zimbra-basado-en-el-subject/"/>
+    <updated>2014-03-21T14:10:00-03:00</updated>
+    <id>http://mcoam.github.io/blog/2014/03/21/reenviar-un-correo-en-zimbra-basado-en-el-subject</id>
+    <content type="html"><![CDATA[<p>Para reenviar un que contenga un <i>Subject</i> en particular hacia otra casilla en Zimbra podemos realizar los siguiente</p>
+
+<p>En el archivo de configuración de postfix <i>/opt/zimbra/postfix/conf/main.cf.default</i> colocamos la referencia al hash para header_checks</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">header_checks</span> <span class="o">=</span> <span class="nl">regexp:</span><span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">zimbra</span><span class="o">/</span><span class="n">postfix</span><span class="o">/</span><span class="n">conf</span><span class="o">/</span><span class="n">header_checks</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>En el archivo  <i>/opt/zimbra/postfix/conf/header_checks</i> adicionamos la expresión regular que tendrá el subject</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="o">/^</span><span class="nl">Subject:</span> <span class="n">MIGUELCOA</span><span class="o">/</span> <span class="n">REDIRECT</span> <span class="n">mcoa</span><span class="err">@</span><span class="n">example</span><span class="p">.</span><span class="n">com</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Recargarmos el servicio MTA</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">zmmtactl</span> <span class="n">reload</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Y desde ahora, cada vez que desde el servidor zimbra salga un correo que en su asunto contenga &ldquo;MIGUELCOA&rdquo; será enviada una copia hacia la casilla mcoa\@example.com</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Migrando usuarios/password Postfix to Zimbra]]></title>

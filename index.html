@@ -53,6 +53,61 @@
 	<header>
 		<h2 class="title">
 			
+			<a href="/blog/2014/03/21/reenviar-un-correo-en-zimbra-basado-en-el-subject/">
+			
+				Reenviar Un Correo en Zimbra Basado en El Subject</a>
+		</h2>
+		<div class="meta date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-03-21T14:10:00-03:00" pubdate data-updated="true">Mar 21<span>st</span>, 2014</time></div>
+	</header>
+	<div class="entry-content">
+		<p>Para reenviar un que contenga un <i>Subject</i> en particular hacia otra casilla en Zimbra podemos realizar los siguiente</p>
+
+<p>En el archivo de configuración de postfix <i>/opt/zimbra/postfix/conf/main.cf.default</i> colocamos la referencia al hash para header_checks</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">header_checks</span> <span class="o">=</span> <span class="nl">regexp:</span><span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">zimbra</span><span class="o">/</span><span class="n">postfix</span><span class="o">/</span><span class="n">conf</span><span class="o">/</span><span class="n">header_checks</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>En el archivo  <i>/opt/zimbra/postfix/conf/header_checks</i> adicionamos la expresión regular que tendrá el subject</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="o">/^</span><span class="nl">Subject:</span> <span class="n">MIGUELCOA</span><span class="o">/</span> <span class="n">REDIRECT</span> <span class="n">mcoa</span><span class="err">@</span><span class="n">example</span><span class="p">.</span><span class="n">com</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Recargarmos el servicio MTA</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">zmmtactl</span> <span class="n">reload</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Y desde ahora, cada vez que desde el servidor zimbra salga un correo que en su asunto contenga &ldquo;MIGUELCOA&rdquo; será enviada una copia hacia la casilla mcoa\@example.com</p>
+
+		
+		
+	</div>
+
+</article>
+
+
+    <article class="post">
+	<header>
+		<h2 class="title">
+			
 			<a href="/blog/2014/01/15/migrando-usuarios-slash-password-postfix-to-zimbra/">
 			
 				Migrando Usuarios/password Postfix to Zimbra</a>
@@ -805,87 +860,6 @@ La sintaxis del comando a utilizar dependedará de las configuraciones de los se
 
 		
 		
-	</div>
-
-</article>
-
-
-    <article class="post">
-	<header>
-		<h2 class="title">
-			
-			<a href="/blog/2013/10/23/configurar-octopress-y-github-para-blog/">
-			
-				Configurar Octopress Y Github Para Blog</a>
-		</h2>
-		<div class="meta date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-10-23T18:00:00-03:00" pubdate data-updated="true">Oct 23<span>rd</span>, 2013</time></div>
-	</header>
-	<div class="entry-content">
-		<p>Si quieres montar un blog con Octopress (framework para montar blog) y Github (repo donde almacenaremos nuestro sitio) , hay que hacer lo siguiente:</p>
-
-<p><strong>Descargando Octopress</strong></p>
-
-<ol>
-<li>Descargamos la versión de octopress desde Github</li>
-</ol>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">git</span> <span class="n">clone</span> <span class="nl">git:</span><span class="c1">//github.com/imathis/octopress.git octopress </span>
-</span><span class='line'><span class="n">cd</span> <span class="n">octopress</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ol>
-<li>Instalamos el tema por default y las dependencias necesarias</li>
-</ol>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">gem</span> <span class="n">install</span> <span class="n">bundler</span>
-</span><span class='line'><span class="n">bundle</span> <span class="n">install</span>
-</span><span class='line'><span class="n">rake</span> <span class="n">install</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p><strong>Configuración de Github</strong></p>
-
-<p>Lo primero es que tenemos que crear una cuenta en <a href="https://www.github.com/">Github</a>. Una vez creada la cuenta creamos un repositorio con el formtato: <i>&ldquo;nombredeusuario.github.com&rdquo;</i>,  en el caso de mi repositorio queda así: <a href="https://github.com/mcoam/mcoam.github.com">https://github.com/mcoam/mcoam.github.com</a></p>
-
-<ol>
-<li>Configurar octopress para acceder a este respositorio</li>
-</ol>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'> <span class="n">rake</span> <span class="n">setup_github_pages</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ol>
-<li><p>Ejecutado el comando anterior nos pedirá la url del repositorio. En el caso nuestro, es <i>git@github.com:mcoam/mcoam.github.com.git</i></p></li>
-<li><p>Para efectos de subir los post es necesario copiar la llave ssh de la máquina local (donde tenemos octopress) hacia nuestro sitio en Github.</p></li>
-</ol>
-
-
-
-		
-		<a href="/blog/2013/10/23/configurar-octopress-y-github-para-blog/" class="more-link">Read on &rarr;</a>
 	</div>
 
 </article>
