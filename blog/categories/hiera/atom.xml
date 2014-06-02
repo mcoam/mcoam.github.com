@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: hiera, | Bitácora]]></title>
+  <link href="http://mcoam.github.io/blog/categories/hiera/atom.xml" rel="self"/>
+  <link href="http://mcoam.github.io/"/>
+  <updated>2014-06-01T23:43:45-04:00</updated>
+  <id>http://mcoam.github.io/</id>
+  <author>
+    <name><![CDATA[Miguel Angel Coa Morales]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Configurar PuppetBoard]]></title>
+    <link href="http://mcoam.github.io/blog/2014/06/01/configurar-puppetboard/"/>
+    <updated>2014-06-01T22:39:00-04:00</updated>
+    <id>http://mcoam.github.io/blog/2014/06/01/configurar-puppetboard</id>
+    <content type="html"><![CDATA[<p>Para facilitar la administración de Puppet (opensource) tenemos una nueva herramienta que se llama PuppetBoard su objetivo es dar accesos a la data que nosotros tenemos almacenada en nuestro PuppetDB de forma gráfica vía web, además de permitirnos ver el funcionamiento y reportes de los nodos al momentos de conectarse al nuestro Master.
+PuppetBoard difiere de Pupet Dansboard en:
+<li>Esta escrito en Python no en Ruby </li>
+<li>No almacena ningún tipo de data, toda información es requerida del PuppetDB</li>
+<li>No es posible funcionar sin PuppetDB</li></p>
+
+<p>La instalación del servicio no es compleja, puedes ver con lujo y detalle todos los pasos <a href="https://github.com/nedap/puppetboard">acá</a>. Para nuestro caso el proceso de instalación es el siguiente:</p>
+
+<h4>Instalación</h4>
+
+<p><img src="/images/puppetboardnodes.png"></p>
+
+<p>Nota: Nuestra instalación será en base a Apache + mod-wsi</p>
+
+<p>Creamos nuestro directorio web de PuppetBoard
+<code>ruby
+$ mkdir -p /var/www/puppetboard
+</code>
+Clonamos el fuente
+<code>
+git clone https://github.com/nedap/puppetboard.git /var/www/puppetboard
+</code>
+Instalamos paquetería necesaria
+<code>ruby
+yum install mod_wsgi python-pip
+</code>
+Copiamos el archivo de ejemplo <i>/usr/lib/python2.6/site-packages/puppetboard/default_settings.py</i> a la ruta <i>/var/www/puppetboard</i>, la nombramos <i>settings.py</i>
+<code>ruby
+$ cp /usr/lib/python2.6/site-packages/puppetboard/default_settings.py /var/www/puppetboard
+$ mv /var/www/puppetboard /var/www/settings.py
+</code>
+Y colocamos el siguiente contenido
+```ruby
+PUPPETDB_HOST = &lsquo;127.0.0.1&rsquo;
+PUPPETDB_PORT = 8080</p>
+
+<h1>PUPPETDB_SSL_VERIFY = True</h1>
+
+<p>PUPPETDB_KEY = None
+PUPPETDB_CERT = None
+PUPPETDB_TIMEOUT = 20
+DEV_LISTEN_HOST = &lsquo;127.0.0.1&rsquo;
+DEV_LISTEN_PORT = 5000
+UNRESPONSIVE_HOURS = 2
+ENABLE_QUERY = True
+LOGLEVEL = &lsquo;info&rsquo;
+<code>
+En el mismo directorio del PuppetBoard, creamos el archivo &lt;i&gt;wsgi.py&lt;/i&gt; con el siguiente contenido
+</code>ruby
+from <strong>future</strong> import absolute_import
+import os</p>
+
+<h1>Needed if a settings.py file exists</h1>
+
+<p>os.environ[&lsquo;PUPPETBOARD_SETTINGS&rsquo;] = &lsquo;/var/www/puppetboard/settings.py&rsquo;
+from puppetboard.app import app as application
+<code>
+Ahora, creamos el archivo &lt;i&gt;/etc/httpd/conf.d/wdgi.conf&lt;/i&gt; para cargar el módulo en Apache con el siguiente contenido
+</code>ruby
+LoadModule wsgi_module modules/mod_wsgi.so
+<code>
+Finalmente, creamos el archivo de configuración para el virtualhosts que nos permita el acceso al PuppetBoard vía web
+</code>ruby
+$ touch /etc/httpd/conf.d/puppetboard.conf
+<code>
+Y colocamos la siguiente configuración
+</code>ruby
+<VirtualHost *:80></p>
+
+<pre><code>ServerName puppet.example.com
+WSGIDaemonProcess puppetboard user=apache group=apache threads=5
+WSGIScriptAlias / /var/www/puppetboard/wsgi.py
+ErrorLog /var/log/httpd/puppetboard.error.log
+CustomLog /var/log/httpd/puppetboard.access.log combined
+
+Alias /static /usr/lib/python2.6/site-packages/puppetboard/static/ 
+
+&lt;Directory /usr/lib/python2.6/site-packages/puppetboard&gt;
+    AuthType Basic
+    AuthName "Authentication Required"
+    AuthUserFile "/var/www/puppetboard/.htpasswd"
+    Require valid-user
+    Order allow,deny
+    Allow from all
+   WSGIProcessGroup puppetboard
+    WSGIApplicationGroup %{GLOBAL}
+  #  Require all granted
+</code></pre>
+
+<h1>Order deny,allow</h1>
+
+<h1>Allow from all</h1>
+
+<pre><code>&lt;/Directory&gt;
+</code></pre>
+
+<p></VirtualHost>
+```
+Concluido todo el proceso anterior reiniciamos el servicio apache y nos será posible acceder vía web al PuppetBoard</p>
+
+<p><img src="/images/puppetboardnodes.png"></p>
+]]></content>
+  </entry>
+  
+</feed>
