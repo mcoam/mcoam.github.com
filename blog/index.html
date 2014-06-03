@@ -53,6 +53,47 @@
 	<header>
 		<h2 class="title">
 			
+			<a href="/blog/2014/06/03/desactivar-nodo-puppetdb/">
+			
+				Desactivar Nodo PuppetDB</a>
+		</h2>
+		<div class="meta date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-06-03T18:44:00-04:00" pubdate data-updated="true">Jun 3<span>rd</span>, 2014</time></div>
+	</header>
+	<div class="entry-content">
+		<p>En el caso de querer <i>desactivar</i> un nodo de PuppetDB lo podemos realizar con el comando:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="err">$</span> <span class="n">puppet</span> <span class="n">node</span> <span class="n">deactivate</span> <span class="n">node1</span><span class="o">.</span><span class="n">example</span><span class="o">.</span><span class="n">com</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Con lo anterior, el nodo &ldquo;desaparecerá&rdquo; de nuestro Dashboard .</p>
+
+<p>Referencia <a href="http://docs.puppetlabs.com/puppetdb/1/maintain_and_tune.html#deactivate-decommissioned-nodes">acá</a></p>
+
+		
+		
+	</div>
+
+</article>
+
+
+    <article class="post">
+	<header>
+		<h2 class="title">
+			
 			<a href="/blog/2014/06/01/configurar-puppetboard/">
 			
 				Configurar PuppetBoard</a>
@@ -943,49 +984,6 @@ En este caso el archivo esta alojado en un USB (/dev/sdb1) , por lo cual al mome
 <p> 
 		
 		<a href="/blog/2013/11/04/filtro-de-correos-salientes-zimbra/" class="more-link">Read on &rarr;</a>
-	</div>
-
-</article>
-
-
-    <article class="post">
-	<header>
-		<h2 class="title">
-			
-			<a href="/blog/2013/10/30/expresiones-regulares-con-puppet/">
-			
-				Expresiones Regulares Con Puppet</a>
-		</h2>
-		<div class="meta date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-10-30T15:06:00-03:00" pubdate data-updated="true">Oct 30<span>th</span>, 2013</time></div>
-	</header>
-	<div class="entry-content">
-		<p>Puppet permite la declarición de nodos mediante expresiones regulares, esto permite definir dentro de una sola declaraciones &ldquo;n&rdquo; nodos, lo que nos ayudará a manejar de mejor forma nuestra administración de nodos. Por ejemplo:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">node</span> <span class="o">/</span><span class="p">.</span><span class="o">*</span><span class="err">\</span><span class="p">.</span><span class="n">example</span><span class="err">\</span><span class="p">.</span><span class="n">com</span><span class="o">/</span> <span class="n">inherits</span> <span class="n">basenode</span> <span class="p">{</span>
-</span><span class='line'>    <span class="n">class</span> <span class="n">ntp</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Lo anterior dice que, todo nodo del tipo *.example.com <i>(www.example.com, ftp.example.com, mail.example.com)</i> aplicará la <i>clase ntp</i> y heredará la <i>clase basenode</i>. Para más infomación puedes ver la doc de puppet <a href="http://docs.puppetlabs.com/puppet/2.7/reference/lang_node_definitions.html">Puppet Docs</a></p>
-
-		
-		
 	</div>
 
 </article>

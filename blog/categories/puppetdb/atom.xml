@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: puppetdb | Bitácora]]></title>
+  <link href="http://mcoam.github.io/blog/categories/puppetdb/atom.xml" rel="self"/>
+  <link href="http://mcoam.github.io/"/>
+  <updated>2014-06-03T18:51:12-04:00</updated>
+  <id>http://mcoam.github.io/</id>
+  <author>
+    <name><![CDATA[Miguel Angel Coa Morales]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Desactivar nodo PuppetDB]]></title>
+    <link href="http://mcoam.github.io/blog/2014/06/03/desactivar-nodo-puppetdb/"/>
+    <updated>2014-06-03T18:44:00-04:00</updated>
+    <id>http://mcoam.github.io/blog/2014/06/03/desactivar-nodo-puppetdb</id>
+    <content type="html"><![CDATA[<p>En el caso de querer <i>desactivar</i> un nodo de PuppetDB lo podemos realizar con el comando:
+<code>ruby
+$ puppet node deactivate node1.example.com
+</code>
+Con lo anterior, el nodo &ldquo;desaparecerá&rdquo; de nuestro Dashboard .</p>
+
+<p>Referencia <a href="http://docs.puppetlabs.com/puppetdb/1/maintain_and_tune.html#deactivate-decommissioned-nodes">acá</a></p>
+]]></content>
+  </entry>
+  
+</feed>

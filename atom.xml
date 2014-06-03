@@ -4,13 +4,31 @@
   <title><![CDATA[Bitácora]]></title>
   <link href="http://mcoam.github.io/atom.xml" rel="self"/>
   <link href="http://mcoam.github.io/"/>
-  <updated>2014-06-02T09:18:21-04:00</updated>
+  <updated>2014-06-03T18:51:12-04:00</updated>
   <id>http://mcoam.github.io/</id>
   <author>
     <name><![CDATA[Miguel Angel Coa Morales]]></name>
     
   </author>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Desactivar nodo PuppetDB]]></title>
+    <link href="http://mcoam.github.io/blog/2014/06/03/desactivar-nodo-puppetdb/"/>
+    <updated>2014-06-03T18:44:00-04:00</updated>
+    <id>http://mcoam.github.io/blog/2014/06/03/desactivar-nodo-puppetdb</id>
+    <content type="html"><![CDATA[<p>En el caso de querer <i>desactivar</i> un nodo de PuppetDB lo podemos realizar con el comando:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="err">$</span> <span class="n">puppet</span> <span class="n">node</span> <span class="n">deactivate</span> <span class="n">node1</span><span class="o">.</span><span class="n">example</span><span class="o">.</span><span class="n">com</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Con lo anterior, el nodo &ldquo;desaparecerá&rdquo; de nuestro Dashboard .</p>
+
+<p>Referencia <a href="http://docs.puppetlabs.com/puppetdb/1/maintain_and_tune.html#deactivate-decommissioned-nodes">acá</a></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Configurar PuppetBoard]]></title>
