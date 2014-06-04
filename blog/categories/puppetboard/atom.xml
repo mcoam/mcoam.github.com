@@ -4,7 +4,7 @@
   <title><![CDATA[Category: puppetboard | Bitácora]]></title>
   <link href="http://mcoam.github.io/blog/categories/puppetboard/atom.xml" rel="self"/>
   <link href="http://mcoam.github.io/"/>
-  <updated>2014-06-03T18:51:12-04:00</updated>
+  <updated>2014-06-03T21:28:55-04:00</updated>
   <id>http://mcoam.github.io/</id>
   <author>
     <name><![CDATA[Miguel Angel Coa Morales]]></name>
@@ -116,7 +116,7 @@ Alias /static /usr/lib/python2.6/site-packages/puppetboard/static/
 
 <p></VirtualHost>
 ```
-Concluido todo el proceso anterior reiniciamos el servicio apache y nos será posible acceder vía web al PuppetBoard. De forma adicional el acceso al servicio web es mediante usuario y password <i>/var/www/puppetboard/.htpasswd<i/> la información de la configuración la pueden ver <a href="http://wiki.apache.org/httpd/PasswordBasicAuth">acá</a></p>
+Concluido todo el proceso anterior reiniciamos el servicio apache y nos será posible acceder vía web al PuppetBoard. De forma adicional el acceso al servicio web es mediante usuario y password <i>/var/www/puppetboard/.htpasswd</i> la información de la configuración la pueden ver <a href="http://wiki.apache.org/httpd/PasswordBasicAuth">acá</a></p>
 
 <p><img src="/images/puppetboardnodes.png"></p>
 ]]></content>
