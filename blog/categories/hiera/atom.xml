@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: hiera, | Bitácora]]></title>
+  <title><![CDATA[Category: hiera | Bitácora]]></title>
   <link href="http://mcoam.github.io/blog/categories/hiera/atom.xml" rel="self"/>
   <link href="http://mcoam.github.io/"/>
-  <updated>2014-06-03T21:28:55-04:00</updated>
+  <updated>2014-06-26T22:15:48-04:00</updated>
   <id>http://mcoam.github.io/</id>
   <author>
     <name><![CDATA[Miguel Angel Coa Morales]]></name>
@@ -14,111 +14,242 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Configurar PuppetBoard]]></title>
-    <link href="http://mcoam.github.io/blog/2014/06/01/configurar-puppetboard/"/>
-    <updated>2014-06-01T22:39:00-04:00</updated>
-    <id>http://mcoam.github.io/blog/2014/06/01/configurar-puppetboard</id>
-    <content type="html"><![CDATA[<p>Para facilitar la administración de Puppet (opensource) tenemos una nueva herramienta que se llama PuppetBoard su objetivo es dar accesos a la data que nosotros tenemos almacenada en nuestro PuppetDB de forma gráfica vía web, además de permitirnos ver el funcionamiento y reportes de los nodos al momentos de conectarse al nuestro Master.
-PuppetBoard difiere de Pupet Dansboard en:
-<li>Esta escrito en Python no en Ruby </li>
-<li>No almacena ningún tipo de data, toda información es requerida del PuppetDB</li>
-<li>No es posible funcionar sin PuppetDB</li></p>
+    <title type="html"><![CDATA[Módulo SSH Puppet y Hiera]]></title>
+    <link href="http://mcoam.github.io/blog/2014/06/26/modulo-ssh-puppet-y-hiera/"/>
+    <updated>2014-06-26T21:28:00-04:00</updated>
+    <id>http://mcoam.github.io/blog/2014/06/26/modulo-ssh-puppet-y-hiera</id>
+    <content type="html"><![CDATA[<p>El siguiente es un módulo de Puppet para la administración del servicio ssh en Linux (Rhel/Debian). La idea, de módulo es tomar los valores de las variables <code>port</code> <code>usedns</code> y <code>permit_root_login</code>.</p>
 
-<p>La instalación del servicio no es compleja, puedes ver con lujo y detalle todos los pasos <a href="https://github.com/nedap/puppetboard">acá</a>. Para nuestro caso el proceso de instalación es el siguiente:</p>
-
-<h4>Instalación</h4>
-
-<p><img src="/images/puppetboard.png"></p>
-
-<p>Nota: Nuestra instalación será en base a Apache + mod-wsi</p>
-
-<p>Creamos nuestro directorio web de PuppetBoard
-<code>ruby
-$ mkdir -p /var/www/puppetboard
-</code>
-Clonamos el fuente
-<code>
-git clone https://github.com/nedap/puppetboard.git /var/www/puppetboard
-</code>
-Instalamos paquetería necesaria
-<code>ruby
-yum install mod_wsgi python-pip
-</code>
-Copiamos el archivo de ejemplo <i>/usr/lib/python2.6/site-packages/puppetboard/default_settings.py</i> a la ruta <i>/var/www/puppetboard</i>, la nombramos <i>settings.py</i>
-<code>ruby
-$ cp /usr/lib/python2.6/site-packages/puppetboard/default_settings.py /var/www/puppetboard
-$ mv /var/www/puppetboard /var/www/settings.py
-</code>
-Y colocamos el siguiente contenido
+<p><li>Clase init.pp</li>
+Esta clase lo que hace es heredar las definición de variables que nosotros tenemos en nuestra clase <code>params.pp</code> e instancia el orden de la ejecución de las clases.
 ```ruby
-PUPPETDB_HOST = &lsquo;127.0.0.1&rsquo;
-PUPPETDB_PORT = 8080</p>
+[root@master manifests]$ cat init.pp
+class sshmcoa (</p>
 
-<h1>PUPPETDB_SSL_VERIFY = True</h1>
-
-<p>PUPPETDB_KEY = None
-PUPPETDB_CERT = None
-PUPPETDB_TIMEOUT = 20
-DEV_LISTEN_HOST = &lsquo;127.0.0.1&rsquo;
-DEV_LISTEN_PORT = 5000
-UNRESPONSIVE_HOURS = 2
-ENABLE_QUERY = True
-LOGLEVEL = &lsquo;info&rsquo;
-<code>
-En el mismo directorio del PuppetBoard, creamos el archivo &lt;i&gt;wsgi.py&lt;/i&gt; con el siguiente contenido
-</code>ruby
-from <strong>future</strong> import absolute_import
-import os</p>
-
-<h1>Needed if a settings.py file exists</h1>
-
-<p>os.environ[&lsquo;PUPPETBOARD_SETTINGS&rsquo;] = &lsquo;/var/www/puppetboard/settings.py&rsquo;
-from puppetboard.app import app as application
-<code>
-Ahora, creamos el archivo &lt;i&gt;/etc/httpd/conf.d/wdgi.conf&lt;/i&gt; para cargar el módulo en Apache con el siguiente contenido
-</code>ruby
-LoadModule wsgi_module modules/mod_wsgi.so
-<code>
-Finalmente, creamos el archivo de configuración para el virtualhosts que nos permita el acceso al PuppetBoard vía web
-</code>ruby
-$ touch /etc/httpd/conf.d/puppetboard.conf
-<code>
-Y colocamos la siguiente configuración
-</code>ruby
-<VirtualHost *:80></p>
-
-<pre><code>ServerName puppet.example.com
-WSGIDaemonProcess puppetboard user=apache group=apache threads=5
-WSGIScriptAlias / /var/www/puppetboard/wsgi.py
-ErrorLog /var/log/httpd/puppetboard.error.log
-CustomLog /var/log/httpd/puppetboard.access.log combined
-
-Alias /static /usr/lib/python2.6/site-packages/puppetboard/static/ 
-
-&lt;Directory /usr/lib/python2.6/site-packages/puppetboard&gt;
-    AuthType Basic
-    AuthName "Authentication Required"
-    AuthUserFile "/var/www/puppetboard/.htpasswd"
-    Require valid-user
-    Order allow,deny
-    Allow from all
-   WSGIProcessGroup puppetboard
-    WSGIApplicationGroup %{GLOBAL}
-  #  Require all granted
+<pre><code>$port               = $sshmcoa::params::port,
+$usedns             = $sshmcoa::params::usedns,
+$ensure             = $sshmcoa::params::ensure,
+$permit_root_login  = $sshmcoa::params::permit_root_login,
+$port           = $sshmcoa::params::port,
+$service_name   = $sshmcoa::params::service_name,
+$config_file    = $sshmcoa::params::config_file,
+$package_name   = $sshmcoa::params::package_name,
+$config_template    = $sshmcoa::params::config_template,
 </code></pre>
 
-<h1>Order deny,allow</h1>
+<p>) inherits sshmcoa::params {</p>
 
-<h1>Allow from all</h1>
-
-<pre><code>&lt;/Directory&gt;
+<pre><code>class {'::sshmcoa::install': } -&gt;
+class {'::sshmcoa::config':}  -&gt;
+class {'::sshmcoa::service':}  -&gt;
+Class ['sshmcoa']
 </code></pre>
 
-<p></VirtualHost>
+<p> #notify {&ldquo;EL PUERTO ES: $port&rdquo;:}
+}
+```</p>
+
+<p><li>Clase params.pp</li>
+En esta clase se definen todos los parámetros a configurar por la clase dependiendo del sistema operativo (familia RedHat o familia Debian)
+```ruby
+[root@master manifests]$ cat params.pp
+class sshmcoa::params{</p>
+
+<pre><code>$port       = ''
+$usedns     = ''
+$ensure             = 'present'
+$permit_root_login  = ''
+$listen_address     = '0.0.0.0'
+$config_template    = 'sshmcoa/sshd_config.conf.erb'
+</code></pre>
+
+<p>case $::osfamily {</p>
+
+<pre><code>    'Debian':{ 
+    $config_file  = '/etc/ssh/sshd_config'
+    $service_name = 'ssh'
+    $package_name = 'ssh'
+}
+    default:{
+    $config_file  = '/etc/ssh/sshd_config'
+    $service_name = 'sshd'
+    $package_name = 'openssh-server'
+}
+ }
+</code></pre>
+
+<p>}
+<code>
+&lt;li&gt;Clase install.pp&lt;/li&gt;
+Esta es la clase encargada de la instalación del paquete para el servicio ssh, dependiendo del &lt;code&gt;osfamily&lt;/code&gt; se instalará el pauete &lt;code&gt;ssh&lt;/code&gt; o &lt;code&gt;openssh-server&lt;/code&gt;
+</code>ruby
+[root@master manifests]$ cat install.pp
+class sshmcoa::install inherits sshmcoa {</p>
+
+<p>case $::osfamily {</p>
+
+<pre><code>    'Debian':{
+            package {"$package_name":
+                    ensure =&gt; 'installed'
+            }
+    }
+    default:{
+            package {"$package_name":
+                    ensure =&gt; 'installed'
+        }
+  }
+</code></pre>
+
+<p>   }
+}
+<code>
+&lt;li&gt;Clase service.pp&lt;/li&gt;
+Se configurar las opciones propias del servicio ssh
+</code>ruby
+[root@master manifests]$ cat service.pp
+class sshmcoa::service inherits sshmcoa {</p>
+
+<pre><code>service {"$service_name":
+        ensure     =&gt; running,
+        hasstatus  =&gt; true,
+        hasrestart =&gt; true,
+        enable     =&gt; true,
+        require    =&gt; Class[sshmcoa::config]
+}   
+</code></pre>
+
+<p>}
+<code>
+&lt;li&gt;Clase config.pp&lt;/li&gt;
+Configuramos los valores del archivo sshd_config. El nombre del archivo viene heredado de la de la clase principal bajo la variable &lt;code&gt;$config_file&lt;/code&gt;, y el contenido &lt;code&gt;content&lt;/code&gt; que tendrá el archivo es creado mediante un template &lt;code&gt;.erb&lt;/code&gt;
+</code>ruby
+[root@master manifests]# cat config.pp
+class sshmcoa::config inherits sshmcoa {</p>
+
+<pre><code>file { $config_file:
+        ensure  =&gt; present,
+        owner   =&gt; 'root',
+        group   =&gt; 'root',
+        mode    =&gt; '600',
+        content =&gt; template($config_template),
+    notify  =&gt; Service["$service_name"]
+}
+</code></pre>
+
+<p>}
+<code>
+&lt;li&gt;Archivo sshd_config.conf.erb&lt;/li&gt;
+Este es el arhivo .erb que se crea con el contenido dinámico con el valor de las variables que fueron ingresadas desde &lt;code&gt;Hiera&lt;/code&gt;. Para el caso de la clase, los valores que modificamos son &lt;code&gt;port&lt;/code&gt; &lt;code&gt;usedns&lt;/code&gt; y &lt;code&gt;permit_root_login&lt;/code&gt; y para importalos al template tenemos que utilizar el formato &lt;code&gt;&lt;%= @NOMBRE_DE_VARIABLE %&gt;&lt;/code&gt;
+</code>ruby
+[root@master manifests]$ cat ../templates/sshd_config.conf.erb</p>
+
+<h1>sshd.conf: Managed by Puppet.</h1>
+
+<p>#</p>
+
+<h1>Port Puppet</h1>
+
+<p>Port &lt;%= @port %>
+Protocol 2
+SyslogFacility AUTHPRIV
+PasswordAuthentication yes
+ChallengeResponseAuthentication no
+GSSAPIAuthentication yes
+GSSAPICleanupCredentials yes</p>
+
+<h2>PermitRootLogin Puppet</h2>
+
+<p>PermitRootLogin &lt;%= @permit_root_login %>
+UsePAM yes</p>
+
+<h1>UseDNS Puppet</h1>
+
+<p>UseDNS &lt;%= @usedns %>
+AcceptEnv LANG LC_CTYPE LC_NUMERIC LC_TIME LC_COLLATE LC_MONETARY LC_MESSAGES
+AcceptEnv LC_PAPER LC_NAME LC_ADDRESS LC_TELEPHONE LC_MEASUREMENT
+AcceptEnv LC_IDENTIFICATION LC_ALL LANGUAGE
+AcceptEnv XMODIFIERS
+X11Forwarding yes
+Subsystem   sftp    /usr/libexec/openssh/sftp-server
 ```
-Concluido todo el proceso anterior reiniciamos el servicio apache y nos será posible acceder vía web al PuppetBoard. De forma adicional el acceso al servicio web es mediante usuario y password <i>/var/www/puppetboard/.htpasswd</i> la información de la configuración la pueden ver <a href="http://wiki.apache.org/httpd/PasswordBasicAuth">acá</a></p>
+<li>Archivo Hiera.yaml</li>
+Dentro de nuestro <code>common.yaml</code> configuramos los valores que tendrán las variables del servicio ssh.</p>
 
-<p><img src="/images/puppetboardnodes.png"></p>
+<p>```ruby</p>
+
+<h2>[root@master hieradata]$ cat common.yaml</h2>
+
+<p>classes:</p>
+
+<pre><code> - sshmcoa
+</code></pre>
+
+<p>sshmcoa::port: &lsquo;2222&rsquo;
+sshmcoa::usedns: &lsquo;no&rsquo;
+sshmcoa::permit_root_login: &lsquo;no&rsquo;
+```</p>
+
+<p>Finalmente cuando conectemos el nodo veremos como se ejecuta la clase con los valores que le hemos pasado
+<code>ruby
+[root@node1 etc]# !puppet
+puppet agent --test
+Info: Retrieving plugin
+Info: Loading facts in /var/lib/puppet/lib/facter/root_home.rb
+Info: Loading facts in /var/lib/puppet/lib/facter/puppet_vardir.rb
+Info: Loading facts in /var/lib/puppet/lib/facter/pe_version.rb
+Info: Loading facts in /var/lib/puppet/lib/facter/hosts_managed.rb
+Info: Loading facts in /var/lib/puppet/lib/facter/facter_dot_d.rb
+Info: Caching catalog for node1.example.com
+Info: Applying configuration version '1401042981'
+Notice: /Stage[main]/Sshmcoa::Install/Package[openssh-server]/ensure: created
+Notice: /File[/etc/ssh/sshd_config]/content:
+--- /etc/ssh/sshd_config    2013-11-22 19:40:03.000000000 -0300
+....
+....
+....
+Info: FileBucket adding {md5}53ad75eb1f2269d23f6e4228353cbca3
+Info: /File[/etc/ssh/sshd_config]: Filebucketed /etc/ssh/sshd_config to puppet with sum 53ad75eb1f2269d23f6e4228353cbca3
+Notice: /File[/etc/ssh/sshd_config]/content: content changed '{md5}53ad75eb1f2269d23f6e4228353cbca3' to '{md5}22a041c1bbfd208de0259a2403bf3cbb'
+Info: /File[/etc/ssh/sshd_config]: Scheduling refresh of Service[sshd]
+Notice: /Stage[main]/Sshmcoa::Service/Service[sshd]/ensure: ensure changed 'stopped' to 'running'
+Info: /Stage[main]/Sshmcoa::Service/Service[sshd]: Unscheduling refresh on Service[sshd]
+Notice: EL PUERTO ES: 2222
+Notice: /Stage[main]/Sshmcoa/Notify[EL PUERTO ES: 2222]/message: defined 'message' as 'EL PUERTO ES: 2222'
+Notice: Finished catalog run in 16.27 seconds
+</code>
+Si vemos el contenido observaremos que se creó tal cual esta definido en nuestro template erb.
+```ruby
+[root@node1 etc]# cat /etc/ssh/sshd_config</p>
+
+<h1>sshd.conf: Managed by Puppet.</h1>
+
+<p>#</p>
+
+<h1>Port Puppet</h1>
+
+<p>Port 2222
+Protocol 2
+SyslogFacility AUTHPRIV
+PasswordAuthentication yes
+ChallengeResponseAuthentication no
+GSSAPIAuthentication yes
+GSSAPICleanupCredentials yes</p>
+
+<h2>PermitRootLogin Puppet</h2>
+
+<p>PermitRootLogin no
+UsePAM yes</p>
+
+<h1>UseDNS Puppet</h1>
+
+<p>UseDNS no
+AcceptEnv LANG LC_CTYPE LC_NUMERIC LC_TIME LC_COLLATE LC_MONETARY LC_MESSAGES
+AcceptEnv LC_PAPER LC_NAME LC_ADDRESS LC_TELEPHONE LC_MEASUREMENT
+AcceptEnv LC_IDENTIFICATION LC_ALL LANGUAGE
+AcceptEnv XMODIFIERS
+X11Forwarding yes
+Subsystem   sftp    /usr/libexec/openssh/sftp-server
+```</p>
 ]]></content>
   </entry>
   
