@@ -4,7 +4,7 @@
   <title><![CDATA[Category: puppet, | Bitácora]]></title>
   <link href="http://mcoam.github.io/blog/categories/puppet/atom.xml" rel="self"/>
   <link href="http://mcoam.github.io/"/>
-  <updated>2014-06-26T22:16:57-04:00</updated>
+  <updated>2014-06-26T22:41:51-04:00</updated>
   <id>http://mcoam.github.io/</id>
   <author>
     <name><![CDATA[Miguel Angel Coa Morales]]></name>
@@ -131,7 +131,7 @@ Configuramos los valores del archivo sshd_config. El nombre del archivo viene he
 class sshmcoa::config inherits sshmcoa {</p>
 
 <pre><code>file { $config_file:
-        ensure  =&gt; present,
+        ensure  =&gt; $ensure,
         owner   =&gt; 'root',
         group   =&gt; 'root',
         mode    =&gt; '600',

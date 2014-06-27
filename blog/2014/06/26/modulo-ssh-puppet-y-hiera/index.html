@@ -249,7 +249,7 @@ Configuramos los valores del archivo sshd_config. El nombre del archivo viene he
 </span><span class='line'><span class="k">class</span> <span class="ss">sshmcoa</span><span class="p">:</span><span class="ss">:config</span> <span class="n">inherits</span> <span class="n">sshmcoa</span> <span class="p">{</span>
 </span><span class='line'>
 </span><span class='line'>  <span class="n">file</span> <span class="p">{</span> <span class="vg">$config_file</span><span class="p">:</span>
-</span><span class='line'>          <span class="k">ensure</span>  <span class="o">=&gt;</span> <span class="n">present</span><span class="p">,</span>
+</span><span class='line'>          <span class="k">ensure</span>  <span class="o">=&gt;</span> <span class="vg">$ensure</span><span class="p">,</span>
 </span><span class='line'>          <span class="n">owner</span>   <span class="o">=&gt;</span> <span class="s1">&#39;root&#39;</span><span class="p">,</span>
 </span><span class='line'>          <span class="n">group</span>   <span class="o">=&gt;</span> <span class="s1">&#39;root&#39;</span><span class="p">,</span>
 </span><span class='line'>          <span class="n">mode</span>    <span class="o">=&gt;</span> <span class="s1">&#39;600&#39;</span><span class="p">,</span>
