@@ -4,7 +4,7 @@
   <title><![CDATA[Category: devops, | Bitácora]]></title>
   <link href="http://mcoam.github.io/blog/categories/devops/atom.xml" rel="self"/>
   <link href="http://mcoam.github.io/"/>
-  <updated>2014-07-07T15:32:21-04:00</updated>
+  <updated>2014-07-07T15:33:50-04:00</updated>
   <id>http://mcoam.github.io/</id>
   <author>
     <name><![CDATA[Miguel Angel Coa Morales]]></name>
@@ -97,8 +97,7 @@ Por defecto el nombre con que queda la VM y se puede ver mediante la GUI de Virt
 
 <p><img class="center" src="/images/vagrantDefaultName.png"></p>
 
-<p>Al archivo de configuración, tenemos que adicionarle las líneas:
-```ruby
+<p>```ruby
 Miguel:Puppet$ cat Vagrantfile</p>
 
 <h1>&ndash;<em>&ndash; mode: ruby &ndash;</em>&ndash;</h1>
