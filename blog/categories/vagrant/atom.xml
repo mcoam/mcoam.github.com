@@ -4,7 +4,7 @@
   <title><![CDATA[Category: vagrant, | Bitácora]]></title>
   <link href="http://mcoam.github.io/blog/categories/vagrant/atom.xml" rel="self"/>
   <link href="http://mcoam.github.io/"/>
-  <updated>2014-07-07T15:33:50-04:00</updated>
+  <updated>2014-07-07T15:35:39-04:00</updated>
   <id>http://mcoam.github.io/</id>
   <author>
     <name><![CDATA[Miguel Angel Coa Morales]]></name>
@@ -18,7 +18,7 @@
     <link href="http://mcoam.github.io/blog/2014/07/07/configurando-vagrant-en-osx/"/>
     <updated>2014-07-07T15:30:00-04:00</updated>
     <id>http://mcoam.github.io/blog/2014/07/07/configurando-vagrant-en-osx</id>
-    <content type="html"><![CDATA[<p>En la búsqueda de correr máquinas virtuales de forma mas simple y colocarme a la &ldquo;moda&rdquo; me he decidido instalar <code>Vagrant</code>, que es un entorno para la gestión de máquinas virtuales bajo mbiente VirtualBox. La mágia de Vagrant viene de la mano de VirtualBox ya que este tiene soporte para correr máquinas virtuales del tipo <i>headless</i> (algo así como máquinas que corren en un servidor pero no sabes donde).</p>
+    <content type="html"><![CDATA[<p>En la búsqueda de correr máquinas virtuales de forma mas simple me he decidido instalar <code>Vagrant</code>, que es un entorno para la gestión de máquinas virtuales bajo mbiente VirtualBox. La mágia de Vagrant viene de la mano de VirtualBox ya que este tiene soporte para correr máquinas virtuales del tipo <i>headless</i> (algo así como máquinas que corren en un servidor pero no sabes donde).</p>
 
 <h4>Instalación de Vagrant en OSX 10.9.3</h4>
 
