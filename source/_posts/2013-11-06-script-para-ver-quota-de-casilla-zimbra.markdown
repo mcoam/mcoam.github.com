@@ -38,9 +38,9 @@ ______________________
 Mailbox size of user@example.com  = 281.51 MB
 The Mailbox isn't Setting Quota
 ______________________
-Mailbox size of mflopes@dalchile.cl  = 1.30 GB
+Mailbox size of user2@example.com  = 1.30 GB
 The Mailbox isn't Setting Quota
 ______________________
-Mailbox size of mcoa@libramarchile.cl = 718.00 KB
+Mailbox size of user3@example.com = 718.00 KB
 Mailbox Quota is = 10 MB
 {% endcodeblock %}

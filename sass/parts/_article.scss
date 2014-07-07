@@ -1,5 +1,5 @@
 article{
-	padding-top: 40px;
+	padding-top: 10px;
 	position: relative;
 	header {
 		margin-bottom: 1.5em;
@@ -27,6 +27,7 @@ article{
 	.entry-content{
 		line-height: 1.5;
 		text-align: justify;
+		font-size: 16px;
 		a{
 			&:hover{
 				text-decoration:none;
