@@ -4,7 +4,7 @@
   <title><![CDATA[Category: puppetboard | Bitácora]]></title>
   <link href="http://mcoam.github.io/blog/categories/puppetboard/atom.xml" rel="self"/>
   <link href="http://mcoam.github.io/"/>
-  <updated>2014-07-07T15:39:12-04:00</updated>
+  <updated>2014-07-10T10:39:16-04:00</updated>
   <id>http://mcoam.github.io/</id>
   <author>
     <name><![CDATA[Miguel Angel Coa Morales]]></name>
@@ -40,6 +40,10 @@ Clonamos el fuente
 <code>
 git clone https://github.com/nedap/puppetboard.git /var/www/puppetboard
 </code>
+O lo instalamos de forma manual
+<code>ruby
+pip install puppetboard
+</code>
 Instalamos paquetería necesaria
 <code>ruby
 yum install mod_wsgi python-pip
@@ -47,7 +51,7 @@ yum install mod_wsgi python-pip
 Copiamos el archivo de ejemplo <i>/usr/lib/python2.6/site-packages/puppetboard/default_settings.py</i> a la ruta <i>/var/www/puppetboard</i>, la nombramos <i>settings.py</i>
 <code>ruby
 $ cp /usr/lib/python2.6/site-packages/puppetboard/default_settings.py /var/www/puppetboard
-$ mv /var/www/puppetboard /var/www/settings.py
+$ mv /var/www/puppetboard/default_settings.py /var/www/puppetboard/settings.py
 </code>
 Y colocamos el siguiente contenido
 ```ruby
