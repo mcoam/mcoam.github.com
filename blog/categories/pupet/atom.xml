@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: Devops | Bitácora]]></title>
-  <link href="http://mcoam.github.io/blog/categories/devops/atom.xml" rel="self"/>
+  <title><![CDATA[Category: Pupet, | Bitácora]]></title>
+  <link href="http://mcoam.github.io/blog/categories/pupet/atom.xml" rel="self"/>
   <link href="http://mcoam.github.io/"/>
   <updated>2014-07-24T12:25:51-04:00</updated>
   <id>http://mcoam.github.io/</id>
