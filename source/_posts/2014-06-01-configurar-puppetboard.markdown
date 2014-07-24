@@ -28,6 +28,10 @@ Clonamos el fuente
 ```
 git clone https://github.com/nedap/puppetboard.git /var/www/puppetboard
 ```
+O lo instalamos de forma manual
+```ruby
+pip install puppetboard
+```
 Instalamos paquetería necesaria
 ```ruby
 yum install mod_wsgi python-pip
@@ -35,7 +39,7 @@ yum install mod_wsgi python-pip
 Copiamos el archivo de ejemplo <i>/usr/lib/python2.6/site-packages/puppetboard/default_settings.py</i> a la ruta <i>/var/www/puppetboard</i>, la nombramos <i>settings.py</i>
 ```ruby
 $ cp /usr/lib/python2.6/site-packages/puppetboard/default_settings.py /var/www/puppetboard
-$ mv /var/www/puppetboard /var/www/settings.py
+$ mv /var/www/puppetboard/default_settings.py /var/www/puppetboard/settings.py
 ```
 Y colocamos el siguiente contenido
 ```ruby
