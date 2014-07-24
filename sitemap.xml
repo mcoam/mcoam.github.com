@@ -77,20 +77,26 @@
         <lastmod>2014-07-24T12:25:48-04:00</lastmod>
     </url>
     <url>
+        <loc>
+            http://mcoam.github.io/blog/2014/07/24/path-global-para-todos-los-execs-en-puppet/
+        </loc>
+        <lastmod>2014-07-24T14:48:22-04:00</lastmod>
+    </url>
+    <url>
         <loc>http://mcoam.github.io/about/</loc>
         <lastmod>2014-02-28T11:17:23-03:00</lastmod>
     </url>
     <url>
         <loc>http://mcoam.github.io/archives/</loc>
-        <lastmod>2014-07-24T12:25:48-04:00</lastmod>
+        <lastmod>2014-07-24T14:48:22-04:00</lastmod>
     </url>
     <url>
         <loc>http://mcoam.github.io/blog/archives/</loc>
-        <lastmod>2014-07-24T12:25:48-04:00</lastmod>
+        <lastmod>2014-07-24T14:48:22-04:00</lastmod>
     </url>
     <url>
         <loc>http://mcoam.github.io/blog/</loc>
-        <lastmod>2014-07-24T12:25:48-04:00</lastmod>
+        <lastmod>2014-07-24T14:48:22-04:00</lastmod>
     </url>
     <url>
         <loc>http://mcoam.github.io/contact/</loc>
@@ -98,7 +104,7 @@
     </url>
     <url>
         <loc>http://mcoam.github.io/</loc>
-        <lastmod>2014-07-24T12:25:48-04:00</lastmod>
+        <lastmod>2014-07-24T14:48:22-04:00</lastmod>
     </url>
     <url>
         <loc>http://mcoam.github.io/robots.txt</loc>

@@ -4,13 +4,44 @@
   <title><![CDATA[Bitácora]]></title>
   <link href="http://mcoam.github.io/atom.xml" rel="self"/>
   <link href="http://mcoam.github.io/"/>
-  <updated>2014-07-24T12:25:51-04:00</updated>
+  <updated>2014-07-24T14:48:38-04:00</updated>
   <id>http://mcoam.github.io/</id>
   <author>
     <name><![CDATA[Miguel Angel Coa Morales]]></name>
     
   </author>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Path Global para todos los Execs en Puppet]]></title>
+    <link href="http://mcoam.github.io/blog/2014/07/24/path-global-para-todos-los-execs-en-puppet/"/>
+    <updated>2014-07-24T14:37:00-04:00</updated>
+    <id>http://mcoam.github.io/blog/2014/07/24/path-global-para-todos-los-execs-en-puppet</id>
+    <content type="html"><![CDATA[<p>En Puppet si tenemos varios <code>Exec</code> para ejecutar comandos del sistema operativo podemos configurar el atributo <code>path</code> de forma global dentro del <code>site.pp</code> y con ello evitamos repetir código.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">exec</span> <span class="p">{</span> <span class="s2">&quot;restart-dns&quot;</span><span class="p">:</span>
+</span><span class='line'><span class="n">command</span> <span class="o">=&gt;</span> <span class="s2">&quot;service named restart&quot;</span>
+</span><span class='line'><span class="n">creates</span> <span class="o">=&gt;</span> <span class="s2">&quot;/var/named&quot;</span><span class="p">,</span>
+</span><span class='line'><span class="n">refreshonly</span> <span class="o">=&gt;</span> <span class="kp">true</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>site.pp</li></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">Exec</span> <span class="p">{</span> <span class="n">path</span> <span class="o">=&gt;</span> <span class="o">[</span> <span class="s2">&quot;/bin/&quot;</span><span class="p">,</span> <span class="s2">&quot;/sbin/&quot;</span> <span class="p">,</span> <span class="s2">&quot;/usr/bin/&quot;</span><span class="p">,</span> <span class="s2">&quot;/usr/sbin/&quot;</span> <span class="o">]</span> <span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Controlando la ejecución de Exec en Puppet]]></title>

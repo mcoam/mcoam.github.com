@@ -53,6 +53,60 @@
 	<header>
 		<h2 class="title">
 			
+			<a href="/blog/2014/07/24/path-global-para-todos-los-execs-en-puppet/">
+			
+				Path Global Para Todos Los Execs en Puppet</a>
+		</h2>
+		<div class="meta date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-07-24T14:37:00-04:00" pubdate data-updated="true">Jul 24<span>th</span>, 2014</time></div>
+	</header>
+	<div class="entry-content">
+		<p>En Puppet si tenemos varios <code>Exec</code> para ejecutar comandos del sistema operativo podemos configurar el atributo <code>path</code> de forma global dentro del <code>site.pp</code> y con ello evitamos repetir código.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">exec</span> <span class="p">{</span> <span class="s2">&quot;restart-dns&quot;</span><span class="p">:</span>
+</span><span class='line'><span class="n">command</span> <span class="o">=&gt;</span> <span class="s2">&quot;service named restart&quot;</span>
+</span><span class='line'><span class="n">creates</span> <span class="o">=&gt;</span> <span class="s2">&quot;/var/named&quot;</span><span class="p">,</span>
+</span><span class='line'><span class="n">refreshonly</span> <span class="o">=&gt;</span> <span class="kp">true</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>site.pp</li></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">Exec</span> <span class="p">{</span> <span class="n">path</span> <span class="o">=&gt;</span> <span class="o">[</span> <span class="s2">&quot;/bin/&quot;</span><span class="p">,</span> <span class="s2">&quot;/sbin/&quot;</span> <span class="p">,</span> <span class="s2">&quot;/usr/bin/&quot;</span><span class="p">,</span> <span class="s2">&quot;/usr/sbin/&quot;</span> <span class="o">]</span> <span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+		
+		
+	</div>
+
+</article>
+
+
+    <article class="post">
+	<header>
+		<h2 class="title">
+			
 			<a href="/blog/2014/07/23/controlando-la-ejecucion-de-exec-en-puppet/">
 			
 				Controlando La Ejecución De Exec en Puppet</a>
@@ -973,45 +1027,6 @@ Valor que los podemos almacenar en un archivo y los ejecutamos pasandolo como pa
 
 		
 		<a href="/blog/2013/11/29/configurar-nagios-server-y-pnp4nagios/" class="more-link">Read on &rarr;</a>
-	</div>
-
-</article>
-
-
-    <article class="post">
-	<header>
-		<h2 class="title">
-			
-			<a href="/blog/2013/11/27/tabulacion-con-editor-vim/">
-			
-				Tabulación Con Editor VIM</a>
-		</h2>
-		<div class="meta date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-11-27T08:32:00-03:00" pubdate data-updated="true">Nov 27<span>th</span>, 2013</time></div>
-	</header>
-	<div class="entry-content">
-		<p>En ocasiones al copiar y pegar texto hacia una archivo que está siendo accedido por medio del editor VIM, este queda con una mala tabulación (excesivamente corrida a la derecha) al momento de pegarla. La solución para eso es que antes de pegar el texto tenemos realizar lo siguiente en la misma ventana del editor</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="nl">type:</span> <span class="n">set</span> <span class="n">paste</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Lo otro, es agregar la línea <i>set paste</i> dentro de <i>/etc/vim/vimrc</i> .</p>
-
-		
-		
 	</div>
 
 </article>
