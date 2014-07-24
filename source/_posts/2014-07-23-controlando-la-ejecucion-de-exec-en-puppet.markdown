@@ -4,7 +4,7 @@ title: "Controlando la ejecución de Exec en Puppet"
 date: 2014-07-23 21:25
 comments: true
 categories: Pupet, Devops
-published: false
+published: true
 ---
 En Puppet podemos ejecutar comando a nivel del sistema operativo por medio de <code>Exec</code>, en ocasiones sucede que tenemos declarada la sintaxis a ejecutar pero sucede que esta se aplica cada vez que corre el agente Puppet, Ejemplo: 
 ```ruby
