@@ -4,13 +4,87 @@
   <title><![CDATA[Bitácora]]></title>
   <link href="http://mcoam.github.io/atom.xml" rel="self"/>
   <link href="http://mcoam.github.io/"/>
-  <updated>2014-08-02T23:05:50-04:00</updated>
+  <updated>2014-08-03T00:06:49-04:00</updated>
   <id>http://mcoam.github.io/</id>
   <author>
     <name><![CDATA[Miguel Angel Coa Morales]]></name>
     
   </author>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Creando un Box para Vagrant]]></title>
+    <link href="http://mcoam.github.io/blog/2014/08/02/creando-un-box-para-vagrant/"/>
+    <updated>2014-08-02T23:50:00-04:00</updated>
+    <id>http://mcoam.github.io/blog/2014/08/02/creando-un-box-para-vagrant</id>
+    <content type="html"><![CDATA[<p>En mi caso la máquina virtual no fue creada desde cero, ya que bajé un Box de Vagrant y lo customicé por lo que me salté los pasos previos de la creación del box <a href="https://docs.vagrantup.com/v2/boxes/base.html.">https://docs.vagrantup.com/v2/boxes/base.html.</a> Lo realizado para la creación del box fue lo siguiente:</p>
+
+<p><li> Optimización de tamaño de la VM </li></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="err">$</span> <span class="n">sudo</span> <span class="n">dd</span> <span class="k">if</span><span class="o">=</span><span class="sr">/dev/</span><span class="n">zero</span> <span class="n">of</span><span class="o">=</span><span class="sr">/EMPTY bs=1M</span>
+</span><span class='line'><span class="sr">$ sudo rm -f /</span><span class="no">EMPTY</span>
+</span><span class='line'><span class="err">$</span> <span class="n">sudo</span> <span class="n">shutdown</span> <span class="o">-</span><span class="n">h</span> <span class="n">now</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><li> Creación del Box </li></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="ss">Miguel</span><span class="p">:</span><span class="no">PuppetMaster</span><span class="err">$</span> <span class="n">cd</span> <span class="o">~</span><span class="sr">/VirtualBox\ VMs/</span> <span class="c1"># directorio donde quedan alojadas las vms</span>
+</span><span class='line'><span class="ss">Miguel</span><span class="p">:</span><span class="no">VirtualBox</span> <span class="no">VMs</span><span class="err">$</span> <span class="n">vagrant</span> <span class="n">package</span> <span class="o">--</span><span class="n">base</span> <span class="n">puppetserver</span> <span class="c1">##puppetserver es el nombre de la vm en virtualbox</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><li> Testing del Box</li>
+Agreagamos nuestro Box a nuestro Vagrant</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="ss">Miguel</span><span class="p">:</span><span class="no">PuppetMaster</span><span class="err">$</span> <span class="n">vagrant</span> <span class="n">box</span> <span class="n">add</span> <span class="no">Centos6PuppetServer</span> <span class="o">~</span><span class="sr">/VirtualBox\ VMs/</span><span class="n">package</span><span class="o">.</span><span class="n">box</span>
+</span><span class='line'><span class="o">==&gt;</span> <span class="ss">box</span><span class="p">:</span> <span class="no">Adding</span> <span class="n">box</span> <span class="s1">&#39;Centos6PuppetServer&#39;</span> <span class="p">(</span><span class="n">v0</span><span class="p">)</span> <span class="k">for</span> <span class="ss">provider</span><span class="p">:</span>
+</span><span class='line'>    <span class="ss">box</span><span class="p">:</span> <span class="ss">Downloading</span><span class="p">:</span> <span class="ss">file</span><span class="p">:</span><span class="sr">//</span><span class="o">/</span><span class="no">Users</span><span class="o">/</span><span class="no">Miguel</span><span class="o">/</span><span class="no">VirtualBox</span><span class="o">%</span><span class="mi">20</span><span class="no">VMs</span><span class="o">/</span><span class="n">package</span><span class="o">.</span><span class="n">box</span>
+</span><span class='line'><span class="o">==&gt;</span> <span class="ss">box</span><span class="p">:</span> <span class="no">Successfully</span> <span class="n">added</span> <span class="n">box</span> <span class="s1">&#39;Centos6PuppetServer&#39;</span> <span class="p">(</span><span class="n">v0</span><span class="p">)</span> <span class="k">for</span> <span class="s1">&#39;virtualbox&#39;</span><span class="o">!</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Verificamos</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="ss">Miguel</span><span class="p">:</span><span class="no">PuppetMaster</span><span class="err">$</span> <span class="n">vagrant</span> <span class="n">box</span> <span class="n">list</span>
+</span><span class='line'><span class="no">Centos6PuppetServer</span> <span class="p">(</span><span class="n">virtualbox</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="c1"># nuestro box</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Nos dirigimos a nuestro directorio de trabajo de Vagrant y crearemos un nuevo proyecto <i>testing</i></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="ss">Miguel</span><span class="p">:</span><span class="no">VagrantVM</span><span class="err">$</span> <span class="n">mkdir</span> <span class="n">testing</span>
+</span><span class='line'><span class="ss">Miguel</span><span class="p">:</span><span class="no">VagrantVM</span><span class="err">$</span> <span class="n">cd</span> <span class="n">testing</span><span class="o">/</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Iniciamos una nueva VM</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="ss">Miguel</span><span class="p">:</span><span class="n">testing</span><span class="err">$</span> <span class="n">vagrant</span> <span class="n">init</span> <span class="no">Centos6PuppetServer</span> <span class="c1">##la iniciamos</span>
+</span><span class='line'><span class="ss">Miguel</span><span class="p">:</span><span class="n">testing</span><span class="err">$</span> <span class="n">vagrant</span> <span class="n">up</span> <span class="c1">#la arrancamos</span>
+</span><span class='line'><span class="ss">Miguel</span><span class="p">:</span><span class="n">testing</span><span class="err">$</span> <span class="n">vagrant</span> <span class="n">ssh</span> <span class="c1">#nos conectamos</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Red pública para máquinas virtuales en Vagrant ]]></title>

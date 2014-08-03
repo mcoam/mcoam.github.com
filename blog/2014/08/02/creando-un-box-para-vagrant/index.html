@@ -1,0 +1,213 @@
+
+<!DOCTYPE HTML>
+<html lang="en-GB">
+<head>
+	<meta charset="utf-8">
+	<title>Creando un Box para Vagrant  | Bitácora</title>
+
+	<meta name="author" content="Miguel Angel Coa Morales">
+
+<meta name="description" content="Un blog personal"> <meta name="keywords" content="zimbra, linux, centos, devops, puppet, opensource, virtualizar, virtualización">
+
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="Bitácora" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.png" rel="shortcut icon">
+	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+</head>
+
+
+
+<body>
+	<header id="header" class="inner"><h1><a href="/">Bitácora</a></h1>
+<span class="tagline">Miguel Angel Coa Morales</span>
+<nav id="main-nav"><ul>
+	<li><a href="/about">About</a></li>
+	<li><a href="/archives">Archives</a></li>
+	<li><a href="/contact">Contact</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul>
+	<li><a href="/about">About</a></li>
+	<li><a href="/archives">Archives</a></li>
+	<li><a href="/contact">Contact</a></li>
+</ul>
+</div>
+	</div>
+</nav>
+
+
+</header>
+
+	<div id="content" class="inner"><article class="post">
+	<header>
+		<h2 class="title">Creando Un Box Para Vagrant</h2>
+		<div class="meta date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-08-02T23:50:00-04:00" pubdate data-updated="true">Aug 2<span>nd</span>, 2014</time></div>
+	</header>
+	<div class="entry-content"><p>En mi caso la máquina virtual no fue creada desde cero, ya que bajé un Box de Vagrant y lo customicé por lo que me salté los pasos previos de la creación del box <a href="https://docs.vagrantup.com/v2/boxes/base.html.">https://docs.vagrantup.com/v2/boxes/base.html.</a> Lo realizado para la creación del box fue lo siguiente:</p>
+
+<p><li> Optimización de tamaño de la VM </li></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="err">$</span> <span class="n">sudo</span> <span class="n">dd</span> <span class="k">if</span><span class="o">=</span><span class="sr">/dev/</span><span class="n">zero</span> <span class="n">of</span><span class="o">=</span><span class="sr">/EMPTY bs=1M</span>
+</span><span class='line'><span class="sr">$ sudo rm -f /</span><span class="no">EMPTY</span>
+</span><span class='line'><span class="err">$</span> <span class="n">sudo</span> <span class="n">shutdown</span> <span class="o">-</span><span class="n">h</span> <span class="n">now</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><li> Creación del Box </li></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="ss">Miguel</span><span class="p">:</span><span class="no">PuppetMaster</span><span class="err">$</span> <span class="n">cd</span> <span class="o">~</span><span class="sr">/VirtualBox\ VMs/</span> <span class="c1"># directorio donde quedan alojadas las vms</span>
+</span><span class='line'><span class="ss">Miguel</span><span class="p">:</span><span class="no">VirtualBox</span> <span class="no">VMs</span><span class="err">$</span> <span class="n">vagrant</span> <span class="n">package</span> <span class="o">--</span><span class="n">base</span> <span class="n">puppetserver</span> <span class="c1">##puppetserver es el nombre de la vm en virtualbox</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><li> Testing del Box</li>
+Agreagamos nuestro Box a nuestro Vagrant</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="ss">Miguel</span><span class="p">:</span><span class="no">PuppetMaster</span><span class="err">$</span> <span class="n">vagrant</span> <span class="n">box</span> <span class="n">add</span> <span class="no">Centos6PuppetServer</span> <span class="o">~</span><span class="sr">/VirtualBox\ VMs/</span><span class="n">package</span><span class="o">.</span><span class="n">box</span>
+</span><span class='line'><span class="o">==&gt;</span> <span class="ss">box</span><span class="p">:</span> <span class="no">Adding</span> <span class="n">box</span> <span class="s1">&#39;Centos6PuppetServer&#39;</span> <span class="p">(</span><span class="n">v0</span><span class="p">)</span> <span class="k">for</span> <span class="ss">provider</span><span class="p">:</span>
+</span><span class='line'>    <span class="ss">box</span><span class="p">:</span> <span class="ss">Downloading</span><span class="p">:</span> <span class="ss">file</span><span class="p">:</span><span class="sr">//</span><span class="o">/</span><span class="no">Users</span><span class="o">/</span><span class="no">Miguel</span><span class="o">/</span><span class="no">VirtualBox</span><span class="o">%</span><span class="mi">20</span><span class="no">VMs</span><span class="o">/</span><span class="n">package</span><span class="o">.</span><span class="n">box</span>
+</span><span class='line'><span class="o">==&gt;</span> <span class="ss">box</span><span class="p">:</span> <span class="no">Successfully</span> <span class="n">added</span> <span class="n">box</span> <span class="s1">&#39;Centos6PuppetServer&#39;</span> <span class="p">(</span><span class="n">v0</span><span class="p">)</span> <span class="k">for</span> <span class="s1">&#39;virtualbox&#39;</span><span class="o">!</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Verificamos</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="ss">Miguel</span><span class="p">:</span><span class="no">PuppetMaster</span><span class="err">$</span> <span class="n">vagrant</span> <span class="n">box</span> <span class="n">list</span>
+</span><span class='line'><span class="no">Centos6PuppetServer</span> <span class="p">(</span><span class="n">virtualbox</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="c1"># nuestro box</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Nos dirigimos a nuestro directorio de trabajo de Vagrant y crearemos un nuevo proyecto <i>testing</i></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="ss">Miguel</span><span class="p">:</span><span class="no">VagrantVM</span><span class="err">$</span> <span class="n">mkdir</span> <span class="n">testing</span>
+</span><span class='line'><span class="ss">Miguel</span><span class="p">:</span><span class="no">VagrantVM</span><span class="err">$</span> <span class="n">cd</span> <span class="n">testing</span><span class="o">/</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Iniciamos una nueva VM</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="ss">Miguel</span><span class="p">:</span><span class="n">testing</span><span class="err">$</span> <span class="n">vagrant</span> <span class="n">init</span> <span class="no">Centos6PuppetServer</span> <span class="c1">##la iniciamos</span>
+</span><span class='line'><span class="ss">Miguel</span><span class="p">:</span><span class="n">testing</span><span class="err">$</span> <span class="n">vagrant</span> <span class="n">up</span> <span class="c1">#la arrancamos</span>
+</span><span class='line'><span class="ss">Miguel</span><span class="p">:</span><span class="n">testing</span><span class="err">$</span> <span class="n">vagrant</span> <span class="n">ssh</span> <span class="c1">#nos conectamos</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+</div>
+	
+
+</article>
+
+	
+	<div class="share">
+		<ul>
+			<li>
+  <a href="https://twitter.com/intent/tweet?text=Creando un Box para Vagrant by @&url=http://mcoam.github.io/blog/2014/08/02/creando-un-box-para-vagrant/" title="Share Creando un Box para Vagrant on Twitter">
+    <img src="/images/social/twitter.png" />
+  </a>
+</li>
+
+			<li>
+  <a href="https://www.facebook.com/sharer.php?u=http://mcoam.github.io/blog/2014/08/02/creando-un-box-para-vagrant/" title="Share Creando un Box para Vagrant on Facebook">
+    <img src="/images/social/facebook.png" />
+  </a>
+</li>
+
+			<li>
+  <a href="https://plus.google.com/share?url=http://mcoam.github.io/blog/2014/08/02/creando-un-box-para-vagrant/" title="Share Creando un Box para Vagrant on Google Plus">
+    <img src="/images/social/google.png" />
+  </a>
+</li>
+
+		</ul>
+	</div>
+
+
+
+
+<section id="comment">
+    <h2 class="title">Comments</h2>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+</div>
+	<footer id="footer" class="inner">&copy; 2014
+
+    Miguel Angel Coa Morales
+
+</footer>
+	<script src="/javascripts/slash.js"></script>
+<script src="/javascripts/hyphenator.js"></script>
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'miguelcoa';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://mcoam.github.io/blog/2014/08/02/creando-un-box-para-vagrant/';
+        var disqus_url = 'http://mcoam.github.io/blog/2014/08/02/creando-un-box-para-vagrant/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-45157770-1']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+
+
+</body>
+</html>
