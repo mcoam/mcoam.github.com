@@ -4,7 +4,7 @@
   <title><![CDATA[Bitácora]]></title>
   <link href="http://mcoam.github.io/atom.xml" rel="self"/>
   <link href="http://mcoam.github.io/"/>
-  <updated>2014-08-02T23:04:22-04:00</updated>
+  <updated>2014-08-02T23:05:07-04:00</updated>
   <id>http://mcoam.github.io/</id>
   <author>
     <name><![CDATA[Miguel Angel Coa Morales]]></name>
@@ -908,8 +908,6 @@ PuppetBoard difiere de Pupet Dansboard en:
 </span><span class='line'><span class="o">[</span><span class="n">root</span><span class="vi">@master</span> <span class="n">puppetboard</span><span class="o">]</span><span class="err">$</span> <span class="n">htpasswd</span> <span class="o">-</span><span class="n">c</span> <span class="o">.</span><span class="n">htpasswd</span> <span class="n">admin</span> <span class="c1">#colocamos el Password para el acceso web</span>
 </span></code></pre></td></tr></table></div></figure>
 
-
-<p>Concluido todo el proceso anterior reiniciamos el servicio apache y nos será posible acceder vía web al PuppetBoard. De forma adicional el acceso al servicio web es mediante usuario y password <i>/var/www/puppetboard/.htpasswd</i> la información mas detallada la pueden ver <a href="http://wiki.apache.org/httpd/PasswordBasicAuth">acá</a></p>
 
 <p><img src="http://mcoam.github.io/images/puppetboardnodes.png"></p>
 ]]></content>
