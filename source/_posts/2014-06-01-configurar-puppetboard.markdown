@@ -98,6 +98,11 @@ Y colocamos la siguiente configuración
     </Directory>
 </VirtualHost>
 ```
-Concluido todo el proceso anterior reiniciamos el servicio apache y nos será posible acceder vía web al PuppetBoard. De forma adicional el acceso al servicio web es mediante usuario y password <i>/var/www/puppetboard/.htpasswd</i> la información de la configuración la pueden ver [acá](http://wiki.apache.org/httpd/PasswordBasicAuth)
+Creando el usuario para el acceso web
+```ruby
+[root@master puppetboard]$ cd /var/www/puppetboard/
+[root@master puppetboard]$ htpasswd -c .htpasswd admin #colocamos el Password para el acceso web
+```
+Finalmente podemos acceder luego de ingresar el usuario y password.
 
 {% img /images/puppetboardnodes.png %}
