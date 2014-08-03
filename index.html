@@ -815,7 +815,16 @@ PuppetBoard difiere de Pupet Dansboard en:
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Concluido todo el proceso anterior reiniciamos el servicio apache y nos será posible acceder vía web al PuppetBoard. De forma adicional el acceso al servicio web es mediante usuario y password <i>/var/www/puppetboard/.htpasswd</i> la información de la configuración la pueden ver <a href="http://wiki.apache.org/httpd/PasswordBasicAuth">acá</a></p>
+<p>Creando el usuario para el acceso web</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[</span><span class="n">root</span><span class="vi">@master</span> <span class="n">puppetboard</span><span class="o">]</span><span class="c1"># cd /var/www/puppetboard/</span>
+</span><span class='line'><span class="o">[</span><span class="n">root</span><span class="vi">@master</span> <span class="n">puppetboard</span><span class="o">]</span><span class="c1"># htpasswd -c .htpasswd admin #colocamos el Password para el acceso web</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Concluido todo el proceso anterior reiniciamos el servicio apache y nos será posible acceder vía web al PuppetBoard. De forma adicional el acceso al servicio web es mediante usuario y password <i>/var/www/puppetboard/.htpasswd</i> la información mas detallada la pueden ver <a href="http://wiki.apache.org/httpd/PasswordBasicAuth">acá</a></p>
 
 <p><img src="/images/puppetboardnodes.png"></p>
 
