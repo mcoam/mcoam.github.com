@@ -93,12 +93,6 @@
         <lastmod>2014-08-03T00:06:27-04:00</lastmod>
     </url>
     <url>
-        <loc>
-            http://mcoam.github.io/blog/2014/08/20/samba4-como-controlador-de-dominio-a-slash-d/
-        </loc>
-        <lastmod>2014-08-26T11:52:19-04:00</lastmod>
-    </url>
-    <url>
         <loc>http://mcoam.github.io/blog/2014/08/20/error-samba4-y-bind/</loc>
         <lastmod>2014-08-20T18:28:42-04:00</lastmod>
     </url>
@@ -114,15 +108,15 @@
     </url>
     <url>
         <loc>http://mcoam.github.io/archives/</loc>
-        <lastmod>2014-08-26T11:52:19-04:00</lastmod>
+        <lastmod>2014-08-26T11:49:33-04:00</lastmod>
     </url>
     <url>
         <loc>http://mcoam.github.io/blog/archives/</loc>
-        <lastmod>2014-08-26T11:52:19-04:00</lastmod>
+        <lastmod>2014-08-26T11:49:33-04:00</lastmod>
     </url>
     <url>
         <loc>http://mcoam.github.io/blog/</loc>
-        <lastmod>2014-08-26T11:52:19-04:00</lastmod>
+        <lastmod>2014-08-26T11:49:33-04:00</lastmod>
     </url>
     <url>
         <loc>http://mcoam.github.io/contact/</loc>
@@ -130,7 +124,7 @@
     </url>
     <url>
         <loc>http://mcoam.github.io/</loc>
-        <lastmod>2014-08-26T11:52:19-04:00</lastmod>
+        <lastmod>2014-08-26T11:49:33-04:00</lastmod>
     </url>
     <url>
         <loc>http://mcoam.github.io/robots.txt</loc>
