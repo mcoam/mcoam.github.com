@@ -4,7 +4,7 @@
   <title><![CDATA[Category: puppetdb | Bitácora]]></title>
   <link href="http://mcoam.github.io/blog/categories/puppetdb/atom.xml" rel="self"/>
   <link href="http://mcoam.github.io/"/>
-  <updated>2014-08-03T00:06:49-04:00</updated>
+  <updated>2014-08-26T11:50:47-04:00</updated>
   <id>http://mcoam.github.io/</id>
   <author>
     <name><![CDATA[Miguel Angel Coa Morales]]></name>
@@ -12,6 +12,36 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Eliminar y purgar nodo de PuppetDB (storeconfig)]]></title>
+    <link href="http://mcoam.github.io/blog/2014/08/26/eliminar-y-purgar-nodo-de-puppetdb-storeconfig/"/>
+    <updated>2014-08-26T11:43:00-04:00</updated>
+    <id>http://mcoam.github.io/blog/2014/08/26/eliminar-y-purgar-nodo-de-puppetdb-storeconfig</id>
+    <content type="html"><![CDATA[<p>Error:
+<code>ruby
+Error: Could not retrieve catalog from remote server: Error 400 on SERVER: A duplicate resource was found while collecting exported resources, with the type and title Nagios_host[next-haproxy-1.domain.org] on node nagios.domain.org
+Warning: Not using cache on failed catalog
+Error: Could not retrieve catalog; skipping run
+</code>
+Lo anterior era por que el node estaba registrado dos veces en PuppetDB una con el fqdn completo <i>next-haproxy-1.domain.org</i> y otra sin el dominio <i>next-haproxy-1</i> lo que generaba error al exportar los recursos. La solución fue eliminar uno y luego purgar el contenido de la base de datos:</p>
+
+<p><li>Remover el nodo de PuppetDB</li>
+<code>ruby
+[root@nagios servers]$ puppet node deactivate next-haproxy-1
+</code>
+Remover el nodo de la DB
+```ruby
+[root@puppet ~]# psql -h 127.0.0.1 puppetdb puppetdb
+Password for user puppetdb: <colocar password></p>
+
+<h1>EJECUTAR</h1>
+
+<p>puppetdb=> delete from catalogs where certname in (select name from certnames where deactivated is not null);
+DELETE 1
+```</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Desactivar nodo PuppetDB]]></title>

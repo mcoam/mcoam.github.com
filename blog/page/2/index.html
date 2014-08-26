@@ -53,6 +53,355 @@
 	<header>
 		<h2 class="title">
 			
+			<a href="/blog/2014/06/01/configurar-puppetboard/">
+			
+				Configurar PuppetBoard</a>
+		</h2>
+		<div class="meta date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-06-01T22:39:00-04:00" pubdate data-updated="true">Jun 1<span>st</span>, 2014</time></div>
+	</header>
+	<div class="entry-content">
+		<p>Para facilitar la administración de Puppet (opensource) tenemos una nueva herramienta que se llama PuppetBoard su objetivo es dar accesos a la data que nosotros tenemos almacenada en nuestro PuppetDB de forma gráfica vía web, además de permitirnos ver el funcionamiento y reportes de los nodos al momentos de conectarse al nuestro Master.
+PuppetBoard difiere de Pupet Dansboard en:
+<li>Esta escrito en Python no en Ruby </li>
+<li>No almacena ningún tipo de data, toda información es requerida del PuppetDB</li>
+<li>No es posible funcionar sin PuppetDB</li></p>
+
+<p>La instalación del servicio no es compleja, puedes ver con lujo y detalle todos los pasos <a href="https://github.com/nedap/puppetboard">acá</a>. Para nuestro caso el proceso de instalación es el siguiente:</p>
+
+<h4>Instalación</h4>
+
+<p><img src="/images/puppetboard.png"></p>
+
+<p>Nota: Nuestra instalación será en base a Apache + mod-wsi</p>
+
+<p>Creamos nuestro directorio web de PuppetBoard</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="err">$</span> <span class="n">mkdir</span> <span class="o">-</span><span class="nb">p</span> <span class="sr">/var/</span><span class="n">www</span><span class="o">/</span><span class="n">puppetboard</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Clonamos el fuente</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">git</span> <span class="nb">clone</span> <span class="ss">https</span><span class="p">:</span><span class="sr">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">nedap</span><span class="o">/</span><span class="n">puppetboard</span><span class="o">.</span><span class="n">git</span> <span class="sr">/var/</span><span class="n">www</span><span class="o">/</span><span class="n">puppetboard</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>O lo instalamos de forma manual</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">pip</span> <span class="n">install</span> <span class="n">puppetboard</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Instalamos paquetería necesaria</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">yum</span> <span class="n">install</span> <span class="n">mod_wsgi</span> <span class="n">python</span><span class="o">-</span><span class="n">pip</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Copiamos el archivo de ejemplo <i>/usr/lib/python2.6/site-packages/puppetboard/default_settings.py</i> a la ruta <i>/var/www/puppetboard</i>, la nombramos <i>settings.py</i></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="err">$</span> <span class="n">cp</span> <span class="sr">/usr/</span><span class="n">lib</span><span class="o">/</span><span class="n">python2</span><span class="o">.</span><span class="mi">6</span><span class="o">/</span><span class="n">site</span><span class="o">-</span><span class="n">packages</span><span class="o">/</span><span class="n">puppetboard</span><span class="o">/</span><span class="n">default_settings</span><span class="o">.</span><span class="n">py</span> <span class="sr">/var/</span><span class="n">www</span><span class="o">/</span><span class="n">puppetboard</span>
+</span><span class='line'><span class="err">$</span> <span class="n">mv</span> <span class="sr">/var/</span><span class="n">www</span><span class="o">/</span><span class="n">puppetboard</span><span class="o">/</span><span class="n">default_settings</span><span class="o">.</span><span class="n">py</span> <span class="sr">/var/</span><span class="n">www</span><span class="o">/</span><span class="n">puppetboard</span><span class="o">/</span><span class="n">settings</span><span class="o">.</span><span class="n">py</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Y colocamos el siguiente contenido</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">PUPPETDB_HOST</span> <span class="o">=</span> <span class="s1">&#39;127.0.0.1&#39;</span>
+</span><span class='line'><span class="no">PUPPETDB_PORT</span> <span class="o">=</span> <span class="mi">8080</span>
+</span><span class='line'><span class="c1">#PUPPETDB_SSL_VERIFY = True</span>
+</span><span class='line'><span class="no">PUPPETDB_KEY</span> <span class="o">=</span> <span class="no">None</span>
+</span><span class='line'><span class="no">PUPPETDB_CERT</span> <span class="o">=</span> <span class="no">None</span>
+</span><span class='line'><span class="no">PUPPETDB_TIMEOUT</span> <span class="o">=</span> <span class="mi">20</span>
+</span><span class='line'><span class="no">DEV_LISTEN_HOST</span> <span class="o">=</span> <span class="s1">&#39;127.0.0.1&#39;</span>
+</span><span class='line'><span class="no">DEV_LISTEN_PORT</span> <span class="o">=</span> <span class="mi">5000</span>
+</span><span class='line'><span class="no">UNRESPONSIVE_HOURS</span> <span class="o">=</span> <span class="mi">2</span>
+</span><span class='line'><span class="no">ENABLE_QUERY</span> <span class="o">=</span> <span class="no">True</span>
+</span><span class='line'><span class="no">LOGLEVEL</span> <span class="o">=</span> <span class="s1">&#39;info&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>En el mismo directorio del PuppetBoard, creamos el archivo <i>wsgi.py</i> con el siguiente contenido</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">from</span> <span class="n">__future__</span> <span class="n">import</span> <span class="n">absolute_import</span>
+</span><span class='line'><span class="n">import</span> <span class="n">os</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1"># Needed if a settings.py file exists</span>
+</span><span class='line'><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">[</span><span class="s1">&#39;PUPPETBOARD_SETTINGS&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="s1">&#39;/var/www/puppetboard/settings.py&#39;</span>
+</span><span class='line'><span class="n">from</span> <span class="n">puppetboard</span><span class="o">.</span><span class="n">app</span> <span class="n">import</span> <span class="n">app</span> <span class="n">as</span> <span class="n">application</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Ahora, creamos el archivo <i>/etc/httpd/conf.d/wdgi.conf</i> para cargar el módulo en Apache con el siguiente contenido</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">LoadModule</span> <span class="n">wsgi_module</span> <span class="n">modules</span><span class="o">/</span><span class="n">mod_wsgi</span><span class="o">.</span><span class="n">so</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Finalmente, creamos el archivo de configuración para el virtualhosts que nos permita el acceso al PuppetBoard vía web</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="err">$</span> <span class="n">touch</span> <span class="sr">/etc/</span><span class="n">httpd</span><span class="o">/</span><span class="n">conf</span><span class="o">.</span><span class="n">d</span><span class="o">/</span><span class="n">puppetboard</span><span class="o">.</span><span class="n">conf</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Y colocamos la siguiente configuración</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">&lt;</span><span class="no">VirtualHost</span> <span class="o">*</span><span class="p">:</span><span class="mi">80</span><span class="o">&gt;</span>
+</span><span class='line'>    <span class="no">ServerName</span> <span class="n">puppet</span><span class="o">.</span><span class="n">example</span><span class="o">.</span><span class="n">com</span>
+</span><span class='line'>    <span class="no">WSGIDaemonProcess</span> <span class="n">puppetboard</span> <span class="n">user</span><span class="o">=</span><span class="n">apache</span> <span class="n">group</span><span class="o">=</span><span class="n">apache</span> <span class="n">threads</span><span class="o">=</span><span class="mi">5</span>
+</span><span class='line'>    <span class="no">WSGIScriptAlias</span> <span class="o">/</span> <span class="sr">/var/</span><span class="n">www</span><span class="o">/</span><span class="n">puppetboard</span><span class="o">/</span><span class="n">wsgi</span><span class="o">.</span><span class="n">py</span>
+</span><span class='line'>    <span class="no">ErrorLog</span> <span class="sr">/var/</span><span class="n">log</span><span class="o">/</span><span class="n">httpd</span><span class="o">/</span><span class="n">puppetboard</span><span class="o">.</span><span class="n">error</span><span class="o">.</span><span class="n">log</span>
+</span><span class='line'>    <span class="no">CustomLog</span> <span class="sr">/var/</span><span class="n">log</span><span class="o">/</span><span class="n">httpd</span><span class="o">/</span><span class="n">puppetboard</span><span class="o">.</span><span class="n">access</span><span class="o">.</span><span class="n">log</span> <span class="n">combined</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="no">Alias</span> <span class="sr">/static /us</span><span class="n">r</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python2</span><span class="o">.</span><span class="mi">6</span><span class="o">/</span><span class="n">site</span><span class="o">-</span><span class="n">packages</span><span class="o">/</span><span class="n">puppetboard</span><span class="o">/</span><span class="n">static</span><span class="o">/</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="o">&lt;</span><span class="no">Directory</span> <span class="sr">/usr/</span><span class="n">lib</span><span class="o">/</span><span class="n">python2</span><span class="o">.</span><span class="mi">6</span><span class="o">/</span><span class="n">site</span><span class="o">-</span><span class="n">packages</span><span class="o">/</span><span class="n">puppetboard</span><span class="o">&gt;</span>
+</span><span class='line'>        <span class="no">AuthType</span> <span class="no">Basic</span>
+</span><span class='line'>        <span class="no">AuthName</span> <span class="s2">&quot;Authentication Required&quot;</span>
+</span><span class='line'>        <span class="no">AuthUserFile</span> <span class="s2">&quot;/var/www/puppetboard/.htpasswd&quot;</span>
+</span><span class='line'>        <span class="no">Require</span> <span class="n">valid</span><span class="o">-</span><span class="n">user</span>
+</span><span class='line'>        <span class="no">Order</span> <span class="n">allow</span><span class="p">,</span><span class="n">deny</span>
+</span><span class='line'>        <span class="no">Allow</span> <span class="n">from</span> <span class="n">all</span>
+</span><span class='line'>       <span class="no">WSGIProcessGroup</span> <span class="n">puppetboard</span>
+</span><span class='line'>        <span class="no">WSGIApplicationGroup</span> <span class="sx">%{GLOBAL}</span>
+</span><span class='line'>      <span class="c1">#  Require all granted</span>
+</span><span class='line'><span class="c1">#      Order deny,allow</span>
+</span><span class='line'><span class="c1">#        Allow from all</span>
+</span><span class='line'>    <span class="o">&lt;</span><span class="sr">/Directory&gt;</span>
+</span><span class='line'><span class="sr">&lt;/</span><span class="no">VirtualHost</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Creando el usuario para el acceso web</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[</span><span class="n">root</span><span class="vi">@master</span> <span class="n">puppetboard</span><span class="o">]</span><span class="err">$</span> <span class="n">cd</span> <span class="sr">/var/</span><span class="n">www</span><span class="o">/</span><span class="n">puppetboard</span><span class="o">/</span>
+</span><span class='line'><span class="o">[</span><span class="n">root</span><span class="vi">@master</span> <span class="n">puppetboard</span><span class="o">]</span><span class="err">$</span> <span class="n">htpasswd</span> <span class="o">-</span><span class="n">c</span> <span class="o">.</span><span class="n">htpasswd</span> <span class="n">admin</span> <span class="c1">#colocamos el Password para el acceso web</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Finalmente podemos acceder luego de ingresar el usuario y password.</p>
+
+<p><img src="/images/puppetboardnodes.png"></p>
+
+		
+		
+	</div>
+
+</article>
+
+
+    <article class="post">
+	<header>
+		<h2 class="title">
+			
+			<a href="/blog/2014/03/21/reenviar-un-correo-en-zimbra-basado-en-el-subject/">
+			
+				Reenviar Un Correo en Zimbra Basado en El Subject</a>
+		</h2>
+		<div class="meta date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-03-21T14:10:00-03:00" pubdate data-updated="true">Mar 21<span>st</span>, 2014</time></div>
+	</header>
+	<div class="entry-content">
+		<p>Para reenviar un que contenga un <i>Subject</i> en particular hacia otra casilla en Zimbra podemos realizar los siguiente</p>
+
+<p>En el archivo de configuración de postfix <i>/opt/zimbra/postfix/conf/main.cf.default</i> colocamos la referencia al hash para header_checks</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">header_checks</span> <span class="o">=</span> <span class="nl">regexp:</span><span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">zimbra</span><span class="o">/</span><span class="n">postfix</span><span class="o">/</span><span class="n">conf</span><span class="o">/</span><span class="n">header_checks</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Dependiendo de la versión de Zimbra, la anterior configuración funcionará sin problemas, de lo contrario la configuración referente al header_checks tenemos que hacerla en el archivo <i>/opt/zimbra/postfix/conf/zmmta.cf</i> donde adicionaremos la siguiente línea (antes del parámetro RESTART mta)</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">POSTCONF</span> <span class="n">header_checks</span>  <span class="nl">regexp:</span><span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">zimbra</span><span class="o">/</span><span class="n">postfix</span><span class="o">/</span><span class="n">conf</span><span class="o">/</span><span class="n">header_checks</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>
+En el archivo  <i>/opt/zimbra/postfix/conf/header_checks</i> adicionamos la expresión regular que tendrá el subject</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="o">/^</span><span class="nl">Subject:</span> <span class="n">MIGUELCOA</span><span class="o">/</span> <span class="n">REDIRECT</span> <span class="n">mcoa</span><span class="err">@</span><span class="n">example</span><span class="p">.</span><span class="n">com</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Recargarmos el servicio MTA</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">zmmtactl</span> <span class="n">reload</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Y desde ahora, cada vez que desde el servidor zimbra salga un correo que en su asunto contenga &ldquo;MIGUELCOA&rdquo; será enviada una copia hacia la casilla mcoa\@example.com</p>
+
+		
+		
+	</div>
+
+</article>
+
+
+    <article class="post">
+	<header>
+		<h2 class="title">
+			
+			<a href="/blog/2014/01/15/migrando-usuarios-slash-password-postfix-to-zimbra/">
+			
+				Migrando Usuarios/password Postfix to Zimbra</a>
+		</h2>
+		<div class="meta date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-01-15T09:58:00-03:00" pubdate data-updated="true">Jan 15<span>th</span>, 2014</time></div>
+	</header>
+	<div class="entry-content">
+		<p>La idea del siguiente script es; primero crear la cuenta con una password temporal y luego configurar la password original del usuario, ambos valores son sacados del <i>/etc/shadow</i></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="c">#!/usr/bin/python</span>
+</span><span class='line'><span class="c">##Miguel Coa M.</span>
+</span><span class='line'>
+</span><span class='line'><span class="kn">import</span> <span class="nn">csv</span>
+</span><span class='line'><span class="k">with</span> <span class="nb">open</span> <span class="p">(</span><span class="s">&#39;shadow&#39;</span><span class="p">,</span> <span class="s">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="n">reader</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">reader</span> <span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s">&#39;:&#39;</span> <span class="p">)</span>
+</span><span class='line'>        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">reader</span><span class="p">:</span>
+</span><span class='line'>
+</span><span class='line'>                <span class="n">user</span>     <span class="o">=</span> <span class="n">row</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</span><span class='line'>                <span class="n">passwd</span>   <span class="o">=</span> <span class="s">&quot;&#39;crypt{&quot;</span> <span class="o">+</span> <span class="n">row</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span><span class="s">&quot;}&#39;&quot;</span>
+</span><span class='line'>
+</span><span class='line'>                <span class="k">print</span> <span class="s">&quot;ca {}@domain.com tmpPSW&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">user</span><span class="p">)</span>
+</span><span class='line'>                <span class="k">print</span> <span class="s">&quot;ma {}@domain.com userPassword  {}  &quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">user</span><span class="p">,</span><span class="n">passwd</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Y como resultado nos arrojará por pantalla</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">ca</span> <span class="n">varaya</span><span class="nd">@domain.com</span> <span class="n">tmpPSW</span>
+</span><span class='line'><span class="n">ma</span> <span class="n">varaya</span><span class="nd">@domain.com</span> <span class="n">userPassword</span>  <span class="s">&#39;crypt{$1$6RT62jZZ$sFlv.MIII4PuKISBaap030}&#39;</span>
+</span><span class='line'><span class="n">ca</span> <span class="n">cgalaz</span><span class="nd">@domain.com</span> <span class="n">tmpPSW</span>
+</span><span class='line'><span class="n">ma</span> <span class="n">cgalaz</span><span class="nd">@domain.com</span> <span class="n">userPassword</span>  <span class="s">&#39;crypt{$1$bAEOlC0N$4t.3zCGDb.RFc0vmxd2UB0}&#39;</span>
+</span><span class='line'><span class="n">ca</span> <span class="n">ctagle</span><span class="nd">@domain.com</span> <span class="n">tmpPSW</span>
+</span><span class='line'><span class="n">ma</span> <span class="n">ctagle</span><span class="nd">@domain.com</span> <span class="n">userPassword</span>  <span class="s">&#39;crypt{$1$L7vlV7Me$orB2TCnqn.JeoVQpKsr6P0}&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>
+Valor que los podemos almacenar en un archivo y los ejecutamos pasandolo como parámetro al comando <i>zmprov</i>. Si ya tenemos creadas las cuentas podemos comentar el primer print, para que solo las modifique.</p>
+
+		
+		
+	</div>
+
+</article>
+
+
+    <article class="post">
+	<header>
+		<h2 class="title">
+			
 			<a href="/blog/2014/01/14/creando-cuentas-zimbra-desde-un-csv/">
 			
 				Creando Cuentas Zimbra Desde Un CSV</a>
@@ -658,205 +1007,12 @@ En este caso el archivo esta alojado en un USB (/dev/sdb1) , por lo cual al mome
 </article>
 
 
-    <article class="post">
-	<header>
-		<h2 class="title">
-			
-			<a href="/blog/2013/10/26/migrar-correos-en-zimbra-con-imapsync/">
-			
-				Migrar Correos en Zimbra Con Imapsync</a>
-		</h2>
-		<div class="meta date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-10-26T16:17:00-03:00" pubdate data-updated="true">Oct 26<span>th</span>, 2013</time></div>
-	</header>
-	<div class="entry-content">
-		<p>En ocaciones es necesario migrar un servidor de correos Zimbra hacia otro servidor Zimbra o simplemente deseamos migrar la data entre usuario de un mismo servidor. Bueno, para eso existe el mágico del comando imapsync. Básicamente, lo que hace este comando es conectarse entre los servidores de correos mediante el protocolo imap (también puede ser imap SSl) y migrar la data de una casilla hacia otra.
-La sintaxis del comando a utilizar dependedará de las configuraciones de los servidores Ej: si acepta conexeón texto plano, solo ssl, etc. Por defecto el comando siguiente es para una instalación estandar y con conección al puerto 143.</p>
-
-<p>El comando mágico es:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">imapsync</span> <span class="o">--</span><span class="n">buffersize</span> <span class="mi">18192000</span> <span class="o">--</span><span class="n">nosyncacls</span> <span class="o">--</span><span class="n">subscribe</span> \
-</span><span class='line'><span class="o">--</span><span class="n">syncinternaldates</span> <span class="o">--</span><span class="n">noauthmd5</span> <span class="o">--</span><span class="n">authmech2</span> <span class="n">PLAIN</span> \
-</span><span class='line'><span class="o">--</span><span class="n">host1</span> <span class="mf">192.168.0.5</span> <span class="o">--</span><span class="n">user1</span> <span class="n">source</span><span class="err">@</span><span class="n">domain</span><span class="p">.</span><span class="n">com</span> \
-</span><span class='line'><span class="o">--</span><span class="n">password1</span> <span class="n">SourcePassword</span> <span class="o">--</span><span class="n">host2</span> <span class="mf">192.168.0.5</span> \
-</span><span class='line'><span class="o">--</span><span class="n">user2</span> <span class="n">destination</span><span class="err">@</span><span class="n">domain</span><span class="p">.</span><span class="n">com</span> <span class="o">--</span><span class="n">authmech2</span> <span class="n">PLAIN</span> \
-</span><span class='line'><span class="o">--</span><span class="n">password2</span> <span class="n">DestinationPassword</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Donde:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="o">--</span><span class="n">host1</span> <span class="o">:</span> <span class="n">Es</span> <span class="n">el</span> <span class="n">servidor</span> <span class="n">de</span> <span class="n">origen</span>
-</span><span class='line'><span class="o">--</span><span class="n">user1</span> <span class="o">:</span> <span class="n">Es</span> <span class="n">el</span> <span class="n">usuario</span> <span class="n">de</span> <span class="n">origen</span>
-</span><span class='line'><span class="o">--</span><span class="n">password1</span> <span class="o">:</span> <span class="n">Es</span> <span class="n">la</span> <span class="n">password</span> <span class="n">de</span> <span class="n">la</span> <span class="n">cuenta</span> <span class="n">origen</span>
-</span><span class='line'><span class="o">--</span><span class="n">host2</span> <span class="o">:</span> <span class="n">Es</span> <span class="n">el</span> <span class="n">servidor</span> <span class="n">de</span> <span class="n">destino</span>
-</span><span class='line'><span class="o">--</span><span class="n">user2</span> <span class="o">:</span> <span class="n">Es</span> <span class="n">el</span> <span class="n">usuario</span> <span class="n">de</span> <span class="n">destino</span>
-</span><span class='line'><span class="o">--</span><span class="n">password2</span> <span class="o">:</span> <span class="n">Es</span> <span class="n">la</span> <span class="n">password</span> <span class="n">de</span> <span class="n">la</span> <span class="n">cuenta</span> <span class="n">de</span> <span class="n">destino</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Para más detalle del uso del comando visita el <a href="http://wiki.zimbra.com/wiki/Guide_to_imapsync">Wiki de Zimbra </a></p>
-
-		
-		
-	</div>
-
-</article>
-
-
-    <article class="post">
-	<header>
-		<h2 class="title">
-			
-			<a href="/blog/2013/10/23/configurar-octopress-y-github-para-blog/">
-			
-				Configurar Octopress Y Github Para Blog</a>
-		</h2>
-		<div class="meta date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-10-23T18:00:00-03:00" pubdate data-updated="true">Oct 23<span>rd</span>, 2013</time></div>
-	</header>
-	<div class="entry-content">
-		<p>Si quieres montar un blog con Octopress (framework para montar blog) y Github (repo donde almacenaremos nuestro sitio) , hay que hacer lo siguiente:</p>
-
-<p><strong>Descargando Octopress</strong></p>
-
-<ol>
-<li>Descargamos la versión de octopress desde Github</li>
-</ol>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">git</span> <span class="n">clone</span> <span class="nl">git:</span><span class="c1">//github.com/imathis/octopress.git octopress </span>
-</span><span class='line'><span class="n">cd</span> <span class="n">octopress</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ol>
-<li>Instalamos el tema por default y las dependencias necesarias</li>
-</ol>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">gem</span> <span class="n">install</span> <span class="n">bundler</span>
-</span><span class='line'><span class="n">bundle</span> <span class="n">install</span>
-</span><span class='line'><span class="n">rake</span> <span class="n">install</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p><strong>Configuración de Github</strong></p>
-
-<p>Lo primero es que tenemos que crear una cuenta en <a href="https://www.github.com/">Github</a>. Una vez creada la cuenta creamos un repositorio con el formtato: <i>&ldquo;nombredeusuario.github.com&rdquo;</i>,  en el caso de mi repositorio queda así: <a href="https://github.com/mcoam/mcoam.github.com">https://github.com/mcoam/mcoam.github.com</a></p>
-
-<ol>
-<li>Configurar octopress para acceder a este respositorio</li>
-</ol>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'> <span class="n">rake</span> <span class="n">setup_github_pages</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ol>
-<li><p>Ejecutado el comando anterior nos pedirá la url del repositorio. En el caso nuestro, es <i>git@github.com:mcoam/mcoam.github.com.git</i></p></li>
-<li><p>Para efectos de subir los post es necesario copiar la llave ssh de la máquina local (donde tenemos octopress) hacia nuestro sitio en Github.</p></li>
-</ol>
-
-
-
-		
-		<a href="/blog/2013/10/23/configurar-octopress-y-github-para-blog/" class="more-link">Read on &rarr;</a>
-	</div>
-
-</article>
-
-
-    <article class="post">
-	<header>
-		<h2 class="title">
-			
-			<a href="/blog/2013/10/22/cambiar-theme-octopress/">
-			
-				Cambiar Theme Octopress</a>
-		</h2>
-		<div class="meta date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-10-22T23:17:00-03:00" pubdate data-updated="true">Oct 22<span>nd</span>, 2013</time></div>
-	</header>
-	<div class="entry-content">
-		<p>Si deseamos cambiar el theme por defecto que instala Octopress, hacemos lo siguiente</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>cd octopress
-</span><span class='line'>git clone git://github.com/panks/fabric.git .themes/fabric
-</span><span class='line'>rake install['fabric']
-</span><span class='line'>rake generate</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-
-		
-		<a href="/blog/2013/10/22/cambiar-theme-octopress/" class="more-link">Read on &rarr;</a>
-	</div>
-
-</article>
-
-
     <nav id="pagenavi">
         
             <a href="/" class="prev">Previous</a>
         
+        
+            <a href="/blog/page/3/" class="next">Next</a>
         
     </nav>
 

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: bind | Bitácora]]></title>
+  <link href="http://mcoam.github.io/blog/categories/bind/atom.xml" rel="self"/>
+  <link href="http://mcoam.github.io/"/>
+  <updated>2014-08-26T11:50:47-04:00</updated>
+  <id>http://mcoam.github.io/</id>
+  <author>
+    <name><![CDATA[Miguel Angel Coa Morales]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Error Kerberos y Bind con Samba4]]></title>
+    <link href="http://mcoam.github.io/blog/2014/08/20/error-samba4-y-bind/"/>
+    <updated>2014-08-20T18:17:00-04:00</updated>
+    <id>http://mcoam.github.io/blog/2014/08/20/error-samba4-y-bind</id>
+    <content type="html"><![CDATA[<p>Al momento de validar la configuración de kerberos del usuario admin arrojaba lo siguiente:</p>
+
+<p><code>ruby
+[root@samba ~]$ kinit administrator@EXAMPLE.LOCAL
+kinit: Cannot resolve servers for KDC in realm "EXAMPLE.LOCAL" while getting initial credentials
+</code>
+Al chequear las configuraciones DNS de de Samba arrojaba
+```ruby
+[root@samba ~]$ samba_dnsupdate &mdash;verbose &mdash;all-names
+IPs: [&lsquo;10.0.2.15&rsquo;, &lsquo;10.10.0.200&rsquo;]
+Traceback (most recent call last):
+  File &ldquo;/usr/local/samba/sbin/samba_dnsupdate&rdquo;, line 511, in <module></p>
+
+<pre><code>get_credentials(lp)
+</code></pre>
+
+<p>  File &ldquo;/usr/local/samba/sbin/samba_dnsupdate&rdquo;, line 124, in get_credentials</p>
+
+<pre><code>raise e
+</code></pre>
+
+<p>RuntimeError: kinit for SAMBA$@EXAMPLE.LOCAL failed (Cannot contact any KDC for requested realm)
+```</p>
+
+<h4>Solución ELIMINAR Bind</h4>
+
+<p><code>ruby
+[root@samba ~]$ yum remove bind -y
+</code></p>
+
+<h4>Comprobamos</h4>
+
+<p><code>ruby
+[root@samba ~]# kinit administrator@EXAMPLE.LOCAL
+Password for administrator@EXAMPLE.LOCAL:
+Warning: Your password will expire in 41 days on Wed Oct  1 17:54:00 2014
+</code>
+Y chequeamos la configuracion de DNS de Samba
+```ruby
+[root@samba ~]# samba_dnsupdate &mdash;verbose &mdash;all-names
+IPs: [&lsquo;10.0.2.15&rsquo;, &lsquo;10.10.0.200&rsquo;]
+Calling nsupdate for A example.local 10.0.2.15
+Outgoing update query:
+;; &ndash;>>HEADER&lt;&lt;&ndash; opcode: UPDATE, status: NOERROR, id:      0
+;; flags:; ZONE: 0, PREREQ: 0, UPDATE: 0, ADDITIONAL: 0
+;; UPDATE SECTION:
+example.local.      900 IN  A   10.0.2.15</p>
+
+<p>; TSIG error with server: tsig verify failure
+Failed nsupdate: 2
+Calling nsupdate for A samba.example.local 10.0.2.15
+Outgoing update query:
+;; &ndash;>>HEADER&lt;&lt;&ndash; opcode: UPDATE, status: NOERROR, id:      0
+;; flags:; ZONE: 0, PREREQ: 0, UPDATE: 0, ADDITIONAL: 0
+;; UPDATE SECTION:
+samba.example.local.    900 IN  A   10.0.2.15
+```</p>
+]]></content>
+  </entry>
+  
+</feed>
