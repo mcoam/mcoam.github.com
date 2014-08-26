@@ -83,14 +83,14 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Remover el nodo de la DB</p>
+<p><li>Remover el nodo de la DB</li></p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
 <span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[</span><span class="n">root</span><span class="vi">@puppet</span> <span class="o">~]</span><span class="c1"># psql -h 127.0.0.1 puppetdb puppetdb</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[</span><span class="n">root</span><span class="vi">@puppet</span> <span class="o">~]</span><span class="err">$</span> <span class="n">psql</span> <span class="o">-</span><span class="n">h</span> <span class="mi">127</span><span class="o">.</span><span class="mi">0</span><span class="o">.</span><span class="mi">0</span><span class="o">.</span><span class="mi">1</span> <span class="n">puppetdb</span> <span class="n">puppetdb</span>
 </span><span class='line'><span class="no">Password</span> <span class="k">for</span> <span class="n">user</span> <span class="ss">puppetdb</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">colocar</span> <span class="n">password</span><span class="o">&gt;</span>
 </span><span class='line'><span class="c1">#EJECUTAR</span>
 </span><span class='line'><span class="n">puppetdb</span><span class="o">=&gt;</span> <span class="n">delete</span> <span class="n">from</span> <span class="n">catalogs</span> <span class="n">where</span> <span class="n">certname</span> <span class="k">in</span> <span class="p">(</span><span class="nb">select</span> <span class="nb">name</span> <span class="n">from</span> <span class="n">certnames</span> <span class="n">where</span> <span class="n">deactivated</span> <span class="n">is</span> <span class="ow">not</span> <span class="n">null</span><span class="p">);</span>
