@@ -4,7 +4,7 @@
   <title><![CDATA[Bitácora]]></title>
   <link href="http://mcoam.github.io/atom.xml" rel="self"/>
   <link href="http://mcoam.github.io/"/>
-  <updated>2014-10-13T16:52:33-03:00</updated>
+  <updated>2014-10-13T16:54:56-03:00</updated>
   <id>http://mcoam.github.io/</id>
   <author>
     <name><![CDATA[Miguel Angel Coa Morales]]></name>
@@ -17,7 +17,7 @@
     <link href="http://mcoam.github.io/blog/2014/10/13/eliminar-vm-vagrant/"/>
     <updated>2014-10-13T16:44:00-03:00</updated>
     <id>http://mcoam.github.io/blog/2014/10/13/eliminar-vm-vagrant</id>
-    <content type="html"><![CDATA[<p>En <code>Vagrant</code> nuestra máquinas virtuales son borradas con el comando <code>vm destroy</code> pero sucede que aveces hemos borradoe l directorio de la VM o el vagrant file y esta ya no puede ser referenciada mediante Vagrant para ser eliminada. Como Vagrant trabaja con <code>VirtualBox</code> podemos utilizar el comando <code>VBoxManage</code> para que la podamos eliminar.</p>
+    <content type="html"><![CDATA[<p>En <code>Vagrant</code> nuestra máquinas virtuales son borradas con el comando <code>vm destroy</code> pero sucede que aveces hemos borrado el directorio de la VM o el Vagrantfile y esta ya no puede ser referenciada mediante Vagrant para ser eliminada. Como Vagrant trabaja con <code>VirtualBox</code> podemos utilizar el comando <code>VBoxManage</code> para que la podamos eliminar.</p>
 
 <p>Listamos todas la VM</p>
 
