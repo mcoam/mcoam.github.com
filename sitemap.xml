@@ -93,6 +93,12 @@
         <lastmod>2014-08-03T00:06:27-04:00</lastmod>
     </url>
     <url>
+        <loc>
+            http://mcoam.github.io/blog/2014/08/20/samba4-como-controlador-de-dominio-a-slash-d/
+        </loc>
+        <lastmod>2014-09-22T14:33:00-03:00</lastmod>
+    </url>
+    <url>
         <loc>http://mcoam.github.io/blog/2014/08/20/error-samba4-y-bind/</loc>
         <lastmod>2014-08-20T18:28:42-04:00</lastmod>
     </url>
@@ -103,20 +109,24 @@
         <lastmod>2014-08-26T11:56:11-04:00</lastmod>
     </url>
     <url>
+        <loc>http://mcoam.github.io/blog/2014/10/13/eliminar-vm-vagrant/</loc>
+        <lastmod>2014-10-13T16:52:17-03:00</lastmod>
+    </url>
+    <url>
         <loc>http://mcoam.github.io/about/</loc>
         <lastmod>2014-02-28T11:17:23-03:00</lastmod>
     </url>
     <url>
         <loc>http://mcoam.github.io/archives/</loc>
-        <lastmod>2014-08-26T11:56:11-04:00</lastmod>
+        <lastmod>2014-10-13T16:52:17-03:00</lastmod>
     </url>
     <url>
         <loc>http://mcoam.github.io/blog/archives/</loc>
-        <lastmod>2014-08-26T11:56:11-04:00</lastmod>
+        <lastmod>2014-10-13T16:52:17-03:00</lastmod>
     </url>
     <url>
         <loc>http://mcoam.github.io/blog/</loc>
-        <lastmod>2014-08-26T11:56:11-04:00</lastmod>
+        <lastmod>2014-10-13T16:52:17-03:00</lastmod>
     </url>
     <url>
         <loc>http://mcoam.github.io/contact/</loc>
@@ -124,7 +134,7 @@
     </url>
     <url>
         <loc>http://mcoam.github.io/</loc>
-        <lastmod>2014-08-26T11:56:11-04:00</lastmod>
+        <lastmod>2014-10-13T16:52:17-03:00</lastmod>
     </url>
     <url>
         <loc>http://mcoam.github.io/robots.txt</loc>

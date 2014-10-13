@@ -1,0 +1,207 @@
+
+<!DOCTYPE HTML>
+<html lang="en-GB">
+<head>
+	<meta charset="utf-8">
+	<title>Eliminar VM Vagrant  | Bitácora</title>
+
+	<meta name="author" content="Miguel Angel Coa Morales">
+
+<meta name="description" content="Un blog personal"> <meta name="keywords" content="zimbra, linux, centos, devops, puppet, opensource, virtualizar, virtualización">
+
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="Bitácora" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.png" rel="shortcut icon">
+	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+</head>
+
+
+
+<body>
+	<header id="header" class="inner"><h1><a href="/">Bitácora</a></h1>
+<span class="tagline">Miguel Angel Coa Morales</span>
+<nav id="main-nav"><ul>
+	<li><a href="/about">About</a></li>
+	<li><a href="/archives">Archives</a></li>
+	<li><a href="/contact">Contact</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul>
+	<li><a href="/about">About</a></li>
+	<li><a href="/archives">Archives</a></li>
+	<li><a href="/contact">Contact</a></li>
+</ul>
+</div>
+	</div>
+</nav>
+
+
+</header>
+
+	<div id="content" class="inner"><article class="post">
+	<header>
+		<h2 class="title">Eliminar VM Vagrant</h2>
+		<div class="meta date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-10-13T16:44:00-03:00" pubdate data-updated="true">Oct 13<span>th</span>, 2014</time></div>
+	</header>
+	<div class="entry-content"><p>En <code>Vagrant</code> nuestra máquinas virtuales son borradas con el comando <code>vm destroy</code> pero sucede que aveces hemos borradoe l directorio de la VM o el vagrant file y esta ya no puede ser referenciada mediante Vagrant para ser eliminada. Como Vagrant trabaja con <code>VirtualBox</code> podemos utilizar el comando <code>VBoxManage</code> para que la podamos eliminar.</p>
+
+<p>Listamos todas la VM</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="ss">Miguel</span><span class="p">:</span><span class="n">zimbra</span><span class="err">$</span> <span class="no">VBoxManage</span> <span class="n">list</span> <span class="n">vms</span>
+</span><span class='line'><span class="s2">&quot;puppetserver&quot;</span> <span class="p">{</span><span class="mi">3830</span><span class="n">b010</span><span class="o">-</span><span class="mi">4</span><span class="n">fca</span><span class="o">-</span><span class="mi">4</span><span class="n">c29</span><span class="o">-</span><span class="mi">9225</span><span class="o">-</span><span class="mi">6647</span><span class="n">b1edcd7f</span><span class="p">}</span>
+</span><span class='line'><span class="s2">&quot;nagiosserver&quot;</span> <span class="p">{</span><span class="mi">3178</span><span class="n">a761</span><span class="o">-</span><span class="mi">0</span><span class="n">c61</span><span class="o">-</span><span class="mi">4</span><span class="n">ffb</span><span class="o">-</span><span class="mi">8</span><span class="n">fc8</span><span class="o">-</span><span class="n">d4bd4853be22</span><span class="p">}</span>
+</span><span class='line'><span class="s2">&quot;nagiosnode1&quot;</span> <span class="p">{</span><span class="mi">90</span><span class="n">da5db9</span><span class="o">-</span><span class="mi">2538</span><span class="o">-</span><span class="mi">4</span><span class="n">fe5</span><span class="o">-</span><span class="n">b76f</span><span class="o">-</span><span class="n">af68f83a8397</span><span class="p">}</span>
+</span><span class='line'><span class="s2">&quot;nagiosnode2&quot;</span> <span class="p">{</span><span class="n">e32fb9be</span><span class="o">-</span><span class="n">fb34</span><span class="o">-</span><span class="mi">4663</span><span class="o">-</span><span class="n">befb</span><span class="o">-</span><span class="mi">900</span><span class="n">f43b60cfb</span><span class="p">}</span>
+</span><span class='line'><span class="s2">&quot;samba4&quot;</span> <span class="p">{</span><span class="n">f5c753c3</span><span class="o">-</span><span class="n">c8e0</span><span class="o">-</span><span class="mi">4117</span><span class="o">-</span><span class="n">b05c</span><span class="o">-</span><span class="n">f635ebcae06d</span><span class="p">}</span>
+</span><span class='line'><span class="s2">&quot;docker.example.com&quot;</span> <span class="p">{</span><span class="mi">0</span><span class="n">c5213d4</span><span class="o">-</span><span class="mi">6</span><span class="n">d1a</span><span class="o">-</span><span class="mi">40</span><span class="n">b9</span><span class="o">-</span><span class="mi">9</span><span class="n">e44</span><span class="o">-</span><span class="n">cff9c3829d73</span><span class="p">}</span>
+</span><span class='line'><span class="s2">&quot;zimbra_default_1413222975386_53519&quot;</span> <span class="p">{</span><span class="mi">969175</span><span class="n">c2</span><span class="o">-</span><span class="mi">451</span><span class="n">c</span><span class="o">-</span><span class="mi">42</span><span class="n">fc</span><span class="o">-</span><span class="mi">98</span><span class="n">fd</span><span class="o">-</span><span class="mi">7946</span><span class="n">d6796bcc</span><span class="p">}</span>
+</span><span class='line'><span class="s2">&quot;zimbra&quot;</span> <span class="p">{</span><span class="mi">35</span><span class="n">ed5012</span><span class="o">-</span><span class="mi">4</span><span class="n">b33</span><span class="o">-</span><span class="mi">4</span><span class="n">b30</span><span class="o">-</span><span class="mi">869</span><span class="n">b</span><span class="o">-</span><span class="mi">35654</span><span class="n">b3e88b8</span><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Vamos a eliminar la máquina de la línea nº8 UID <code>969175c2-451c-42fc-98fd-7946d6796bcc</code></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="ss">Miguel</span><span class="p">:</span><span class="n">zimbra</span><span class="err">$</span> <span class="no">VBoxManage</span> <span class="n">unregistervm</span> <span class="mi">969175</span><span class="n">c2</span><span class="o">-</span><span class="mi">451</span><span class="n">c</span><span class="o">-</span><span class="mi">42</span><span class="n">fc</span><span class="o">-</span><span class="mi">98</span><span class="n">fd</span><span class="o">-</span><span class="mi">7946</span><span class="n">d6796bcc</span> <span class="o">-</span><span class="n">delete</span>
+</span><span class='line'><span class="mi">0</span><span class="sx">%..</span><span class="o">.</span><span class="mi">10</span><span class="sx">%..</span><span class="o">.</span><span class="mi">20</span><span class="sx">%..</span><span class="o">.</span><span class="mi">30</span><span class="sx">%..</span><span class="o">.</span><span class="mi">40</span><span class="sx">%..</span><span class="o">.</span><span class="mi">50</span><span class="sx">%..</span><span class="o">.</span><span class="mi">60</span><span class="sx">%..</span><span class="o">.</span><span class="mi">70</span><span class="sx">%..</span><span class="o">.</span><span class="mi">80</span><span class="sx">%..</span><span class="o">.</span><span class="mi">90</span><span class="sx">%..</span><span class="o">.</span><span class="mi">100</span><span class="o">%</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Y ahora vemos que ya no esta</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="ss">Miguel</span><span class="p">:</span><span class="n">zimbra</span><span class="err">$</span> <span class="no">VBoxManage</span> <span class="n">list</span> <span class="n">vms</span>
+</span><span class='line'><span class="s2">&quot;puppetserver&quot;</span> <span class="p">{</span><span class="mi">3830</span><span class="n">b010</span><span class="o">-</span><span class="mi">4</span><span class="n">fca</span><span class="o">-</span><span class="mi">4</span><span class="n">c29</span><span class="o">-</span><span class="mi">9225</span><span class="o">-</span><span class="mi">6647</span><span class="n">b1edcd7f</span><span class="p">}</span>
+</span><span class='line'><span class="s2">&quot;CentOS-6.4-x86_64_1407080394847_1407&quot;</span> <span class="p">{</span><span class="n">bd5b11c8</span><span class="o">-</span><span class="n">a7e4</span><span class="o">-</span><span class="mi">4</span><span class="n">c6e</span><span class="o">-</span><span class="n">b6f2</span><span class="o">-</span><span class="mi">1646775</span><span class="n">e7f9a</span><span class="p">}</span>
+</span><span class='line'><span class="s2">&quot;nagiosServer_default_1407266455588_52667&quot;</span> <span class="p">{</span><span class="mi">2</span><span class="n">f3d8ae9</span><span class="o">-</span><span class="n">c8e5</span><span class="o">-</span><span class="mi">4557</span><span class="o">-</span><span class="n">a79e</span><span class="o">-</span><span class="mi">503</span><span class="n">a1af4646a</span><span class="p">}</span>
+</span><span class='line'><span class="s2">&quot;nagiosserver&quot;</span> <span class="p">{</span><span class="mi">3178</span><span class="n">a761</span><span class="o">-</span><span class="mi">0</span><span class="n">c61</span><span class="o">-</span><span class="mi">4</span><span class="n">ffb</span><span class="o">-</span><span class="mi">8</span><span class="n">fc8</span><span class="o">-</span><span class="n">d4bd4853be22</span><span class="p">}</span>
+</span><span class='line'><span class="s2">&quot;nagiosnode1&quot;</span> <span class="p">{</span><span class="mi">90</span><span class="n">da5db9</span><span class="o">-</span><span class="mi">2538</span><span class="o">-</span><span class="mi">4</span><span class="n">fe5</span><span class="o">-</span><span class="n">b76f</span><span class="o">-</span><span class="n">af68f83a8397</span><span class="p">}</span>
+</span><span class='line'><span class="s2">&quot;nagiosnode2&quot;</span> <span class="p">{</span><span class="n">e32fb9be</span><span class="o">-</span><span class="n">fb34</span><span class="o">-</span><span class="mi">4663</span><span class="o">-</span><span class="n">befb</span><span class="o">-</span><span class="mi">900</span><span class="n">f43b60cfb</span><span class="p">}</span>
+</span><span class='line'><span class="s2">&quot;samba4&quot;</span> <span class="p">{</span><span class="n">f5c753c3</span><span class="o">-</span><span class="n">c8e0</span><span class="o">-</span><span class="mi">4117</span><span class="o">-</span><span class="n">b05c</span><span class="o">-</span><span class="n">f635ebcae06d</span><span class="p">}</span>
+</span><span class='line'><span class="s2">&quot;docker.example.com&quot;</span> <span class="p">{</span><span class="mi">0</span><span class="n">c5213d4</span><span class="o">-</span><span class="mi">6</span><span class="n">d1a</span><span class="o">-</span><span class="mi">40</span><span class="n">b9</span><span class="o">-</span><span class="mi">9</span><span class="n">e44</span><span class="o">-</span><span class="n">cff9c3829d73</span><span class="p">}</span>
+</span><span class='line'><span class="s2">&quot;zimbra&quot;</span> <span class="p">{</span><span class="mi">35</span><span class="n">ed5012</span><span class="o">-</span><span class="mi">4</span><span class="n">b33</span><span class="o">-</span><span class="mi">4</span><span class="n">b30</span><span class="o">-</span><span class="mi">869</span><span class="n">b</span><span class="o">-</span><span class="mi">35654</span><span class="n">b3e88b8</span><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+</div>
+	
+
+</article>
+
+	
+	<div class="share">
+		<ul>
+			<li>
+  <a href="https://twitter.com/intent/tweet?text=Eliminar VM Vagrant by @&url=http://mcoam.github.io/blog/2014/10/13/eliminar-vm-vagrant/" title="Share Eliminar VM Vagrant on Twitter">
+    <img src="/images/social/twitter.png" />
+  </a>
+</li>
+
+			<li>
+  <a href="https://www.facebook.com/sharer.php?u=http://mcoam.github.io/blog/2014/10/13/eliminar-vm-vagrant/" title="Share Eliminar VM Vagrant on Facebook">
+    <img src="/images/social/facebook.png" />
+  </a>
+</li>
+
+			<li>
+  <a href="https://plus.google.com/share?url=http://mcoam.github.io/blog/2014/10/13/eliminar-vm-vagrant/" title="Share Eliminar VM Vagrant on Google Plus">
+    <img src="/images/social/google.png" />
+  </a>
+</li>
+
+		</ul>
+	</div>
+
+
+
+
+<section id="comment">
+    <h2 class="title">Comments</h2>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+</div>
+	<footer id="footer" class="inner">&copy; 2014
+
+    Miguel Angel Coa Morales
+
+</footer>
+	<script src="/javascripts/slash.js"></script>
+<script src="/javascripts/hyphenator.js"></script>
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'miguelcoa';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://mcoam.github.io/blog/2014/10/13/eliminar-vm-vagrant/';
+        var disqus_url = 'http://mcoam.github.io/blog/2014/10/13/eliminar-vm-vagrant/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-45157770-1']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+
+
+</body>
+</html>

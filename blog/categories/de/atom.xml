@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: samba4, | Bitácora]]></title>
-  <link href="http://mcoam.github.io/blog/categories/samba4/atom.xml" rel="self"/>
+  <title><![CDATA[Category: de | Bitácora]]></title>
+  <link href="http://mcoam.github.io/blog/categories/de/atom.xml" rel="self"/>
   <link href="http://mcoam.github.io/"/>
   <updated>2014-10-13T16:52:33-03:00</updated>
   <id>http://mcoam.github.io/</id>
@@ -12,71 +12,6 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
-  
-  <entry>
-    <title type="html"><![CDATA[Error Kerberos y Bind con Samba4]]></title>
-    <link href="http://mcoam.github.io/blog/2014/08/20/error-samba4-y-bind/"/>
-    <updated>2014-08-20T18:17:00-04:00</updated>
-    <id>http://mcoam.github.io/blog/2014/08/20/error-samba4-y-bind</id>
-    <content type="html"><![CDATA[<p>Al momento de validar la configuración de kerberos del usuario admin arrojaba lo siguiente:</p>
-
-<p><code>ruby
-[root@samba ~]$ kinit administrator@EXAMPLE.LOCAL
-kinit: Cannot resolve servers for KDC in realm "EXAMPLE.LOCAL" while getting initial credentials
-</code>
-Al chequear las configuraciones DNS de de Samba arrojaba
-```ruby
-[root@samba ~]$ samba_dnsupdate &mdash;verbose &mdash;all-names
-IPs: [&lsquo;10.0.2.15&rsquo;, &lsquo;10.10.0.200&rsquo;]
-Traceback (most recent call last):
-  File &ldquo;/usr/local/samba/sbin/samba_dnsupdate&rdquo;, line 511, in <module></p>
-
-<pre><code>get_credentials(lp)
-</code></pre>
-
-<p>  File &ldquo;/usr/local/samba/sbin/samba_dnsupdate&rdquo;, line 124, in get_credentials</p>
-
-<pre><code>raise e
-</code></pre>
-
-<p>RuntimeError: kinit for SAMBA$@EXAMPLE.LOCAL failed (Cannot contact any KDC for requested realm)
-```</p>
-
-<h4>Solución ELIMINAR Bind</h4>
-
-<p><code>ruby
-[root@samba ~]$ yum remove bind -y
-</code></p>
-
-<h4>Comprobamos</h4>
-
-<p><code>ruby
-[root@samba ~]# kinit administrator@EXAMPLE.LOCAL
-Password for administrator@EXAMPLE.LOCAL:
-Warning: Your password will expire in 41 days on Wed Oct  1 17:54:00 2014
-</code>
-Y chequeamos la configuracion de DNS de Samba
-```ruby
-[root@samba ~]# samba_dnsupdate &mdash;verbose &mdash;all-names
-IPs: [&lsquo;10.0.2.15&rsquo;, &lsquo;10.10.0.200&rsquo;]
-Calling nsupdate for A example.local 10.0.2.15
-Outgoing update query:
-;; &ndash;>>HEADER&lt;&lt;&ndash; opcode: UPDATE, status: NOERROR, id:      0
-;; flags:; ZONE: 0, PREREQ: 0, UPDATE: 0, ADDITIONAL: 0
-;; UPDATE SECTION:
-example.local.      900 IN  A   10.0.2.15</p>
-
-<p>; TSIG error with server: tsig verify failure
-Failed nsupdate: 2
-Calling nsupdate for A samba.example.local 10.0.2.15
-Outgoing update query:
-;; &ndash;>>HEADER&lt;&lt;&ndash; opcode: UPDATE, status: NOERROR, id:      0
-;; flags:; ZONE: 0, PREREQ: 0, UPDATE: 0, ADDITIONAL: 0
-;; UPDATE SECTION:
-samba.example.local.    900 IN  A   10.0.2.15
-```</p>
-]]></content>
-  </entry>
   
   <entry>
     <title type="html"><![CDATA[SAMBA4.localo controlador de dominio A/D]]></title>
@@ -206,7 +141,7 @@ Comprobamos el funcionamiento en kerberos
 <code>
 Comprobamos la autentificación contra kerberos
 </code>ruby
-[root@samba ~]# kinit <a href="&#109;&#97;&#x69;&#108;&#x74;&#111;&#58;&#x61;&#x64;&#x6d;&#x69;&#x6e;&#x69;&#x73;&#116;&#x72;&#x61;&#x74;&#111;&#114;&#64;&#x45;&#x58;&#65;&#77;&#80;&#x4c;&#69;&#46;&#x4c;&#79;&#x43;&#x41;&#x4c;">&#x61;&#100;&#x6d;&#x69;&#x6e;&#105;&#115;&#116;&#114;&#x61;&#x74;&#111;&#114;&#64;&#x45;&#88;&#x41;&#x4d;&#x50;&#76;&#69;&#x2e;&#76;&#x4f;&#x43;&#65;&#76;</a>
+[root@samba ~]# kinit <a href="&#x6d;&#x61;&#105;&#108;&#x74;&#x6f;&#x3a;&#97;&#100;&#x6d;&#105;&#110;&#105;&#115;&#116;&#114;&#97;&#x74;&#111;&#x72;&#x40;&#69;&#88;&#x41;&#77;&#x50;&#x4c;&#x45;&#x2e;&#76;&#x4f;&#67;&#x41;&#x4c;">&#97;&#x64;&#109;&#105;&#x6e;&#105;&#x73;&#116;&#114;&#97;&#116;&#x6f;&#114;&#64;&#69;&#x58;&#65;&#77;&#x50;&#76;&#x45;&#x2e;&#76;&#79;&#67;&#x41;&#76;</a>
 Password for administrator@EXAMPLE.LOCAL:
 Warning: Your password will expire in 41 days on Wed Oct  1 16:28:11 2014
 ```</p>
