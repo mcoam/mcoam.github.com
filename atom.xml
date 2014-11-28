@@ -4,13 +4,40 @@
   <title><![CDATA[Bitácora]]></title>
   <link href="http://mcoam.github.io/atom.xml" rel="self"/>
   <link href="http://mcoam.github.io/"/>
-  <updated>2014-10-13T16:54:56-03:00</updated>
+  <updated>2014-11-28T13:37:13-03:00</updated>
   <id>http://mcoam.github.io/</id>
   <author>
     <name><![CDATA[Miguel Angel Coa Morales]]></name>
     
   </author>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Atachando sesión screen 'dropeada']]></title>
+    <link href="http://mcoam.github.io/blog/2014/11/28/atachando-sesion-screen-dropeada/"/>
+    <updated>2014-11-28T13:14:00-03:00</updated>
+    <id>http://mcoam.github.io/blog/2014/11/28/atachando-sesion-screen-dropeada</id>
+    <content type="html"><![CDATA[<p>Si al momento de querer recuperar una sesión <code>screen</code> donde tenemos un proceso corriendo y utilizamos el comando <code>scren -r</code>, como resultado de la operación obtenemos el siguiente mensaje:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[</span><span class="n">root</span><span class="vi">@mail</span><span class="o">-</span><span class="n">old</span> <span class="o">~]</span><span class="err">$</span> <span class="n">screen</span> <span class="o">-</span><span class="n">r</span> <span class="s1">&#39;1866.zimbra-mta&#39;</span>
+</span><span class='line'><span class="no">There</span> <span class="n">is</span> <span class="n">a</span> <span class="n">screen</span> <span class="ss">on</span><span class="p">:</span>
+</span><span class='line'><span class="mi">1866</span><span class="o">.</span><span class="n">zimbra</span><span class="o">-</span><span class="n">mta</span> <span class="p">(</span><span class="no">Attached</span><span class="p">)</span>
+</span><span class='line'><span class="no">There</span> <span class="n">is</span> <span class="n">no</span> <span class="n">screen</span> <span class="n">to</span> <span class="n">be</span> <span class="n">resumed</span> <span class="n">matching</span> <span class="mi">1866</span><span class="o">.</span><span class="n">zimbra</span><span class="o">-</span><span class="n">mta</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>La solución es pasar el comando con la opción <i>&lsquo;-D&rsquo;</i> que nos permite desatachar la sessión remota y atacharla en nuestra tty.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[</span><span class="n">root</span><span class="vi">@mail</span><span class="o">-</span><span class="n">old</span> <span class="o">~]</span><span class="err">$</span> <span class="n">screen</span> <span class="o">-</span><span class="n">r</span> <span class="o">-</span><span class="n">D</span> <span class="s1">&#39;1866.zimbra-mta&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Eliminar VM Vagrant]]></title>
@@ -74,8 +101,6 @@
 </span><span class='line'><span class="s2">&quot;docker.example.com&quot;</span> <span class="p">{</span><span class="mi">0</span><span class="n">c5213d4</span><span class="o">-</span><span class="mi">6</span><span class="n">d1a</span><span class="o">-</span><span class="mi">40</span><span class="n">b9</span><span class="o">-</span><span class="mi">9</span><span class="n">e44</span><span class="o">-</span><span class="n">cff9c3829d73</span><span class="p">}</span>
 </span><span class='line'><span class="s2">&quot;zimbra&quot;</span> <span class="p">{</span><span class="mi">35</span><span class="n">ed5012</span><span class="o">-</span><span class="mi">4</span><span class="n">b33</span><span class="o">-</span><span class="mi">4</span><span class="n">b30</span><span class="o">-</span><span class="mi">869</span><span class="n">b</span><span class="o">-</span><span class="mi">35654</span><span class="n">b3e88b8</span><span class="p">}</span>
 </span></code></pre></td></tr></table></div></figure>
-
-
 
 ]]></content>
   </entry>
@@ -2195,58 +2220,6 @@ En este caso el archivo esta alojado en un USB (/dev/sdb1) , por lo cual al mome
 </span><span class='line'><span class="n">______________________</span>
 </span><span class='line'><span class="n">Mailbox</span> <span class="n">size</span> <span class="n">of</span> <span class="n">user3</span><span class="err">@</span><span class="n">example</span><span class="p">.</span><span class="n">com</span> <span class="o">=</span> <span class="mf">718.00</span> <span class="n">KB</span>
 </span><span class='line'><span class="n">Mailbox</span> <span class="n">Quota</span> <span class="n">is</span> <span class="o">=</span> <span class="mi">10</span> <span class="n">MB</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Filtro de correos salientes Zimbra]]></title>
-    <link href="http://mcoam.github.io/blog/2013/11/04/filtro-de-correos-salientes-zimbra/"/>
-    <updated>2013-11-04T17:38:00-03:00</updated>
-    <id>http://mcoam.github.io/blog/2013/11/04/filtro-de-correos-salientes-zimbra</id>
-    <content type="html"><![CDATA[<p>Aveces es necesario en Zimbra &ldquo;copiar&rdquo; los correos salientes desde una casilla hacia otra cuenta (algo así como un forward). Esto en zimbra se puede realizar mediante la configuración del servicio postfix de la siguiente forma:</p>
-
-<p>Editamos el archivo</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">zimbra</span><span class="o">/</span><span class="n">postfix</span><span class="o">/</span><span class="n">conf</span><span class="o">/</span><span class="n">main</span><span class="p">.</span><span class="n">cf</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Y al principio del archivo agregamos la siguiente definición</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">sender_bcc_maps</span> <span class="o">=</span> <span class="nl">hash:</span><span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">zimbra</span><span class="o">/</span><span class="n">postfix</span><span class="o">/</span><span class="n">conf</span><span class="o">/</span><span class="n">sender_bcc</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Creamos el archivo y colocamos los permisos respectivo</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">zimbra</span><span class="o">/</span><span class="n">postfix</span><span class="o">/</span><span class="n">conf</span><span class="o">/</span><span class="n">sender_bcc</span>
-</span><span class='line'><span class="n">chown</span> <span class="n">zimbra</span><span class="p">.</span><span class="n">zimbra</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">zimbra</span><span class="o">/</span><span class="n">postfix</span><span class="o">/</span><span class="n">conf</span><span class="o">/</span><span class="n">sender_bcc</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Dentro del archivo tenemos que definir en la primera columna la cuenta de correo &ldquo;origen&rdquo; y en la segunda la cuenta de correo &ldquo;destino&rdquo; a la cual le llegará una copia de los correos salientes desde la primera.</p>
-
-<p> <!-- more --></p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">originAccount</span><span class="err">@</span><span class="n">example</span><span class="p">.</span><span class="n">com</span> <span class="n">destinationAccount</span><span class="err">@</span><span class="n">example</span><span class="p">.</span><span class="n">com</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Ahora, ejecutamos postmap sobre el archivo para generar el binario que leerá postfix y reiniciamos el servicio mta de zimbra</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">postmap</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">zimbra</span><span class="o">/</span><span class="n">postfix</span><span class="o">/</span><span class="n">conf</span><span class="o">/</span><span class="n">sender_bcc</span>
-</span><span class='line'><span class="n">zmcontrol</span> <span class="n">restart</span>
 </span></code></pre></td></tr></table></div></figure>
 
 

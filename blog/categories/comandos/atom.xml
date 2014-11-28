@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: comandos | Bitácora]]></title>
+  <link href="http://mcoam.github.io/blog/categories/comandos/atom.xml" rel="self"/>
+  <link href="http://mcoam.github.io/"/>
+  <updated>2014-11-28T13:37:13-03:00</updated>
+  <id>http://mcoam.github.io/</id>
+  <author>
+    <name><![CDATA[Miguel Angel Coa Morales]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Atachando sesión screen 'dropeada']]></title>
+    <link href="http://mcoam.github.io/blog/2014/11/28/atachando-sesion-screen-dropeada/"/>
+    <updated>2014-11-28T13:14:00-03:00</updated>
+    <id>http://mcoam.github.io/blog/2014/11/28/atachando-sesion-screen-dropeada</id>
+    <content type="html"><![CDATA[<p>Si al momento de querer recuperar una sesión <code>screen</code> donde tenemos un proceso corriendo y utilizamos el comando <code>scren -r</code>, como resultado de la operación obtenemos el siguiente mensaje:
+<code>ruby
+[root@mail-old ~]$ screen -r '1866.zimbra-mta'
+There is a screen on:
+1866.zimbra-mta (Attached)
+There is no screen to be resumed matching 1866.zimbra-mta
+</code>
+La solución es pasar el comando con la opción <i>&lsquo;-D&rsquo;</i> que nos permite desatachar la sessión remota y atacharla en nuestra tty.
+<code>
+[root@mail-old ~]$ screen -r -D '1866.zimbra-mta'
+</code></p>
+]]></content>
+  </entry>
+  
+</feed>

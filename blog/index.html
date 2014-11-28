@@ -53,6 +53,56 @@
 	<header>
 		<h2 class="title">
 			
+			<a href="/blog/2014/11/28/atachando-sesion-screen-dropeada/">
+			
+				Atachando Sesión Screen &#8216;Dropeada&#8217;</a>
+		</h2>
+		<div class="meta date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-11-28T13:14:00-03:00" pubdate data-updated="true">Nov 28<span>th</span>, 2014</time></div>
+	</header>
+	<div class="entry-content">
+		<p>Si al momento de querer recuperar una sesión <code>screen</code> donde tenemos un proceso corriendo y utilizamos el comando <code>scren -r</code>, como resultado de la operación obtenemos el siguiente mensaje:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[</span><span class="n">root</span><span class="vi">@mail</span><span class="o">-</span><span class="n">old</span> <span class="o">~]</span><span class="err">$</span> <span class="n">screen</span> <span class="o">-</span><span class="n">r</span> <span class="s1">&#39;1866.zimbra-mta&#39;</span>
+</span><span class='line'><span class="no">There</span> <span class="n">is</span> <span class="n">a</span> <span class="n">screen</span> <span class="ss">on</span><span class="p">:</span>
+</span><span class='line'><span class="mi">1866</span><span class="o">.</span><span class="n">zimbra</span><span class="o">-</span><span class="n">mta</span> <span class="p">(</span><span class="no">Attached</span><span class="p">)</span>
+</span><span class='line'><span class="no">There</span> <span class="n">is</span> <span class="n">no</span> <span class="n">screen</span> <span class="n">to</span> <span class="n">be</span> <span class="n">resumed</span> <span class="n">matching</span> <span class="mi">1866</span><span class="o">.</span><span class="n">zimbra</span><span class="o">-</span><span class="n">mta</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>La solución es pasar el comando con la opción <i>&lsquo;-D&rsquo;</i> que nos permite desatachar la sessión remota y atacharla en nuestra tty.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[</span><span class="n">root</span><span class="vi">@mail</span><span class="o">-</span><span class="n">old</span> <span class="o">~]</span><span class="err">$</span> <span class="n">screen</span> <span class="o">-</span><span class="n">r</span> <span class="o">-</span><span class="n">D</span> <span class="s1">&#39;1866.zimbra-mta&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+		
+		
+	</div>
+
+</article>
+
+
+    <article class="post">
+	<header>
+		<h2 class="title">
+			
 			<a href="/blog/2014/10/13/eliminar-vm-vagrant/">
 			
 				Eliminar VM Vagrant</a>
@@ -129,8 +179,6 @@
 </span><span class='line'><span class="s2">&quot;docker.example.com&quot;</span> <span class="p">{</span><span class="mi">0</span><span class="n">c5213d4</span><span class="o">-</span><span class="mi">6</span><span class="n">d1a</span><span class="o">-</span><span class="mi">40</span><span class="n">b9</span><span class="o">-</span><span class="mi">9</span><span class="n">e44</span><span class="o">-</span><span class="n">cff9c3829d73</span><span class="p">}</span>
 </span><span class='line'><span class="s2">&quot;zimbra&quot;</span> <span class="p">{</span><span class="mi">35</span><span class="n">ed5012</span><span class="o">-</span><span class="mi">4</span><span class="n">b33</span><span class="o">-</span><span class="mi">4</span><span class="n">b30</span><span class="o">-</span><span class="mi">869</span><span class="n">b</span><span class="o">-</span><span class="mi">35654</span><span class="n">b3e88b8</span><span class="p">}</span>
 </span></code></pre></td></tr></table></div></figure>
-
-
 
 
 		
@@ -1261,135 +1309,6 @@ Luego de tener creado nuestro <code>Vagrantfile</code> creado, podemos iniciar n
 
 		
 		
-	</div>
-
-</article>
-
-
-    <article class="post">
-	<header>
-		<h2 class="title">
-			
-			<a href="/blog/2014/06/26/modulo-ssh-puppet-y-hiera/">
-			
-				Módulo SSH Puppet Y Hiera</a>
-		</h2>
-		<div class="meta date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-06-26T21:28:00-04:00" pubdate data-updated="true">Jun 26<span>th</span>, 2014</time></div>
-	</header>
-	<div class="entry-content">
-		<p>El siguiente es un módulo de Puppet para la administración del servicio ssh en Linux (Rhel/Debian). La idea, de módulo es tomar los valores de las variables <code>port</code> <code>usedns</code> y <code>permit_root_login</code>.</p>
-
-<p><li>Clase init.pp</li>
-Esta clase lo que hace es heredar las definición de variables que nosotros tenemos en nuestra clase <code>params.pp</code> e instancia el orden de la ejecución de las clases.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[</span><span class="n">root</span><span class="vi">@master</span> <span class="n">manifests</span><span class="o">]</span><span class="err">$</span> <span class="n">cat</span> <span class="n">init</span><span class="o">.</span><span class="n">pp</span>
-</span><span class='line'><span class="k">class</span> <span class="n">sshmcoa</span> <span class="p">(</span>
-</span><span class='line'>    <span class="vg">$port</span>               <span class="o">=</span> <span class="vg">$sshmcoa</span><span class="o">::</span><span class="ss">params</span><span class="p">:</span><span class="ss">:port</span><span class="p">,</span>
-</span><span class='line'>    <span class="vg">$usedns</span>             <span class="o">=</span> <span class="vg">$sshmcoa</span><span class="o">::</span><span class="ss">params</span><span class="p">:</span><span class="ss">:usedns</span><span class="p">,</span>
-</span><span class='line'>    <span class="vg">$ensure</span>             <span class="o">=</span> <span class="vg">$sshmcoa</span><span class="o">::</span><span class="ss">params</span><span class="p">:</span><span class="ss">:ensure</span><span class="p">,</span>
-</span><span class='line'>    <span class="vg">$permit_root_login</span>  <span class="o">=</span> <span class="vg">$sshmcoa</span><span class="o">::</span><span class="ss">params</span><span class="p">:</span><span class="ss">:permit_root_login</span><span class="p">,</span>
-</span><span class='line'>    <span class="vg">$port</span>             <span class="o">=</span> <span class="vg">$sshmcoa</span><span class="o">::</span><span class="ss">params</span><span class="p">:</span><span class="ss">:port</span><span class="p">,</span>
-</span><span class='line'>    <span class="vg">$service_name</span> <span class="o">=</span> <span class="vg">$sshmcoa</span><span class="o">::</span><span class="ss">params</span><span class="p">:</span><span class="ss">:service_name</span><span class="p">,</span>
-</span><span class='line'>    <span class="vg">$config_file</span>  <span class="o">=</span> <span class="vg">$sshmcoa</span><span class="o">::</span><span class="ss">params</span><span class="p">:</span><span class="ss">:config_file</span><span class="p">,</span>
-</span><span class='line'>    <span class="vg">$package_name</span> <span class="o">=</span> <span class="vg">$sshmcoa</span><span class="o">::</span><span class="ss">params</span><span class="p">:</span><span class="ss">:package_name</span><span class="p">,</span>
-</span><span class='line'>    <span class="vg">$config_template</span>    <span class="o">=</span> <span class="vg">$sshmcoa</span><span class="o">::</span><span class="ss">params</span><span class="p">:</span><span class="ss">:config_template</span><span class="p">,</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">)</span> <span class="n">inherits</span> <span class="ss">sshmcoa</span><span class="p">:</span><span class="ss">:params</span> <span class="p">{</span>
-</span><span class='line'>  <span class="k">class</span> <span class="p">{</span><span class="s1">&#39;::sshmcoa::install&#39;</span><span class="p">:</span> <span class="p">}</span> <span class="o">-&gt;</span>
-</span><span class='line'>  <span class="k">class</span> <span class="p">{</span><span class="s1">&#39;::sshmcoa::config&#39;</span><span class="p">:}</span>  <span class="o">-&gt;</span>
-</span><span class='line'>  <span class="k">class</span> <span class="p">{</span><span class="s1">&#39;::sshmcoa::service&#39;</span><span class="p">:}</span>  <span class="o">-&gt;</span>
-</span><span class='line'>  <span class="no">Class</span> <span class="o">[</span><span class="s1">&#39;sshmcoa&#39;</span><span class="o">]</span>
-</span><span class='line'> <span class="c1">#notify {&quot;EL PUERTO ES: $port&quot;:}</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p><li>Clase params.pp</li>
-En esta clase se definen todos los parámetros a configurar por la clase dependiendo del sistema operativo (familia RedHat o familia Debian)</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[</span><span class="n">root</span><span class="vi">@master</span> <span class="n">manifests</span><span class="o">]</span><span class="err">$</span> <span class="n">cat</span> <span class="n">params</span><span class="o">.</span><span class="n">pp</span>
-</span><span class='line'><span class="k">class</span> <span class="ss">sshmcoa</span><span class="p">:</span><span class="ss">:params</span><span class="p">{</span>
-</span><span class='line'>    <span class="vg">$port</span>     <span class="o">=</span> <span class="s1">&#39;&#39;</span>
-</span><span class='line'>    <span class="vg">$usedns</span>       <span class="o">=</span> <span class="s1">&#39;&#39;</span>
-</span><span class='line'>    <span class="vg">$ensure</span>             <span class="o">=</span> <span class="s1">&#39;present&#39;</span>
-</span><span class='line'>    <span class="vg">$permit_root_login</span>  <span class="o">=</span> <span class="s1">&#39;&#39;</span>
-</span><span class='line'>    <span class="vg">$listen_address</span>     <span class="o">=</span> <span class="s1">&#39;0.0.0.0&#39;</span>
-</span><span class='line'>    <span class="vg">$config_template</span>    <span class="o">=</span> <span class="s1">&#39;sshmcoa/sshd_config.conf.erb&#39;</span>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'><span class="k">case</span> <span class="vg">$:</span><span class="ss">:osfamily</span> <span class="p">{</span>
-</span><span class='line'>          <span class="s1">&#39;Debian&#39;</span><span class="p">:{</span>
-</span><span class='line'>      <span class="vg">$config_file</span>  <span class="o">=</span> <span class="s1">&#39;/etc/ssh/sshd_config&#39;</span>
-</span><span class='line'>      <span class="vg">$service_name</span> <span class="o">=</span> <span class="s1">&#39;ssh&#39;</span>
-</span><span class='line'>      <span class="vg">$package_name</span> <span class="o">=</span> <span class="s1">&#39;ssh&#39;</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>          <span class="ss">default</span><span class="p">:{</span>
-</span><span class='line'>      <span class="vg">$config_file</span>  <span class="o">=</span> <span class="s1">&#39;/etc/ssh/sshd_config&#39;</span>
-</span><span class='line'>      <span class="vg">$service_name</span> <span class="o">=</span> <span class="s1">&#39;sshd&#39;</span>
-</span><span class='line'>      <span class="vg">$package_name</span> <span class="o">=</span> <span class="s1">&#39;openssh-server&#39;</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>     <span class="p">}</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-		
-		<a href="/blog/2014/06/26/modulo-ssh-puppet-y-hiera/" class="more-link">Read on &rarr;</a>
 	</div>
 
 </article>
