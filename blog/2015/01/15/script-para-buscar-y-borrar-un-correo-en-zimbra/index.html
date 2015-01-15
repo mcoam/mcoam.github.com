@@ -108,7 +108,24 @@ Para el caso, tenemos que tener las cuentas de correos en el archivo <code>/var/
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Demás esta decir que lo realizado en el comando anterior se puede hacer dentro del mismo script sin tener que hacer esto de forma separada.</p>
+<p>Demás esta decir que lo realizado en el comando anterior se puede hacer dentro del mismo script sin tener que hacer esto de forma separada.  Una vez ejecutado el script, podremos ver la información de las cuentas en donde fue borrado el correo:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[</span><span class="n">zimbra</span><span class="vi">@mail1</span> <span class="n">tmp</span><span class="o">]</span><span class="err">$</span> <span class="n">tail</span> <span class="o">-</span><span class="n">f</span> <span class="n">casillasConEmail</span>
+</span><span class='line'><span class="ss">cuenta</span><span class="p">:</span> <span class="n">ahidalgo</span><span class="vi">@example</span><span class="o">.</span><span class="n">com</span>
+</span><span class='line'><span class="ss">cuenta</span><span class="p">:</span> <span class="n">alinay</span><span class="vi">@example</span><span class="o">.</span><span class="n">com</span>
+</span><span class='line'><span class="ss">cuenta</span><span class="p">:</span> <span class="n">chernandez</span><span class="vi">@example</span><span class="o">.</span><span class="n">com</span>
+</span><span class='line'><span class="ss">cuenta</span><span class="p">:</span> <span class="n">currutia</span><span class="vi">@example</span><span class="o">.</span><span class="n">com</span>
+</span><span class='line'><span class="ss">cuenta</span><span class="p">:</span> <span class="n">cvaldes</span><span class="vi">@example</span><span class="o">.</span><span class="n">com</span>
+</span><span class='line'><span class="ss">cuenta</span><span class="p">:</span> <span class="n">evalencia</span><span class="vi">@example</span><span class="o">.</span><span class="n">com</span>
+</span></code></pre></td></tr></table></div></figure>
+
 </div>
 	
 
