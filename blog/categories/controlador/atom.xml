@@ -4,7 +4,7 @@
   <title><![CDATA[Category: controlador | Bitácora]]></title>
   <link href="http://mcoam.github.io/blog/categories/controlador/atom.xml" rel="self"/>
   <link href="http://mcoam.github.io/"/>
-  <updated>2015-01-15T13:00:06-03:00</updated>
+  <updated>2015-01-15T13:00:46-03:00</updated>
   <id>http://mcoam.github.io/</id>
   <author>
     <name><![CDATA[Miguel Angel Coa Morales]]></name>
@@ -141,7 +141,7 @@ Comprobamos el funcionamiento en kerberos
 <code>
 Comprobamos la autentificación contra kerberos
 </code>ruby
-[root@samba ~]# kinit <a href="&#x6d;&#x61;&#105;&#x6c;&#x74;&#111;&#x3a;&#97;&#x64;&#109;&#x69;&#110;&#105;&#x73;&#116;&#x72;&#x61;&#116;&#x6f;&#x72;&#64;&#x45;&#88;&#x41;&#77;&#80;&#76;&#x45;&#46;&#x4c;&#79;&#x43;&#x41;&#76;">&#x61;&#100;&#109;&#105;&#110;&#105;&#115;&#116;&#114;&#97;&#x74;&#111;&#x72;&#x40;&#x45;&#88;&#65;&#x4d;&#x50;&#x4c;&#69;&#x2e;&#x4c;&#79;&#x43;&#65;&#76;</a>
+[root@samba ~]# kinit <a href="&#109;&#x61;&#105;&#x6c;&#116;&#x6f;&#x3a;&#x61;&#100;&#x6d;&#105;&#x6e;&#x69;&#x73;&#116;&#114;&#x61;&#x74;&#111;&#114;&#64;&#x45;&#x58;&#65;&#x4d;&#80;&#x4c;&#69;&#46;&#x4c;&#x4f;&#67;&#65;&#76;">&#x61;&#x64;&#x6d;&#x69;&#110;&#x69;&#115;&#x74;&#114;&#x61;&#116;&#x6f;&#x72;&#64;&#69;&#x58;&#65;&#77;&#x50;&#76;&#69;&#46;&#76;&#x4f;&#67;&#65;&#76;</a>
 Password for administrator@EXAMPLE.LOCAL:
 Warning: Your password will expire in 41 days on Wed Oct  1 16:28:11 2014
 ```</p>
