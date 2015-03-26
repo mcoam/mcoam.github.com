@@ -53,6 +53,79 @@
 	<header>
 		<h2 class="title">
 			
+			<a href="/blog/2015/03/26/instalado-slash-actualizando-paquetes-endian-firewall/">
+			
+				Instalado/Actualizando Paquetes Endian Firewall</a>
+		</h2>
+		<div class="meta date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-03-26T18:35:00-03:00" pubdate data-updated="true">Mar 26<span>th</span>, 2015</time></div>
+	</header>
+	<div class="entry-content">
+		<p>Para instalar paquetes en Endian Firewall podemos utilizar el comando <code>smart</code> que es un administrador de paquetes que viene incorporado en la distro. Lo primero que hay que realizar es instalar el repositorio:</p>
+
+<p><li>Para Endian 2.4.x</li></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">smart</span> <span class="n">channel</span> <span class="o">--</span><span class="n">add</span> <span class="no">CentOS_4</span><span class="o">.</span><span class="mi">9</span> <span class="n">type</span><span class="o">=</span><span class="n">rpm</span><span class="o">-</span><span class="n">md</span> <span class="nb">name</span><span class="o">=</span><span class="s2">&quot;CentOS_4.9&quot;</span> <span class="p">\</span><span class="n">baseurl</span><span class="o">=</span><span class="s2">&quot;http://vault.centos.org/4.9/os/i386/&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><li>En el caso de Endian 2.5.x</li></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">smart</span> <span class="n">channel</span> <span class="o">--</span><span class="n">add</span> <span class="no">CentOS_4</span><span class="o">.</span><span class="mi">9</span> <span class="n">type</span><span class="o">=</span><span class="n">rpm</span><span class="o">-</span><span class="n">md</span> <span class="nb">name</span><span class="o">=</span><span class="s2">&quot;CentOS_5&quot;</span> <span class="p">\</span><span class="n">baseurl</span><span class="o">=</span><span class="s2">&quot;http://vault.centos.org/5.9/os/i386/&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Instalando paquetes</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">smart</span> <span class="n">update</span>
+</span><span class='line'><span class="n">smart</span> <span class="n">install</span> <span class="n">wget</span> <span class="n">nmap</span> <span class="n">vim</span><span class="o">-</span><span class="n">enhanced</span> <span class="o">-</span><span class="n">y</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>En el caso de ver el error:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="ss">warning</span><span class="p">:</span> <span class="n">rpmts_HdrFromFdno</span><span class="p">:</span> <span class="no">Header</span> <span class="no">V3</span> <span class="no">DSA</span> <span class="ss">signature</span><span class="p">:</span> <span class="no">NOKEY</span><span class="p">,</span> <span class="n">key</span> <span class="no">ID</span> <span class="mi">443</span><span class="n">e1821</span>
+</span><span class='line'><span class="ss">error</span><span class="p">:</span> <span class="n">vim</span><span class="o">-</span><span class="n">common</span><span class="o">-</span><span class="mi">6</span><span class="o">.</span><span class="mi">3</span><span class="o">.</span><span class="mo">046</span><span class="o">-</span><span class="mi">2</span><span class="o">.</span><span class="n">el4</span><span class="o">.</span><span class="mi">1</span><span class="o">.</span><span class="n">i386</span><span class="o">.</span><span class="n">rpm</span><span class="p">:</span> <span class="kp">public</span> <span class="n">key</span> <span class="ow">not</span> <span class="n">available</span>
+</span><span class='line'><span class="no">Saving</span> <span class="n">cache</span><span class="o">.</span><span class="n">.</span><span class="o">.</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Ejecutar</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">smart</span> <span class="n">config</span> <span class="o">--</span><span class="n">set</span>  <span class="n">rpm</span><span class="o">-</span><span class="n">check</span><span class="o">-</span><span class="n">signatures</span><span class="o">=</span><span class="kp">false</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+		
+		
+	</div>
+
+</article>
+
+
+    <article class="post">
+	<header>
+		<h2 class="title">
+			
 			<a href="/blog/2015/01/15/script-para-buscar-y-borrar-un-correo-en-zimbra/">
 			
 				Script Para Buscar Y Borrar Un Correo en Zimbra</a>
@@ -134,6 +207,8 @@ Para el caso, tenemos que tener las cuentas de correos en el archivo <code>/var/
 </span><span class='line'><span class="ss">cuenta</span><span class="p">:</span> <span class="n">cvaldes</span><span class="vi">@example</span><span class="o">.</span><span class="n">com</span>
 </span><span class='line'><span class="ss">cuenta</span><span class="p">:</span> <span class="n">evalencia</span><span class="vi">@example</span><span class="o">.</span><span class="n">com</span>
 </span></code></pre></td></tr></table></div></figure>
+
+
 
 
 		
@@ -1139,88 +1214,6 @@ Agreagamos nuestro Box a nuestro Vagrant</p>
 
 
 
-
-		
-		
-	</div>
-
-</article>
-
-
-    <article class="post">
-	<header>
-		<h2 class="title">
-			
-			<a href="/blog/2014/07/23/controlando-la-ejecucion-de-exec-en-puppet/">
-			
-				Controlando La Ejecución De Exec en Puppet</a>
-		</h2>
-		<div class="meta date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-07-23T21:25:00-04:00" pubdate data-updated="true">Jul 23<span>rd</span>, 2014</time></div>
-	</header>
-	<div class="entry-content">
-		<p>En Puppet podemos ejecutar comando a nivel del sistema operativo por medio de <code>Exec</code>, en ocasiones sucede que tenemos declarada la sintaxis a ejecutar pero sucede que esta se aplica cada vez que corre el agente Puppet, Ejemplo:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">exec</span><span class="p">{</span><span class="s2">&quot;install-rpm&quot;</span><span class="p">:</span>
-</span><span class='line'>  <span class="k">ensure</span>  <span class="o">=&gt;</span> <span class="n">present</span><span class="p">,</span>
-</span><span class='line'>  <span class="n">command</span> <span class="o">=&gt;</span> <span class="s1">&#39;rpm -Uvh /root/package.rpm&#39;</span><span class="p">,</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Lo anterior instalará un rpm llamado <code>package.rpm</code> cada vez que corra el agente, lo que pisará las configuraciones ya realizadas en la instalación y post-instalación del rpm. Para evitar que esto suceda <code>Exec</code> maneja dos atributos <code>creates</code> y <code>onlyif</code> ambos como condicionantes para que se puede ejecutar el comando.
-<li>creates</li>
-Funciona del modo que para ejecutar el atributo <code>command</code> no tiene que existir &ldquo;algo&rdquo; que se define con el atributo <code>creates</code>, ejemplo:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">exec</span><span class="p">{</span><span class="s2">&quot;install-rpm&quot;</span><span class="p">:</span>
-</span><span class='line'><span class="k">ensure</span>  <span class="o">=&gt;</span> <span class="n">present</span><span class="p">,</span>
-</span><span class='line'><span class="n">creates</span> <span class="o">=&gt;</span> <span class="s1">&#39;/opt/rpm-directory/&#39;</span><span class="p">,</span>
-</span><span class='line'><span class="n">command</span> <span class="o">=&gt;</span> <span class="s1">&#39;rpm -Uvh /root/package.rpm&#39;</span><span class="p">,</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Lo anterior dice que; para que se ejecute el <code>exec</code> no tiene que estar creado el directorio <code>/opt/rpm-directory/</code>, si este ya esta creado, es por que ya tenemos instalado el rpm y no es necesario volver a instalarlo.</p>
-
-<p><li>onlyif</li>
-Funciona del modo que para ejecutar el atributo <code>command</code> el resultado del atributo <code>onlyif</code> debe retornar value 0 &ldquo;nada&rdquo; como respuesta a la condición, ejemplo:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">exec</span><span class="p">{</span><span class="s2">&quot;install-rpm&quot;</span><span class="p">:</span>
-</span><span class='line'><span class="k">ensure</span>  <span class="o">=&gt;</span> <span class="n">present</span><span class="p">,</span>
-</span><span class='line'><span class="n">onlyif</span> <span class="o">=&gt;</span> <span class="s2">&quot;ls /opt/ |grep rpm-directory&quot;</span>
-</span><span class='line'><span class="n">command</span> <span class="o">=&gt;</span> <span class="s1">&#39;rpm -Uvh /root/package.rpm&#39;</span><span class="p">,</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Lo anterior dice que; para que se ejecute el <code>exec</code> la salida del <code>onlyif</code> debe retornar 0. Si el rpm ya lo tenemos instalado, este va a crear el directorio por lo que para evitar que se siga instalando solo vemos si este ya fue creado. Si el rpm fue instalado, el <code>onlyif</code> retornará un <i>1</i> por lo que no se volverá a ejecutar nuevamente.</p>
-
-<p>Link <a href="http://docs.puppetlabs.com/references/latest/type.html#exec-attribute">documentación</a></p>
 
 		
 		

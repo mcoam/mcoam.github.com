@@ -4,13 +4,63 @@
   <title><![CDATA[Bitácora]]></title>
   <link href="http://mcoam.github.io/atom.xml" rel="self"/>
   <link href="http://mcoam.github.io/"/>
-  <updated>2015-01-15T13:00:46-03:00</updated>
+  <updated>2015-03-26T18:48:36-03:00</updated>
   <id>http://mcoam.github.io/</id>
   <author>
     <name><![CDATA[Miguel Angel Coa Morales]]></name>
     
   </author>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Instalado/Actualizando paquetes Endian Firewall]]></title>
+    <link href="http://mcoam.github.io/blog/2015/03/26/instalado-slash-actualizando-paquetes-endian-firewall/"/>
+    <updated>2015-03-26T18:35:00-03:00</updated>
+    <id>http://mcoam.github.io/blog/2015/03/26/instalado-slash-actualizando-paquetes-endian-firewall</id>
+    <content type="html"><![CDATA[<p>Para instalar paquetes en Endian Firewall podemos utilizar el comando <code>smart</code> que es un administrador de paquetes que viene incorporado en la distro. Lo primero que hay que realizar es instalar el repositorio:</p>
+
+<p><li>Para Endian 2.4.x</li></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">smart</span> <span class="n">channel</span> <span class="o">--</span><span class="n">add</span> <span class="no">CentOS_4</span><span class="o">.</span><span class="mi">9</span> <span class="n">type</span><span class="o">=</span><span class="n">rpm</span><span class="o">-</span><span class="n">md</span> <span class="nb">name</span><span class="o">=</span><span class="s2">&quot;CentOS_4.9&quot;</span> <span class="p">\</span><span class="n">baseurl</span><span class="o">=</span><span class="s2">&quot;http://vault.centos.org/4.9/os/i386/&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><li>En el caso de Endian 2.5.x</li></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">smart</span> <span class="n">channel</span> <span class="o">--</span><span class="n">add</span> <span class="no">CentOS_4</span><span class="o">.</span><span class="mi">9</span> <span class="n">type</span><span class="o">=</span><span class="n">rpm</span><span class="o">-</span><span class="n">md</span> <span class="nb">name</span><span class="o">=</span><span class="s2">&quot;CentOS_5&quot;</span> <span class="p">\</span><span class="n">baseurl</span><span class="o">=</span><span class="s2">&quot;http://vault.centos.org/5.9/os/i386/&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Instalando paquetes</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">smart</span> <span class="n">update</span>
+</span><span class='line'><span class="n">smart</span> <span class="n">install</span> <span class="n">wget</span> <span class="n">nmap</span> <span class="n">vim</span><span class="o">-</span><span class="n">enhanced</span> <span class="o">-</span><span class="n">y</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>En el caso de ver el error:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="ss">warning</span><span class="p">:</span> <span class="n">rpmts_HdrFromFdno</span><span class="p">:</span> <span class="no">Header</span> <span class="no">V3</span> <span class="no">DSA</span> <span class="ss">signature</span><span class="p">:</span> <span class="no">NOKEY</span><span class="p">,</span> <span class="n">key</span> <span class="no">ID</span> <span class="mi">443</span><span class="n">e1821</span>
+</span><span class='line'><span class="ss">error</span><span class="p">:</span> <span class="n">vim</span><span class="o">-</span><span class="n">common</span><span class="o">-</span><span class="mi">6</span><span class="o">.</span><span class="mi">3</span><span class="o">.</span><span class="mo">046</span><span class="o">-</span><span class="mi">2</span><span class="o">.</span><span class="n">el4</span><span class="o">.</span><span class="mi">1</span><span class="o">.</span><span class="n">i386</span><span class="o">.</span><span class="n">rpm</span><span class="p">:</span> <span class="kp">public</span> <span class="n">key</span> <span class="ow">not</span> <span class="n">available</span>
+</span><span class='line'><span class="no">Saving</span> <span class="n">cache</span><span class="o">.</span><span class="n">.</span><span class="o">.</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Ejecutar</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">smart</span> <span class="n">config</span> <span class="o">--</span><span class="n">set</span>  <span class="n">rpm</span><span class="o">-</span><span class="n">check</span><span class="o">-</span><span class="n">signatures</span><span class="o">=</span><span class="kp">false</span>
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Script para buscar y borrar un correo en zimbra]]></title>
@@ -79,6 +129,8 @@ Para el caso, tenemos que tener las cuentas de correos en el archivo <code>/var/
 </span><span class='line'><span class="ss">cuenta</span><span class="p">:</span> <span class="n">cvaldes</span><span class="vi">@example</span><span class="o">.</span><span class="n">com</span>
 </span><span class='line'><span class="ss">cuenta</span><span class="p">:</span> <span class="n">evalencia</span><span class="vi">@example</span><span class="o">.</span><span class="n">com</span>
 </span></code></pre></td></tr></table></div></figure>
+
+
 
 ]]></content>
   </entry>
@@ -2030,196 +2082,6 @@ Reiniciamos apache</p>
 
 
 <p>Lo otro, es agregar la línea <i>set paste</i> dentro de <i>/etc/vim/vimrc</i> .</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Automatizando instalaciones RedHat/Centos con KickStart]]></title>
-    <link href="http://mcoam.github.io/blog/2013/11/11/automatizando-instalaciones-redhat-slash-centos-con-quickstart/"/>
-    <updated>2013-11-11T20:04:00-03:00</updated>
-    <id>http://mcoam.github.io/blog/2013/11/11/automatizando-instalaciones-redhat-slash-centos-con-quickstart</id>
-    <content type="html"><![CDATA[<p>En ocasiones y ante la repetitividad de la operación en algunas instalaciones y estar aburrido de realizar la misma operación por &ldquo;x&rdquo; veces, lo mejor en este escenario es automatizar la instalación mediante el método &ldquo;kickstart&rdquo;. Cuando uno hace una instalación mediante insterfaz gráfica en Redhat/Centos/Fedora (instalador RedHat) al final del proceso se crea un archivo de la instalación bajo <i>/root/anaconda-ks.cfg</i>. Este archivo lo podemos tomar y complementar la instalación que igura en el.
-Bueno, si queremos utilizarlo como &ldquo;plantilla&rdquo; para otra instalación solo tenemos que tomar ese archivo y lo copiamos en un medio extraible (Ej. Usb).
-Por ejemplo, y en el siguiente escenario, vamos a realizar una instalación tomando un archivo kickstart que sacamos de otra instalación y lo alojamos en un Usb el que será instanciado una vez que instalemos el SO.</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-<span class='line-number'>46</span>
-<span class='line-number'>47</span>
-<span class='line-number'>48</span>
-<span class='line-number'>49</span>
-<span class='line-number'>50</span>
-<span class='line-number'>51</span>
-<span class='line-number'>52</span>
-<span class='line-number'>53</span>
-<span class='line-number'>54</span>
-<span class='line-number'>55</span>
-<span class='line-number'>56</span>
-<span class='line-number'>57</span>
-<span class='line-number'>58</span>
-<span class='line-number'>59</span>
-<span class='line-number'>60</span>
-<span class='line-number'>61</span>
-<span class='line-number'>62</span>
-<span class='line-number'>63</span>
-<span class='line-number'>64</span>
-<span class='line-number'>65</span>
-<span class='line-number'>66</span>
-<span class='line-number'>67</span>
-<span class='line-number'>68</span>
-<span class='line-number'>69</span>
-<span class='line-number'>70</span>
-<span class='line-number'>71</span>
-<span class='line-number'>72</span>
-<span class='line-number'>73</span>
-<span class='line-number'>74</span>
-<span class='line-number'>75</span>
-<span class='line-number'>76</span>
-<span class='line-number'>77</span>
-<span class='line-number'>78</span>
-<span class='line-number'>79</span>
-<span class='line-number'>80</span>
-<span class='line-number'>81</span>
-<span class='line-number'>82</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="cp"># Kickstart file automatically generated by anaconda.</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">install</span>
-</span><span class='line'><span class="n">text</span>
-</span><span class='line'><span class="n">cdrom</span>
-</span><span class='line'><span class="n">key</span> <span class="o">--</span><span class="n">skip</span>
-</span><span class='line'><span class="n">lang</span> <span class="n">en_US</span><span class="p">.</span><span class="n">UTF</span><span class="o">-</span><span class="mi">8</span>
-</span><span class='line'><span class="n">keyboard</span> <span class="n">la</span><span class="o">-</span><span class="n">latin1</span>
-</span><span class='line'><span class="n">xconfig</span> <span class="o">--</span><span class="n">startxonboot</span>
-</span><span class='line'><span class="cp">#network --device eth0 --onboot no --bootproto dhcp --hostname hosts.example.com</span>
-</span><span class='line'><span class="cp">#network --device eth2 --bootproto static --ip 10.0.0.190 --netmask 255.255.255.0 --gateway 10.0.0.1 --hostname hosts.example.com</span>
-</span><span class='line'><span class="n">rootpw</span> <span class="n">MyPassword</span>
-</span><span class='line'><span class="n">firewall</span> <span class="o">--</span><span class="n">disabled</span>
-</span><span class='line'><span class="n">authconfig</span> <span class="o">--</span><span class="n">enableshadow</span> <span class="o">--</span><span class="n">enablemd5</span>
-</span><span class='line'><span class="n">selinux</span> <span class="o">--</span><span class="n">disabled</span>
-</span><span class='line'><span class="n">timezone</span> <span class="n">America</span><span class="o">/</span><span class="n">Santiago</span>
-</span><span class='line'><span class="n">firstboot</span> <span class="o">--</span><span class="n">disable</span>
-</span><span class='line'><span class="n">services</span> <span class="o">--</span><span class="n">disabled</span> <span class="n">pcscd</span><span class="p">,</span><span class="n">hidd</span><span class="p">,</span><span class="n">bluetooth</span><span class="p">,</span><span class="n">pand</span><span class="p">,</span><span class="n">isdn</span><span class="p">,</span><span class="n">cups</span><span class="p">,</span><span class="n">avahi</span><span class="o">-</span><span class="n">daemon</span><span class="p">,</span><span class="n">cups</span><span class="p">,</span><span class="n">cups</span><span class="o">-</span><span class="n">config</span><span class="o">-</span><span class="n">daemon</span><span class="p">,</span><span class="n">pcscd</span><span class="p">,</span><span class="n">hplip</span><span class="p">,</span><span class="n">hidd</span><span class="p">,</span><span class="n">portmap</span><span class="p">,</span><span class="n">rpcidmapd</span><span class="p">,</span><span class="n">rpcsvcgssd</span><span class="p">,</span><span class="n">rpcgssd</span><span class="p">,</span><span class="n">sendmail</span><span class="p">,</span><span class="n">nfslock</span><span class="p">,</span><span class="n">mdmonitor</span><span class="p">,</span><span class="n">setroubleshoot</span><span class="p">,</span><span class="n">restorecond</span><span class="p">,</span><span class="n">rawdevices</span><span class="p">,</span><span class="n">smartd</span><span class="p">,</span><span class="n">qpidd</span><span class="p">,</span><span class="n">postfix</span>
-</span><span class='line'><span class="n">reboot</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">bootloader</span> <span class="o">--</span><span class="n">location</span><span class="o">=</span><span class="n">mbr</span> <span class="o">--</span><span class="n">driveorder</span><span class="o">=</span><span class="n">sda</span><span class="p">,</span><span class="n">sdb</span> <span class="o">--</span><span class="n">append</span><span class="o">=</span><span class="s">&quot;rhgb quiet&quot;</span>
-</span><span class='line'><span class="cp"># The following is the partition information you requested</span>
-</span><span class='line'><span class="cp"># Note that any partitions you deleted are not expressed</span>
-</span><span class='line'><span class="cp"># here so unless you clear all partitions first, this is</span>
-</span><span class='line'><span class="cp"># not guaranteed to work</span>
-</span><span class='line'><span class="cp"># VALORES DE DISCOS EN MB</span>
-</span><span class='line'><span class="n">clearpart</span> <span class="o">--</span><span class="n">linux</span> <span class="o">--</span><span class="n">drives</span><span class="o">=</span><span class="n">sda</span><span class="p">,</span><span class="n">sdb</span>
-</span><span class='line'><span class="n">part</span> <span class="o">/</span><span class="n">boot</span> <span class="o">--</span><span class="n">fstype</span> <span class="n">ext3</span> <span class="o">--</span><span class="n">size</span><span class="o">=</span><span class="mi">100</span> <span class="o">--</span><span class="n">ondisk</span><span class="o">=</span><span class="n">sda</span>
-</span><span class='line'><span class="n">part</span> <span class="n">pv</span><span class="mf">.8</span> <span class="o">--</span><span class="n">size</span><span class="o">=</span><span class="mi">0</span> <span class="o">--</span><span class="n">grow</span> <span class="o">--</span><span class="n">ondisk</span><span class="o">=</span><span class="n">sda</span>
-</span><span class='line'><span class="n">volgroup</span> <span class="n">vg00</span> <span class="o">--</span><span class="n">pesize</span><span class="o">=</span><span class="mi">32768</span> <span class="n">pv</span><span class="mf">.8</span>
-</span><span class='line'><span class="n">logvol</span> <span class="o">/</span><span class="n">tmp</span> <span class="o">--</span><span class="n">fstype</span> <span class="n">ext3</span> <span class="o">--</span><span class="n">name</span><span class="o">=</span><span class="n">tmp</span> <span class="o">--</span><span class="n">vgname</span><span class="o">=</span><span class="n">vg00</span> <span class="o">--</span><span class="n">size</span><span class="o">=</span><span class="mi">1000</span>
-</span><span class='line'><span class="n">logvol</span> <span class="o">/</span><span class="n">usr</span> <span class="o">--</span><span class="n">fstype</span> <span class="n">ext3</span> <span class="o">--</span><span class="n">name</span><span class="o">=</span><span class="n">usr</span> <span class="o">--</span><span class="n">vgname</span><span class="o">=</span><span class="n">vg00</span> <span class="o">--</span><span class="n">size</span><span class="o">=</span><span class="mi">1000</span>
-</span><span class='line'><span class="n">logvol</span> <span class="o">/</span><span class="n">var</span> <span class="o">--</span><span class="n">fstype</span> <span class="n">ext3</span> <span class="o">--</span><span class="n">name</span><span class="o">=</span><span class="n">var</span> <span class="o">--</span><span class="n">vgname</span><span class="o">=</span><span class="n">vg00</span> <span class="o">--</span><span class="n">size</span><span class="o">=</span><span class="mi">1000</span>
-</span><span class='line'><span class="n">logvol</span> <span class="o">/</span><span class="n">stage</span> <span class="o">--</span><span class="n">fstype</span> <span class="n">ext3</span> <span class="o">--</span><span class="n">name</span><span class="o">=</span><span class="n">stage</span> <span class="o">--</span><span class="n">vgname</span><span class="o">=</span><span class="n">vg00</span> <span class="o">--</span><span class="n">size</span><span class="o">=</span><span class="mi">1000</span>
-</span><span class='line'><span class="n">logvol</span> <span class="o">/</span><span class="n">admin</span> <span class="o">--</span><span class="n">fstype</span> <span class="n">ext3</span> <span class="o">--</span><span class="n">name</span><span class="o">=</span><span class="n">admin</span> <span class="o">--</span><span class="n">vgname</span><span class="o">=</span><span class="n">vg00</span> <span class="o">--</span><span class="n">size</span><span class="o">=</span><span class="mi">1000</span>
-</span><span class='line'><span class="n">logvol</span> <span class="o">/</span><span class="n">home</span> <span class="o">--</span><span class="n">fstype</span> <span class="n">ext3</span> <span class="o">--</span><span class="n">name</span><span class="o">=</span><span class="n">home</span> <span class="o">--</span><span class="n">vgname</span><span class="o">=</span><span class="n">vg00</span> <span class="o">--</span><span class="n">size</span><span class="o">=</span><span class="mi">1000</span>
-</span><span class='line'><span class="n">logvol</span> <span class="o">/</span> <span class="o">--</span><span class="n">fstype</span> <span class="n">ext3</span> <span class="o">--</span><span class="n">name</span><span class="o">=</span><span class="n">raiz</span> <span class="o">--</span><span class="n">vgname</span><span class="o">=</span><span class="n">vg00</span> <span class="o">--</span><span class="n">size</span><span class="o">=</span><span class="mi">2000</span>
-</span><span class='line'><span class="n">logvol</span> <span class="n">swap</span> <span class="o">--</span><span class="n">fstype</span> <span class="n">swap</span> <span class="o">--</span><span class="n">name</span><span class="o">=</span><span class="n">swap</span> <span class="o">--</span><span class="n">vgname</span><span class="o">=</span><span class="n">vg00</span> <span class="o">--</span><span class="n">size</span><span class="o">=</span><span class="mi">1000</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">%</span><span class="n">packages</span>
-</span><span class='line'><span class="err">@</span><span class="n">admin</span><span class="o">-</span><span class="n">tools</span>
-</span><span class='line'><span class="err">@</span><span class="n">base</span>
-</span><span class='line'><span class="err">@</span><span class="n">core</span>
-</span><span class='line'><span class="err">@</span><span class="n">development</span><span class="o">-</span><span class="n">libs</span>
-</span><span class='line'><span class="err">@</span><span class="n">development</span><span class="o">-</span><span class="n">tools</span>
-</span><span class='line'><span class="err">@</span><span class="n">dialup</span>
-</span><span class='line'><span class="err">@</span><span class="n">editors</span>
-</span><span class='line'><span class="err">@</span><span class="n">gnome</span><span class="o">-</span><span class="n">desktop</span>
-</span><span class='line'><span class="err">@</span><span class="n">graphical</span><span class="o">-</span><span class="n">internet</span>
-</span><span class='line'><span class="err">@</span><span class="n">java</span>
-</span><span class='line'><span class="err">@</span><span class="n">legacy</span><span class="o">-</span><span class="n">software</span><span class="o">-</span><span class="n">development</span>
-</span><span class='line'><span class="err">@</span><span class="n">legacy</span><span class="o">-</span><span class="n">software</span><span class="o">-</span><span class="n">support</span>
-</span><span class='line'><span class="err">@</span><span class="n">printing</span>
-</span><span class='line'><span class="err">@</span><span class="n">sound</span><span class="o">-</span><span class="n">and</span><span class="o">-</span><span class="n">video</span>
-</span><span class='line'><span class="err">@</span><span class="n">text</span><span class="o">-</span><span class="n">internet</span>
-</span><span class='line'><span class="err">@</span><span class="n">base</span><span class="o">-</span><span class="n">x</span>
-</span><span class='line'><span class="n">kexec</span><span class="o">-</span><span class="n">tools</span>
-</span><span class='line'><span class="n">iscsi</span><span class="o">-</span><span class="n">initiator</span><span class="o">-</span><span class="n">utils</span>
-</span><span class='line'><span class="n">fipscheck</span>
-</span><span class='line'><span class="n">device</span><span class="o">-</span><span class="n">mapper</span><span class="o">-</span><span class="n">multipath</span>
-</span><span class='line'><span class="n">sgpio</span>
-</span><span class='line'><span class="n">python</span><span class="o">-</span><span class="n">dmidecode</span>
-</span><span class='line'><span class="n">imake</span>
-</span><span class='line'><span class="n">emacs</span>
-</span><span class='line'><span class="n">xorg</span><span class="o">-</span><span class="n">x11</span><span class="o">-</span><span class="n">utils</span>
-</span><span class='line'><span class="n">xorg</span><span class="o">-</span><span class="n">x11</span><span class="o">-</span><span class="n">server</span><span class="o">-</span><span class="n">Xnest</span>
-</span><span class='line'><span class="n">xorg</span><span class="o">-</span><span class="n">x11</span><span class="o">-</span><span class="n">server</span><span class="o">-</span><span class="n">Xvfb</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">%</span><span class="n">post</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">echo</span> <span class="s">&quot;################################&quot;</span>
-</span><span class='line'><span class="n">echo</span> <span class="s">&quot;# Running Post Configuration   #&quot;</span>
-</span><span class='line'><span class="n">echo</span> <span class="s">&quot;################################&quot;</span>
-</span><span class='line'><span class="cp">#Adding a user &quot;oracle&quot;</span>
-</span><span class='line'><span class="n">useradd</span> <span class="o">-</span><span class="n">m</span> <span class="n">oracle</span>
-</span><span class='line'><span class="cp">#Password  &quot;oracle&quot;</span>
-</span><span class='line'><span class="n">echo</span> <span class="n">oraclepass</span> <span class="o">|</span> <span class="n">passwd</span> <span class="o">--</span><span class="n">stdin</span> <span class="n">oracle</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">echo</span> <span class="s">&quot;Syslog.conf&quot;</span>
-</span><span class='line'><span class="n">cat</span> <span class="o">&lt;&lt;</span> <span class="n">EOF</span> <span class="o">&gt;&gt;</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">syslog</span><span class="p">.</span><span class="n">conf</span>
-</span><span class='line'><span class="cp">#texto de prueba dentro de syslog.conf</span>
-</span><span class='line'><span class="n">EOF</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Lo anterior, es una archivo típico de instalación en donde yo adiconé lo referente a que la instalación se haga en modo texto  lo que está bajo de la variable <i>%post</i>.
-En este caso el archivo esta alojado en un USB (/dev/sdb1) , por lo cual al momento de carga el instalador tenemos que ejecutar la siguiente instrucción: <i>linux ks=hd:sdb1/ks.cfg</i></p>
-
-<p><img src="http://s22.postimg.org/wft8hy2ip/Captura_de_pantalla_2013_11_08_a_la_s_21_08_58.png"></p>
-
-<p>Luego el archivo será accedido y leido para realizar la instalación según lo que se detalló dentro de el.</p>
-
-<p><img src="http://s23.postimg.org/468oi4u97/Captura_de_pantalla_2013_11_08_a_la_s_21_13_01.png">
-</p></p>
-
-<p>Este tipo de instalación se puede complementar con PXE y el que el kickstart pueda ser accedido mediante ftp, nfs, etc.</p>
 ]]></content>
   </entry>
   
