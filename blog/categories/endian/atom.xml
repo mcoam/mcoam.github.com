@@ -4,7 +4,7 @@
   <title><![CDATA[Category: endian | Bitácora]]></title>
   <link href="http://mcoam.github.io/blog/categories/endian/atom.xml" rel="self"/>
   <link href="http://mcoam.github.io/"/>
-  <updated>2015-03-26T18:48:36-03:00</updated>
+  <updated>2015-03-26T18:50:40-03:00</updated>
   <id>http://mcoam.github.io/</id>
   <author>
     <name><![CDATA[Miguel Angel Coa Morales]]></name>
@@ -26,7 +26,7 @@ smart channel --add CentOS_4.9 type=rpm-md name="CentOS_4.9" \baseurl="http://va
 </code>
 <li>En el caso de Endian 2.5.x</li>
 <code>ruby
-smart channel --add CentOS_4.9 type=rpm-md name="CentOS_5" \baseurl="http://vault.centos.org/5.9/os/i386/"
+smart channel --add CentOS_5.9 type=rpm-md name="CentOS_5.9" \baseurl="http://vault.centos.org/5.9/os/i386/"
 </code>
 Instalando paquetes
 <code>
