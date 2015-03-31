@@ -1,0 +1,189 @@
+
+<!DOCTYPE HTML>
+<html lang="en-GB">
+<head>
+	<meta charset="utf-8">
+	<title>Instalado/Actualizando paquetes Endian Firewall  | Bitácora</title>
+
+	<meta name="author" content="Miguel Angel Coa Morales">
+
+<meta name="description" content="Un blog personal"> <meta name="keywords" content="zimbra, linux, centos, devops, puppet, opensource, virtualizar, virtualización">
+
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="Bitácora" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.png" rel="shortcut icon">
+	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+</head>
+
+
+
+<body>
+	<header id="header" class="inner"><h1><a href="/">Bitácora</a></h1>
+<span class="tagline">Miguel Angel Coa Morales</span>
+<nav id="main-nav"><ul>
+	<li><a href="/about">About</a></li>
+	<li><a href="/archives">Archives</a></li>
+	<li><a href="/contact">Contact</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul>
+	<li><a href="/about">About</a></li>
+	<li><a href="/archives">Archives</a></li>
+	<li><a href="/contact">Contact</a></li>
+</ul>
+</div>
+	</div>
+</nav>
+
+
+</header>
+
+	<div id="content" class="inner"><article class="post">
+	<header>
+		<h2 class="title">Instalado/Actualizando Paquetes Endian Firewall</h2>
+		<div class="meta date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-03-26T18:35:00-03:00" pubdate data-updated="true">Mar 26<span>th</span>, 2015</time></div>
+	</header>
+	<div class="entry-content"><p>Para instalar paquetes en Endian Firewall podemos utilizar el comando <code>smart</code> que es un administrador de paquetes que viene incorporado en la distro. Lo primero que hay que realizar es instalar el repositorio:</p>
+
+<p><li>Para Endian 2.4.x</li></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">smart</span> <span class="n">channel</span> <span class="o">--</span><span class="n">add</span> <span class="no">CentOS_4</span><span class="o">.</span><span class="mi">9</span> <span class="n">type</span><span class="o">=</span><span class="n">rpm</span><span class="o">-</span><span class="n">md</span> <span class="nb">name</span><span class="o">=</span><span class="s2">&quot;CentOS_4.9&quot;</span> <span class="p">\</span><span class="n">baseurl</span><span class="o">=</span><span class="s2">&quot;http://vault.centos.org/4.9/os/i386/&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><li>En el caso de Endian 2.5.x</li></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">smart</span> <span class="n">channel</span> <span class="o">--</span><span class="n">add</span> <span class="no">CentOS_5</span><span class="o">.</span><span class="mi">9</span> <span class="n">type</span><span class="o">=</span><span class="n">rpm</span><span class="o">-</span><span class="n">md</span> <span class="nb">name</span><span class="o">=</span><span class="s2">&quot;CentOS_5.9&quot;</span> <span class="p">\</span><span class="n">baseurl</span><span class="o">=</span><span class="s2">&quot;http://vault.centos.org/5.9/os/i386/&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Instalando paquetes</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">smart</span> <span class="n">update</span>
+</span><span class='line'><span class="n">smart</span> <span class="n">install</span> <span class="n">wget</span> <span class="n">nmap</span> <span class="n">vim</span><span class="o">-</span><span class="n">enhanced</span> <span class="o">-</span><span class="n">y</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>En el caso de ver el error:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="ss">warning</span><span class="p">:</span> <span class="n">rpmts_HdrFromFdno</span><span class="p">:</span> <span class="no">Header</span> <span class="no">V3</span> <span class="no">DSA</span> <span class="ss">signature</span><span class="p">:</span> <span class="no">NOKEY</span><span class="p">,</span> <span class="n">key</span> <span class="no">ID</span> <span class="mi">443</span><span class="n">e1821</span>
+</span><span class='line'><span class="ss">error</span><span class="p">:</span> <span class="n">vim</span><span class="o">-</span><span class="n">common</span><span class="o">-</span><span class="mi">6</span><span class="o">.</span><span class="mi">3</span><span class="o">.</span><span class="mo">046</span><span class="o">-</span><span class="mi">2</span><span class="o">.</span><span class="n">el4</span><span class="o">.</span><span class="mi">1</span><span class="o">.</span><span class="n">i386</span><span class="o">.</span><span class="n">rpm</span><span class="p">:</span> <span class="kp">public</span> <span class="n">key</span> <span class="ow">not</span> <span class="n">available</span>
+</span><span class='line'><span class="no">Saving</span> <span class="n">cache</span><span class="o">.</span><span class="n">.</span><span class="o">.</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Ejecutar</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">smart</span> <span class="n">config</span> <span class="o">--</span><span class="n">set</span>  <span class="n">rpm</span><span class="o">-</span><span class="n">check</span><span class="o">-</span><span class="n">signatures</span><span class="o">=</span><span class="kp">false</span>
+</span></code></pre></td></tr></table></div></figure>
+
+</div>
+	
+
+</article>
+
+	
+	<div class="share">
+		<ul>
+			<li>
+  <a href="https://twitter.com/intent/tweet?text=Instalado/Actualizando paquetes Endian Firewall by @&url=http://mcoam.github.io/blog/2015/03/26/instalado-slash-actualizando-paquetes-endian-firewall/" title="Share Instalado/Actualizando paquetes Endian Firewall on Twitter">
+    <img src="/images/social/twitter.png" />
+  </a>
+</li>
+
+			<li>
+  <a href="https://www.facebook.com/sharer.php?u=http://mcoam.github.io/blog/2015/03/26/instalado-slash-actualizando-paquetes-endian-firewall/" title="Share Instalado/Actualizando paquetes Endian Firewall on Facebook">
+    <img src="/images/social/facebook.png" />
+  </a>
+</li>
+
+			<li>
+  <a href="https://plus.google.com/share?url=http://mcoam.github.io/blog/2015/03/26/instalado-slash-actualizando-paquetes-endian-firewall/" title="Share Instalado/Actualizando paquetes Endian Firewall on Google Plus">
+    <img src="/images/social/google.png" />
+  </a>
+</li>
+
+		</ul>
+	</div>
+
+
+
+
+<section id="comment">
+    <h2 class="title">Comments</h2>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+</div>
+	<footer id="footer" class="inner">&copy; 2015
+
+    Miguel Angel Coa Morales
+
+</footer>
+	<script src="/javascripts/slash.js"></script>
+<script src="/javascripts/hyphenator.js"></script>
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'miguelcoa';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://mcoam.github.io/blog/2015/03/26/instalado-slash-actualizando-paquetes-endian-firewall/';
+        var disqus_url = 'http://mcoam.github.io/blog/2015/03/26/instalado-slash-actualizando-paquetes-endian-firewall/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-45157770-1']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+
+
+</body>
+</html>

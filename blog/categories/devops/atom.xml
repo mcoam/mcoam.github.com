@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: devops | Bitácora]]></title>
+  <link href="http://mcoam.github.io/blog/categories/devops/atom.xml" rel="self"/>
+  <link href="http://mcoam.github.io/"/>
+  <updated>2015-03-26T18:50:40-03:00</updated>
+  <id>http://mcoam.github.io/</id>
+  <author>
+    <name><![CDATA[Miguel Angel Coa Morales]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Path Global para todos los Execs en Puppet]]></title>
+    <link href="http://mcoam.github.io/blog/2014/07/24/path-global-para-todos-los-execs-en-puppet/"/>
+    <updated>2014-07-24T14:37:00-04:00</updated>
+    <id>http://mcoam.github.io/blog/2014/07/24/path-global-para-todos-los-execs-en-puppet</id>
+    <content type="html"><![CDATA[<p>En Puppet si tenemos varios <code>Exec</code> para ejecutar comandos del sistema operativo podemos configurar el atributo <code>path</code> de forma global dentro del <code>site.pp</code> y con ello evitamos repetir código.
+<code>ruby
+exec { "restart-dns":
+command =&gt; "service named restart"
+creates =&gt; "/var/named",
+refreshonly =&gt; true
+}
+</code>
+site.pp</li>
+<code>ruby
+Exec { path =&gt; [ "/bin/", "/sbin/" , "/usr/bin/", "/usr/sbin/" ] }
+</code></p>
+]]></content>
+  </entry>
+  
+</feed>

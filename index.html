@@ -3,12 +3,11 @@
 <html lang="en-GB">
 <head>
 	<meta charset="utf-8">
-	<title>Miguel Coa M.  | Bitácora</title>
+	<title>Miguel Angel Coa Morales  | Bitácora</title>
 
-    <meta name="author" content="Miguel Coa M.">
+	<meta name="author" content="Miguel Angel Coa Morales">
 
-    <meta name="description" content="Un blog personal">
-<meta name="keywords" content="zimbra, linux, centos, devops, puppet, opensource, virtualizar, virtualización">
+<meta name="description" content="Un blog personal"> <meta name="keywords" content="zimbra, linux, centos, devops, puppet, opensource, virtualizar, virtualización">
 
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -25,8 +24,8 @@
 
 <body>
 	<header id="header" class="inner"><h1><a href="/">Bitácora</a></h1>
-<span class="tagline">Miguel Coa M.</span>
-<nav id="main-nav"><ul class="main-navigation">
+<span class="tagline">Miguel Angel Coa Morales</span>
+<nav id="main-nav"><ul>
 	<li><a href="/about">About</a></li>
 	<li><a href="/archives">Archives</a></li>
 	<li><a href="/contact">Contact</a></li>
@@ -35,7 +34,7 @@
 <nav id="mobile-nav">
 	<div class="alignleft menu">
 		<a class="button">Menu</a>
-		<div class="container"><ul class="main-navigation">
+		<div class="container"><ul>
 	<li><a href="/about">About</a></li>
 	<li><a href="/archives">Archives</a></li>
 	<li><a href="/contact">Contact</a></li>
@@ -54,9 +53,9 @@
 	<header>
 		<h2 class="title">
 			
-			<a href="/blog/2014/01/15/migrando-usuarios-slash-password-postfix-to-zimbra/">
+			<a href="/blog/2015/03/26/instalado-slash-actualizando-paquetes-endian-firewall/">
 			
-				Migrando Usuarios/password Postfix to Zimbra</a>
+				Instalado/Actualizando Paquetes Endian Firewall</a>
 		</h2>
 		<div class="meta date">
 
@@ -70,10 +69,83 @@
   
 
 
-<time datetime="2014-01-15T09:58:00-03:00" pubdate data-updated="true">Jan 15<span>th</span>, 2014</time></div>
+<time datetime="2015-03-26T18:35:00-03:00" pubdate data-updated="true">Mar 26<span>th</span>, 2015</time></div>
 	</header>
 	<div class="entry-content">
-		<p>La idea del siguiente script es; primero crear la cuenta con una password temporal y luego configurar la password original del usuario, ambos valores son sacados del <i>/etc/shadow</i></p>
+		<p>Para instalar paquetes en Endian Firewall podemos utilizar el comando <code>smart</code> que es un administrador de paquetes que viene incorporado en la distro. Lo primero que hay que realizar es instalar el repositorio:</p>
+
+<p><li>Para Endian 2.4.x</li></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">smart</span> <span class="n">channel</span> <span class="o">--</span><span class="n">add</span> <span class="no">CentOS_4</span><span class="o">.</span><span class="mi">9</span> <span class="n">type</span><span class="o">=</span><span class="n">rpm</span><span class="o">-</span><span class="n">md</span> <span class="nb">name</span><span class="o">=</span><span class="s2">&quot;CentOS_4.9&quot;</span> <span class="p">\</span><span class="n">baseurl</span><span class="o">=</span><span class="s2">&quot;http://vault.centos.org/4.9/os/i386/&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><li>En el caso de Endian 2.5.x</li></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">smart</span> <span class="n">channel</span> <span class="o">--</span><span class="n">add</span> <span class="no">CentOS_5</span><span class="o">.</span><span class="mi">9</span> <span class="n">type</span><span class="o">=</span><span class="n">rpm</span><span class="o">-</span><span class="n">md</span> <span class="nb">name</span><span class="o">=</span><span class="s2">&quot;CentOS_5.9&quot;</span> <span class="p">\</span><span class="n">baseurl</span><span class="o">=</span><span class="s2">&quot;http://vault.centos.org/5.9/os/i386/&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Instalando paquetes</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">smart</span> <span class="n">update</span>
+</span><span class='line'><span class="n">smart</span> <span class="n">install</span> <span class="n">wget</span> <span class="n">nmap</span> <span class="n">vim</span><span class="o">-</span><span class="n">enhanced</span> <span class="o">-</span><span class="n">y</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>En el caso de ver el error:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="ss">warning</span><span class="p">:</span> <span class="n">rpmts_HdrFromFdno</span><span class="p">:</span> <span class="no">Header</span> <span class="no">V3</span> <span class="no">DSA</span> <span class="ss">signature</span><span class="p">:</span> <span class="no">NOKEY</span><span class="p">,</span> <span class="n">key</span> <span class="no">ID</span> <span class="mi">443</span><span class="n">e1821</span>
+</span><span class='line'><span class="ss">error</span><span class="p">:</span> <span class="n">vim</span><span class="o">-</span><span class="n">common</span><span class="o">-</span><span class="mi">6</span><span class="o">.</span><span class="mi">3</span><span class="o">.</span><span class="mo">046</span><span class="o">-</span><span class="mi">2</span><span class="o">.</span><span class="n">el4</span><span class="o">.</span><span class="mi">1</span><span class="o">.</span><span class="n">i386</span><span class="o">.</span><span class="n">rpm</span><span class="p">:</span> <span class="kp">public</span> <span class="n">key</span> <span class="ow">not</span> <span class="n">available</span>
+</span><span class='line'><span class="no">Saving</span> <span class="n">cache</span><span class="o">.</span><span class="n">.</span><span class="o">.</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Ejecutar</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">smart</span> <span class="n">config</span> <span class="o">--</span><span class="n">set</span>  <span class="n">rpm</span><span class="o">-</span><span class="n">check</span><span class="o">-</span><span class="n">signatures</span><span class="o">=</span><span class="kp">false</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+		
+		
+	</div>
+
+</article>
+
+
+    <article class="post">
+	<header>
+		<h2 class="title">
+			
+			<a href="/blog/2015/01/15/script-para-buscar-y-borrar-un-correo-en-zimbra/">
+			
+				Script Para Buscar Y Borrar Un Correo en Zimbra</a>
+		</h2>
+		<div class="meta date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-01-15T12:49:00-03:00" pubdate data-updated="true">Jan 15<span>th</span>, 2015</time></div>
+	</header>
+	<div class="entry-content">
+		<p>El siguiente script permite buscar y borrar un correo mediante consola desde los mailbox de los usuarios.</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -89,24 +161,36 @@
 <span class='line-number'>12</span>
 <span class='line-number'>13</span>
 <span class='line-number'>14</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="c">#!/usr/bin/python</span>
-</span><span class='line'><span class="c">##Miguel Coa M.</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1">#!/bin/bash</span>
 </span><span class='line'>
-</span><span class='line'><span class="kn">import</span> <span class="nn">csv</span>
-</span><span class='line'><span class="k">with</span> <span class="nb">open</span> <span class="p">(</span><span class="s">&#39;shadow&#39;</span><span class="p">,</span> <span class="s">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="n">reader</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">reader</span> <span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s">&#39;:&#39;</span> <span class="p">)</span>
-</span><span class='line'>        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">reader</span><span class="p">:</span>
-</span><span class='line'>
-</span><span class='line'>                <span class="n">user</span>     <span class="o">=</span> <span class="n">row</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-</span><span class='line'>                <span class="n">passwd</span>   <span class="o">=</span> <span class="s">&quot;&#39;crypt{&quot;</span> <span class="o">+</span> <span class="n">row</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span><span class="s">&quot;}&#39;&quot;</span>
-</span><span class='line'>
-</span><span class='line'>                <span class="k">print</span> <span class="s">&quot;ca {}@domain.com tmpPSW&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">user</span><span class="p">)</span>
-</span><span class='line'>                <span class="k">print</span> <span class="s">&quot;ma {}@domain.com userPassword  {}  &quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">user</span><span class="p">,</span><span class="n">passwd</span><span class="p">)</span>
+</span><span class='line'><span class="n">zimbraAccounts</span><span class="o">=</span><span class="s1">&#39;/var/tmp/cuentas&#39;</span>
+</span><span class='line'><span class="n">zimbraCMD</span><span class="o">=</span><span class="s1">&#39;/opt/zimbra/bin/zmmailbox&#39;</span>
+</span><span class='line'> <span class="k">for</span> <span class="n">a</span> <span class="k">in</span> <span class="sb">`cat $zimbraAccounts`</span>
+</span><span class='line'>    <span class="k">do</span>
+</span><span class='line'>        <span class="c1">#user=`$a`</span>
+</span><span class='line'>        <span class="n">emailID</span><span class="o">=</span><span class="p">(</span> <span class="err">$</span><span class="p">(</span><span class="vg">$zimbraCMD</span> <span class="o">-</span><span class="n">z</span> <span class="o">-</span><span class="n">m</span> <span class="vg">$a</span> <span class="n">search</span> <span class="s2">&quot;de haber superado debido a la alta tasa de correos spam&quot;</span> <span class="o">|</span><span class="n">grep</span> <span class="n">conv</span> <span class="o">|</span><span class="n">awk</span> <span class="p">{</span><span class="s1">&#39;print $2&#39;</span><span class="p">}</span> <span class="o">|</span><span class="n">sed</span> <span class="s1">&#39;s/-//g&#39;</span><span class="p">)</span> <span class="p">)</span>
+</span><span class='line'>        <span class="n">echo</span> <span class="vg">$user</span>
+</span><span class='line'>        <span class="c1">#echo ${emailID[1]}</span>
+</span><span class='line'>            <span class="k">for</span> <span class="n">i</span> <span class="k">in</span> <span class="s2">&quot;${emailID[@]}&quot;</span>
+</span><span class='line'>                <span class="k">do</span>
+</span><span class='line'>                    <span class="vg">$zimbraCMD</span> <span class="o">-</span><span class="n">z</span> <span class="o">-</span><span class="n">m</span> <span class="vg">$a</span> <span class="n">dm</span> <span class="vg">$i</span>
+</span><span class='line'>          <span class="n">echo</span> <span class="s2">&quot;cuenta: $a&quot;</span> <span class="o">&gt;&gt;</span> <span class="sr">/var/</span><span class="n">tmp</span><span class="o">/</span><span class="n">casillasConEmail</span>
+</span><span class='line'>                <span class="n">done</span>
+</span><span class='line'>    <span class="n">done</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Y como resultado nos arrojará por pantalla</p>
+<p>En la línea nº8 tenemos que cambiar el texto a buscar, y que corresponde a lo que esta dentro de comillas.
+Para el caso, tenemos que tener las cuentas de correos en el archivo <code>/var/tmp/cuentas</code> que las podemos obtener con el comando:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">zmprov</span> <span class="o">-</span><span class="n">l</span> <span class="n">gaa</span> <span class="o">|</span><span class="n">egrep</span> <span class="o">-</span><span class="n">vi</span> <span class="s1">&#39;spam|virus|galsyn|archiv&#39;</span><span class="o">|</span> <span class="n">sort</span> <span class="o">&gt;</span> <span class="sr">/var/</span><span class="n">tmp</span><span class="o">/</span><span class="n">cuentas</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Demás esta decir que lo realizado en el comando anterior se puede hacer dentro del mismo script sin tener que hacer esto de forma separada.  Una vez ejecutado el script, podremos ver la información de las cuentas en donde fue borrado el correo:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -114,17 +198,18 @@
 <span class='line-number'>4</span>
 <span class='line-number'>5</span>
 <span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">ca</span> <span class="n">varaya</span><span class="nd">@domain.com</span> <span class="n">tmpPSW</span>
-</span><span class='line'><span class="n">ma</span> <span class="n">varaya</span><span class="nd">@domain.com</span> <span class="n">userPassword</span>  <span class="s">&#39;crypt{$1$6RT62jZZ$sFlv.MIII4PuKISBaap030}&#39;</span>
-</span><span class='line'><span class="n">ca</span> <span class="n">cgalaz</span><span class="nd">@domain.com</span> <span class="n">tmpPSW</span>
-</span><span class='line'><span class="n">ma</span> <span class="n">cgalaz</span><span class="nd">@domain.com</span> <span class="n">userPassword</span>  <span class="s">&#39;crypt{$1$bAEOlC0N$4t.3zCGDb.RFc0vmxd2UB0}&#39;</span>
-</span><span class='line'><span class="n">ca</span> <span class="n">ctagle</span><span class="nd">@domain.com</span> <span class="n">tmpPSW</span>
-</span><span class='line'><span class="n">ma</span> <span class="n">ctagle</span><span class="nd">@domain.com</span> <span class="n">userPassword</span>  <span class="s">&#39;crypt{$1$L7vlV7Me$orB2TCnqn.JeoVQpKsr6P0}&#39;</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[</span><span class="n">zimbra</span><span class="vi">@mail1</span> <span class="n">tmp</span><span class="o">]</span><span class="err">$</span> <span class="n">tail</span> <span class="o">-</span><span class="n">f</span> <span class="sr">/var/</span><span class="n">tmp</span><span class="o">/</span><span class="n">casillasConEmail</span>
+</span><span class='line'><span class="ss">cuenta</span><span class="p">:</span> <span class="n">ahidalgo</span><span class="vi">@example</span><span class="o">.</span><span class="n">com</span>
+</span><span class='line'><span class="ss">cuenta</span><span class="p">:</span> <span class="n">alinay</span><span class="vi">@example</span><span class="o">.</span><span class="n">com</span>
+</span><span class='line'><span class="ss">cuenta</span><span class="p">:</span> <span class="n">chernandez</span><span class="vi">@example</span><span class="o">.</span><span class="n">com</span>
+</span><span class='line'><span class="ss">cuenta</span><span class="p">:</span> <span class="n">currutia</span><span class="vi">@example</span><span class="o">.</span><span class="n">com</span>
+</span><span class='line'><span class="ss">cuenta</span><span class="p">:</span> <span class="n">cvaldes</span><span class="vi">@example</span><span class="o">.</span><span class="n">com</span>
+</span><span class='line'><span class="ss">cuenta</span><span class="p">:</span> <span class="n">evalencia</span><span class="vi">@example</span><span class="o">.</span><span class="n">com</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>
-Valor que los podemos almacenar en un archivo y los ejecutamos pasandolo como parámetro al comando <i>zmprov</i>. Si ya tenemos creadas las cuentas podemos comentar el primer print, para que solo las modifique.</p>
+
 
 		
 		
@@ -137,9 +222,9 @@ Valor que los podemos almacenar en un archivo y los ejecutamos pasandolo como pa
 	<header>
 		<h2 class="title">
 			
-			<a href="/blog/2014/01/14/creando-cuentas-zimbra-desde-un-csv/">
+			<a href="/blog/2014/11/28/atachando-sesion-screen-dropeada/">
 			
-				Creando Cuentas Zimbra Desde Un CSV</a>
+				Error Screen: There Is No Screen to Be Resumed Matching</a>
 		</h2>
 		<div class="meta date">
 
@@ -153,19 +238,264 @@ Valor que los podemos almacenar en un archivo y los ejecutamos pasandolo como pa
   
 
 
-<time datetime="2014-01-14T17:38:00-03:00" pubdate data-updated="true">Jan 14<span>th</span>, 2014</time></div>
+<time datetime="2014-11-28T13:14:00-03:00" pubdate data-updated="true">Nov 28<span>th</span>, 2014</time></div>
 	</header>
 	<div class="entry-content">
-		<p>El siguiente script nos permite crear las cuentas en Zimbra desde un CSV y automatizar el proceso. El CSV en donde tenemos las cuentas, tiene el siguiente formato:</p>
+		<p>Si al momento de querer recuperar una sesión <code>screen</code> donde tenemos un proceso corriendo y utilizamos el comando <code>scren -r</code>, como resultado de la operación obtenemos el siguiente mensaje:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">cpinera</span><span class="err">@</span><span class="n">example</span><span class="p">.</span><span class="n">com</span><span class="p">;</span><span class="n">cpinera</span><span class="p">;</span><span class="n">pinera</span><span class="p">;</span><span class="n">carlos</span>
-</span><span class='line'><span class="n">mcoa</span><span class="err">@</span><span class="n">example</span><span class="p">.</span><span class="n">com</span><span class="p">;</span><span class="n">mcoa</span><span class="p">;</span><span class="n">Coa</span><span class="p">;</span><span class="n">miguel</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[</span><span class="n">root</span><span class="vi">@mail</span><span class="o">-</span><span class="n">old</span> <span class="o">~]</span><span class="err">$</span> <span class="n">screen</span> <span class="o">-</span><span class="n">r</span> <span class="s1">&#39;1866.zimbra-mta&#39;</span>
+</span><span class='line'><span class="no">There</span> <span class="n">is</span> <span class="n">a</span> <span class="n">screen</span> <span class="ss">on</span><span class="p">:</span>
+</span><span class='line'><span class="mi">1866</span><span class="o">.</span><span class="n">zimbra</span><span class="o">-</span><span class="n">mta</span> <span class="p">(</span><span class="no">Attached</span><span class="p">)</span>
+</span><span class='line'><span class="no">There</span> <span class="n">is</span> <span class="n">no</span> <span class="n">screen</span> <span class="n">to</span> <span class="n">be</span> <span class="n">resumed</span> <span class="n">matching</span> <span class="mi">1866</span><span class="o">.</span><span class="n">zimbra</span><span class="o">-</span><span class="n">mta</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Y el script</p>
+<p>La solución es pasar el comando con la opción <i>&lsquo;-D&rsquo;</i> que nos permite desatachar la sessión remota y atacharla en nuestra tty.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[</span><span class="n">root</span><span class="vi">@mail</span><span class="o">-</span><span class="n">old</span> <span class="o">~]</span><span class="err">$</span> <span class="n">screen</span> <span class="o">-</span><span class="n">r</span> <span class="o">-</span><span class="n">D</span> <span class="s1">&#39;1866.zimbra-mta&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+		
+		
+	</div>
+
+</article>
+
+
+    <article class="post">
+	<header>
+		<h2 class="title">
+			
+			<a href="/blog/2014/10/13/eliminar-vm-vagrant/">
+			
+				Eliminar VM Vagrant</a>
+		</h2>
+		<div class="meta date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-10-13T16:44:00-03:00" pubdate data-updated="true">Oct 13<span>th</span>, 2014</time></div>
+	</header>
+	<div class="entry-content">
+		<p>En <code>Vagrant</code> nuestra máquinas virtuales son borradas con el comando <code>vm destroy</code> pero sucede que aveces hemos borrado el directorio de la VM o el Vagrantfile y esta ya no puede ser referenciada mediante Vagrant para ser eliminada. Como Vagrant trabaja con <code>VirtualBox</code> podemos utilizar el comando <code>VBoxManage</code> para que la podamos eliminar.</p>
+
+<p>Listamos todas la VM</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="ss">Miguel</span><span class="p">:</span><span class="n">zimbra</span><span class="err">$</span> <span class="no">VBoxManage</span> <span class="n">list</span> <span class="n">vms</span>
+</span><span class='line'><span class="s2">&quot;puppetserver&quot;</span> <span class="p">{</span><span class="mi">3830</span><span class="n">b010</span><span class="o">-</span><span class="mi">4</span><span class="n">fca</span><span class="o">-</span><span class="mi">4</span><span class="n">c29</span><span class="o">-</span><span class="mi">9225</span><span class="o">-</span><span class="mi">6647</span><span class="n">b1edcd7f</span><span class="p">}</span>
+</span><span class='line'><span class="s2">&quot;nagiosserver&quot;</span> <span class="p">{</span><span class="mi">3178</span><span class="n">a761</span><span class="o">-</span><span class="mi">0</span><span class="n">c61</span><span class="o">-</span><span class="mi">4</span><span class="n">ffb</span><span class="o">-</span><span class="mi">8</span><span class="n">fc8</span><span class="o">-</span><span class="n">d4bd4853be22</span><span class="p">}</span>
+</span><span class='line'><span class="s2">&quot;nagiosnode1&quot;</span> <span class="p">{</span><span class="mi">90</span><span class="n">da5db9</span><span class="o">-</span><span class="mi">2538</span><span class="o">-</span><span class="mi">4</span><span class="n">fe5</span><span class="o">-</span><span class="n">b76f</span><span class="o">-</span><span class="n">af68f83a8397</span><span class="p">}</span>
+</span><span class='line'><span class="s2">&quot;nagiosnode2&quot;</span> <span class="p">{</span><span class="n">e32fb9be</span><span class="o">-</span><span class="n">fb34</span><span class="o">-</span><span class="mi">4663</span><span class="o">-</span><span class="n">befb</span><span class="o">-</span><span class="mi">900</span><span class="n">f43b60cfb</span><span class="p">}</span>
+</span><span class='line'><span class="s2">&quot;samba4&quot;</span> <span class="p">{</span><span class="n">f5c753c3</span><span class="o">-</span><span class="n">c8e0</span><span class="o">-</span><span class="mi">4117</span><span class="o">-</span><span class="n">b05c</span><span class="o">-</span><span class="n">f635ebcae06d</span><span class="p">}</span>
+</span><span class='line'><span class="s2">&quot;docker.example.com&quot;</span> <span class="p">{</span><span class="mi">0</span><span class="n">c5213d4</span><span class="o">-</span><span class="mi">6</span><span class="n">d1a</span><span class="o">-</span><span class="mi">40</span><span class="n">b9</span><span class="o">-</span><span class="mi">9</span><span class="n">e44</span><span class="o">-</span><span class="n">cff9c3829d73</span><span class="p">}</span>
+</span><span class='line'><span class="s2">&quot;zimbra_default_1413222975386_53519&quot;</span> <span class="p">{</span><span class="mi">969175</span><span class="n">c2</span><span class="o">-</span><span class="mi">451</span><span class="n">c</span><span class="o">-</span><span class="mi">42</span><span class="n">fc</span><span class="o">-</span><span class="mi">98</span><span class="n">fd</span><span class="o">-</span><span class="mi">7946</span><span class="n">d6796bcc</span><span class="p">}</span>
+</span><span class='line'><span class="s2">&quot;zimbra&quot;</span> <span class="p">{</span><span class="mi">35</span><span class="n">ed5012</span><span class="o">-</span><span class="mi">4</span><span class="n">b33</span><span class="o">-</span><span class="mi">4</span><span class="n">b30</span><span class="o">-</span><span class="mi">869</span><span class="n">b</span><span class="o">-</span><span class="mi">35654</span><span class="n">b3e88b8</span><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Vamos a eliminar la máquina de la línea nº8 UID <code>969175c2-451c-42fc-98fd-7946d6796bcc</code></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="ss">Miguel</span><span class="p">:</span><span class="n">zimbra</span><span class="err">$</span> <span class="no">VBoxManage</span> <span class="n">unregistervm</span> <span class="mi">969175</span><span class="n">c2</span><span class="o">-</span><span class="mi">451</span><span class="n">c</span><span class="o">-</span><span class="mi">42</span><span class="n">fc</span><span class="o">-</span><span class="mi">98</span><span class="n">fd</span><span class="o">-</span><span class="mi">7946</span><span class="n">d6796bcc</span> <span class="o">-</span><span class="n">delete</span>
+</span><span class='line'><span class="mi">0</span><span class="sx">%..</span><span class="o">.</span><span class="mi">10</span><span class="sx">%..</span><span class="o">.</span><span class="mi">20</span><span class="sx">%..</span><span class="o">.</span><span class="mi">30</span><span class="sx">%..</span><span class="o">.</span><span class="mi">40</span><span class="sx">%..</span><span class="o">.</span><span class="mi">50</span><span class="sx">%..</span><span class="o">.</span><span class="mi">60</span><span class="sx">%..</span><span class="o">.</span><span class="mi">70</span><span class="sx">%..</span><span class="o">.</span><span class="mi">80</span><span class="sx">%..</span><span class="o">.</span><span class="mi">90</span><span class="sx">%..</span><span class="o">.</span><span class="mi">100</span><span class="o">%</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Y ahora vemos que ya no esta</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="ss">Miguel</span><span class="p">:</span><span class="n">zimbra</span><span class="err">$</span> <span class="no">VBoxManage</span> <span class="n">list</span> <span class="n">vms</span>
+</span><span class='line'><span class="s2">&quot;puppetserver&quot;</span> <span class="p">{</span><span class="mi">3830</span><span class="n">b010</span><span class="o">-</span><span class="mi">4</span><span class="n">fca</span><span class="o">-</span><span class="mi">4</span><span class="n">c29</span><span class="o">-</span><span class="mi">9225</span><span class="o">-</span><span class="mi">6647</span><span class="n">b1edcd7f</span><span class="p">}</span>
+</span><span class='line'><span class="s2">&quot;CentOS-6.4-x86_64_1407080394847_1407&quot;</span> <span class="p">{</span><span class="n">bd5b11c8</span><span class="o">-</span><span class="n">a7e4</span><span class="o">-</span><span class="mi">4</span><span class="n">c6e</span><span class="o">-</span><span class="n">b6f2</span><span class="o">-</span><span class="mi">1646775</span><span class="n">e7f9a</span><span class="p">}</span>
+</span><span class='line'><span class="s2">&quot;nagiosServer_default_1407266455588_52667&quot;</span> <span class="p">{</span><span class="mi">2</span><span class="n">f3d8ae9</span><span class="o">-</span><span class="n">c8e5</span><span class="o">-</span><span class="mi">4557</span><span class="o">-</span><span class="n">a79e</span><span class="o">-</span><span class="mi">503</span><span class="n">a1af4646a</span><span class="p">}</span>
+</span><span class='line'><span class="s2">&quot;nagiosserver&quot;</span> <span class="p">{</span><span class="mi">3178</span><span class="n">a761</span><span class="o">-</span><span class="mi">0</span><span class="n">c61</span><span class="o">-</span><span class="mi">4</span><span class="n">ffb</span><span class="o">-</span><span class="mi">8</span><span class="n">fc8</span><span class="o">-</span><span class="n">d4bd4853be22</span><span class="p">}</span>
+</span><span class='line'><span class="s2">&quot;nagiosnode1&quot;</span> <span class="p">{</span><span class="mi">90</span><span class="n">da5db9</span><span class="o">-</span><span class="mi">2538</span><span class="o">-</span><span class="mi">4</span><span class="n">fe5</span><span class="o">-</span><span class="n">b76f</span><span class="o">-</span><span class="n">af68f83a8397</span><span class="p">}</span>
+</span><span class='line'><span class="s2">&quot;nagiosnode2&quot;</span> <span class="p">{</span><span class="n">e32fb9be</span><span class="o">-</span><span class="n">fb34</span><span class="o">-</span><span class="mi">4663</span><span class="o">-</span><span class="n">befb</span><span class="o">-</span><span class="mi">900</span><span class="n">f43b60cfb</span><span class="p">}</span>
+</span><span class='line'><span class="s2">&quot;samba4&quot;</span> <span class="p">{</span><span class="n">f5c753c3</span><span class="o">-</span><span class="n">c8e0</span><span class="o">-</span><span class="mi">4117</span><span class="o">-</span><span class="n">b05c</span><span class="o">-</span><span class="n">f635ebcae06d</span><span class="p">}</span>
+</span><span class='line'><span class="s2">&quot;docker.example.com&quot;</span> <span class="p">{</span><span class="mi">0</span><span class="n">c5213d4</span><span class="o">-</span><span class="mi">6</span><span class="n">d1a</span><span class="o">-</span><span class="mi">40</span><span class="n">b9</span><span class="o">-</span><span class="mi">9</span><span class="n">e44</span><span class="o">-</span><span class="n">cff9c3829d73</span><span class="p">}</span>
+</span><span class='line'><span class="s2">&quot;zimbra&quot;</span> <span class="p">{</span><span class="mi">35</span><span class="n">ed5012</span><span class="o">-</span><span class="mi">4</span><span class="n">b33</span><span class="o">-</span><span class="mi">4</span><span class="n">b30</span><span class="o">-</span><span class="mi">869</span><span class="n">b</span><span class="o">-</span><span class="mi">35654</span><span class="n">b3e88b8</span><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+		
+		
+	</div>
+
+</article>
+
+
+    <article class="post">
+	<header>
+		<h2 class="title">
+			
+			<a href="/blog/2014/08/26/eliminar-y-purgar-nodo-de-puppetdb-storeconfig/">
+			
+				Eliminar Y Purgar Nodo De PuppetDB (Storeconfig)</a>
+		</h2>
+		<div class="meta date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-08-26T11:43:00-04:00" pubdate data-updated="true">Aug 26<span>th</span>, 2014</time></div>
+	</header>
+	<div class="entry-content">
+		<p>Error:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="ss">Error</span><span class="p">:</span> <span class="no">Could</span> <span class="ow">not</span> <span class="n">retrieve</span> <span class="n">catalog</span> <span class="n">from</span> <span class="n">remote</span> <span class="ss">server</span><span class="p">:</span> <span class="no">Error</span> <span class="mi">400</span> <span class="n">on</span> <span class="ss">SERVER</span><span class="p">:</span> <span class="n">A</span> <span class="n">duplicate</span> <span class="n">resource</span> <span class="n">was</span> <span class="n">found</span> <span class="k">while</span> <span class="n">collecting</span> <span class="n">exported</span> <span class="n">resources</span><span class="p">,</span> <span class="n">with</span> <span class="n">the</span> <span class="n">type</span> <span class="ow">and</span> <span class="n">title</span> <span class="no">Nagios_host</span><span class="o">[</span><span class="k">next</span><span class="o">-</span><span class="n">haproxy</span><span class="o">-</span><span class="mi">1</span><span class="o">.</span><span class="n">domain</span><span class="o">.</span><span class="n">org</span><span class="o">]</span> <span class="n">on</span> <span class="n">node</span> <span class="n">nagios</span><span class="o">.</span><span class="n">domain</span><span class="o">.</span><span class="n">org</span>
+</span><span class='line'><span class="ss">Warning</span><span class="p">:</span> <span class="no">Not</span> <span class="n">using</span> <span class="n">cache</span> <span class="n">on</span> <span class="n">failed</span> <span class="n">catalog</span>
+</span><span class='line'><span class="ss">Error</span><span class="p">:</span> <span class="no">Could</span> <span class="ow">not</span> <span class="n">retrieve</span> <span class="n">catalog</span><span class="p">;</span> <span class="n">skipping</span> <span class="n">run</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Lo anterior era por que el node estaba registrado dos veces en PuppetDB una con el fqdn completo <i>next-haproxy-1.domain.org</i> y otra sin el dominio <i>next-haproxy-1</i> lo que generaba error al exportar los recursos. La solución fue eliminar uno y luego purgar el contenido de la base de datos:</p>
+
+<p><li>Remover el nodo de PuppetDB</li></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[</span><span class="n">root</span><span class="vi">@nagios</span> <span class="n">servers</span><span class="o">]</span><span class="err">$</span> <span class="n">puppet</span> <span class="n">node</span> <span class="n">deactivate</span> <span class="k">next</span><span class="o">-</span><span class="n">haproxy</span><span class="o">-</span><span class="mi">1</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><li>Remover el nodo de la DB</li></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[</span><span class="n">root</span><span class="vi">@puppet</span> <span class="o">~]</span><span class="err">$</span> <span class="n">psql</span> <span class="o">-</span><span class="n">h</span> <span class="mi">127</span><span class="o">.</span><span class="mi">0</span><span class="o">.</span><span class="mi">0</span><span class="o">.</span><span class="mi">1</span> <span class="n">puppetdb</span> <span class="n">puppetdb</span>
+</span><span class='line'><span class="no">Password</span> <span class="k">for</span> <span class="n">user</span> <span class="ss">puppetdb</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">colocar</span> <span class="n">password</span><span class="o">&gt;</span>
+</span><span class='line'><span class="c1">#EJECUTAR</span>
+</span><span class='line'><span class="n">puppetdb</span><span class="o">=&gt;</span> <span class="n">delete</span> <span class="n">from</span> <span class="n">catalogs</span> <span class="n">where</span> <span class="n">certname</span> <span class="k">in</span> <span class="p">(</span><span class="nb">select</span> <span class="nb">name</span> <span class="n">from</span> <span class="n">certnames</span> <span class="n">where</span> <span class="n">deactivated</span> <span class="n">is</span> <span class="ow">not</span> <span class="n">null</span><span class="p">);</span>
+</span><span class='line'><span class="no">DELETE</span> <span class="mi">1</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+		
+		
+	</div>
+
+</article>
+
+
+    <article class="post">
+	<header>
+		<h2 class="title">
+			
+			<a href="/blog/2014/08/20/error-samba4-y-bind/">
+			
+				Error Kerberos Y Bind Con Samba4</a>
+		</h2>
+		<div class="meta date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-08-20T18:17:00-04:00" pubdate data-updated="true">Aug 20<span>th</span>, 2014</time></div>
+	</header>
+	<div class="entry-content">
+		<p>Al momento de validar la configuración de kerberos del usuario admin arrojaba lo siguiente:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[</span><span class="n">root</span><span class="vi">@samba</span> <span class="o">~]</span><span class="err">$</span> <span class="n">kinit</span> <span class="n">administrator</span><span class="vi">@EXAMPLE</span><span class="o">.</span><span class="n">LOCAL</span>
+</span><span class='line'><span class="ss">kinit</span><span class="p">:</span> <span class="no">Cannot</span> <span class="n">resolve</span> <span class="n">servers</span> <span class="k">for</span> <span class="no">KDC</span> <span class="k">in</span> <span class="n">realm</span> <span class="s2">&quot;EXAMPLE.LOCAL&quot;</span> <span class="k">while</span> <span class="n">getting</span> <span class="n">initial</span> <span class="n">credentials</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Al chequear las configuraciones DNS de de Samba arrojaba</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[</span><span class="n">root</span><span class="vi">@samba</span> <span class="o">~]</span><span class="err">$</span> <span class="n">samba_dnsupdate</span> <span class="o">--</span><span class="n">verbose</span> <span class="o">--</span><span class="n">all</span><span class="o">-</span><span class="n">names</span>
+</span><span class='line'><span class="ss">IPs</span><span class="p">:</span> <span class="o">[</span><span class="s1">&#39;10.0.2.15&#39;</span><span class="p">,</span> <span class="s1">&#39;10.10.0.200&#39;</span><span class="o">]</span>
+</span><span class='line'><span class="no">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">):</span>
+</span><span class='line'>  <span class="no">File</span> <span class="s2">&quot;/usr/local/samba/sbin/samba_dnsupdate&quot;</span><span class="p">,</span> <span class="n">line</span> <span class="mi">511</span><span class="p">,</span> <span class="k">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+</span><span class='line'>    <span class="n">get_credentials</span><span class="p">(</span><span class="n">lp</span><span class="p">)</span>
+</span><span class='line'>  <span class="no">File</span> <span class="s2">&quot;/usr/local/samba/sbin/samba_dnsupdate&quot;</span><span class="p">,</span> <span class="n">line</span> <span class="mi">124</span><span class="p">,</span> <span class="k">in</span> <span class="n">get_credentials</span>
+</span><span class='line'>    <span class="k">raise</span> <span class="n">e</span>
+</span><span class='line'><span class="ss">RuntimeError</span><span class="p">:</span> <span class="n">kinit</span> <span class="k">for</span> <span class="no">SAMBA</span><span class="vg">$@</span><span class="no">EXAMPLE</span><span class="o">.</span><span class="n">LOCAL</span> <span class="n">failed</span> <span class="p">(</span><span class="no">Cannot</span> <span class="n">contact</span> <span class="n">any</span> <span class="no">KDC</span> <span class="k">for</span> <span class="n">requested</span> <span class="n">realm</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>Solución ELIMINAR Bind</h4>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[</span><span class="n">root</span><span class="vi">@samba</span> <span class="o">~]</span><span class="err">$</span> <span class="n">yum</span> <span class="n">remove</span> <span class="n">bind</span> <span class="o">-</span><span class="n">y</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>Comprobamos</h4>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[</span><span class="n">root</span><span class="vi">@samba</span> <span class="o">~]</span><span class="c1"># kinit administrator@EXAMPLE.LOCAL</span>
+</span><span class='line'><span class="no">Password</span> <span class="k">for</span> <span class="n">administrator</span><span class="vi">@EXAMPLE</span><span class="o">.</span><span class="n">LOCAL</span><span class="p">:</span>
+</span><span class='line'><span class="ss">Warning</span><span class="p">:</span> <span class="no">Your</span> <span class="n">password</span> <span class="n">will</span> <span class="n">expire</span> <span class="k">in</span> <span class="mi">41</span> <span class="n">days</span> <span class="n">on</span> <span class="no">Wed</span> <span class="no">Oct</span>  <span class="mi">1</span> <span class="mi">17</span><span class="p">:</span><span class="mi">54</span><span class="p">:</span><span class="mo">00</span> <span class="mi">2014</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Y chequeamos la configuracion de DNS de Samba</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -181,36 +511,26 @@ Valor que los podemos almacenar en un archivo y los ejecutamos pasandolo como pa
 <span class='line-number'>12</span>
 <span class='line-number'>13</span>
 <span class='line-number'>14</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="cp">#!/usr/bin/python</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[</span><span class="n">root</span><span class="vi">@samba</span> <span class="o">~]</span><span class="c1"># samba_dnsupdate --verbose --all-names</span>
+</span><span class='line'><span class="ss">IPs</span><span class="p">:</span> <span class="o">[</span><span class="s1">&#39;10.0.2.15&#39;</span><span class="p">,</span> <span class="s1">&#39;10.10.0.200&#39;</span><span class="o">]</span>
+</span><span class='line'><span class="no">Calling</span> <span class="n">nsupdate</span> <span class="k">for</span> <span class="n">A</span> <span class="n">example</span><span class="o">.</span><span class="n">local</span> <span class="mi">10</span><span class="o">.</span><span class="mi">0</span><span class="o">.</span><span class="mi">2</span><span class="o">.</span><span class="mi">15</span>
+</span><span class='line'><span class="no">Outgoing</span> <span class="n">update</span> <span class="ss">query</span><span class="p">:</span>
+</span><span class='line'><span class="p">;;</span> <span class="o">-&gt;&gt;</span><span class="no">HEADER</span><span class="o">&lt;&lt;-</span> <span class="ss">opcode</span><span class="p">:</span> <span class="no">UPDATE</span><span class="p">,</span> <span class="ss">status</span><span class="p">:</span> <span class="no">NOERROR</span><span class="p">,</span> <span class="nb">id</span><span class="p">:</span>      <span class="mi">0</span>
+</span><span class='line'><span class="p">;;</span> <span class="ss">flags</span><span class="p">:;</span> <span class="ss">ZONE</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="ss">PREREQ</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="ss">UPDATE</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="ss">ADDITIONAL</span><span class="p">:</span> <span class="mi">0</span>
+</span><span class='line'><span class="p">;;</span> <span class="no">UPDATE</span> <span class="ss">SECTION</span><span class="p">:</span>
+</span><span class='line'><span class="n">example</span><span class="o">.</span><span class="n">local</span><span class="o">.</span>        <span class="mi">900</span> <span class="no">IN</span>  <span class="n">A</span>    <span class="mi">10</span><span class="o">.</span><span class="mi">0</span><span class="o">.</span><span class="mi">2</span><span class="o">.</span><span class="mi">15</span>
 </span><span class='line'>
-</span><span class='line'><span class="n">import</span> <span class="n">csv</span>
-</span><span class='line'><span class="n">with</span> <span class="n">open</span> <span class="p">(</span><span class="err">&#39;</span><span class="n">cuentas</span><span class="p">.</span><span class="n">csv</span><span class="err">&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">rb</span><span class="err">&#39;</span><span class="p">)</span> <span class="n">as</span> <span class="nl">f:</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="n">reader</span> <span class="o">=</span> <span class="n">csv</span><span class="p">.</span><span class="n">reader</span> <span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="sc">&#39;;&#39;</span> <span class="p">)</span> <span class="err">#</span><span class="n">delimiter</span> <span class="n">tabulador</span> <span class="err">\</span><span class="n">t</span>
-</span><span class='line'>        <span class="k">for</span> <span class="n">row</span> <span class="k">in</span> <span class="nl">reader:</span>
-</span><span class='line'>
-</span><span class='line'>                <span class="n">mail</span>     <span class="o">=</span> <span class="n">row</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-</span><span class='line'>                <span class="n">name</span>     <span class="o">=</span> <span class="n">row</span> <span class="p">[</span><span class="mi">3</span><span class="p">]</span>
-</span><span class='line'>                <span class="n">lastname</span> <span class="o">=</span> <span class="n">row</span> <span class="p">[</span><span class="mi">2</span><span class="p">]</span>
-</span><span class='line'>                <span class="n">name2</span>    <span class="o">=</span> <span class="n">row</span> <span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">+</span> <span class="sc">&#39; &#39;</span> <span class="o">+</span> <span class="n">row</span> <span class="p">[</span><span class="mi">2</span><span class="p">]</span>
-</span><span class='line'>
-</span><span class='line'>                <span class="n">print</span> <span class="s">&quot;ca {} 123456 displayName &#39;{}&#39; sn &#39;{}&#39; cn &#39;{}&#39;&quot;</span><span class="p">.</span><span class="n">format</span><span class="p">(</span><span class="n">mail</span><span class="p">,</span><span class="n">name2</span><span class="p">.</span><span class="n">title</span><span class="p">(),</span><span class="n">lastname</span><span class="p">.</span><span class="n">title</span><span class="p">(),</span><span class="n">name2</span><span class="p">.</span><span class="n">title</span><span class="p">())</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Lo anterior, imprimerá por pantalla lo siguiente:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">ca</span> <span class="n">cpinera</span><span class="err">@</span><span class="n">example</span><span class="p">.</span><span class="n">com</span> <span class="mi">123456</span> <span class="n">displayName</span> <span class="err">&#39;</span><span class="n">Carlos</span> <span class="n">Pinera</span><span class="err">&#39;</span> <span class="n">sn</span> <span class="err">&#39;</span><span class="n">Pinera</span><span class="err">&#39;</span> <span class="n">cn</span> <span class="err">&#39;</span><span class="n">Carlos</span> <span class="n">Pinera</span><span class="err">&#39;</span>
-</span><span class='line'><span class="n">ca</span> <span class="n">mcoa</span><span class="err">@</span><span class="n">olisur</span><span class="p">.</span><span class="n">com</span> <span class="mi">123456</span> <span class="n">displayName</span> <span class="err">&#39;</span><span class="n">Miguel</span> <span class="n">Coa</span><span class="err">&#39;</span> <span class="n">sn</span> <span class="err">&#39;</span><span class="n">Coa</span><span class="err">&#39;</span> <span class="n">cn</span> <span class="err">&#39;</span><span class="n">Miguel</span> <span class="n">Coa</span><span class="err">&#39;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>La salida se puede mandar de forma directa dentro del script hacia un archivo y luego pasarlo por parametro al comando zmprov</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">zmprov</span> <span class="o">&lt;</span> <span class="n">zmCreateAccounts</span>
+</span><span class='line'><span class="p">;</span> <span class="no">TSIG</span> <span class="n">error</span> <span class="n">with</span> <span class="ss">server</span><span class="p">:</span> <span class="n">tsig</span> <span class="n">verify</span> <span class="n">failure</span>
+</span><span class='line'><span class="no">Failed</span> <span class="ss">nsupdate</span><span class="p">:</span> <span class="mi">2</span>
+</span><span class='line'><span class="no">Calling</span> <span class="n">nsupdate</span> <span class="k">for</span> <span class="n">A</span> <span class="n">samba</span><span class="o">.</span><span class="n">example</span><span class="o">.</span><span class="n">local</span> <span class="mi">10</span><span class="o">.</span><span class="mi">0</span><span class="o">.</span><span class="mi">2</span><span class="o">.</span><span class="mi">15</span>
+</span><span class='line'><span class="no">Outgoing</span> <span class="n">update</span> <span class="ss">query</span><span class="p">:</span>
+</span><span class='line'><span class="p">;;</span> <span class="o">-&gt;&gt;</span><span class="no">HEADER</span><span class="o">&lt;&lt;-</span> <span class="ss">opcode</span><span class="p">:</span> <span class="no">UPDATE</span><span class="p">,</span> <span class="ss">status</span><span class="p">:</span> <span class="no">NOERROR</span><span class="p">,</span> <span class="nb">id</span><span class="p">:</span>      <span class="mi">0</span>
+</span><span class='line'><span class="p">;;</span> <span class="ss">flags</span><span class="p">:;</span> <span class="ss">ZONE</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="ss">PREREQ</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="ss">UPDATE</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="ss">ADDITIONAL</span><span class="p">:</span> <span class="mi">0</span>
+</span><span class='line'><span class="p">;;</span> <span class="no">UPDATE</span> <span class="ss">SECTION</span><span class="p">:</span>
+</span><span class='line'><span class="n">samba</span><span class="o">.</span><span class="n">example</span><span class="o">.</span><span class="n">local</span><span class="o">.</span>    <span class="mi">900</span> <span class="no">IN</span>  <span class="n">A</span>    <span class="mi">10</span><span class="o">.</span><span class="mi">0</span><span class="o">.</span><span class="mi">2</span><span class="o">.</span><span class="mi">15</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
@@ -227,9 +547,9 @@ Valor que los podemos almacenar en un archivo y los ejecutamos pasandolo como pa
 	<header>
 		<h2 class="title">
 			
-			<a href="/blog/2013/11/29/configurar-nagios-server-y-pnp4nagios/">
+			<a href="/blog/2014/08/20/samba4-como-controlador-de-dominio-a-slash-d/">
 			
-				Configurar Nagios Server Y Pnp4nagios</a>
+				SAMBA4.localo Controlador De Dominio A/D</a>
 		</h2>
 		<div class="meta date">
 
@@ -243,111 +563,231 @@ Valor que los podemos almacenar en un archivo y los ejecutamos pasandolo como pa
   
 
 
-<time datetime="2013-11-29T10:46:00-03:00" pubdate data-updated="true">Nov 29<span>th</span>, 2013</time></div>
+<time datetime="2014-08-20T10:57:00-04:00" pubdate data-updated="true">Aug 20<span>th</span>, 2014</time></div>
 	</header>
 	<div class="entry-content">
-		<p>Si tienes un servidor Nagios como plataforma de monitoreo de servidores, es posible que en alguna ocasión puedas necesitar generar reportes de la estadística (mensual, díaria, semanal, etc) para lo cual la versión open de Nagios Server no lo tiene integrado de forma nativa pero podemos solucionar con <a href="http://www.pnp4nagios.org/">pnp4nagios</a> y para realizarlo tenemos que hacer lo siguiente (asumiremos que ya tenemos nuestro Nagios Server funcionando)</p>
+		<p>Para Centos 6 tenemos que complilar las fuentes para instalar Samba4:</p>
 
-<p>Tenemos que tener instalado en el servidor rrdtool, perl-rrdtool y una serie de paquetería</p>
+<p>Instalar paqueteria necesaria</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">yum</span> <span class="n">install</span> <span class="n">libdbi</span> <span class="n">rrdtool</span> <span class="n">perl</span><span class="o">-</span><span class="n">rrdtool</span> <span class="n">ruby</span> <span class="n">xorg</span><span class="o">-</span><span class="n">x11</span><span class="o">-</span><span class="n">fonts</span><span class="o">-</span><span class="n">Type1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[</span><span class="n">root</span><span class="vi">@samba</span> <span class="o">~]</span><span class="err">$</span> <span class="n">yum</span> <span class="o">-</span><span class="n">y</span> <span class="n">install</span> <span class="n">gcc</span> <span class="n">make</span> <span class="n">wget</span> <span class="n">python</span><span class="o">-</span><span class="n">devel</span> <span class="n">gnutls</span><span class="o">-</span><span class="n">devel</span> <span class="n">openssl</span><span class="o">-</span><span class="n">devel</span> <span class="n">libacl</span><span class="o">-</span><span class="n">devel</span> <span class="n">krb5</span><span class="o">-</span><span class="n">server</span> <span class="n">krb5</span><span class="o">-</span><span class="n">libs</span> <span class="n">krb5</span><span class="o">-</span><span class="n">workstation</span> <span class="n">bind</span> <span class="n">bind</span><span class="o">-</span><span class="n">libs</span> <span class="n">bind</span><span class="o">-</span><span class="n">utils</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Instalación php4nagios</p>
+<p>Descargamos y lo compilamos</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">wget</span> <span class="nl">http:</span><span class="c1">//downloads.sourceforge.net/project/pnp4nagios/PNP-0.6/pnp4nagios-0.6.21.tar.gz?r=http%3A%2F%2Fsourceforge.net%2Fprojects%2Fpnp4nagios%2F&amp;ts=1372937581&amp;use_mirror=jaist</span>
-</span><span class='line'><span class="n">tar</span> <span class="o">-</span><span class="n">zxvf</span> <span class="n">pnp4nagios</span><span class="o">-</span><span class="mf">0.6.21</span><span class="p">.</span><span class="n">tar</span><span class="p">.</span><span class="n">gz</span>
-</span><span class='line'><span class="n">cd</span> <span class="n">pnp4nagios</span><span class="o">-</span><span class="mf">0.6.21</span>
-</span><span class='line'><span class="p">.</span><span class="o">/</span><span class="n">configure</span> <span class="o">-</span><span class="n">prefix</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">pnp4nagios</span> <span class="o">-</span><span class="n">with</span><span class="o">-</span><span class="n">rrdtool</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">rrdtool</span> <span class="o">-</span><span class="n">with</span><span class="o">-</span><span class="n">nagios</span><span class="o">-</span><span class="n">user</span><span class="o">=</span><span class="n">nagios</span> <span class="o">-</span><span class="n">with</span><span class="o">-</span><span class="n">nagios</span><span class="o">-</span><span class="n">group</span><span class="o">=</span><span class="n">nagios</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[</span><span class="n">root</span><span class="vi">@samba</span> <span class="o">~]</span><span class="err">$</span> <span class="n">git</span> <span class="nb">clone</span> <span class="ss">git</span><span class="p">:</span><span class="sr">//</span><span class="n">git</span><span class="o">.</span><span class="n">samba</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">samba</span><span class="o">.</span><span class="n">git</span> <span class="n">samba4</span>
+</span><span class='line'><span class="o">[</span><span class="n">root</span><span class="vi">@samba</span> <span class="o">~]</span><span class="err">$</span> <span class="n">cd</span> <span class="n">samba4</span>
+</span><span class='line'><span class="o">[</span><span class="n">root</span><span class="vi">@samba</span> <span class="o">~]</span><span class="err">$</span> <span class="o">.</span><span class="n">/configure</span> <span class="o">--</span><span class="n">enable</span><span class="o">-</span><span class="n">selftest</span>
+</span><span class='line'><span class="o">[</span><span class="n">root</span><span class="vi">@samba</span> <span class="o">~]</span><span class="err">$</span> <span class="n">make</span> <span class="o">&amp;&amp;</span> <span class="n">make</span> <span class="n">install</span> <span class="c1">#Esto demora bastante</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Lo anterior generará todo el proceso de compilación lo que finalmente arrojará algo similar a lo siguiente:
-<img src="/assets/images/pnp4nagios.png"></p>
+<p>Terminado lo anterior y si no arroja ningún error, tendremos instalado Samba4. Ahora necesitamos configurar el controlador de dominio, lo primiero que tenemos que hacer es el <i>Provisioning</i> para el nuevo dominio.</p>
 
-<p>Y luego lo compilamos e instalamos</p>
+<p>Unas cosas antes a considerar:
+Configuramos el hostname en la tabla hosts <code>/etc/hosts</code></p>
 
-
-		
-		<a href="/blog/2013/11/29/configurar-nagios-server-y-pnp4nagios/" class="more-link">Read on &rarr;</a>
-	</div>
-
-</article>
-
-
-    <article class="post">
-	<header>
-		<h2 class="title">
-			
-			<a href="/blog/2013/11/27/tabulacion-con-editor-vim/">
-			
-				Tabulación Con Editor VIM</a>
-		</h2>
-		<div class="meta date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-11-27T08:32:00-03:00" pubdate data-updated="true">Nov 27<span>th</span>, 2013</time></div>
-	</header>
-	<div class="entry-content">
-		<p>En ocasiones al copiar y pegar texto hacia una archivo que está siendo accedido por medio del editor VIM, este queda con una mala tabulación (excesivamente corrida a la derecha) al momento de pegarla. La solución para eso es que antes de pegar el texto tenemos realizar lo siguiente en la misma ventana del editor</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="nl">type:</span> <span class="n">set</span> <span class="n">paste</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[</span><span class="n">root</span><span class="vi">@samba</span> <span class="o">~]</span><span class="err">$</span> <span class="n">cat</span> <span class="sr">/etc/</span><span class="n">hosts</span>
+</span><span class='line'><span class="mi">127</span><span class="o">.</span><span class="mi">0</span><span class="o">.</span><span class="mi">0</span><span class="o">.</span><span class="mi">1</span>   <span class="n">localhost</span> <span class="n">localhost</span><span class="o">.</span><span class="n">localdomain</span> <span class="n">localhost4</span> <span class="n">localhost4</span><span class="o">.</span><span class="n">localdomain4</span>
+</span><span class='line'><span class="o">::</span><span class="mi">1</span>         <span class="n">localhost</span> <span class="n">localhost</span><span class="o">.</span><span class="n">localdomain</span> <span class="n">localhost6</span> <span class="n">localhost6</span><span class="o">.</span><span class="n">localdomain6</span>
+</span><span class='line'>
+</span><span class='line'><span class="mi">10</span><span class="o">.</span><span class="mi">10</span><span class="o">.</span><span class="mi">0</span><span class="o">.</span><span class="mi">200</span> <span class="n">samba</span><span class="o">.</span><span class="n">example</span><span class="o">.</span><span class="n">local</span> <span class="n">samba</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Lo otro, es agregar la línea <i>set paste</i> dentro de <i>/etc/vim/vimrc</i> .</p>
+<p>Y el servidor de nombres en el <code>/etc/resolv.conf</code></p>
 
-		
-		
-	</div>
-
-</article>
-
-
-    <article class="post">
-	<header>
-		<h2 class="title">
-			
-			<a href="/blog/2013/11/11/automatizando-instalaciones-redhat-slash-centos-con-quickstart/">
-			
-				Automatizando Instalaciones RedHat/Centos Con KickStart</a>
-		</h2>
-		<div class="meta date">
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[</span><span class="n">root</span><span class="vi">@samba</span> <span class="o">~]</span><span class="err">$</span> <span class="n">cat</span> <span class="sr">/etc/</span><span class="n">resolv</span><span class="o">.</span><span class="n">conf</span>
+</span><span class='line'><span class="n">search</span> <span class="n">example</span><span class="o">.</span><span class="n">local</span>
+</span><span class='line'><span class="n">domain</span> <span class="n">example</span><span class="o">.</span><span class="n">local</span>
+</span><span class='line'><span class="n">nameserver</span> <span class="mi">127</span><span class="o">.</span><span class="mi">0</span><span class="o">.</span><span class="mi">0</span><span class="o">.</span><span class="mi">1</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
+<p>Esto es necesario para los servicios Samba y Kerberos, además, tenemos que configurar el parámetro <code>dns forwarder</code> dentro del archivo de configuración del servicio (esto si no lo hacemos dentro del proceso del provisionamiento).</p>
+
+<p>NOTA: El servidor tiene que tener correctamente sincronizada la hora (utilizar NTP)</p>
+
+<h4>Provisionando el nuevo dominio</h4>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="sr">/usr/</span><span class="n">local</span><span class="o">/</span><span class="n">samba</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">samba</span><span class="o">-</span><span class="n">tool</span> <span class="n">domain</span> <span class="n">provision</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
+<p>Y completamos con los datos solicitados</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">Realm</span> <span class="o">[</span><span class="no">EXAMPLE</span><span class="o">.</span><span class="n">LOCAL</span><span class="o">]</span><span class="p">:</span> <span class="p">(</span><span class="n">press</span> <span class="no">Enter</span><span class="p">)</span>
+</span><span class='line'><span class="no">Domain</span> <span class="o">[</span><span class="no">EXAMPLE</span><span class="o">]</span><span class="p">:</span> <span class="p">(</span><span class="n">press</span> <span class="no">Enter</span><span class="p">)</span> <span class="c1">#CON MAYUSCULAS</span>
+</span><span class='line'><span class="no">Server</span> <span class="no">Role</span> <span class="p">(</span><span class="n">dc</span><span class="p">,</span> <span class="n">member</span><span class="p">,</span> <span class="n">standalone</span><span class="p">)</span> <span class="o">[</span><span class="n">dc</span><span class="o">]</span><span class="p">:</span> <span class="p">(</span><span class="n">press</span> <span class="no">Enter</span><span class="p">)</span>
+</span><span class='line'><span class="no">DNS</span> <span class="n">backend</span> <span class="p">(</span><span class="no">SAMBA_INTERNAL</span><span class="p">,</span> <span class="no">BIND9_FLATFILE</span><span class="p">,</span> <span class="no">BIND9_DLZ</span><span class="p">,</span> <span class="no">NONE</span><span class="p">)</span> <span class="o">[</span><span class="no">SAMBA_INTERNAL</span><span class="o">]</span><span class="p">:</span> <span class="p">(</span><span class="n">press</span> <span class="no">Enter</span><span class="p">)</span>
+</span><span class='line'><span class="no">DNS</span> <span class="n">forwarder</span> <span class="no">IP</span> <span class="n">address</span> <span class="p">(</span><span class="n">write</span> <span class="s1">&#39;none&#39;</span> <span class="n">to</span> <span class="n">disable</span> <span class="n">forwarding</span><span class="p">)</span> <span class="o">[</span><span class="mi">10</span><span class="o">.</span><span class="mi">10</span><span class="o">.</span><span class="mi">0</span><span class="o">.</span><span class="mi">1</span><span class="o">]</span><span class="p">:</span> <span class="mi">10</span><span class="o">.</span><span class="mi">10</span><span class="o">.</span><span class="mi">0</span><span class="o">.</span><span class="mi">1</span>
+</span><span class='line'><span class="no">Administrator</span> <span class="ss">password</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">set_password</span><span class="o">&gt;</span>
+</span><span class='line'><span class="no">Retype</span> <span class="ss">password</span><span class="p">:</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
+<p>Con todo el proceso anterior realizado, al final de todo veremos algo como lo siguiente</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">Fixing</span> <span class="n">provision</span> <span class="no">GUIDs</span>
+</span><span class='line'><span class="n">A</span> <span class="no">Kerberos</span> <span class="n">configuration</span> <span class="n">suitable</span> <span class="k">for</span> <span class="no">Samba</span> <span class="mi">4</span> <span class="n">has</span> <span class="n">been</span> <span class="n">generated</span> <span class="n">at</span> <span class="sr">/usr/</span><span class="n">local</span><span class="o">/</span><span class="n">samba</span><span class="o">/</span><span class="kp">private</span><span class="o">/</span><span class="n">krb5</span><span class="o">.</span><span class="n">conf</span>
+</span><span class='line'><span class="no">Once</span> <span class="n">the</span> <span class="n">above</span> <span class="n">files</span> <span class="n">are</span> <span class="n">installed</span><span class="p">,</span> <span class="n">your</span> <span class="no">Samba4</span> <span class="n">server</span> <span class="n">will</span> <span class="n">be</span> <span class="n">ready</span> <span class="n">to</span> <span class="n">use</span>
+</span><span class='line'><span class="no">Server</span> <span class="ss">Role</span><span class="p">:</span>           <span class="n">active</span> <span class="n">directory</span> <span class="n">domain</span> <span class="n">controller</span>
+</span><span class='line'><span class="ss">Hostname</span><span class="p">:</span>              <span class="n">samba</span>
+</span><span class='line'><span class="no">NetBIOS</span> <span class="ss">Domain</span><span class="p">:</span>        <span class="no">EXAMPLE</span>
+</span><span class='line'><span class="no">DNS</span> <span class="ss">Domain</span><span class="p">:</span>            <span class="n">example</span><span class="o">.</span><span class="n">local</span>
+</span><span class='line'><span class="no">DOMAIN</span> <span class="ss">SID</span><span class="p">:</span>            <span class="n">S</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="mi">5</span><span class="o">-</span><span class="mi">21</span><span class="o">-</span><span class="mi">3438009546</span><span class="o">-</span><span class="mi">7273</span><span class="no">XXXX</span><span class="o">-</span><span class="no">XXXXXXXXX</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
-  
+<p>Y luego reiniciamos el servidor</p>
+
+<p>El path de instalación de Samaba4 queda bajo <code>/usr/local/samba/</code> los mismo sucede con los binarios <code>/usr/local/samba/bin/</code> y <code>/usr/local/samba/sbin/</code> para lo cual vamos a configurar la variable <code>$PATH</code> en nuestro bash.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[</span><span class="n">root</span><span class="vi">@samba</span> <span class="o">~]</span><span class="c1"># vim ~/.bashrc</span>
+</span><span class='line'><span class="c1">#Dentro colocamos</span>
+</span><span class='line'><span class="n">export</span> <span class="no">PATH</span><span class="o">=</span><span class="s2">&quot;/usr/local/samba/sbin:/usr/local/samba/bin:$PATH&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
-<time datetime="2013-11-11T20:04:00-03:00" pubdate data-updated="true">Nov 11<span>th</span>, 2013</time></div>
-	</header>
-	<div class="entry-content">
-		<p>En ocasiones y ante la repetitividad de la operación en algunas instalaciones y estar aburrido de realizar la misma operación por &ldquo;x&rdquo; veces, lo mejor en este escenario es automatizar la instalación mediante el método &ldquo;kickstart&rdquo;. Cuando uno hace una instalación mediante insterfaz gráfica en Redhat/Centos/Fedora (instalador RedHat) al final del proceso se crea un archivo de la instalación bajo <i>/root/anaconda-ks.cfg</i>. Este archivo lo podemos tomar y complementar la instalación que igura en el.
-Bueno, si queremos utilizarlo como &ldquo;plantilla&rdquo; para otra instalación solo tenemos que tomar ese archivo y lo copiamos en un medio extraible (Ej. Usb).
-Por ejemplo, y en el siguiente escenario, vamos a realizar una instalación tomando un archivo kickstart que sacamos de otra instalación y lo alojamos en un Usb el que será instanciado una vez que instalemos el SO.</p>
+<p>Para ver que quedó todo en orden ejecutamos</p>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[</span><span class="n">root</span><span class="vi">@samba</span> <span class="o">~]</span><span class="c1"># samba -V</span>
+</span><span class='line'><span class="no">Version</span> <span class="mi">4</span><span class="o">.</span><span class="mi">1</span><span class="o">.</span><span class="mi">11</span>
+</span><span class='line'><span class="o">[</span><span class="n">root</span><span class="vi">@samba</span> <span class="o">~]</span><span class="c1"># smbclient -V</span>
+</span><span class='line'><span class="no">Version</span> <span class="mi">4</span><span class="o">.</span><span class="mi">1</span><span class="o">.</span><span class="mi">11</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Chequeamos la configuración local al Samba y los procesos corriendo</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[</span><span class="n">root</span><span class="vi">@samba</span> <span class="o">~]</span><span class="c1">#  ps -ef | grep samba</span>
+</span><span class='line'><span class="n">root</span>     <span class="mi">23010</span>     <span class="mi">1</span>  <span class="mi">1</span> <span class="mi">12</span><span class="p">:</span><span class="mi">32</span> <span class="o">?</span>        <span class="mo">00</span><span class="p">:</span><span class="mo">00</span><span class="p">:</span><span class="mo">00</span> <span class="n">samba</span>
+</span><span class='line'><span class="n">root</span>     <span class="mi">23011</span> <span class="mi">23010</span>  <span class="mi">0</span> <span class="mi">12</span><span class="p">:</span><span class="mi">32</span> <span class="o">?</span>        <span class="mo">00</span><span class="p">:</span><span class="mo">00</span><span class="p">:</span><span class="mo">00</span> <span class="n">samba</span>
+</span><span class='line'><span class="n">root</span>     <span class="mi">23012</span> <span class="mi">23010</span>  <span class="mi">0</span> <span class="mi">12</span><span class="p">:</span><span class="mi">32</span> <span class="o">?</span>        <span class="mo">00</span><span class="p">:</span><span class="mo">00</span><span class="p">:</span><span class="mo">00</span> <span class="n">samba</span>
+</span><span class='line'><span class="n">root</span>     <span class="mi">23013</span> <span class="mi">23010</span>  <span class="mi">0</span> <span class="mi">12</span><span class="p">:</span><span class="mi">32</span> <span class="o">?</span>        <span class="mo">00</span><span class="p">:</span><span class="mo">00</span><span class="p">:</span><span class="mo">00</span> <span class="n">samba</span>
+</span><span class='line'><span class="n">root</span>     <span class="mi">23014</span> <span class="mi">23010</span>  <span class="mi">0</span> <span class="mi">12</span><span class="p">:</span><span class="mi">32</span> <span class="o">?</span>        <span class="mo">00</span><span class="p">:</span><span class="mo">00</span><span class="p">:</span><span class="mo">00</span> <span class="n">samba</span>
+</span><span class='line'><span class="n">root</span>     <span class="mi">23015</span> <span class="mi">23011</span>  <span class="mi">1</span> <span class="mi">12</span><span class="p">:</span><span class="mi">32</span> <span class="o">?</span>        <span class="mo">00</span><span class="p">:</span><span class="mo">00</span><span class="p">:</span><span class="mo">00</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">samba</span><span class="o">/</span><span class="n">sbin</span><span class="o">/</span><span class="n">smbd</span> <span class="o">-</span><span class="n">D</span> <span class="o">--</span><span class="n">option</span><span class="o">=</span><span class="n">server</span> <span class="n">role</span> <span class="ss">check</span><span class="p">:</span><span class="n">inhibit</span><span class="o">=</span><span class="n">yes</span> <span class="o">--</span><span class="n">foreground</span>
+</span><span class='line'><span class="n">root</span>     <span class="mi">23016</span> <span class="mi">23010</span>  <span class="mi">2</span> <span class="mi">12</span><span class="p">:</span><span class="mi">32</span> <span class="o">?</span>        <span class="mo">00</span><span class="p">:</span><span class="mo">00</span><span class="p">:</span><span class="mo">00</span> <span class="n">samba</span>
+</span><span class='line'><span class="n">root</span>     <span class="mi">23017</span> <span class="mi">23010</span>  <span class="mi">0</span> <span class="mi">12</span><span class="p">:</span><span class="mi">32</span> <span class="o">?</span>        <span class="mo">00</span><span class="p">:</span><span class="mo">00</span><span class="p">:</span><span class="mo">00</span> <span class="n">samba</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[</span><span class="n">root</span><span class="vi">@samba</span> <span class="o">~]</span><span class="c1"># /usr/local/samba/bin/smbclient -L localhost -U%</span>
+</span><span class='line'><span class="no">Domain</span><span class="o">=[</span><span class="no">EXAMPLE</span><span class="o">]</span> <span class="no">OS</span><span class="o">=[</span><span class="no">Unix</span><span class="o">]</span> <span class="no">Server</span><span class="o">=[</span><span class="no">Samba</span> <span class="mi">4</span><span class="o">.</span><span class="mi">1</span><span class="o">.</span><span class="mi">11</span><span class="o">]</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="no">Sharename</span>       <span class="no">Type</span>      <span class="no">Comment</span>
+</span><span class='line'>        <span class="o">---------</span>       <span class="o">----</span>      <span class="o">-------</span>
+</span><span class='line'>        <span class="n">netlogon</span>        <span class="no">Disk</span>
+</span><span class='line'>        <span class="n">sysvol</span>          <span class="no">Disk</span>
+</span><span class='line'>        <span class="no">IPC</span><span class="err">$</span>            <span class="no">IPC</span>       <span class="no">IPC</span> <span class="no">Service</span> <span class="p">(</span><span class="no">Samba</span> <span class="mi">4</span><span class="o">.</span><span class="mi">1</span><span class="o">.</span><span class="mi">11</span><span class="p">)</span>
+</span><span class='line'><span class="no">Domain</span><span class="o">=[</span><span class="no">EXAMPLE</span><span class="o">]</span> <span class="no">OS</span><span class="o">=[</span><span class="no">Unix</span><span class="o">]</span> <span class="no">Server</span><span class="o">=[</span><span class="no">Samba</span> <span class="mi">4</span><span class="o">.</span><span class="mi">1</span><span class="o">.</span><span class="mi">11</span><span class="o">]</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="no">Server</span>               <span class="no">Comment</span>
+</span><span class='line'>        <span class="o">---------</span>            <span class="o">-------</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="no">Workgroup</span>            <span class="no">Master</span>
+</span><span class='line'>        <span class="o">---------</span>            <span class="o">-------</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>El proceso de configuración del Samba va a crear un archivo kerberos de la configuración relaizada, tenemos que enlazarlo al directorio <code>/etc</code></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[</span><span class="n">root</span><span class="vi">@samba</span> <span class="o">~]</span><span class="err">$</span> <span class="n">mv</span> <span class="sr">/etc/</span><span class="n">krb5</span><span class="o">.</span><span class="n">conf</span> <span class="sr">/etc/</span><span class="n">krb5</span><span class="o">.</span><span class="n">conf</span><span class="o">.</span><span class="n">ORG</span>
+</span><span class='line'><span class="o">[</span><span class="n">root</span><span class="vi">@samba</span> <span class="o">~]</span><span class="err">$</span> <span class="n">ln</span> <span class="o">-</span><span class="n">s</span> <span class="sr">/usr/</span><span class="n">local</span><span class="o">/</span><span class="n">samba</span><span class="o">/</span><span class="kp">private</span><span class="o">/</span><span class="n">krb5</span><span class="o">.</span><span class="n">conf</span>  <span class="sr">/etc/</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Comprobamos el funcionamiento en kerberos</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[</span><span class="n">root</span><span class="vi">@samba</span> <span class="o">~]</span><span class="c1"># host -t SRV _ldap._tcp.example.local.</span>
+</span><span class='line'><span class="n">_ldap</span><span class="o">.</span><span class="n">_tcp</span><span class="o">.</span><span class="n">example</span><span class="o">.</span><span class="n">local</span> <span class="n">has</span> <span class="no">SRV</span> <span class="n">record</span> <span class="mi">0</span> <span class="mi">100</span> <span class="mi">389</span> <span class="n">samba</span><span class="o">.</span><span class="n">example</span><span class="o">.</span><span class="n">local</span><span class="o">.</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Comprobamos la autentificación contra kerberos</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[</span><span class="n">root</span><span class="vi">@samba</span> <span class="o">~]</span><span class="c1"># kinit administrator@EXAMPLE.LOCAL </span>
+</span><span class='line'><span class="no">Password</span> <span class="k">for</span> <span class="n">administrator</span><span class="vi">@EXAMPLE</span><span class="o">.</span><span class="n">LOCAL</span><span class="p">:</span>
+</span><span class='line'><span class="ss">Warning</span><span class="p">:</span> <span class="no">Your</span> <span class="n">password</span> <span class="n">will</span> <span class="n">expire</span> <span class="k">in</span> <span class="mi">41</span> <span class="n">days</span> <span class="n">on</span> <span class="no">Wed</span> <span class="no">Oct</span>  <span class="mi">1</span> <span class="mi">16</span><span class="p">:</span><span class="mi">28</span><span class="p">:</span><span class="mi">11</span> <span class="mi">2014</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Si por el contrario nos arroja algún error, tenemos que ver las configuraciones realizadas o reconfigurar el servicio samba</p>
+
+<h4>Script de arranque</h4>
+
+<p>Para el control del servicio creamos el siguiente script</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -415,116 +855,116 @@ Por ejemplo, y en el siguiente escenario, vamos a realizar una instalación toma
 <span class='line-number'>66</span>
 <span class='line-number'>67</span>
 <span class='line-number'>68</span>
-<span class='line-number'>69</span>
-<span class='line-number'>70</span>
-<span class='line-number'>71</span>
-<span class='line-number'>72</span>
-<span class='line-number'>73</span>
-<span class='line-number'>74</span>
-<span class='line-number'>75</span>
-<span class='line-number'>76</span>
-<span class='line-number'>77</span>
-<span class='line-number'>78</span>
-<span class='line-number'>79</span>
-<span class='line-number'>80</span>
-<span class='line-number'>81</span>
-<span class='line-number'>82</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="cp"># Kickstart file automatically generated by anaconda.</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[</span><span class="n">root</span><span class="vi">@samba</span> <span class="o">~]</span><span class="err">$</span> <span class="n">cat</span> <span class="sr">/etc/ini</span><span class="n">t</span><span class="o">.</span><span class="n">d</span><span class="o">/</span><span class="n">samba4</span>
+</span><span class='line'><span class="c1">#! /bin/bash</span>
+</span><span class='line'><span class="c1">#</span>
+</span><span class='line'><span class="c1"># samba4 Bring up/down samba4 service</span>
+</span><span class='line'><span class="c1">#</span>
+</span><span class='line'><span class="c1"># chkconfig: - 90 10</span>
+</span><span class='line'><span class="c1"># description: Activates/Deactivates all samba4 interfaces configured to#</span>
+</span><span class='line'><span class="c1"># chkconfig: - 90 10</span>
+</span><span class='line'><span class="c1"># description: Activates/Deactivates all samba4 interfaces configured to</span>
+</span><span class='line'><span class="c1"># start at boot time.</span>
+</span><span class='line'><span class="c1">#</span>
+</span><span class='line'><span class="c1">### BEGIN INIT INFO</span>
+</span><span class='line'><span class="c1"># Provides:</span>
+</span><span class='line'><span class="c1"># Should-Start:</span>
+</span><span class='line'><span class="c1"># Short-Description: Bring up/down samba4</span>
+</span><span class='line'><span class="c1"># Description: Bring up/down samba4</span>
+</span><span class='line'><span class="c1">### END INIT INFO</span>
+</span><span class='line'><span class="c1"># Source function library.</span>
+</span><span class='line'><span class="o">.</span> <span class="sr">/etc/ini</span><span class="n">t</span><span class="o">.</span><span class="n">d</span><span class="o">/</span><span class="n">functions</span>
 </span><span class='line'>
-</span><span class='line'><span class="n">install</span>
-</span><span class='line'><span class="n">text</span>
-</span><span class='line'><span class="n">cdrom</span>
-</span><span class='line'><span class="n">key</span> <span class="o">--</span><span class="n">skip</span>
-</span><span class='line'><span class="n">lang</span> <span class="n">en_US</span><span class="p">.</span><span class="n">UTF</span><span class="o">-</span><span class="mi">8</span>
-</span><span class='line'><span class="n">keyboard</span> <span class="n">la</span><span class="o">-</span><span class="n">latin1</span>
-</span><span class='line'><span class="n">xconfig</span> <span class="o">--</span><span class="n">startxonboot</span>
-</span><span class='line'><span class="cp">#network --device eth0 --onboot no --bootproto dhcp --hostname hosts.example.com</span>
-</span><span class='line'><span class="cp">#network --device eth2 --bootproto static --ip 10.0.0.190 --netmask 255.255.255.0 --gateway 10.0.0.1 --hostname hosts.example.com</span>
-</span><span class='line'><span class="n">rootpw</span> <span class="n">MyPassword</span>
-</span><span class='line'><span class="n">firewall</span> <span class="o">--</span><span class="n">disabled</span>
-</span><span class='line'><span class="n">authconfig</span> <span class="o">--</span><span class="n">enableshadow</span> <span class="o">--</span><span class="n">enablemd5</span>
-</span><span class='line'><span class="n">selinux</span> <span class="o">--</span><span class="n">disabled</span>
-</span><span class='line'><span class="n">timezone</span> <span class="n">America</span><span class="o">/</span><span class="n">Santiago</span>
-</span><span class='line'><span class="n">firstboot</span> <span class="o">--</span><span class="n">disable</span>
-</span><span class='line'><span class="n">services</span> <span class="o">--</span><span class="n">disabled</span> <span class="n">pcscd</span><span class="p">,</span><span class="n">hidd</span><span class="p">,</span><span class="n">bluetooth</span><span class="p">,</span><span class="n">pand</span><span class="p">,</span><span class="n">isdn</span><span class="p">,</span><span class="n">cups</span><span class="p">,</span><span class="n">avahi</span><span class="o">-</span><span class="n">daemon</span><span class="p">,</span><span class="n">cups</span><span class="p">,</span><span class="n">cups</span><span class="o">-</span><span class="n">config</span><span class="o">-</span><span class="n">daemon</span><span class="p">,</span><span class="n">pcscd</span><span class="p">,</span><span class="n">hplip</span><span class="p">,</span><span class="n">hidd</span><span class="p">,</span><span class="n">portmap</span><span class="p">,</span><span class="n">rpcidmapd</span><span class="p">,</span><span class="n">rpcsvcgssd</span><span class="p">,</span><span class="n">rpcgssd</span><span class="p">,</span><span class="n">sendmail</span><span class="p">,</span><span class="n">nfslock</span><span class="p">,</span><span class="n">mdmonitor</span><span class="p">,</span><span class="n">setroubleshoot</span><span class="p">,</span><span class="n">restorecond</span><span class="p">,</span><span class="n">rawdevices</span><span class="p">,</span><span class="n">smartd</span><span class="p">,</span><span class="n">qpidd</span><span class="p">,</span><span class="n">postfix</span>
-</span><span class='line'><span class="n">reboot</span>
+</span><span class='line'><span class="k">if</span> <span class="o">[</span> <span class="o">-</span><span class="n">f</span> <span class="sr">/etc/s</span><span class="n">ysconfig</span><span class="o">/</span><span class="n">samba4</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span><span class='line'><span class="o">.</span> <span class="sr">/etc/s</span><span class="n">ysconfig</span><span class="o">/</span><span class="n">samba4</span>
+</span><span class='line'><span class="n">fi</span>
 </span><span class='line'>
-</span><span class='line'><span class="n">bootloader</span> <span class="o">--</span><span class="n">location</span><span class="o">=</span><span class="n">mbr</span> <span class="o">--</span><span class="n">driveorder</span><span class="o">=</span><span class="n">sda</span><span class="p">,</span><span class="n">sdb</span> <span class="o">--</span><span class="n">append</span><span class="o">=</span><span class="s">&quot;rhgb quiet&quot;</span>
-</span><span class='line'><span class="cp"># The following is the partition information you requested</span>
-</span><span class='line'><span class="cp"># Note that any partitions you deleted are not expressed</span>
-</span><span class='line'><span class="cp"># here so unless you clear all partitions first, this is</span>
-</span><span class='line'><span class="cp"># not guaranteed to work</span>
-</span><span class='line'><span class="cp"># VALORES DE DISCOS EN MB</span>
-</span><span class='line'><span class="n">clearpart</span> <span class="o">--</span><span class="n">linux</span> <span class="o">--</span><span class="n">drives</span><span class="o">=</span><span class="n">sda</span><span class="p">,</span><span class="n">sdb</span>
-</span><span class='line'><span class="n">part</span> <span class="o">/</span><span class="n">boot</span> <span class="o">--</span><span class="n">fstype</span> <span class="n">ext3</span> <span class="o">--</span><span class="n">size</span><span class="o">=</span><span class="mi">100</span> <span class="o">--</span><span class="n">ondisk</span><span class="o">=</span><span class="n">sda</span>
-</span><span class='line'><span class="n">part</span> <span class="n">pv</span><span class="mf">.8</span> <span class="o">--</span><span class="n">size</span><span class="o">=</span><span class="mi">0</span> <span class="o">--</span><span class="n">grow</span> <span class="o">--</span><span class="n">ondisk</span><span class="o">=</span><span class="n">sda</span>
-</span><span class='line'><span class="n">volgroup</span> <span class="n">vg00</span> <span class="o">--</span><span class="n">pesize</span><span class="o">=</span><span class="mi">32768</span> <span class="n">pv</span><span class="mf">.8</span>
-</span><span class='line'><span class="n">logvol</span> <span class="o">/</span><span class="n">tmp</span> <span class="o">--</span><span class="n">fstype</span> <span class="n">ext3</span> <span class="o">--</span><span class="n">name</span><span class="o">=</span><span class="n">tmp</span> <span class="o">--</span><span class="n">vgname</span><span class="o">=</span><span class="n">vg00</span> <span class="o">--</span><span class="n">size</span><span class="o">=</span><span class="mi">1000</span>
-</span><span class='line'><span class="n">logvol</span> <span class="o">/</span><span class="n">usr</span> <span class="o">--</span><span class="n">fstype</span> <span class="n">ext3</span> <span class="o">--</span><span class="n">name</span><span class="o">=</span><span class="n">usr</span> <span class="o">--</span><span class="n">vgname</span><span class="o">=</span><span class="n">vg00</span> <span class="o">--</span><span class="n">size</span><span class="o">=</span><span class="mi">1000</span>
-</span><span class='line'><span class="n">logvol</span> <span class="o">/</span><span class="n">var</span> <span class="o">--</span><span class="n">fstype</span> <span class="n">ext3</span> <span class="o">--</span><span class="n">name</span><span class="o">=</span><span class="n">var</span> <span class="o">--</span><span class="n">vgname</span><span class="o">=</span><span class="n">vg00</span> <span class="o">--</span><span class="n">size</span><span class="o">=</span><span class="mi">1000</span>
-</span><span class='line'><span class="n">logvol</span> <span class="o">/</span><span class="n">stage</span> <span class="o">--</span><span class="n">fstype</span> <span class="n">ext3</span> <span class="o">--</span><span class="n">name</span><span class="o">=</span><span class="n">stage</span> <span class="o">--</span><span class="n">vgname</span><span class="o">=</span><span class="n">vg00</span> <span class="o">--</span><span class="n">size</span><span class="o">=</span><span class="mi">1000</span>
-</span><span class='line'><span class="n">logvol</span> <span class="o">/</span><span class="n">admin</span> <span class="o">--</span><span class="n">fstype</span> <span class="n">ext3</span> <span class="o">--</span><span class="n">name</span><span class="o">=</span><span class="n">admin</span> <span class="o">--</span><span class="n">vgname</span><span class="o">=</span><span class="n">vg00</span> <span class="o">--</span><span class="n">size</span><span class="o">=</span><span class="mi">1000</span>
-</span><span class='line'><span class="n">logvol</span> <span class="o">/</span><span class="n">home</span> <span class="o">--</span><span class="n">fstype</span> <span class="n">ext3</span> <span class="o">--</span><span class="n">name</span><span class="o">=</span><span class="n">home</span> <span class="o">--</span><span class="n">vgname</span><span class="o">=</span><span class="n">vg00</span> <span class="o">--</span><span class="n">size</span><span class="o">=</span><span class="mi">1000</span>
-</span><span class='line'><span class="n">logvol</span> <span class="o">/</span> <span class="o">--</span><span class="n">fstype</span> <span class="n">ext3</span> <span class="o">--</span><span class="n">name</span><span class="o">=</span><span class="n">raiz</span> <span class="o">--</span><span class="n">vgname</span><span class="o">=</span><span class="n">vg00</span> <span class="o">--</span><span class="n">size</span><span class="o">=</span><span class="mi">2000</span>
-</span><span class='line'><span class="n">logvol</span> <span class="n">swap</span> <span class="o">--</span><span class="n">fstype</span> <span class="n">swap</span> <span class="o">--</span><span class="n">name</span><span class="o">=</span><span class="n">swap</span> <span class="o">--</span><span class="n">vgname</span><span class="o">=</span><span class="n">vg00</span> <span class="o">--</span><span class="n">size</span><span class="o">=</span><span class="mi">1000</span>
+</span><span class='line'><span class="no">CWD</span><span class="o">=</span><span class="err">$</span><span class="p">(</span><span class="n">pwd</span><span class="p">)</span>
+</span><span class='line'><span class="n">prog</span><span class="o">=</span><span class="s2">&quot;samba4&quot;</span>
 </span><span class='line'>
-</span><span class='line'><span class="o">%</span><span class="n">packages</span>
-</span><span class='line'><span class="err">@</span><span class="n">admin</span><span class="o">-</span><span class="n">tools</span>
-</span><span class='line'><span class="err">@</span><span class="n">base</span>
-</span><span class='line'><span class="err">@</span><span class="n">core</span>
-</span><span class='line'><span class="err">@</span><span class="n">development</span><span class="o">-</span><span class="n">libs</span>
-</span><span class='line'><span class="err">@</span><span class="n">development</span><span class="o">-</span><span class="n">tools</span>
-</span><span class='line'><span class="err">@</span><span class="n">dialup</span>
-</span><span class='line'><span class="err">@</span><span class="n">editors</span>
-</span><span class='line'><span class="err">@</span><span class="n">gnome</span><span class="o">-</span><span class="n">desktop</span>
-</span><span class='line'><span class="err">@</span><span class="n">graphical</span><span class="o">-</span><span class="n">internet</span>
-</span><span class='line'><span class="err">@</span><span class="n">java</span>
-</span><span class='line'><span class="err">@</span><span class="n">legacy</span><span class="o">-</span><span class="n">software</span><span class="o">-</span><span class="n">development</span>
-</span><span class='line'><span class="err">@</span><span class="n">legacy</span><span class="o">-</span><span class="n">software</span><span class="o">-</span><span class="n">support</span>
-</span><span class='line'><span class="err">@</span><span class="n">printing</span>
-</span><span class='line'><span class="err">@</span><span class="n">sound</span><span class="o">-</span><span class="n">and</span><span class="o">-</span><span class="n">video</span>
-</span><span class='line'><span class="err">@</span><span class="n">text</span><span class="o">-</span><span class="n">internet</span>
-</span><span class='line'><span class="err">@</span><span class="n">base</span><span class="o">-</span><span class="n">x</span>
-</span><span class='line'><span class="n">kexec</span><span class="o">-</span><span class="n">tools</span>
-</span><span class='line'><span class="n">iscsi</span><span class="o">-</span><span class="n">initiator</span><span class="o">-</span><span class="n">utils</span>
-</span><span class='line'><span class="n">fipscheck</span>
-</span><span class='line'><span class="n">device</span><span class="o">-</span><span class="n">mapper</span><span class="o">-</span><span class="n">multipath</span>
-</span><span class='line'><span class="n">sgpio</span>
-</span><span class='line'><span class="n">python</span><span class="o">-</span><span class="n">dmidecode</span>
-</span><span class='line'><span class="n">imake</span>
-</span><span class='line'><span class="n">emacs</span>
-</span><span class='line'><span class="n">xorg</span><span class="o">-</span><span class="n">x11</span><span class="o">-</span><span class="n">utils</span>
-</span><span class='line'><span class="n">xorg</span><span class="o">-</span><span class="n">x11</span><span class="o">-</span><span class="n">server</span><span class="o">-</span><span class="n">Xnest</span>
-</span><span class='line'><span class="n">xorg</span><span class="o">-</span><span class="n">x11</span><span class="o">-</span><span class="n">server</span><span class="o">-</span><span class="n">Xvfb</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">%</span><span class="n">post</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">echo</span> <span class="s">&quot;################################&quot;</span>
-</span><span class='line'><span class="n">echo</span> <span class="s">&quot;# Running Post Configuration   #&quot;</span>
-</span><span class='line'><span class="n">echo</span> <span class="s">&quot;################################&quot;</span>
-</span><span class='line'><span class="cp">#Adding a user &quot;oracle&quot;</span>
-</span><span class='line'><span class="n">useradd</span> <span class="o">-</span><span class="n">m</span> <span class="n">oracle</span>
-</span><span class='line'><span class="cp">#Password  &quot;oracle&quot;</span>
-</span><span class='line'><span class="n">echo</span> <span class="n">oraclepass</span> <span class="o">|</span> <span class="n">passwd</span> <span class="o">--</span><span class="n">stdin</span> <span class="n">oracle</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">echo</span> <span class="s">&quot;Syslog.conf&quot;</span>
-</span><span class='line'><span class="n">cat</span> <span class="o">&lt;&lt;</span> <span class="n">EOF</span> <span class="o">&gt;&gt;</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">syslog</span><span class="p">.</span><span class="n">conf</span>
-</span><span class='line'><span class="cp">#texto de prueba dentro de syslog.conf</span>
-</span><span class='line'><span class="n">EOF</span>
+</span><span class='line'><span class="n">start</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'><span class="c1"># Attach irda device</span>
+</span><span class='line'><span class="n">echo</span> <span class="o">-</span><span class="n">n</span> <span class="vg">$&quot;</span><span class="no">Starting</span> <span class="vg">$prog</span><span class="p">:</span> <span class="s2">&quot;</span>
+</span><span class='line'><span class="s2">/usr/local/samba/sbin/samba</span>
+</span><span class='line'><span class="s2">sleep 2</span>
+</span><span class='line'><span class="s2">if ps ax | grep -v &quot;</span><span class="n">grep</span><span class="s2">&quot; | grep -q /samba/sbin/samba ; then success $&quot;</span><span class="n">samba4</span> <span class="n">startup</span><span class="s2">&quot;; else failure $&quot;</span><span class="n">samba4</span> <span class="n">startup</span><span class="s2">&quot;; fi</span>
+</span><span class='line'><span class="s2">echo</span>
+</span><span class='line'><span class="s2">}</span>
+</span><span class='line'><span class="s2">stop() {</span>
+</span><span class='line'><span class="s2"># Stop service.</span>
+</span><span class='line'><span class="s2">echo -n $&quot;</span><span class="no">Shutting</span> <span class="n">down</span> <span class="vg">$prog</span><span class="p">:</span> <span class="s2">&quot;</span>
+</span><span class='line'><span class="s2">killall samba</span>
+</span><span class='line'><span class="s2">sleep 2</span>
+</span><span class='line'><span class="s2">if ps ax | grep -v &quot;</span><span class="n">grep</span><span class="s2">&quot; | grep -q /samba/sbin/samba ; then failure $&quot;</span><span class="n">samba4</span> <span class="n">shutdown</span><span class="s2">&quot;; else success $&quot;</span><span class="n">samba4</span> <span class="n">shutdown</span><span class="s2">&quot;; fi</span>
+</span><span class='line'><span class="s2">echo</span>
+</span><span class='line'><span class="s2">}</span>
+</span><span class='line'><span class="s2">status() {</span>
+</span><span class='line'><span class="s2">/usr/local/samba/sbin/samba --show-build</span>
+</span><span class='line'><span class="s2">}</span>
+</span><span class='line'><span class="s2"> </span>
+</span><span class='line'><span class="s2"># See how we were called.</span>
+</span><span class='line'><span class="s2">case &quot;</span><span class="vg">$1</span><span class="s2">&quot; in</span>
+</span><span class='line'><span class="s2">start)</span>
+</span><span class='line'><span class="s2">start</span>
+</span><span class='line'><span class="s2">;;</span>
+</span><span class='line'><span class="s2">stop)</span>
+</span><span class='line'><span class="s2">stop</span>
+</span><span class='line'><span class="s2">;;</span>
+</span><span class='line'><span class="s2">status)</span>
+</span><span class='line'><span class="s2">status irattach</span>
+</span><span class='line'><span class="s2">;;</span>
+</span><span class='line'><span class="s2">restart|reload)</span>
+</span><span class='line'><span class="s2">stop</span>
+</span><span class='line'><span class="s2">start</span>
+</span><span class='line'><span class="s2">;;</span>
+</span><span class='line'><span class="s2">*)</span>
+</span><span class='line'><span class="s2">echo $&quot;</span><span class="ss">Usage</span><span class="p">:</span> <span class="vg">$0</span> <span class="p">{</span><span class="n">start</span><span class="o">|</span><span class="n">stop</span><span class="o">|</span><span class="n">restart</span><span class="o">|</span><span class="n">status</span><span class="p">}</span><span class="s2">&quot;</span>
+</span><span class='line'><span class="s2">exit 1</span>
+</span><span class='line'><span class="s2">esac</span>
+</span><span class='line'><span class="s2"> </span>
+</span><span class='line'><span class="s2">exit 0</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Lo anterior, es una archivo típico de instalación en donde yo adiconé lo referente a que la instalación se haga en modo texto  lo que está bajo de la variable <i>%post</i>.
-En este caso el archivo esta alojado en un USB (/dev/sdb1) , por lo cual al momento de carga el instalador tenemos que ejecutar la siguiente instrucción: <i>linux ks=hd:sdb1/ks.cfg</i></p>
+<p>Configuramos los permisos</p>
 
-<p><img src="http://s22.postimg.org/wft8hy2ip/Captura_de_pantalla_2013_11_08_a_la_s_21_08_58.png"></p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[</span><span class="n">root</span><span class="vi">@samba</span> <span class="o">~]</span><span class="err">$</span> <span class="n">chmod</span> <span class="o">+</span><span class="n">x</span> <span class="sr">/etc/ini</span><span class="n">t</span><span class="o">.</span><span class="n">d</span><span class="o">/</span><span class="n">samba4</span>
+</span></code></pre></td></tr></table></div></figure>
 
-<p>Luego el archivo será accedido y leido para realizar la instalación según lo que se detalló dentro de el.</p>
 
-<p><img src="http://s23.postimg.org/468oi4u97/Captura_de_pantalla_2013_11_08_a_la_s_21_13_01.png">
-</p></p>
+<p>Finalmente dejamos los servicios para correr por defecto</p>
 
-<p>Este tipo de instalación se puede complementar con PXE y el que el kickstart pueda ser accedido mediante ftp, nfs, etc.</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[</span><span class="n">root</span><span class="vi">@samba</span> <span class="o">~]</span><span class="err">$</span> <span class="n">chkconfig</span> <span class="o">--</span><span class="n">levels</span> <span class="mi">235</span> <span class="n">samba4</span> <span class="n">on</span>
+</span><span class='line'><span class="o">[</span><span class="n">root</span><span class="vi">@samba</span> <span class="o">~]</span><span class="err">$</span> <span class="n">chkconfig</span> <span class="o">--</span><span class="n">levels</span> <span class="mi">235</span> <span class="n">ntp</span> <span class="n">on</span>
+</span><span class='line'><span class="o">[</span><span class="n">root</span><span class="vi">@samba</span> <span class="o">~]</span><span class="err">$</span> <span class="n">chkconfig</span> <span class="o">--</span><span class="n">levels</span> <span class="mi">235</span> <span class="n">named</span> <span class="n">on</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Ahora ya tenemos configurado el Samba, desde ahora podemos empezar a conectar a los usuarios.</p>
+
+<h4>Uniendo una máquina al dominio</h4>
+
+<h4>Getión remota del controlado de dominio (Remote Server Administration Tool)</h4>
+
+<p>Para la gestión remota del controlador de dominio descargamos <i>Remote Server Administration Tool</i> desde <a href="http://www.microsoft.com/es-es/download/details.aspx?id=7887">acá</a>:
+ Instalación</p>
+
+<ol>
+<li>Lo instalamos como cualquier exe</li>
+<li>Panel de control </li>
+<li>Programas y caracteristicas</li>
+<li>Activar o desactivar caracteristicas</li>
+<li>Seleccionamos las caracteristicas asociadas al A/D</li>
+<li>Reinciamos la máquina Windows</li>
+<li>Inicio -> Ejecutar -> &#8220;Usuarios y Equipos de Active Directory&#8221; y veremos el arbol de nuestro Samba4</li>
+</ol>
+
+
+<p>Para mas detalles del RSTA <a href="https://wiki.samba.org/index.php/Installing_RSAT_on_Windows_for_AD_Management">acá</a></p>
 
 		
 		
@@ -537,9 +977,9 @@ En este caso el archivo esta alojado en un USB (/dev/sdb1) , por lo cual al mome
 	<header>
 		<h2 class="title">
 			
-			<a href="/blog/2013/11/06/script-para-ver-quota-de-casilla-zimbra/">
+			<a href="/blog/2014/08/02/creando-un-box-para-vagrant/">
 			
-				Script Para Ver Quota De Casilla Zimbra</a>
+				Creando Un Box Para Vagrant</a>
 		</h2>
 		<div class="meta date">
 
@@ -553,12 +993,109 @@ En este caso el archivo esta alojado en un USB (/dev/sdb1) , por lo cual al mome
   
 
 
-<time datetime="2013-11-06T17:14:00-03:00" pubdate data-updated="true">Nov 6<span>th</span>, 2013</time></div>
+<time datetime="2014-08-02T23:50:00-04:00" pubdate data-updated="true">Aug 2<span>nd</span>, 2014</time></div>
 	</header>
 	<div class="entry-content">
-		<p>A continuación un script que lista la quota que está utilizando una casilla de usuario y cuanto es la quota asignada (esto en el caso de tener) en Zimbra.</p>
+		<p>En mi caso la máquina virtual no fue creada desde cero, ya que bajé un Box de Vagrant y lo customicé por lo que me salté los pasos previos de la creación del box <a href="https://docs.vagrantup.com/v2/boxes/base.html.">https://docs.vagrantup.com/v2/boxes/base.html.</a> Lo realizado para la creación del box fue lo siguiente:</p>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<p><li> Optimización de tamaño de la VM </li></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="err">$</span> <span class="n">sudo</span> <span class="n">dd</span> <span class="k">if</span><span class="o">=</span><span class="sr">/dev/</span><span class="n">zero</span> <span class="n">of</span><span class="o">=</span><span class="sr">/EMPTY bs=1M</span>
+</span><span class='line'><span class="sr">$ sudo rm -f /</span><span class="no">EMPTY</span>
+</span><span class='line'><span class="err">$</span> <span class="n">sudo</span> <span class="n">shutdown</span> <span class="o">-</span><span class="n">h</span> <span class="n">now</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><li> Creación del Box </li></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="ss">Miguel</span><span class="p">:</span><span class="no">PuppetMaster</span><span class="err">$</span> <span class="n">cd</span> <span class="o">~</span><span class="sr">/VirtualBox\ VMs/</span> <span class="c1"># directorio donde quedan alojadas las vms</span>
+</span><span class='line'><span class="ss">Miguel</span><span class="p">:</span><span class="no">VirtualBox</span> <span class="no">VMs</span><span class="err">$</span> <span class="n">vagrant</span> <span class="n">package</span> <span class="o">--</span><span class="n">base</span> <span class="n">puppetserver</span> <span class="c1">##puppetserver es el nombre de la vm en virtualbox</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><li> Testing del Box</li>
+Agreagamos nuestro Box a nuestro Vagrant</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="ss">Miguel</span><span class="p">:</span><span class="no">PuppetMaster</span><span class="err">$</span> <span class="n">vagrant</span> <span class="n">box</span> <span class="n">add</span> <span class="no">Centos6PuppetServer</span> <span class="o">~</span><span class="sr">/VirtualBox\ VMs/</span><span class="n">package</span><span class="o">.</span><span class="n">box</span>
+</span><span class='line'><span class="o">==&gt;</span> <span class="ss">box</span><span class="p">:</span> <span class="no">Adding</span> <span class="n">box</span> <span class="s1">&#39;Centos6PuppetServer&#39;</span> <span class="p">(</span><span class="n">v0</span><span class="p">)</span> <span class="k">for</span> <span class="ss">provider</span><span class="p">:</span>
+</span><span class='line'>    <span class="ss">box</span><span class="p">:</span> <span class="ss">Downloading</span><span class="p">:</span> <span class="ss">file</span><span class="p">:</span><span class="sr">//</span><span class="o">/</span><span class="no">Users</span><span class="o">/</span><span class="no">Miguel</span><span class="o">/</span><span class="no">VirtualBox</span><span class="o">%</span><span class="mi">20</span><span class="no">VMs</span><span class="o">/</span><span class="n">package</span><span class="o">.</span><span class="n">box</span>
+</span><span class='line'><span class="o">==&gt;</span> <span class="ss">box</span><span class="p">:</span> <span class="no">Successfully</span> <span class="n">added</span> <span class="n">box</span> <span class="s1">&#39;Centos6PuppetServer&#39;</span> <span class="p">(</span><span class="n">v0</span><span class="p">)</span> <span class="k">for</span> <span class="s1">&#39;virtualbox&#39;</span><span class="o">!</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Verificamos</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="ss">Miguel</span><span class="p">:</span><span class="no">PuppetMaster</span><span class="err">$</span> <span class="n">vagrant</span> <span class="n">box</span> <span class="n">list</span>
+</span><span class='line'><span class="no">Centos6PuppetServer</span> <span class="p">(</span><span class="n">virtualbox</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="c1"># nuestro box</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Nos dirigimos a nuestro directorio de trabajo de Vagrant y crearemos un nuevo proyecto <i>testing</i></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="ss">Miguel</span><span class="p">:</span><span class="no">VagrantVM</span><span class="err">$</span> <span class="n">mkdir</span> <span class="n">testing</span>
+</span><span class='line'><span class="ss">Miguel</span><span class="p">:</span><span class="no">VagrantVM</span><span class="err">$</span> <span class="n">cd</span> <span class="n">testing</span><span class="o">/</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Iniciamos una nueva VM</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="ss">Miguel</span><span class="p">:</span><span class="n">testing</span><span class="err">$</span> <span class="n">vagrant</span> <span class="n">init</span> <span class="no">Centos6PuppetServer</span> <span class="c1">##la iniciamos</span>
+</span><span class='line'><span class="ss">Miguel</span><span class="p">:</span><span class="n">testing</span><span class="err">$</span> <span class="n">vagrant</span> <span class="n">up</span> <span class="c1">#la arrancamos</span>
+</span><span class='line'><span class="ss">Miguel</span><span class="p">:</span><span class="n">testing</span><span class="err">$</span> <span class="n">vagrant</span> <span class="n">ssh</span> <span class="c1">#nos conectamos</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+		
+		
+	</div>
+
+</article>
+
+
+    <article class="post">
+	<header>
+		<h2 class="title">
+			
+			<a href="/blog/2014/07/30/red-publica-para-maquinas-virtuales-en-vagrant/">
+			
+				Red Pública Para Máquinas Virtuales en Vagrant</a>
+		</h2>
+		<div class="meta date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-07-30T15:05:00-04:00" pubdate data-updated="true">Jul 30<span>th</span>, 2014</time></div>
+	</header>
+	<div class="entry-content">
+		<p>Por defecto las máquinas virtuales creadas en Vagrant quedan configuradas con una ip &ldquo;privada&rdquo; y el acceso a la VM es por medio de NAT. Si deseamos configurar una ip &ldquo;publica&rdquo; en nuestra máquina virtual tenemos que editar nuestro <code>Vagranfile</code> y adicionar el parámetro <code>vm.network</code> dentro de nuestro apartado <code>config.vm.define</code>.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -576,32 +1113,30 @@ En este caso el archivo esta alojado en un USB (/dev/sdb1) , por lo cual al mome
 <span class='line-number'>16</span>
 <span class='line-number'>17</span>
 <span class='line-number'>18</span>
-<span class='line-number'>19</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">all_account</span><span class="o">=</span><span class="err">`</span><span class="n">zmprov</span> <span class="o">-</span><span class="n">l</span> <span class="n">gaa</span><span class="err">`</span><span class="p">;</span>
-</span><span class='line'><span class="k">for</span> <span class="n">account</span> <span class="k">in</span> <span class="n">$</span><span class="p">{</span><span class="n">all_account</span><span class="p">}</span>
-</span><span class='line'><span class="k">do</span>
-</span><span class='line'>    <span class="n">mb_size</span><span class="o">=</span><span class="err">`</span><span class="n">zmmailbox</span> <span class="o">-</span><span class="n">z</span> <span class="o">-</span><span class="n">m</span> <span class="n">$</span><span class="p">{</span><span class="n">account</span><span class="p">}</span> <span class="n">gms</span><span class="err">`</span><span class="p">;</span>
-</span><span class='line'>    <span class="n">mb_quota</span><span class="o">=</span><span class="err">`</span><span class="n">zmprov</span> <span class="n">ga</span> <span class="n">$</span><span class="p">{</span><span class="n">account</span><span class="p">}</span> <span class="o">|</span><span class="n">grep</span> <span class="o">-</span><span class="n">i</span> <span class="n">zimbraMailQuota</span> <span class="o">|</span><span class="n">cut</span> <span class="o">-</span><span class="n">d</span><span class="s">&quot;:&quot;</span> <span class="o">-</span><span class="n">f2</span><span class="err">`</span>
-</span><span class='line'>    <span class="k">if</span> <span class="p">[</span> <span class="n">$mb_quota</span> <span class="o">!=</span> <span class="mi">0</span> <span class="p">];</span> <span class="n">then</span>
-</span><span class='line'>            <span class="n">echo</span> <span class="s">&quot;Mailbox size of ${account} = ${mb_size}&quot;</span>
-</span><span class='line'>            <span class="n">count</span><span class="o">=</span><span class="err">`</span><span class="n">expr</span> <span class="n">length</span> <span class="n">$mb_quota</span><span class="err">`</span>
-</span><span class='line'>            <span class="k">if</span> <span class="p">[</span> <span class="n">$count</span> <span class="o">==</span> <span class="mi">8</span> <span class="p">];</span> <span class="n">then</span>
-</span><span class='line'>                <span class="n">echo</span> <span class="s">&quot;Mailbox Quota is = `echo ${mb_quota}/1024/1024 | bc` MB &quot;</span>
-</span><span class='line'>            <span class="k">else</span>
-</span><span class='line'>                <span class="n">echo</span> <span class="s">&quot;Mailbox Quota is = `echo ${mb_quota}/1024/1024/1024 | bc` GB &quot;</span>
-</span><span class='line'>            <span class="n">fi</span>
-</span><span class='line'>    <span class="k">else</span>
-</span><span class='line'>            <span class="n">echo</span> <span class="s">&quot;Mailbox size of ${account}  = ${mb_size}&quot;</span>
-</span><span class='line'>            <span class="n">echo</span> <span class="s">&quot;The Mailbox isn&#39;t Setting Quota&quot;</span>
-</span><span class='line'>    <span class="n">fi</span>
-</span><span class='line'>    <span class="n">echo</span> <span class="s">&quot;______________________&quot;</span>
-</span><span class='line'><span class="n">done</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># -*- mode: ruby -*-</span>
+</span><span class='line'><span class="c1"># vi: set ft=ruby :</span>
+</span><span class='line'>
+</span><span class='line'><span class="no">VAGRANTFILE_API_VERSION</span> <span class="o">=</span> <span class="s2">&quot;2&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="no">Vagrant</span><span class="o">.</span><span class="n">configure</span><span class="p">(</span><span class="no">VAGRANTFILE_API_VERSION</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">define</span> <span class="ss">:puppet</span> <span class="k">do</span> <span class="o">|</span><span class="n">puppet_config</span><span class="o">|</span>
+</span><span class='line'>     <span class="n">puppet_config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">box</span> <span class="o">=</span> <span class="s2">&quot;Centos&quot;</span>
+</span><span class='line'>     <span class="n">puppet_config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">hostname</span>  <span class="o">=</span> <span class="s2">&quot;puppetmaster.example.com&quot;</span>
+</span><span class='line'>     <span class="n">puppet_config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">network</span> <span class="ss">:public_network</span><span class="p">,</span>  <span class="ss">bridge</span><span class="p">:</span> <span class="s1">&#39;en1: Wi-Fi (AirPort)&#39;</span><span class="p">,</span> <span class="ss">ip</span><span class="p">:</span> <span class="s2">&quot;192.168.1.36&quot;</span>
+</span><span class='line'>
+</span><span class='line'>   <span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">provider</span> <span class="s2">&quot;virtualbox&quot;</span> <span class="k">do</span> <span class="o">|</span><span class="n">vboxpuppet</span><span class="o">|</span>
+</span><span class='line'>        <span class="n">vboxpuppet</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;puppetmaster&quot;</span>
+</span><span class='line'>    <span class="k">end</span> <span class="c1">##cierra config.vm.provider</span>
+</span><span class='line'>  <span class="k">end</span> <span class="c1">##cierra config.vm.define</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">end</span> <span class="c1">##cierra file</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Lo anterior, arrojará por pantalla valores como los siguientes:</p>
+<p>Y si nos conectamos</p>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -610,19 +1145,21 @@ En este caso el archivo esta alojado en un USB (/dev/sdb1) , por lo cual al mome
 <span class='line-number'>7</span>
 <span class='line-number'>8</span>
 <span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">______________________</span>
-</span><span class='line'><span class="n">Mailbox</span> <span class="n">size</span> <span class="n">of</span> <span class="n">user</span><span class="err">@</span><span class="n">example</span><span class="p">.</span><span class="n">com</span>  <span class="o">=</span> <span class="mf">281.51</span> <span class="n">MB</span>
-</span><span class='line'><span class="n">The</span> <span class="n">Mailbox</span> <span class="n">isn</span><span class="err">&#39;</span><span class="n">t</span> <span class="n">Setting</span> <span class="n">Quota</span>
-</span><span class='line'><span class="n">______________________</span>
-</span><span class='line'><span class="n">Mailbox</span> <span class="n">size</span> <span class="n">of</span> <span class="n">user2</span><span class="err">@</span><span class="n">example</span><span class="p">.</span><span class="n">com</span>  <span class="o">=</span> <span class="mf">1.30</span> <span class="n">GB</span>
-</span><span class='line'><span class="n">The</span> <span class="n">Mailbox</span> <span class="n">isn</span><span class="err">&#39;</span><span class="n">t</span> <span class="n">Setting</span> <span class="n">Quota</span>
-</span><span class='line'><span class="n">______________________</span>
-</span><span class='line'><span class="n">Mailbox</span> <span class="n">size</span> <span class="n">of</span> <span class="n">user3</span><span class="err">@</span><span class="n">example</span><span class="p">.</span><span class="n">com</span> <span class="o">=</span> <span class="mf">718.00</span> <span class="n">KB</span>
-</span><span class='line'><span class="n">Mailbox</span> <span class="n">Quota</span> <span class="n">is</span> <span class="o">=</span> <span class="mi">10</span> <span class="n">MB</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="ss">Miguel</span><span class="p">:</span><span class="no">Puppet</span><span class="err">$</span> <span class="n">vagrant</span> <span class="n">ssh</span>
+</span><span class='line'><span class="o">[</span><span class="n">vagrant</span><span class="vi">@puppetmaster</span> <span class="o">~]</span><span class="err">$</span> <span class="n">ifconfig</span>
+</span><span class='line'><span class="n">eth0</span>      <span class="no">Link</span> <span class="ss">encap</span><span class="p">:</span><span class="no">Ethernet</span>  <span class="no">HWaddr</span> <span class="mi">08</span><span class="p">:</span><span class="mo">00</span><span class="p">:</span><span class="mi">27</span><span class="p">:</span><span class="mi">97</span><span class="p">:</span><span class="mi">35</span><span class="ss">:D8</span>
+</span><span class='line'>          <span class="n">inet</span> <span class="ss">addr</span><span class="p">:</span><span class="mi">192</span><span class="o">.</span><span class="mi">168</span><span class="o">.</span><span class="mi">1</span><span class="o">.</span><span class="mi">36</span>  <span class="ss">Bcast</span><span class="p">:</span><span class="mi">192</span><span class="o">.</span><span class="mi">168</span><span class="o">.</span><span class="mi">1</span><span class="o">.</span><span class="mi">255</span>  <span class="ss">Mask</span><span class="p">:</span><span class="mi">255</span><span class="o">.</span><span class="mi">255</span><span class="o">.</span><span class="mi">255</span><span class="o">.</span><span class="mi">0</span>
+</span><span class='line'>          <span class="n">inet6</span> <span class="ss">addr</span><span class="p">:</span> <span class="ss">fe80</span><span class="p">:</span><span class="ss">:a00</span><span class="p">:</span><span class="mi">27</span><span class="ss">ff</span><span class="p">:</span><span class="ss">fe97</span><span class="p">:</span><span class="mi">35</span><span class="n">d8</span><span class="o">/</span><span class="mi">64</span> <span class="ss">Scope</span><span class="p">:</span><span class="no">Link</span>
+</span><span class='line'>          <span class="no">UP</span> <span class="no">BROADCAST</span> <span class="no">RUNNING</span> <span class="no">MULTICAST</span>  <span class="ss">MTU</span><span class="p">:</span><span class="mi">1500</span>  <span class="ss">Metric</span><span class="p">:</span><span class="mi">1</span>
+</span><span class='line'>          <span class="no">RX</span> <span class="ss">packets</span><span class="p">:</span><span class="mi">36</span> <span class="ss">errors</span><span class="p">:</span><span class="mi">0</span> <span class="ss">dropped</span><span class="p">:</span><span class="mi">0</span> <span class="ss">overruns</span><span class="p">:</span><span class="mi">0</span> <span class="ss">frame</span><span class="p">:</span><span class="mi">0</span>
+</span><span class='line'>          <span class="no">TX</span> <span class="ss">packets</span><span class="p">:</span><span class="mi">15</span> <span class="ss">errors</span><span class="p">:</span><span class="mi">0</span> <span class="ss">dropped</span><span class="p">:</span><span class="mi">0</span> <span class="ss">overruns</span><span class="p">:</span><span class="mi">0</span> <span class="ss">carrier</span><span class="p">:</span><span class="mi">0</span>
+</span><span class='line'>          <span class="ss">collisions</span><span class="p">:</span><span class="mi">0</span> <span class="ss">txqueuelen</span><span class="p">:</span><span class="mi">1000</span>
+</span><span class='line'>          <span class="no">RX</span> <span class="ss">bytes</span><span class="p">:</span><span class="mi">5256</span> <span class="p">(</span><span class="mi">5</span><span class="o">.</span><span class="mi">1</span> <span class="no">KiB</span><span class="p">)</span>  <span class="no">TX</span> <span class="ss">bytes</span><span class="p">:</span><span class="mi">998</span> <span class="p">(</span><span class="mi">998</span><span class="o">.</span><span class="mi">0</span> <span class="n">b</span><span class="p">)</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-
+<p>Ref: <a href="https://docs.vagrantup.com/v2/networking/public_network.html">https://docs.vagrantup.com/v2/networking/public_network.html</a></p>
 
 		
 		
@@ -635,9 +1172,9 @@ En este caso el archivo esta alojado en un USB (/dev/sdb1) , por lo cual al mome
 	<header>
 		<h2 class="title">
 			
-			<a href="/blog/2013/11/04/filtro-de-correos-salientes-zimbra/">
+			<a href="/blog/2014/07/24/path-global-para-todos-los-execs-en-puppet/">
 			
-				Filtro De Correos Salientes Zimbra</a>
+				Path Global Para Todos Los Execs en Puppet</a>
 		</h2>
 		<div class="meta date">
 
@@ -651,232 +1188,35 @@ En este caso el archivo esta alojado en un USB (/dev/sdb1) , por lo cual al mome
   
 
 
-<time datetime="2013-11-04T17:38:00-03:00" pubdate data-updated="true">Nov 4<span>th</span>, 2013</time></div>
+<time datetime="2014-07-24T14:37:00-04:00" pubdate data-updated="true">Jul 24<span>th</span>, 2014</time></div>
 	</header>
 	<div class="entry-content">
-		<p>Aveces es necesario en Zimbra &ldquo;copiar&rdquo; los correos salientes desde una casilla hacia otra cuenta (algo así como un forward). Esto en zimbra se puede realizar mediante la configuración del servicio postfix de la siguiente forma:</p>
+		<p>En Puppet si tenemos varios <code>Exec</code> para ejecutar comandos del sistema operativo podemos configurar el atributo <code>path</code> de forma global dentro del <code>site.pp</code> y con ello evitamos repetir código.</p>
 
-<p>Editamos el archivo</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">zimbra</span><span class="o">/</span><span class="n">postfix</span><span class="o">/</span><span class="n">conf</span><span class="o">/</span><span class="n">main</span><span class="p">.</span><span class="n">cf</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Y al principio del archivo agregamos la siguiente definición</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">sender_bcc_maps</span> <span class="o">=</span> <span class="nl">hash:</span><span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">zimbra</span><span class="o">/</span><span class="n">postfix</span><span class="o">/</span><span class="n">conf</span><span class="o">/</span><span class="n">sender_bcc</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Creamos el archivo y colocamos los permisos respectivo</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">zimbra</span><span class="o">/</span><span class="n">postfix</span><span class="o">/</span><span class="n">conf</span><span class="o">/</span><span class="n">sender_bcc</span>
-</span><span class='line'><span class="n">chown</span> <span class="n">zimbra</span><span class="p">.</span><span class="n">zimbra</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">zimbra</span><span class="o">/</span><span class="n">postfix</span><span class="o">/</span><span class="n">conf</span><span class="o">/</span><span class="n">sender_bcc</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Dentro del archivo tenemos que definir en la primera columna la cuenta de correo &ldquo;origen&rdquo; y en la segunda la cuenta de correo &ldquo;destino&rdquo; a la cual le llegará una copia de los correos salientes desde la primera.</p>
-
-<p> 
-		
-		<a href="/blog/2013/11/04/filtro-de-correos-salientes-zimbra/" class="more-link">Read on &rarr;</a>
-	</div>
-
-</article>
-
-
-    <article class="post">
-	<header>
-		<h2 class="title">
-			
-			<a href="/blog/2013/10/30/expresiones-regulares-con-puppet/">
-			
-				Expresiones Regulares Con Puppet</a>
-		</h2>
-		<div class="meta date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-10-30T15:06:00-03:00" pubdate data-updated="true">Oct 30<span>th</span>, 2013</time></div>
-	</header>
-	<div class="entry-content">
-		<p>Puppet permite la declarición de nodos mediante expresiones regulares, esto permite definir dentro de una sola declaraciones &ldquo;n&rdquo; nodos, lo que nos ayudará a manejar de mejor forma nuestra administración de nodos. Por ejemplo:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">node</span> <span class="o">/</span><span class="p">.</span><span class="o">*</span><span class="err">\</span><span class="p">.</span><span class="n">example</span><span class="err">\</span><span class="p">.</span><span class="n">com</span><span class="o">/</span> <span class="n">inherits</span> <span class="n">basenode</span> <span class="p">{</span>
-</span><span class='line'>    <span class="n">class</span> <span class="n">ntp</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">exec</span> <span class="p">{</span> <span class="s2">&quot;restart-dns&quot;</span><span class="p">:</span>
+</span><span class='line'><span class="n">command</span> <span class="o">=&gt;</span> <span class="s2">&quot;service named restart&quot;</span>
+</span><span class='line'><span class="n">creates</span> <span class="o">=&gt;</span> <span class="s2">&quot;/var/named&quot;</span><span class="p">,</span>
+</span><span class='line'><span class="n">refreshonly</span> <span class="o">=&gt;</span> <span class="kp">true</span>
 </span><span class='line'><span class="p">}</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Lo anterior dice que, todo nodo del tipo *.example.com <i>(www.example.com, ftp.example.com, mail.example.com)</i> aplicará la <i>clase ntp</i> y heredará la <i>clase basenode</i>. Para más infomación puedes ver la doc de puppet <a href="http://docs.puppetlabs.com/puppet/2.7/reference/lang_node_definitions.html">Puppet Docs</a></p>
+<p>site.pp</li></p>
 
-		
-		
-	</div>
-
-</article>
-
-
-    <article class="post">
-	<header>
-		<h2 class="title">
-			
-			<a href="/blog/2013/10/26/migrar-correos-en-zimbra-con-imapsync/">
-			
-				Migrar Correos en Zimbra Con Imapsync</a>
-		</h2>
-		<div class="meta date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-10-26T16:17:00-03:00" pubdate data-updated="true">Oct 26<span>th</span>, 2013</time></div>
-	</header>
-	<div class="entry-content">
-		<p>En ocaciones es necesario migrar un servidor de correos Zimbra hacia otro servidor Zimbra o simplemente deseamos migrar la data entre usuario de un mismo servidor. Bueno, para eso existe el mágico del comando imapsync. Básicamente, lo que hace este comando es conectarse entre los servidores de correos mediante el protocolo imap (también puede ser imap SSl) y migrar la data de una casilla hacia otra.
-La sintaxis del comando a utilizar dependedará de las configuraciones de los servidores Ej: si acepta conexeón texto plano, solo ssl, etc. Por defecto el comando siguiente es para una instalación estandar y con conección al puerto 143.</p>
-
-<p>El comando mágico es:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">imapsync</span> <span class="o">--</span><span class="n">buffersize</span> <span class="mi">18192000</span> <span class="o">--</span><span class="n">nosyncacls</span> <span class="o">--</span><span class="n">subscribe</span> \
-</span><span class='line'><span class="o">--</span><span class="n">syncinternaldates</span> <span class="o">--</span><span class="n">noauthmd5</span> <span class="o">--</span><span class="n">authmech2</span> <span class="n">PLAIN</span> \
-</span><span class='line'><span class="o">--</span><span class="n">host1</span> <span class="mf">192.168.0.5</span> <span class="o">--</span><span class="n">user1</span> <span class="n">source</span><span class="err">@</span><span class="n">domain</span><span class="p">.</span><span class="n">com</span> \
-</span><span class='line'><span class="o">--</span><span class="n">password1</span> <span class="n">SourcePassword</span> <span class="o">--</span><span class="n">host2</span> <span class="mf">192.168.0.5</span> \
-</span><span class='line'><span class="o">--</span><span class="n">user2</span> <span class="n">destination</span><span class="err">@</span><span class="n">domain</span><span class="p">.</span><span class="n">com</span> <span class="o">--</span><span class="n">authmech2</span> <span class="n">PLAIN</span> \
-</span><span class='line'><span class="o">--</span><span class="n">password2</span> <span class="n">DestinationPassword</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">Exec</span> <span class="p">{</span> <span class="n">path</span> <span class="o">=&gt;</span> <span class="o">[</span> <span class="s2">&quot;/bin/&quot;</span><span class="p">,</span> <span class="s2">&quot;/sbin/&quot;</span> <span class="p">,</span> <span class="s2">&quot;/usr/bin/&quot;</span><span class="p">,</span> <span class="s2">&quot;/usr/sbin/&quot;</span> <span class="o">]</span> <span class="p">}</span>
 </span></code></pre></td></tr></table></div></figure>
 
-
-<p>Donde:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="o">--</span><span class="n">host1</span> <span class="o">:</span> <span class="n">Es</span> <span class="n">el</span> <span class="n">servidor</span> <span class="n">de</span> <span class="n">origen</span>
-</span><span class='line'><span class="o">--</span><span class="n">user1</span> <span class="o">:</span> <span class="n">Es</span> <span class="n">el</span> <span class="n">usuario</span> <span class="n">de</span> <span class="n">origen</span>
-</span><span class='line'><span class="o">--</span><span class="n">password1</span> <span class="o">:</span> <span class="n">Es</span> <span class="n">la</span> <span class="n">password</span> <span class="n">de</span> <span class="n">la</span> <span class="n">cuenta</span> <span class="n">origen</span>
-</span><span class='line'><span class="o">--</span><span class="n">host2</span> <span class="o">:</span> <span class="n">Es</span> <span class="n">el</span> <span class="n">servidor</span> <span class="n">de</span> <span class="n">destino</span>
-</span><span class='line'><span class="o">--</span><span class="n">user2</span> <span class="o">:</span> <span class="n">Es</span> <span class="n">el</span> <span class="n">usuario</span> <span class="n">de</span> <span class="n">destino</span>
-</span><span class='line'><span class="o">--</span><span class="n">password2</span> <span class="o">:</span> <span class="n">Es</span> <span class="n">la</span> <span class="n">password</span> <span class="n">de</span> <span class="n">la</span> <span class="n">cuenta</span> <span class="n">de</span> <span class="n">destino</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Para más detalle del uso del comando visita el <a href="http://wiki.zimbra.com/wiki/Guide_to_imapsync">Wiki de Zimbra </a></p>
-
-		
-		
-	</div>
-
-</article>
-
-
-    <article class="post">
-	<header>
-		<h2 class="title">
-			
-			<a href="/blog/2013/10/23/configurar-octopress-y-github-para-blog/">
-			
-				Configurar Octopress Y Github Para Blog</a>
-		</h2>
-		<div class="meta date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-10-23T18:00:00-03:00" pubdate data-updated="true">Oct 23<span>rd</span>, 2013</time></div>
-	</header>
-	<div class="entry-content">
-		<p>Si quieres montar un blog con Octopress (framework para montar blog) y Github (repo donde almacenaremos nuestro sitio) , hay que hacer lo siguiente:</p>
-
-<p><strong>Descargando Octopress</strong></p>
-
-<ol>
-<li>Descargamos la versión de octopress desde Github</li>
-</ol>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">git</span> <span class="n">clone</span> <span class="nl">git:</span><span class="c1">//github.com/imathis/octopress.git octopress </span>
-</span><span class='line'><span class="n">cd</span> <span class="n">octopress</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ol>
-<li>Instalamos el tema por default y las dependencias necesarias</li>
-</ol>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">gem</span> <span class="n">install</span> <span class="n">bundler</span>
-</span><span class='line'><span class="n">bundle</span> <span class="n">install</span>
-</span><span class='line'><span class="n">rake</span> <span class="n">install</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p><strong>Configuración de Github</strong></p>
-
-<p>Lo primero es que tenemos que crear una cuenta en <a href="https://www.github.com/">Github</a>. Una vez creada la cuenta creamos un repositorio con el formtato: <i>&ldquo;nombredeusuario.github.com&rdquo;</i>,  en el caso de mi repositorio queda así: <a href="https://github.com/mcoam/mcoam.github.com">https://github.com/mcoam/mcoam.github.com</a></p>
-
-<ol>
-<li>Configurar octopress para acceder a este respositorio</li>
-</ol>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'> <span class="n">rake</span> <span class="n">setup_github_pages</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ol>
-<li><p>Ejecutado el comando anterior nos pedirá la url del repositorio. En el caso nuestro, es <i>git@github.com:mcoam/mcoam.github.com.git</i></p></li>
-<li><p>Para efectos de subir los post es necesario copiar la llave ssh de la máquina local (donde tenemos octopress) hacia nuestro sitio en Github.</p></li>
-</ol>
 
 
 
 		
-		<a href="/blog/2013/10/23/configurar-octopress-y-github-para-blog/" class="more-link">Read on &rarr;</a>
+		
 	</div>
 
 </article>
@@ -890,9 +1230,9 @@ La sintaxis del comando a utilizar dependedará de las configuraciones de los se
     </nav>
 
 </div>
-	<footer id="footer" class="inner">&copy; 2014
+	<footer id="footer" class="inner">&copy; 2015
 
-    Miguel Coa M.
+    Miguel Angel Coa Morales
 
 </footer>
 	<script src="/javascripts/slash.js"></script>

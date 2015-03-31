@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: firewall, | Bitácora]]></title>
+  <link href="http://mcoam.github.io/blog/categories/firewall/atom.xml" rel="self"/>
+  <link href="http://mcoam.github.io/"/>
+  <updated>2015-03-26T18:50:40-03:00</updated>
+  <id>http://mcoam.github.io/</id>
+  <author>
+    <name><![CDATA[Miguel Angel Coa Morales]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Instalado/Actualizando paquetes Endian Firewall]]></title>
+    <link href="http://mcoam.github.io/blog/2015/03/26/instalado-slash-actualizando-paquetes-endian-firewall/"/>
+    <updated>2015-03-26T18:35:00-03:00</updated>
+    <id>http://mcoam.github.io/blog/2015/03/26/instalado-slash-actualizando-paquetes-endian-firewall</id>
+    <content type="html"><![CDATA[<p>Para instalar paquetes en Endian Firewall podemos utilizar el comando <code>smart</code> que es un administrador de paquetes que viene incorporado en la distro. Lo primero que hay que realizar es instalar el repositorio:</p>
+
+<p><li>Para Endian 2.4.x</li>
+<code>ruby
+smart channel --add CentOS_4.9 type=rpm-md name="CentOS_4.9" \baseurl="http://vault.centos.org/4.9/os/i386/"
+</code>
+<li>En el caso de Endian 2.5.x</li>
+<code>ruby
+smart channel --add CentOS_5.9 type=rpm-md name="CentOS_5.9" \baseurl="http://vault.centos.org/5.9/os/i386/"
+</code>
+Instalando paquetes
+<code>
+smart update
+smart install wget nmap vim-enhanced -y
+</code>
+En el caso de ver el error:
+<code>
+warning: rpmts_HdrFromFdno: Header V3 DSA signature: NOKEY, key ID 443e1821
+error: vim-common-6.3.046-2.el4.1.i386.rpm: public key not available                                                                                 
+Saving cache...
+</code>
+Ejecutar
+<code>
+smart config --set  rpm-check-signatures=false
+</code></p>
+]]></content>
+  </entry>
+  
+</feed>

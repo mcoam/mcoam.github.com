@@ -1,0 +1,235 @@
+
+<!DOCTYPE HTML>
+<html lang="en-GB">
+<head>
+	<meta charset="utf-8">
+	<title>Error Kerberos y Bind con Samba4  | Bitácora</title>
+
+	<meta name="author" content="Miguel Angel Coa Morales">
+
+<meta name="description" content="Un blog personal"> <meta name="keywords" content="zimbra, linux, centos, devops, puppet, opensource, virtualizar, virtualización">
+
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="Bitácora" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.png" rel="shortcut icon">
+	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+</head>
+
+
+
+<body>
+	<header id="header" class="inner"><h1><a href="/">Bitácora</a></h1>
+<span class="tagline">Miguel Angel Coa Morales</span>
+<nav id="main-nav"><ul>
+	<li><a href="/about">About</a></li>
+	<li><a href="/archives">Archives</a></li>
+	<li><a href="/contact">Contact</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul>
+	<li><a href="/about">About</a></li>
+	<li><a href="/archives">Archives</a></li>
+	<li><a href="/contact">Contact</a></li>
+</ul>
+</div>
+	</div>
+</nav>
+
+
+</header>
+
+	<div id="content" class="inner"><article class="post">
+	<header>
+		<h2 class="title">Error Kerberos Y Bind Con Samba4</h2>
+		<div class="meta date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-08-20T18:17:00-04:00" pubdate data-updated="true">Aug 20<span>th</span>, 2014</time></div>
+	</header>
+	<div class="entry-content"><p>Al momento de validar la configuración de kerberos del usuario admin arrojaba lo siguiente:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[</span><span class="n">root</span><span class="vi">@samba</span> <span class="o">~]</span><span class="err">$</span> <span class="n">kinit</span> <span class="n">administrator</span><span class="vi">@EXAMPLE</span><span class="o">.</span><span class="n">LOCAL</span>
+</span><span class='line'><span class="ss">kinit</span><span class="p">:</span> <span class="no">Cannot</span> <span class="n">resolve</span> <span class="n">servers</span> <span class="k">for</span> <span class="no">KDC</span> <span class="k">in</span> <span class="n">realm</span> <span class="s2">&quot;EXAMPLE.LOCAL&quot;</span> <span class="k">while</span> <span class="n">getting</span> <span class="n">initial</span> <span class="n">credentials</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Al chequear las configuraciones DNS de de Samba arrojaba</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[</span><span class="n">root</span><span class="vi">@samba</span> <span class="o">~]</span><span class="err">$</span> <span class="n">samba_dnsupdate</span> <span class="o">--</span><span class="n">verbose</span> <span class="o">--</span><span class="n">all</span><span class="o">-</span><span class="n">names</span>
+</span><span class='line'><span class="ss">IPs</span><span class="p">:</span> <span class="o">[</span><span class="s1">&#39;10.0.2.15&#39;</span><span class="p">,</span> <span class="s1">&#39;10.10.0.200&#39;</span><span class="o">]</span>
+</span><span class='line'><span class="no">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">):</span>
+</span><span class='line'>  <span class="no">File</span> <span class="s2">&quot;/usr/local/samba/sbin/samba_dnsupdate&quot;</span><span class="p">,</span> <span class="n">line</span> <span class="mi">511</span><span class="p">,</span> <span class="k">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+</span><span class='line'>    <span class="n">get_credentials</span><span class="p">(</span><span class="n">lp</span><span class="p">)</span>
+</span><span class='line'>  <span class="no">File</span> <span class="s2">&quot;/usr/local/samba/sbin/samba_dnsupdate&quot;</span><span class="p">,</span> <span class="n">line</span> <span class="mi">124</span><span class="p">,</span> <span class="k">in</span> <span class="n">get_credentials</span>
+</span><span class='line'>    <span class="k">raise</span> <span class="n">e</span>
+</span><span class='line'><span class="ss">RuntimeError</span><span class="p">:</span> <span class="n">kinit</span> <span class="k">for</span> <span class="no">SAMBA</span><span class="vg">$@</span><span class="no">EXAMPLE</span><span class="o">.</span><span class="n">LOCAL</span> <span class="n">failed</span> <span class="p">(</span><span class="no">Cannot</span> <span class="n">contact</span> <span class="n">any</span> <span class="no">KDC</span> <span class="k">for</span> <span class="n">requested</span> <span class="n">realm</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>Solución ELIMINAR Bind</h4>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[</span><span class="n">root</span><span class="vi">@samba</span> <span class="o">~]</span><span class="err">$</span> <span class="n">yum</span> <span class="n">remove</span> <span class="n">bind</span> <span class="o">-</span><span class="n">y</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>Comprobamos</h4>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[</span><span class="n">root</span><span class="vi">@samba</span> <span class="o">~]</span><span class="c1"># kinit administrator@EXAMPLE.LOCAL</span>
+</span><span class='line'><span class="no">Password</span> <span class="k">for</span> <span class="n">administrator</span><span class="vi">@EXAMPLE</span><span class="o">.</span><span class="n">LOCAL</span><span class="p">:</span>
+</span><span class='line'><span class="ss">Warning</span><span class="p">:</span> <span class="no">Your</span> <span class="n">password</span> <span class="n">will</span> <span class="n">expire</span> <span class="k">in</span> <span class="mi">41</span> <span class="n">days</span> <span class="n">on</span> <span class="no">Wed</span> <span class="no">Oct</span>  <span class="mi">1</span> <span class="mi">17</span><span class="p">:</span><span class="mi">54</span><span class="p">:</span><span class="mo">00</span> <span class="mi">2014</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Y chequeamos la configuracion de DNS de Samba</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[</span><span class="n">root</span><span class="vi">@samba</span> <span class="o">~]</span><span class="c1"># samba_dnsupdate --verbose --all-names</span>
+</span><span class='line'><span class="ss">IPs</span><span class="p">:</span> <span class="o">[</span><span class="s1">&#39;10.0.2.15&#39;</span><span class="p">,</span> <span class="s1">&#39;10.10.0.200&#39;</span><span class="o">]</span>
+</span><span class='line'><span class="no">Calling</span> <span class="n">nsupdate</span> <span class="k">for</span> <span class="n">A</span> <span class="n">example</span><span class="o">.</span><span class="n">local</span> <span class="mi">10</span><span class="o">.</span><span class="mi">0</span><span class="o">.</span><span class="mi">2</span><span class="o">.</span><span class="mi">15</span>
+</span><span class='line'><span class="no">Outgoing</span> <span class="n">update</span> <span class="ss">query</span><span class="p">:</span>
+</span><span class='line'><span class="p">;;</span> <span class="o">-&gt;&gt;</span><span class="no">HEADER</span><span class="o">&lt;&lt;-</span> <span class="ss">opcode</span><span class="p">:</span> <span class="no">UPDATE</span><span class="p">,</span> <span class="ss">status</span><span class="p">:</span> <span class="no">NOERROR</span><span class="p">,</span> <span class="nb">id</span><span class="p">:</span>      <span class="mi">0</span>
+</span><span class='line'><span class="p">;;</span> <span class="ss">flags</span><span class="p">:;</span> <span class="ss">ZONE</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="ss">PREREQ</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="ss">UPDATE</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="ss">ADDITIONAL</span><span class="p">:</span> <span class="mi">0</span>
+</span><span class='line'><span class="p">;;</span> <span class="no">UPDATE</span> <span class="ss">SECTION</span><span class="p">:</span>
+</span><span class='line'><span class="n">example</span><span class="o">.</span><span class="n">local</span><span class="o">.</span>        <span class="mi">900</span> <span class="no">IN</span>  <span class="n">A</span>    <span class="mi">10</span><span class="o">.</span><span class="mi">0</span><span class="o">.</span><span class="mi">2</span><span class="o">.</span><span class="mi">15</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">;</span> <span class="no">TSIG</span> <span class="n">error</span> <span class="n">with</span> <span class="ss">server</span><span class="p">:</span> <span class="n">tsig</span> <span class="n">verify</span> <span class="n">failure</span>
+</span><span class='line'><span class="no">Failed</span> <span class="ss">nsupdate</span><span class="p">:</span> <span class="mi">2</span>
+</span><span class='line'><span class="no">Calling</span> <span class="n">nsupdate</span> <span class="k">for</span> <span class="n">A</span> <span class="n">samba</span><span class="o">.</span><span class="n">example</span><span class="o">.</span><span class="n">local</span> <span class="mi">10</span><span class="o">.</span><span class="mi">0</span><span class="o">.</span><span class="mi">2</span><span class="o">.</span><span class="mi">15</span>
+</span><span class='line'><span class="no">Outgoing</span> <span class="n">update</span> <span class="ss">query</span><span class="p">:</span>
+</span><span class='line'><span class="p">;;</span> <span class="o">-&gt;&gt;</span><span class="no">HEADER</span><span class="o">&lt;&lt;-</span> <span class="ss">opcode</span><span class="p">:</span> <span class="no">UPDATE</span><span class="p">,</span> <span class="ss">status</span><span class="p">:</span> <span class="no">NOERROR</span><span class="p">,</span> <span class="nb">id</span><span class="p">:</span>      <span class="mi">0</span>
+</span><span class='line'><span class="p">;;</span> <span class="ss">flags</span><span class="p">:;</span> <span class="ss">ZONE</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="ss">PREREQ</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="ss">UPDATE</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="ss">ADDITIONAL</span><span class="p">:</span> <span class="mi">0</span>
+</span><span class='line'><span class="p">;;</span> <span class="no">UPDATE</span> <span class="ss">SECTION</span><span class="p">:</span>
+</span><span class='line'><span class="n">samba</span><span class="o">.</span><span class="n">example</span><span class="o">.</span><span class="n">local</span><span class="o">.</span>    <span class="mi">900</span> <span class="no">IN</span>  <span class="n">A</span>    <span class="mi">10</span><span class="o">.</span><span class="mi">0</span><span class="o">.</span><span class="mi">2</span><span class="o">.</span><span class="mi">15</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+</div>
+	
+
+</article>
+
+	
+	<div class="share">
+		<ul>
+			<li>
+  <a href="https://twitter.com/intent/tweet?text=Error Kerberos y Bind con Samba4 by @&url=http://mcoam.github.io/blog/2014/08/20/error-samba4-y-bind/" title="Share Error Kerberos y Bind con Samba4 on Twitter">
+    <img src="/images/social/twitter.png" />
+  </a>
+</li>
+
+			<li>
+  <a href="https://www.facebook.com/sharer.php?u=http://mcoam.github.io/blog/2014/08/20/error-samba4-y-bind/" title="Share Error Kerberos y Bind con Samba4 on Facebook">
+    <img src="/images/social/facebook.png" />
+  </a>
+</li>
+
+			<li>
+  <a href="https://plus.google.com/share?url=http://mcoam.github.io/blog/2014/08/20/error-samba4-y-bind/" title="Share Error Kerberos y Bind con Samba4 on Google Plus">
+    <img src="/images/social/google.png" />
+  </a>
+</li>
+
+		</ul>
+	</div>
+
+
+
+
+<section id="comment">
+    <h2 class="title">Comments</h2>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+</div>
+	<footer id="footer" class="inner">&copy; 2015
+
+    Miguel Angel Coa Morales
+
+</footer>
+	<script src="/javascripts/slash.js"></script>
+<script src="/javascripts/hyphenator.js"></script>
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'miguelcoa';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://mcoam.github.io/blog/2014/08/20/error-samba4-y-bind/';
+        var disqus_url = 'http://mcoam.github.io/blog/2014/08/20/error-samba4-y-bind/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-45157770-1']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+
+
+</body>
+</html>

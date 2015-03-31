@@ -3,12 +3,11 @@
 <html lang="en-GB">
 <head>
 	<meta charset="utf-8">
-	<title>Miguel Coa M.  | Bitácora</title>
+	<title>Miguel Angel Coa Morales  | Bitácora</title>
 
-    <meta name="author" content="Miguel Coa M.">
+	<meta name="author" content="Miguel Angel Coa Morales">
 
-    <meta name="description" content="Un blog personal">
-<meta name="keywords" content="zimbra, linux, centos, devops, puppet, opensource, virtualizar, virtualización">
+<meta name="description" content="Un blog personal"> <meta name="keywords" content="zimbra, linux, centos, devops, puppet, opensource, virtualizar, virtualización">
 
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -25,8 +24,8 @@
 
 <body>
 	<header id="header" class="inner"><h1><a href="/">Bitácora</a></h1>
-<span class="tagline">Miguel Coa M.</span>
-<nav id="main-nav"><ul class="main-navigation">
+<span class="tagline">Miguel Angel Coa Morales</span>
+<nav id="main-nav"><ul>
 	<li><a href="/about">About</a></li>
 	<li><a href="/archives">Archives</a></li>
 	<li><a href="/contact">Contact</a></li>
@@ -35,7 +34,7 @@
 <nav id="mobile-nav">
 	<div class="alignleft menu">
 		<a class="button">Menu</a>
-		<div class="container"><ul class="main-navigation">
+		<div class="container"><ul>
 	<li><a href="/about">About</a></li>
 	<li><a href="/archives">Archives</a></li>
 	<li><a href="/contact">Contact</a></li>
@@ -54,9 +53,9 @@
 	<header>
 		<h2 class="title">
 			
-			<a href="/blog/2013/10/22/cambiar-theme-octopress/">
+			<a href="/blog/2014/07/23/controlando-la-ejecucion-de-exec-en-puppet/">
 			
-				Cambiar Theme Octopress</a>
+				Controlando La Ejecución De Exec en Puppet</a>
 		</h2>
 		<div class="meta date">
 
@@ -70,26 +69,958 @@
   
 
 
-<time datetime="2013-10-22T23:17:00-03:00" pubdate data-updated="true">Oct 22<span>nd</span>, 2013</time></div>
+<time datetime="2014-07-23T21:25:00-04:00" pubdate data-updated="true">Jul 23<span>rd</span>, 2014</time></div>
 	</header>
 	<div class="entry-content">
-		<p>Si deseamos cambiar el theme por defecto que instala Octopress, hacemos lo siguiente</p>
+		<p>En Puppet podemos ejecutar comando a nivel del sistema operativo por medio de <code>Exec</code>, en ocasiones sucede que tenemos declarada la sintaxis a ejecutar pero sucede que esta se aplica cada vez que corre el agente Puppet, Ejemplo:</p>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>cd octopress
-</span><span class='line'>git clone git://github.com/panks/fabric.git .themes/fabric
-</span><span class='line'>rake install['fabric']
-</span><span class='line'>rake generate</span></code></pre></td></tr></table></div></figure>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">exec</span><span class="p">{</span><span class="s2">&quot;install-rpm&quot;</span><span class="p">:</span>
+</span><span class='line'>  <span class="k">ensure</span>  <span class="o">=&gt;</span> <span class="n">present</span><span class="p">,</span>
+</span><span class='line'>  <span class="n">command</span> <span class="o">=&gt;</span> <span class="s1">&#39;rpm -Uvh /root/package.rpm&#39;</span><span class="p">,</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
 
+
+<p>Lo anterior instalará un rpm llamado <code>package.rpm</code> cada vez que corra el agente, lo que pisará las configuraciones ya realizadas en la instalación y post-instalación del rpm. Para evitar que esto suceda <code>Exec</code> maneja dos atributos <code>creates</code> y <code>onlyif</code> ambos como condicionantes para que se puede ejecutar el comando.
+<li>creates</li>
+Funciona del modo que para ejecutar el atributo <code>command</code> no tiene que existir &ldquo;algo&rdquo; que se define con el atributo <code>creates</code>, ejemplo:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">exec</span><span class="p">{</span><span class="s2">&quot;install-rpm&quot;</span><span class="p">:</span>
+</span><span class='line'><span class="k">ensure</span>  <span class="o">=&gt;</span> <span class="n">present</span><span class="p">,</span>
+</span><span class='line'><span class="n">creates</span> <span class="o">=&gt;</span> <span class="s1">&#39;/opt/rpm-directory/&#39;</span><span class="p">,</span>
+</span><span class='line'><span class="n">command</span> <span class="o">=&gt;</span> <span class="s1">&#39;rpm -Uvh /root/package.rpm&#39;</span><span class="p">,</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Lo anterior dice que; para que se ejecute el <code>exec</code> no tiene que estar creado el directorio <code>/opt/rpm-directory/</code>, si este ya esta creado, es por que ya tenemos instalado el rpm y no es necesario volver a instalarlo.</p>
+
+<p><li>onlyif</li>
+Funciona del modo que para ejecutar el atributo <code>command</code> el resultado del atributo <code>onlyif</code> debe retornar value 0 &ldquo;nada&rdquo; como respuesta a la condición, ejemplo:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">exec</span><span class="p">{</span><span class="s2">&quot;install-rpm&quot;</span><span class="p">:</span>
+</span><span class='line'><span class="k">ensure</span>  <span class="o">=&gt;</span> <span class="n">present</span><span class="p">,</span>
+</span><span class='line'><span class="n">onlyif</span> <span class="o">=&gt;</span> <span class="s2">&quot;ls /opt/ |grep rpm-directory&quot;</span>
+</span><span class='line'><span class="n">command</span> <span class="o">=&gt;</span> <span class="s1">&#39;rpm -Uvh /root/package.rpm&#39;</span><span class="p">,</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Lo anterior dice que; para que se ejecute el <code>exec</code> la salida del <code>onlyif</code> debe retornar 0. Si el rpm ya lo tenemos instalado, este va a crear el directorio por lo que para evitar que se siga instalando solo vemos si este ya fue creado. Si el rpm fue instalado, el <code>onlyif</code> retornará un <i>1</i> por lo que no se volverá a ejecutar nuevamente.</p>
+
+<p>Link <a href="http://docs.puppetlabs.com/references/latest/type.html#exec-attribute">documentación</a></p>
+
+		
+		
+	</div>
+
+</article>
+
+
+    <article class="post">
+	<header>
+		<h2 class="title">
+			
+			<a href="/blog/2014/07/07/configurando-vagrant-en-osx/">
+			
+				Configurando Vagrant en OSX</a>
+		</h2>
+		<div class="meta date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-07-07T15:30:00-04:00" pubdate data-updated="true">Jul 7<span>th</span>, 2014</time></div>
+	</header>
+	<div class="entry-content">
+		<p>En la búsqueda de correr máquinas virtuales de forma mas simple me he decidido instalar <code>Vagrant</code>, que es un entorno para la gestión de máquinas virtuales bajo mbiente VirtualBox. La mágia de Vagrant viene de la mano de VirtualBox ya que este tiene soporte para correr máquinas virtuales del tipo <i>headless</i> (algo así como máquinas que corren en un servidor pero no sabes donde).</p>
+
+<h4>Instalación de Vagrant en OSX 10.9.3</h4>
+
+<p>Lo primero es bajar la versión correspondiente de <a href="http://www.vagrantup.com/downloads">Vagrant</a> y lo mismo para <a href="https://www.virtualbox.org/wiki/Downloads">VirtualBox</a>. Una vez descargado ambos paquetes (dmg) se instalan como cualquier otra programa para mac.
+Es necesario tener instalado una librerias Ruby para el trabajo con Vagrant, proceso que se realiza con el comando:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">gem</span> <span class="n">install</span> <span class="n">vagrant</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>La gestión de las máquinas virtuales en Vagrant se realizan mediante el comando <code>vagrant</code> <i>(init, up, destroy, ssh, resume, suspend, halt y muchas más)</i>, todas las opciones que tiene este comando figuran en la <a href="http://docs.vagrantup.com/v2/cli/">documentación</a></p>
+
+<h4>Instalando nuestro primer Box</h4>
+
+<p>Lo primero que tenemos que hacer es bajar nuestro Box, que será la <i>imagen base</i> desde donde crearemos nuestras máquinas virtuales:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">vagrant</span> <span class="n">box</span> <span class="n">add</span> <span class="no">CentOS</span>  <span class="ss">https</span><span class="p">:</span><span class="sr">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="mi">2</span><span class="n">creatives</span><span class="o">/</span><span class="n">vagrant</span><span class="o">-</span><span class="n">centos</span><span class="o">/</span><span class="n">releases</span><span class="o">/</span><span class="n">download</span><span class="o">/</span><span class="n">v6</span><span class="o">.</span><span class="mi">4</span><span class="o">.</span><span class="mi">2</span><span class="o">/</span><span class="n">centos64</span><span class="o">-</span><span class="n">x86_64</span><span class="o">-</span><span class="mi">20140116</span><span class="o">.</span><span class="n">box</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Bajamos y agregamos un nuevo Box de sistema que se llama &ldquo;Centos&rdquo; que se encuentra hosteado remotamente, puedes ver la infinidad de Box disponibles <a href="http://www.vagrantbox.es/">acá</a>
+Podemos ver los Box instalados con el siguiente comando</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">vagrant</span> <span class="n">box</span> <span class="n">list</span>
+</span><span class='line'><span class="no">CentOS</span> <span class="p">(</span><span class="n">virtualbox</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>Corriendo nuesta máquina virtual</h4>
+
+<p>Teniendo nuestro Box, podemos instanciar nuesta primera máquina virtual para lo cual tenemos que ejecutar el comando <code>vagrant init</code></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="ss">Miguel</span><span class="p">:</span><span class="no">Puppet</span><span class="err">$</span> <span class="n">vagrant</span> <span class="n">init</span>
+</span><span class='line'><span class="n">A</span> <span class="sb">`Vagrantfile`</span> <span class="n">has</span> <span class="n">been</span> <span class="n">placed</span> <span class="k">in</span> <span class="n">this</span> <span class="n">directory</span><span class="o">.</span> <span class="no">You</span> <span class="n">are</span> <span class="n">now</span>
+</span><span class='line'><span class="n">ready</span> <span class="n">to</span> <span class="sb">`vagrant up`</span> <span class="n">your</span> <span class="n">first</span> <span class="n">virtual</span> <span class="n">environment!</span> <span class="no">Please</span> <span class="n">read</span>
+</span><span class='line'><span class="n">the</span> <span class="n">comments</span> <span class="k">in</span> <span class="n">the</span> <span class="no">Vagrantfile</span> <span class="n">as</span> <span class="n">well</span> <span class="n">as</span> <span class="n">documentation</span> <span class="n">on</span>
+</span><span class='line'><span class="sb">`vagrantup.com`</span> <span class="k">for</span> <span class="n">more</span> <span class="n">information</span> <span class="n">on</span> <span class="n">using</span> <span class="no">Vagrant</span><span class="o">.</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Lo anterior creará un archivo de configuración base llamado Vagrantfile, donde se definieran una seríe de instrucción con las caracteristicas internas (ip, hostname, puertos, servicios) asociadas al SO, como las externas (memoria, cpu, etc) asociadas a VirtualBox, para el caso la dejaremos por defecto esta configurción.
+Luego de tener creado nuestro <code>Vagrantfile</code> creado, podemos iniciar nuestra nueva instancia de máquina virtual:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="ss">Miguel</span><span class="p">:</span><span class="no">Puppet</span><span class="err">$</span> <span class="n">vagrant</span> <span class="n">up</span>
+</span><span class='line'><span class="no">Bringing</span> <span class="n">machine</span> <span class="s1">&#39;default&#39;</span> <span class="n">up</span> <span class="n">with</span> <span class="s1">&#39;virtualbox&#39;</span> <span class="n">provider</span><span class="o">.</span><span class="n">.</span><span class="o">.</span>
+</span><span class='line'><span class="o">==&gt;</span> <span class="ss">default</span><span class="p">:</span> <span class="no">Importing</span> <span class="n">base</span> <span class="n">box</span> <span class="s1">&#39;Centos&#39;</span><span class="o">.</span><span class="n">.</span><span class="o">.</span>
+</span><span class='line'><span class="o">==&gt;</span> <span class="ss">default</span><span class="p">:</span> <span class="no">Matching</span> <span class="no">MAC</span> <span class="n">address</span> <span class="k">for</span> <span class="no">NAT</span> <span class="n">networking</span><span class="o">.</span><span class="n">.</span><span class="o">.</span>
+</span><span class='line'><span class="o">==&gt;</span> <span class="ss">default</span><span class="p">:</span> <span class="no">Setting</span> <span class="n">the</span> <span class="nb">name</span> <span class="n">of</span> <span class="n">the</span> <span class="ss">VM</span><span class="p">:</span> <span class="no">Puppet_default_1404758552103_56627</span>
+</span><span class='line'><span class="o">==&gt;</span> <span class="ss">default</span><span class="p">:</span> <span class="no">Clearing</span> <span class="n">any</span> <span class="n">previously</span> <span class="n">set</span> <span class="n">network</span> <span class="n">interfaces</span><span class="o">.</span><span class="n">.</span><span class="o">.</span>
+</span><span class='line'><span class="o">==&gt;</span> <span class="ss">default</span><span class="p">:</span> <span class="no">Preparing</span> <span class="n">network</span> <span class="n">interfaces</span> <span class="n">based</span> <span class="n">on</span> <span class="n">configuration</span><span class="o">.</span><span class="n">.</span><span class="o">.</span>
+</span><span class='line'>    <span class="ss">default</span><span class="p">:</span> <span class="no">Adapter</span> <span class="mi">1</span><span class="p">:</span> <span class="n">nat</span>
+</span><span class='line'><span class="o">==&gt;</span> <span class="ss">default</span><span class="p">:</span> <span class="no">Forwarding</span> <span class="n">ports</span><span class="o">.</span><span class="n">.</span><span class="o">.</span>
+</span><span class='line'>    <span class="ss">default</span><span class="p">:</span> <span class="mi">22</span> <span class="o">=&gt;</span> <span class="mi">2222</span> <span class="p">(</span><span class="n">adapter</span> <span class="mi">1</span><span class="p">)</span>
+</span><span class='line'><span class="o">==&gt;</span> <span class="ss">default</span><span class="p">:</span> <span class="no">Booting</span> <span class="no">VM</span><span class="o">.</span><span class="n">.</span><span class="o">.</span>
+</span><span class='line'><span class="o">==&gt;</span> <span class="ss">default</span><span class="p">:</span> <span class="no">Waiting</span> <span class="k">for</span> <span class="n">machine</span> <span class="n">to</span> <span class="n">boot</span><span class="o">.</span> <span class="no">This</span> <span class="n">may</span> <span class="n">take</span> <span class="n">a</span> <span class="n">few</span> <span class="n">minutes</span><span class="o">.</span><span class="n">.</span><span class="o">.</span>
+</span><span class='line'>    <span class="ss">default</span><span class="p">:</span> <span class="no">SSH</span> <span class="ss">address</span><span class="p">:</span> <span class="mi">127</span><span class="o">.</span><span class="mi">0</span><span class="o">.</span><span class="mi">0</span><span class="o">.</span><span class="mi">1</span><span class="p">:</span><span class="mi">2222</span>
+</span><span class='line'>    <span class="ss">default</span><span class="p">:</span> <span class="no">SSH</span> <span class="ss">username</span><span class="p">:</span> <span class="n">vagrant</span>
+</span><span class='line'>    <span class="ss">default</span><span class="p">:</span> <span class="no">SSH</span> <span class="n">auth</span> <span class="nb">method</span><span class="p">:</span> <span class="kp">private</span> <span class="n">key</span>
+</span><span class='line'>    <span class="ss">default</span><span class="p">:</span> <span class="ss">Warning</span><span class="p">:</span> <span class="no">Remote</span> <span class="n">connection</span> <span class="n">disconnect</span><span class="o">.</span> <span class="no">Retrying</span><span class="o">.</span><span class="n">.</span><span class="o">.</span>
+</span><span class='line'><span class="o">==&gt;</span> <span class="ss">default</span><span class="p">:</span> <span class="no">Machine</span> <span class="n">booted</span> <span class="ow">and</span> <span class="n">ready!</span>
+</span><span class='line'><span class="o">==&gt;</span> <span class="ss">default</span><span class="p">:</span> <span class="no">Checking</span> <span class="k">for</span> <span class="n">guest</span> <span class="n">additions</span> <span class="k">in</span> <span class="no">VM</span><span class="o">.</span><span class="n">.</span><span class="o">.</span>
+</span><span class='line'><span class="o">==&gt;</span> <span class="ss">default</span><span class="p">:</span> <span class="no">Mounting</span> <span class="n">shared</span> <span class="n">folders</span><span class="o">.</span><span class="n">.</span><span class="o">.</span>
+</span><span class='line'>    <span class="ss">default</span><span class="p">:</span> <span class="sr">/vagrant =&gt; /</span><span class="no">Users</span><span class="o">/</span><span class="no">Miguel</span><span class="o">/</span><span class="no">VagrantVM</span><span class="o">/</span><span class="no">Puppet</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Ahora, la VM se encuentra corriendo en nuestro equipo. Podemos conectarnos con el comando <code>vagrant ssh</code></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="ss">Miguel</span><span class="p">:</span><span class="no">Puppet</span><span class="err">$</span> <span class="n">vagrant</span> <span class="n">ssh</span>
+</span><span class='line'><span class="o">[</span><span class="n">vagrant</span><span class="vi">@vagrant</span><span class="o">-</span><span class="n">centos64</span> <span class="o">~]</span><span class="err">$</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Por defecto el nombre con que queda la VM y se puede ver mediante la GUI de VirtualBox no es para nada descriptivo, pero puede ser modificado editando el archivo <code>Vagranfile</code> adicionando la variable <code>name</code> de la sección <code>config.vm.provider</code> (líneas nº 9,10,11)  .</p>
+
+<p><img class="center" src="/images/vagrantDefaultName.png"></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="ss">Miguel</span><span class="p">:</span><span class="no">Puppet</span><span class="err">$</span> <span class="n">cat</span> <span class="no">Vagrantfile</span>
+</span><span class='line'><span class="c1"># -*- mode: ruby -*-</span>
+</span><span class='line'><span class="c1"># vi: set ft=ruby :</span>
+</span><span class='line'>
+</span><span class='line'><span class="no">VAGRANTFILE_API_VERSION</span> <span class="o">=</span> <span class="s2">&quot;2&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="no">Vagrant</span><span class="o">.</span><span class="n">configure</span><span class="p">(</span><span class="no">VAGRANTFILE_API_VERSION</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
+</span><span class='line'>  <span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">box</span> <span class="o">=</span> <span class="s2">&quot;Centos&quot;</span>
+</span><span class='line'>  <span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">provider</span> <span class="s2">&quot;virtualbox&quot;</span> <span class="k">do</span> <span class="o">|</span><span class="n">puppetmaster</span><span class="o">|</span>
+</span><span class='line'>     <span class="n">puppetmaster</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;puppetmaster&quot;</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Podemos ver el nuevo nombre por línea de comando (Nombre que será también el de la GUI de VirtualBox)</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="ss">Miguel</span><span class="p">:</span><span class="no">Puppet</span><span class="err">$</span> <span class="no">VBoxManage</span> <span class="n">list</span> <span class="n">runningvms</span>
+</span><span class='line'><span class="s2">&quot;puppetmaster&quot;</span> <span class="p">{</span><span class="n">c980cd9e</span><span class="o">-</span><span class="mi">3329</span><span class="o">-</span><span class="mi">4</span><span class="n">aa8</span><span class="o">-</span><span class="mi">8</span><span class="n">d58</span><span class="o">-</span><span class="n">b84e389fff68</span><span class="p">}</span>
+</span><span class='line'><span class="ss">Miguel</span><span class="p">:</span><span class="no">Puppet</span><span class="err">$</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>No esta demás el link de la <a href="https://docs.vagrantup.com">documentación</a></p>
+
+		
+		
+	</div>
+
+</article>
+
+
+    <article class="post">
+	<header>
+		<h2 class="title">
+			
+			<a href="/blog/2014/06/26/modulo-ssh-puppet-y-hiera/">
+			
+				Módulo SSH Puppet Y Hiera</a>
+		</h2>
+		<div class="meta date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-06-26T21:28:00-04:00" pubdate data-updated="true">Jun 26<span>th</span>, 2014</time></div>
+	</header>
+	<div class="entry-content">
+		<p>El siguiente es un módulo de Puppet para la administración del servicio ssh en Linux (Rhel/Debian). La idea, de módulo es tomar los valores de las variables <code>port</code> <code>usedns</code> y <code>permit_root_login</code>.</p>
+
+<p><li>Clase init.pp</li>
+Esta clase lo que hace es heredar las definición de variables que nosotros tenemos en nuestra clase <code>params.pp</code> e instancia el orden de la ejecución de las clases.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[</span><span class="n">root</span><span class="vi">@master</span> <span class="n">manifests</span><span class="o">]</span><span class="err">$</span> <span class="n">cat</span> <span class="n">init</span><span class="o">.</span><span class="n">pp</span>
+</span><span class='line'><span class="k">class</span> <span class="n">sshmcoa</span> <span class="p">(</span>
+</span><span class='line'>    <span class="vg">$port</span>               <span class="o">=</span> <span class="vg">$sshmcoa</span><span class="o">::</span><span class="ss">params</span><span class="p">:</span><span class="ss">:port</span><span class="p">,</span>
+</span><span class='line'>    <span class="vg">$usedns</span>             <span class="o">=</span> <span class="vg">$sshmcoa</span><span class="o">::</span><span class="ss">params</span><span class="p">:</span><span class="ss">:usedns</span><span class="p">,</span>
+</span><span class='line'>    <span class="vg">$ensure</span>             <span class="o">=</span> <span class="vg">$sshmcoa</span><span class="o">::</span><span class="ss">params</span><span class="p">:</span><span class="ss">:ensure</span><span class="p">,</span>
+</span><span class='line'>    <span class="vg">$permit_root_login</span>  <span class="o">=</span> <span class="vg">$sshmcoa</span><span class="o">::</span><span class="ss">params</span><span class="p">:</span><span class="ss">:permit_root_login</span><span class="p">,</span>
+</span><span class='line'>    <span class="vg">$port</span>             <span class="o">=</span> <span class="vg">$sshmcoa</span><span class="o">::</span><span class="ss">params</span><span class="p">:</span><span class="ss">:port</span><span class="p">,</span>
+</span><span class='line'>    <span class="vg">$service_name</span> <span class="o">=</span> <span class="vg">$sshmcoa</span><span class="o">::</span><span class="ss">params</span><span class="p">:</span><span class="ss">:service_name</span><span class="p">,</span>
+</span><span class='line'>    <span class="vg">$config_file</span>  <span class="o">=</span> <span class="vg">$sshmcoa</span><span class="o">::</span><span class="ss">params</span><span class="p">:</span><span class="ss">:config_file</span><span class="p">,</span>
+</span><span class='line'>    <span class="vg">$package_name</span> <span class="o">=</span> <span class="vg">$sshmcoa</span><span class="o">::</span><span class="ss">params</span><span class="p">:</span><span class="ss">:package_name</span><span class="p">,</span>
+</span><span class='line'>    <span class="vg">$config_template</span>    <span class="o">=</span> <span class="vg">$sshmcoa</span><span class="o">::</span><span class="ss">params</span><span class="p">:</span><span class="ss">:config_template</span><span class="p">,</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">)</span> <span class="n">inherits</span> <span class="ss">sshmcoa</span><span class="p">:</span><span class="ss">:params</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">class</span> <span class="p">{</span><span class="s1">&#39;::sshmcoa::install&#39;</span><span class="p">:</span> <span class="p">}</span> <span class="o">-&gt;</span>
+</span><span class='line'>  <span class="k">class</span> <span class="p">{</span><span class="s1">&#39;::sshmcoa::config&#39;</span><span class="p">:}</span>  <span class="o">-&gt;</span>
+</span><span class='line'>  <span class="k">class</span> <span class="p">{</span><span class="s1">&#39;::sshmcoa::service&#39;</span><span class="p">:}</span>  <span class="o">-&gt;</span>
+</span><span class='line'>  <span class="no">Class</span> <span class="o">[</span><span class="s1">&#39;sshmcoa&#39;</span><span class="o">]</span>
+</span><span class='line'> <span class="c1">#notify {&quot;EL PUERTO ES: $port&quot;:}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><li>Clase params.pp</li>
+En esta clase se definen todos los parámetros a configurar por la clase dependiendo del sistema operativo (familia RedHat o familia Debian)</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[</span><span class="n">root</span><span class="vi">@master</span> <span class="n">manifests</span><span class="o">]</span><span class="err">$</span> <span class="n">cat</span> <span class="n">params</span><span class="o">.</span><span class="n">pp</span>
+</span><span class='line'><span class="k">class</span> <span class="ss">sshmcoa</span><span class="p">:</span><span class="ss">:params</span><span class="p">{</span>
+</span><span class='line'>    <span class="vg">$port</span>     <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+</span><span class='line'>    <span class="vg">$usedns</span>       <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+</span><span class='line'>    <span class="vg">$ensure</span>             <span class="o">=</span> <span class="s1">&#39;present&#39;</span>
+</span><span class='line'>    <span class="vg">$permit_root_login</span>  <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+</span><span class='line'>    <span class="vg">$listen_address</span>     <span class="o">=</span> <span class="s1">&#39;0.0.0.0&#39;</span>
+</span><span class='line'>    <span class="vg">$config_template</span>    <span class="o">=</span> <span class="s1">&#39;sshmcoa/sshd_config.conf.erb&#39;</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="k">case</span> <span class="vg">$:</span><span class="ss">:osfamily</span> <span class="p">{</span>
+</span><span class='line'>          <span class="s1">&#39;Debian&#39;</span><span class="p">:{</span>
+</span><span class='line'>      <span class="vg">$config_file</span>  <span class="o">=</span> <span class="s1">&#39;/etc/ssh/sshd_config&#39;</span>
+</span><span class='line'>      <span class="vg">$service_name</span> <span class="o">=</span> <span class="s1">&#39;ssh&#39;</span>
+</span><span class='line'>      <span class="vg">$package_name</span> <span class="o">=</span> <span class="s1">&#39;ssh&#39;</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>          <span class="ss">default</span><span class="p">:{</span>
+</span><span class='line'>      <span class="vg">$config_file</span>  <span class="o">=</span> <span class="s1">&#39;/etc/ssh/sshd_config&#39;</span>
+</span><span class='line'>      <span class="vg">$service_name</span> <span class="o">=</span> <span class="s1">&#39;sshd&#39;</span>
+</span><span class='line'>      <span class="vg">$package_name</span> <span class="o">=</span> <span class="s1">&#39;openssh-server&#39;</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>     <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+		
+		<a href="/blog/2014/06/26/modulo-ssh-puppet-y-hiera/" class="more-link">Read on &rarr;</a>
+	</div>
+
+</article>
+
+
+    <article class="post">
+	<header>
+		<h2 class="title">
+			
+			<a href="/blog/2014/06/03/desactivar-nodo-puppetdb/">
+			
+				Desactivar Nodo PuppetDB</a>
+		</h2>
+		<div class="meta date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-06-03T18:44:00-04:00" pubdate data-updated="true">Jun 3<span>rd</span>, 2014</time></div>
+	</header>
+	<div class="entry-content">
+		<p>En el caso de querer <i>desactivar</i> un nodo de PuppetDB lo podemos realizar con el comando:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="err">$</span> <span class="n">puppet</span> <span class="n">node</span> <span class="n">deactivate</span> <span class="n">node1</span><span class="o">.</span><span class="n">example</span><span class="o">.</span><span class="n">com</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Con lo anterior, el nodo &ldquo;desaparecerá&rdquo; de nuestro Dashboard .</p>
+
+<p>Referencia <a href="http://docs.puppetlabs.com/puppetdb/1/maintain_and_tune.html#deactivate-decommissioned-nodes">acá</a></p>
+
+		
+		
+	</div>
+
+</article>
+
+
+    <article class="post">
+	<header>
+		<h2 class="title">
+			
+			<a href="/blog/2014/06/01/configurar-puppetboard/">
+			
+				Configurar PuppetBoard</a>
+		</h2>
+		<div class="meta date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-06-01T22:39:00-04:00" pubdate data-updated="true">Jun 1<span>st</span>, 2014</time></div>
+	</header>
+	<div class="entry-content">
+		<p>Para facilitar la administración de Puppet (opensource) tenemos una nueva herramienta que se llama PuppetBoard su objetivo es dar accesos a la data que nosotros tenemos almacenada en nuestro PuppetDB de forma gráfica vía web, además de permitirnos ver el funcionamiento y reportes de los nodos al momentos de conectarse al nuestro Master.
+PuppetBoard difiere de Pupet Dansboard en:
+<li>Esta escrito en Python no en Ruby </li>
+<li>No almacena ningún tipo de data, toda información es requerida del PuppetDB</li>
+<li>No es posible funcionar sin PuppetDB</li></p>
+
+<p>La instalación del servicio no es compleja, puedes ver con lujo y detalle todos los pasos <a href="https://github.com/nedap/puppetboard">acá</a>. Para nuestro caso el proceso de instalación es el siguiente:</p>
+
+<h4>Instalación</h4>
+
+<p><img src="/images/puppetboard.png"></p>
+
+<p>Nota: Nuestra instalación será en base a Apache + mod-wsi</p>
+
+<p>Creamos nuestro directorio web de PuppetBoard</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="err">$</span> <span class="n">mkdir</span> <span class="o">-</span><span class="nb">p</span> <span class="sr">/var/</span><span class="n">www</span><span class="o">/</span><span class="n">puppetboard</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Clonamos el fuente</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">git</span> <span class="nb">clone</span> <span class="ss">https</span><span class="p">:</span><span class="sr">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">nedap</span><span class="o">/</span><span class="n">puppetboard</span><span class="o">.</span><span class="n">git</span> <span class="sr">/var/</span><span class="n">www</span><span class="o">/</span><span class="n">puppetboard</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>O lo instalamos de forma manual</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">pip</span> <span class="n">install</span> <span class="n">puppetboard</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Instalamos paquetería necesaria</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">yum</span> <span class="n">install</span> <span class="n">mod_wsgi</span> <span class="n">python</span><span class="o">-</span><span class="n">pip</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Copiamos el archivo de ejemplo <i>/usr/lib/python2.6/site-packages/puppetboard/default_settings.py</i> a la ruta <i>/var/www/puppetboard</i>, la nombramos <i>settings.py</i></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="err">$</span> <span class="n">cp</span> <span class="sr">/usr/</span><span class="n">lib</span><span class="o">/</span><span class="n">python2</span><span class="o">.</span><span class="mi">6</span><span class="o">/</span><span class="n">site</span><span class="o">-</span><span class="n">packages</span><span class="o">/</span><span class="n">puppetboard</span><span class="o">/</span><span class="n">default_settings</span><span class="o">.</span><span class="n">py</span> <span class="sr">/var/</span><span class="n">www</span><span class="o">/</span><span class="n">puppetboard</span>
+</span><span class='line'><span class="err">$</span> <span class="n">mv</span> <span class="sr">/var/</span><span class="n">www</span><span class="o">/</span><span class="n">puppetboard</span><span class="o">/</span><span class="n">default_settings</span><span class="o">.</span><span class="n">py</span> <span class="sr">/var/</span><span class="n">www</span><span class="o">/</span><span class="n">puppetboard</span><span class="o">/</span><span class="n">settings</span><span class="o">.</span><span class="n">py</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Y colocamos el siguiente contenido</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">PUPPETDB_HOST</span> <span class="o">=</span> <span class="s1">&#39;127.0.0.1&#39;</span>
+</span><span class='line'><span class="no">PUPPETDB_PORT</span> <span class="o">=</span> <span class="mi">8080</span>
+</span><span class='line'><span class="c1">#PUPPETDB_SSL_VERIFY = True</span>
+</span><span class='line'><span class="no">PUPPETDB_KEY</span> <span class="o">=</span> <span class="no">None</span>
+</span><span class='line'><span class="no">PUPPETDB_CERT</span> <span class="o">=</span> <span class="no">None</span>
+</span><span class='line'><span class="no">PUPPETDB_TIMEOUT</span> <span class="o">=</span> <span class="mi">20</span>
+</span><span class='line'><span class="no">DEV_LISTEN_HOST</span> <span class="o">=</span> <span class="s1">&#39;127.0.0.1&#39;</span>
+</span><span class='line'><span class="no">DEV_LISTEN_PORT</span> <span class="o">=</span> <span class="mi">5000</span>
+</span><span class='line'><span class="no">UNRESPONSIVE_HOURS</span> <span class="o">=</span> <span class="mi">2</span>
+</span><span class='line'><span class="no">ENABLE_QUERY</span> <span class="o">=</span> <span class="no">True</span>
+</span><span class='line'><span class="no">LOGLEVEL</span> <span class="o">=</span> <span class="s1">&#39;info&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>En el mismo directorio del PuppetBoard, creamos el archivo <i>wsgi.py</i> con el siguiente contenido</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">from</span> <span class="n">__future__</span> <span class="n">import</span> <span class="n">absolute_import</span>
+</span><span class='line'><span class="n">import</span> <span class="n">os</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1"># Needed if a settings.py file exists</span>
+</span><span class='line'><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">[</span><span class="s1">&#39;PUPPETBOARD_SETTINGS&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="s1">&#39;/var/www/puppetboard/settings.py&#39;</span>
+</span><span class='line'><span class="n">from</span> <span class="n">puppetboard</span><span class="o">.</span><span class="n">app</span> <span class="n">import</span> <span class="n">app</span> <span class="n">as</span> <span class="n">application</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Ahora, creamos el archivo <i>/etc/httpd/conf.d/wdgi.conf</i> para cargar el módulo en Apache con el siguiente contenido</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">LoadModule</span> <span class="n">wsgi_module</span> <span class="n">modules</span><span class="o">/</span><span class="n">mod_wsgi</span><span class="o">.</span><span class="n">so</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Finalmente, creamos el archivo de configuración para el virtualhosts que nos permita el acceso al PuppetBoard vía web</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="err">$</span> <span class="n">touch</span> <span class="sr">/etc/</span><span class="n">httpd</span><span class="o">/</span><span class="n">conf</span><span class="o">.</span><span class="n">d</span><span class="o">/</span><span class="n">puppetboard</span><span class="o">.</span><span class="n">conf</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Y colocamos la siguiente configuración</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">&lt;</span><span class="no">VirtualHost</span> <span class="o">*</span><span class="p">:</span><span class="mi">80</span><span class="o">&gt;</span>
+</span><span class='line'>    <span class="no">ServerName</span> <span class="n">puppet</span><span class="o">.</span><span class="n">example</span><span class="o">.</span><span class="n">com</span>
+</span><span class='line'>    <span class="no">WSGIDaemonProcess</span> <span class="n">puppetboard</span> <span class="n">user</span><span class="o">=</span><span class="n">apache</span> <span class="n">group</span><span class="o">=</span><span class="n">apache</span> <span class="n">threads</span><span class="o">=</span><span class="mi">5</span>
+</span><span class='line'>    <span class="no">WSGIScriptAlias</span> <span class="o">/</span> <span class="sr">/var/</span><span class="n">www</span><span class="o">/</span><span class="n">puppetboard</span><span class="o">/</span><span class="n">wsgi</span><span class="o">.</span><span class="n">py</span>
+</span><span class='line'>    <span class="no">ErrorLog</span> <span class="sr">/var/</span><span class="n">log</span><span class="o">/</span><span class="n">httpd</span><span class="o">/</span><span class="n">puppetboard</span><span class="o">.</span><span class="n">error</span><span class="o">.</span><span class="n">log</span>
+</span><span class='line'>    <span class="no">CustomLog</span> <span class="sr">/var/</span><span class="n">log</span><span class="o">/</span><span class="n">httpd</span><span class="o">/</span><span class="n">puppetboard</span><span class="o">.</span><span class="n">access</span><span class="o">.</span><span class="n">log</span> <span class="n">combined</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="no">Alias</span> <span class="sr">/static /us</span><span class="n">r</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python2</span><span class="o">.</span><span class="mi">6</span><span class="o">/</span><span class="n">site</span><span class="o">-</span><span class="n">packages</span><span class="o">/</span><span class="n">puppetboard</span><span class="o">/</span><span class="n">static</span><span class="o">/</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="o">&lt;</span><span class="no">Directory</span> <span class="sr">/usr/</span><span class="n">lib</span><span class="o">/</span><span class="n">python2</span><span class="o">.</span><span class="mi">6</span><span class="o">/</span><span class="n">site</span><span class="o">-</span><span class="n">packages</span><span class="o">/</span><span class="n">puppetboard</span><span class="o">&gt;</span>
+</span><span class='line'>        <span class="no">AuthType</span> <span class="no">Basic</span>
+</span><span class='line'>        <span class="no">AuthName</span> <span class="s2">&quot;Authentication Required&quot;</span>
+</span><span class='line'>        <span class="no">AuthUserFile</span> <span class="s2">&quot;/var/www/puppetboard/.htpasswd&quot;</span>
+</span><span class='line'>        <span class="no">Require</span> <span class="n">valid</span><span class="o">-</span><span class="n">user</span>
+</span><span class='line'>        <span class="no">Order</span> <span class="n">allow</span><span class="p">,</span><span class="n">deny</span>
+</span><span class='line'>        <span class="no">Allow</span> <span class="n">from</span> <span class="n">all</span>
+</span><span class='line'>       <span class="no">WSGIProcessGroup</span> <span class="n">puppetboard</span>
+</span><span class='line'>        <span class="no">WSGIApplicationGroup</span> <span class="sx">%{GLOBAL}</span>
+</span><span class='line'>      <span class="c1">#  Require all granted</span>
+</span><span class='line'><span class="c1">#      Order deny,allow</span>
+</span><span class='line'><span class="c1">#        Allow from all</span>
+</span><span class='line'>    <span class="o">&lt;</span><span class="sr">/Directory&gt;</span>
+</span><span class='line'><span class="sr">&lt;/</span><span class="no">VirtualHost</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Creando el usuario para el acceso web</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[</span><span class="n">root</span><span class="vi">@master</span> <span class="n">puppetboard</span><span class="o">]</span><span class="err">$</span> <span class="n">cd</span> <span class="sr">/var/</span><span class="n">www</span><span class="o">/</span><span class="n">puppetboard</span><span class="o">/</span>
+</span><span class='line'><span class="o">[</span><span class="n">root</span><span class="vi">@master</span> <span class="n">puppetboard</span><span class="o">]</span><span class="err">$</span> <span class="n">htpasswd</span> <span class="o">-</span><span class="n">c</span> <span class="o">.</span><span class="n">htpasswd</span> <span class="n">admin</span> <span class="c1">#colocamos el Password para el acceso web</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Finalmente podemos acceder luego de ingresar el usuario y password.</p>
+
+<p><img src="/images/puppetboardnodes.png"></p>
+
+		
+		
+	</div>
+
+</article>
+
+
+    <article class="post">
+	<header>
+		<h2 class="title">
+			
+			<a href="/blog/2014/03/21/reenviar-un-correo-en-zimbra-basado-en-el-subject/">
+			
+				Reenviar Un Correo en Zimbra Basado en El Subject</a>
+		</h2>
+		<div class="meta date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-03-21T14:10:00-03:00" pubdate data-updated="true">Mar 21<span>st</span>, 2014</time></div>
+	</header>
+	<div class="entry-content">
+		<p>Para reenviar un que contenga un <i>Subject</i> en particular hacia otra casilla en Zimbra podemos realizar los siguiente</p>
+
+<p>En el archivo de configuración de postfix <i>/opt/zimbra/postfix/conf/main.cf.default</i> colocamos la referencia al hash para header_checks</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">header_checks</span> <span class="o">=</span> <span class="nl">regexp:</span><span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">zimbra</span><span class="o">/</span><span class="n">postfix</span><span class="o">/</span><span class="n">conf</span><span class="o">/</span><span class="n">header_checks</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Dependiendo de la versión de Zimbra, la anterior configuración funcionará sin problemas, de lo contrario la configuración referente al header_checks tenemos que hacerla en el archivo <i>/opt/zimbra/postfix/conf/zmmta.cf</i> donde adicionaremos la siguiente línea (antes del parámetro RESTART mta)</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">POSTCONF</span> <span class="n">header_checks</span>  <span class="nl">regexp:</span><span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">zimbra</span><span class="o">/</span><span class="n">postfix</span><span class="o">/</span><span class="n">conf</span><span class="o">/</span><span class="n">header_checks</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>
+En el archivo  <i>/opt/zimbra/postfix/conf/header_checks</i> adicionamos la expresión regular que tendrá el subject</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="o">/^</span><span class="nl">Subject:</span> <span class="n">MIGUELCOA</span><span class="o">/</span> <span class="n">REDIRECT</span> <span class="n">mcoa</span><span class="err">@</span><span class="n">example</span><span class="p">.</span><span class="n">com</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Recargarmos el servicio MTA</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">zmmtactl</span> <span class="n">reload</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Y desde ahora, cada vez que desde el servidor zimbra salga un correo que en su asunto contenga &ldquo;MIGUELCOA&rdquo; será enviada una copia hacia la casilla mcoa\@example.com</p>
+
+		
+		
+	</div>
+
+</article>
+
+
+    <article class="post">
+	<header>
+		<h2 class="title">
+			
+			<a href="/blog/2014/01/15/migrando-usuarios-slash-password-postfix-to-zimbra/">
+			
+				Migrando Usuarios/password Postfix to Zimbra</a>
+		</h2>
+		<div class="meta date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-01-15T09:58:00-03:00" pubdate data-updated="true">Jan 15<span>th</span>, 2014</time></div>
+	</header>
+	<div class="entry-content">
+		<p>La idea del siguiente script es; primero crear la cuenta con una password temporal y luego configurar la password original del usuario, ambos valores son sacados del <i>/etc/shadow</i></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="c">#!/usr/bin/python</span>
+</span><span class='line'><span class="c">##Miguel Coa M.</span>
+</span><span class='line'>
+</span><span class='line'><span class="kn">import</span> <span class="nn">csv</span>
+</span><span class='line'><span class="k">with</span> <span class="nb">open</span> <span class="p">(</span><span class="s">&#39;shadow&#39;</span><span class="p">,</span> <span class="s">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="n">reader</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">reader</span> <span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s">&#39;:&#39;</span> <span class="p">)</span>
+</span><span class='line'>        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">reader</span><span class="p">:</span>
+</span><span class='line'>
+</span><span class='line'>                <span class="n">user</span>     <span class="o">=</span> <span class="n">row</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</span><span class='line'>                <span class="n">passwd</span>   <span class="o">=</span> <span class="s">&quot;&#39;crypt{&quot;</span> <span class="o">+</span> <span class="n">row</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span><span class="s">&quot;}&#39;&quot;</span>
+</span><span class='line'>
+</span><span class='line'>                <span class="k">print</span> <span class="s">&quot;ca {}@domain.com tmpPSW&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">user</span><span class="p">)</span>
+</span><span class='line'>                <span class="k">print</span> <span class="s">&quot;ma {}@domain.com userPassword  {}  &quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">user</span><span class="p">,</span><span class="n">passwd</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Y como resultado nos arrojará por pantalla</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">ca</span> <span class="n">varaya</span><span class="nd">@domain.com</span> <span class="n">tmpPSW</span>
+</span><span class='line'><span class="n">ma</span> <span class="n">varaya</span><span class="nd">@domain.com</span> <span class="n">userPassword</span>  <span class="s">&#39;crypt{$1$6RT62jZZ$sFlv.MIII4PuKISBaap030}&#39;</span>
+</span><span class='line'><span class="n">ca</span> <span class="n">cgalaz</span><span class="nd">@domain.com</span> <span class="n">tmpPSW</span>
+</span><span class='line'><span class="n">ma</span> <span class="n">cgalaz</span><span class="nd">@domain.com</span> <span class="n">userPassword</span>  <span class="s">&#39;crypt{$1$bAEOlC0N$4t.3zCGDb.RFc0vmxd2UB0}&#39;</span>
+</span><span class='line'><span class="n">ca</span> <span class="n">ctagle</span><span class="nd">@domain.com</span> <span class="n">tmpPSW</span>
+</span><span class='line'><span class="n">ma</span> <span class="n">ctagle</span><span class="nd">@domain.com</span> <span class="n">userPassword</span>  <span class="s">&#39;crypt{$1$L7vlV7Me$orB2TCnqn.JeoVQpKsr6P0}&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>
+Valor que los podemos almacenar en un archivo y los ejecutamos pasandolo como parámetro al comando <i>zmprov</i>. Si ya tenemos creadas las cuentas podemos comentar el primer print, para que solo las modifique.</p>
+
+		
+		
+	</div>
+
+</article>
+
+
+    <article class="post">
+	<header>
+		<h2 class="title">
+			
+			<a href="/blog/2014/01/14/creando-cuentas-zimbra-desde-un-csv/">
+			
+				Creando Cuentas Zimbra Desde Un CSV</a>
+		</h2>
+		<div class="meta date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-01-14T17:38:00-03:00" pubdate data-updated="true">Jan 14<span>th</span>, 2014</time></div>
+	</header>
+	<div class="entry-content">
+		<p>El siguiente script nos permite crear las cuentas en Zimbra desde un CSV y automatizar el proceso. El CSV en donde tenemos las cuentas, tiene el siguiente formato:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">cponce</span><span class="err">@</span><span class="n">example</span><span class="p">.</span><span class="n">com</span><span class="p">;</span><span class="n">Claudia</span><span class="p">;</span><span class="n">Ponce</span><span class="p">;</span><span class="n">TMPpasswd</span>
+</span><span class='line'><span class="n">cquintana</span><span class="err">@</span><span class="n">example</span><span class="p">.</span><span class="n">com</span><span class="p">;</span><span class="n">Cristofer</span><span class="p">;</span><span class="n">Quintana</span><span class="p">;</span><span class="n">TMPpasswd</span>
+</span><span class='line'><span class="n">ctello</span><span class="err">@</span><span class="n">example</span><span class="p">.</span><span class="n">com</span><span class="p">;</span><span class="n">Cristian</span><span class="p">;</span><span class="n">Tello</span><span class="p">;</span><span class="n">TMPpasswd</span>
+</span><span class='line'><span class="n">eperalta</span><span class="err">@</span><span class="n">example</span><span class="p">.</span><span class="n">com</span><span class="p">;</span><span class="n">Edgar</span><span class="p">;</span><span class="n">Peralta</span><span class="p">;</span><span class="n">TMPpasswd</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Y el script</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="cp">#!/usr/bin/python</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">import</span> <span class="n">csv</span>
+</span><span class='line'><span class="n">with</span> <span class="n">open</span> <span class="p">(</span><span class="err">&#39;</span><span class="n">Europarts</span><span class="p">.</span><span class="n">csv</span><span class="err">&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">rb</span><span class="err">&#39;</span><span class="p">)</span> <span class="n">as</span> <span class="nl">f:</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="n">reader</span> <span class="o">=</span> <span class="n">csv</span><span class="p">.</span><span class="n">reader</span> <span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="sc">&#39;;&#39;</span> <span class="p">)</span> <span class="err">#</span><span class="n">delimiter</span> <span class="n">tabulador</span> <span class="err">\</span><span class="n">t</span>
+</span><span class='line'>        <span class="k">for</span> <span class="n">row</span> <span class="k">in</span> <span class="nl">reader:</span>
+</span><span class='line'>
+</span><span class='line'>                <span class="n">mail</span>     <span class="o">=</span> <span class="n">row</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</span><span class='line'>                <span class="n">name</span>     <span class="o">=</span> <span class="n">row</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+</span><span class='line'>                <span class="n">lastname</span> <span class="o">=</span> <span class="n">row</span> <span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+</span><span class='line'>                <span class="n">name2</span>    <span class="o">=</span> <span class="n">row</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="sc">&#39; &#39;</span> <span class="o">+</span> <span class="n">row</span> <span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+</span><span class='line'>      <span class="n">passwd</span>    <span class="o">=</span> <span class="n">row</span> <span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="n">print</span> <span class="s">&quot;ca {0} &#39;{1}&#39; displayName &#39;{2}&#39; sn &#39;{3}&#39; cn &#39;{4}&#39;&quot;</span><span class="p">.</span><span class="n">format</span><span class="p">(</span><span class="n">mail</span><span class="p">,</span><span class="n">passwd</span><span class="p">,</span><span class="n">name2</span><span class="p">.</span><span class="n">title</span><span class="p">(),</span><span class="n">lastname</span><span class="p">.</span><span class="n">title</span><span class="p">(),</span><span class="n">name2</span><span class="p">.</span><span class="n">title</span><span class="p">())</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Lo anterior, imprimerá por pantalla lo siguiente:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">ca</span> <span class="n">cponce</span><span class="err">@</span><span class="n">example</span><span class="p">.</span><span class="n">com</span> <span class="err">&#39;</span><span class="n">TMPpasswd</span><span class="err">&#39;</span> <span class="n">displayName</span> <span class="err">&#39;</span><span class="n">Claudia</span> <span class="n">Ponce</span><span class="err">&#39;</span> <span class="n">sn</span> <span class="err">&#39;</span><span class="n">Ponce</span><span class="err">&#39;</span> <span class="n">cn</span> <span class="err">&#39;</span><span class="n">Claudia</span> <span class="n">Ponce</span><span class="err">&#39;</span>
+</span><span class='line'><span class="n">ca</span> <span class="n">cquintana</span><span class="err">@</span><span class="n">example</span><span class="p">.</span><span class="n">com</span> <span class="err">&#39;</span><span class="n">TMPpasswd</span><span class="err">&#39;</span> <span class="n">displayName</span> <span class="err">&#39;</span><span class="n">Cristofer</span> <span class="n">Quintana</span><span class="err">&#39;</span> <span class="n">sn</span> <span class="err">&#39;</span><span class="n">Quintana</span><span class="err">&#39;</span> <span class="n">cn</span> <span class="err">&#39;</span><span class="n">Cristofer</span> <span class="n">Quintana</span><span class="err">&#39;</span>
+</span><span class='line'><span class="n">ca</span> <span class="n">ctello</span><span class="err">@</span><span class="n">example</span><span class="p">.</span><span class="n">com</span> <span class="err">&#39;</span><span class="n">TMPpasswd</span><span class="err">&#39;</span> <span class="n">displayName</span> <span class="err">&#39;</span><span class="n">Cristian</span> <span class="n">Tello</span><span class="err">&#39;</span> <span class="n">sn</span> <span class="err">&#39;</span><span class="n">Tello</span><span class="err">&#39;</span> <span class="n">cn</span> <span class="err">&#39;</span><span class="n">Cristian</span> <span class="n">Tello</span><span class="err">&#39;</span>
+</span><span class='line'><span class="n">ca</span> <span class="n">eperalta</span><span class="err">@</span><span class="n">example</span><span class="p">.</span><span class="n">com</span> <span class="err">&#39;</span><span class="n">TMPpasswd</span><span class="err">&#39;</span> <span class="n">displayName</span> <span class="err">&#39;</span><span class="n">Edgar</span> <span class="n">Peralta</span><span class="err">&#39;</span> <span class="n">sn</span> <span class="err">&#39;</span><span class="n">Peralta</span><span class="err">&#39;</span> <span class="n">cn</span> <span class="err">&#39;</span><span class="n">Edgar</span> <span class="n">Peralta</span><span class="err">&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>La salida se puede mandar de forma directa dentro del script hacia un archivo y luego pasarlo por parametro al comando zmprov</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">zmprov</span> <span class="o">&lt;</span> <span class="n">zmCreateAccounts</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
 
 
 		
-		<a href="/blog/2013/10/22/cambiar-theme-octopress/" class="more-link">Read on &rarr;</a>
+		
+	</div>
+
+</article>
+
+
+    <article class="post">
+	<header>
+		<h2 class="title">
+			
+			<a href="/blog/2013/11/29/configurar-nagios-server-y-pnp4nagios/">
+			
+				Configurar Nagios Server Y Pnp4nagios</a>
+		</h2>
+		<div class="meta date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-11-29T10:46:00-03:00" pubdate data-updated="true">Nov 29<span>th</span>, 2013</time></div>
+	</header>
+	<div class="entry-content">
+		<p>Si tienes un servidor Nagios como plataforma de monitoreo de servidores, es posible que en alguna ocasión puedas necesitar generar reportes de la estadística (mensual, díaria, semanal, etc) para lo cual la versión open de Nagios Server no lo tiene integrado de forma nativa pero podemos solucionar con <a href="http://www.pnp4nagios.org/">pnp4nagios</a> y para realizarlo tenemos que hacer lo siguiente (asumiremos que ya tenemos nuestro Nagios Server funcionando)</p>
+
+<p>Tenemos que tener instalado en el servidor rrdtool, perl-rrdtool y una serie de paquetería</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">yum</span> <span class="n">install</span> <span class="n">libdbi</span> <span class="n">rrdtool</span> <span class="n">perl</span><span class="o">-</span><span class="n">rrdtool</span> <span class="n">ruby</span> <span class="n">xorg</span><span class="o">-</span><span class="n">x11</span><span class="o">-</span><span class="n">fonts</span><span class="o">-</span><span class="n">Type1</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Instalación php4nagios</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">wget</span> <span class="nl">http:</span><span class="c1">//downloads.sourceforge.net/project/pnp4nagios/PNP-0.6/pnp4nagios-0.6.21.tar.gz?r=http%3A%2F%2Fsourceforge.net%2Fprojects%2Fpnp4nagios%2F&amp;ts=1372937581&amp;use_mirror=jaist</span>
+</span><span class='line'><span class="n">tar</span> <span class="o">-</span><span class="n">zxvf</span> <span class="n">pnp4nagios</span><span class="o">-</span><span class="mf">0.6.21</span><span class="p">.</span><span class="n">tar</span><span class="p">.</span><span class="n">gz</span>
+</span><span class='line'><span class="n">cd</span> <span class="n">pnp4nagios</span><span class="o">-</span><span class="mf">0.6.21</span>
+</span><span class='line'><span class="p">.</span><span class="o">/</span><span class="n">configure</span> <span class="o">-</span><span class="n">prefix</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">pnp4nagios</span> <span class="o">-</span><span class="n">with</span><span class="o">-</span><span class="n">rrdtool</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">rrdtool</span> <span class="o">-</span><span class="n">with</span><span class="o">-</span><span class="n">nagios</span><span class="o">-</span><span class="n">user</span><span class="o">=</span><span class="n">nagios</span> <span class="o">-</span><span class="n">with</span><span class="o">-</span><span class="n">nagios</span><span class="o">-</span><span class="n">group</span><span class="o">=</span><span class="n">nagios</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Lo anterior generará todo el proceso de compilación lo que finalmente arrojará algo similar a lo siguiente:
+<img src="/assets/images/pnp4nagios.png"></p>
+
+<p>Y luego lo compilamos e instalamos</p>
+
+
+		
+		<a href="/blog/2013/11/29/configurar-nagios-server-y-pnp4nagios/" class="more-link">Read on &rarr;</a>
+	</div>
+
+</article>
+
+
+    <article class="post">
+	<header>
+		<h2 class="title">
+			
+			<a href="/blog/2013/11/27/tabulacion-con-editor-vim/">
+			
+				Tabulación Con Editor VIM</a>
+		</h2>
+		<div class="meta date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-11-27T08:32:00-03:00" pubdate data-updated="true">Nov 27<span>th</span>, 2013</time></div>
+	</header>
+	<div class="entry-content">
+		<p>En ocasiones al copiar y pegar texto hacia una archivo que está siendo accedido por medio del editor VIM, este queda con una mala tabulación (excesivamente corrida a la derecha) al momento de pegarla. La solución para eso es que antes de pegar el texto tenemos realizar lo siguiente en la misma ventana del editor</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="nl">type:</span> <span class="n">set</span> <span class="n">paste</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Lo otro, es agregar la línea <i>set paste</i> dentro de <i>/etc/vim/vimrc</i> .</p>
+
+		
+		
 	</div>
 
 </article>
@@ -100,12 +1031,14 @@
             <a href="/" class="prev">Previous</a>
         
         
+            <a href="/blog/page/3/" class="next">Next</a>
+        
     </nav>
 
 </div>
-	<footer id="footer" class="inner">&copy; 2014
+	<footer id="footer" class="inner">&copy; 2015
 
-    Miguel Coa M.
+    Miguel Angel Coa Morales
 
 </footer>
 	<script src="/javascripts/slash.js"></script>
