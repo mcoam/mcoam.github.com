@@ -17,9 +17,9 @@ Lo anterior era por que el node estaba registrado dos veces en PuppetDB una con 
 ```ruby
 [root@nagios servers]$ puppet node deactivate next-haproxy-1
 ```
-Remover el nodo de la DB
+<li>Remover el nodo de la DB</li>
 ```ruby
-[root@puppet ~]# psql -h 127.0.0.1 puppetdb puppetdb
+[root@puppet ~]$ psql -h 127.0.0.1 puppetdb puppetdb
 Password for user puppetdb: <colocar password>
 #EJECUTAR
 puppetdb=> delete from catalogs where certname in (select name from certnames where deactivated is not null);

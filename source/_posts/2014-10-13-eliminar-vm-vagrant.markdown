@@ -1,0 +1,40 @@
+---
+layout: post
+title: "Eliminar VM Vagrant"
+date: 2014-10-13 16:44
+comments: true
+categories: Vagrant, VirtualBox
+---
+En <code>Vagrant</code> nuestra máquinas virtuales son borradas con el comando <code>vm destroy</code> pero sucede que aveces hemos borrado el directorio de la VM o el Vagrantfile y esta ya no puede ser referenciada mediante Vagrant para ser eliminada. Como Vagrant trabaja con <code>VirtualBox</code> podemos utilizar el comando <code>VBoxManage</code> para que la podamos eliminar.
+
+Listamos todas la VM 
+```ruby
+Miguel:zimbra$ VBoxManage list vms
+"puppetserver" {3830b010-4fca-4c29-9225-6647b1edcd7f}
+"nagiosserver" {3178a761-0c61-4ffb-8fc8-d4bd4853be22}
+"nagiosnode1" {90da5db9-2538-4fe5-b76f-af68f83a8397}
+"nagiosnode2" {e32fb9be-fb34-4663-befb-900f43b60cfb}
+"samba4" {f5c753c3-c8e0-4117-b05c-f635ebcae06d}
+"docker.example.com" {0c5213d4-6d1a-40b9-9e44-cff9c3829d73}
+"zimbra_default_1413222975386_53519" {969175c2-451c-42fc-98fd-7946d6796bcc}
+"zimbra" {35ed5012-4b33-4b30-869b-35654b3e88b8}
+```
+Vamos a eliminar la máquina de la línea nº8 UID <code>969175c2-451c-42fc-98fd-7946d6796bcc</code>
+```ruby
+Miguel:zimbra$ VBoxManage unregistervm 969175c2-451c-42fc-98fd-7946d6796bcc -delete
+0%...10%...20%...30%...40%...50%...60%...70%...80%...90%...100%
+```
+Y ahora vemos que ya no esta
+
+```ruby
+Miguel:zimbra$ VBoxManage list vms
+"puppetserver" {3830b010-4fca-4c29-9225-6647b1edcd7f}
+"CentOS-6.4-x86_64_1407080394847_1407" {bd5b11c8-a7e4-4c6e-b6f2-1646775e7f9a}
+"nagiosServer_default_1407266455588_52667" {2f3d8ae9-c8e5-4557-a79e-503a1af4646a}
+"nagiosserver" {3178a761-0c61-4ffb-8fc8-d4bd4853be22}
+"nagiosnode1" {90da5db9-2538-4fe5-b76f-af68f83a8397}
+"nagiosnode2" {e32fb9be-fb34-4663-befb-900f43b60cfb}
+"samba4" {f5c753c3-c8e0-4117-b05c-f635ebcae06d}
+"docker.example.com" {0c5213d4-6d1a-40b9-9e44-cff9c3829d73}
+"zimbra" {35ed5012-4b33-4b30-869b-35654b3e88b8}
+```

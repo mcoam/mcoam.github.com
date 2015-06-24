@@ -4,7 +4,7 @@ title: "SAMBA4.localo controlador de dominio A/D"
 date: 2014-08-20 10:57
 comments: true
 categories: samba, samba4, active, controlador de dominio, samba3, active rirectory
-publised: false
+published: true
 ---
 Para Centos 6 tenemos que complilar las fuentes para instalar Samba4:
 
