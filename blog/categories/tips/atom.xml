@@ -4,7 +4,7 @@
   <title><![CDATA[Category: tips | Bitácora]]></title>
   <link href="http://mcoam.github.io/blog/categories/tips/atom.xml" rel="self"/>
   <link href="http://mcoam.github.io/"/>
-  <updated>2015-03-26T18:50:40-03:00</updated>
+  <updated>2015-06-24T16:19:59-03:00</updated>
   <id>http://mcoam.github.io/</id>
   <author>
     <name><![CDATA[Miguel Angel Coa Morales]]></name>
@@ -12,6 +12,29 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Seleccionar y comentar texto con VIM]]></title>
+    <link href="http://mcoam.github.io/blog/2015/06/24/seleccionar-y-comentar-texto-con-vim/"/>
+    <updated>2015-06-24T16:03:00-03:00</updated>
+    <id>http://mcoam.github.io/blog/2015/06/24/seleccionar-y-comentar-texto-con-vim</id>
+    <content type="html"><![CDATA[<p>En el caso de necesitar seleccionar texto (muchas líneas) con <code>vim</code> podemos hacer lo siguiente:</p>
+
+<ul>
+<li> Seleccionar texto en modo <b>visual</b> </li>
+<li> Apretar la combinación: <b>:norm i#</b> para agregar los comentarios </li>
+</ul>
+
+
+<p>Para quitar los comentatrios</p>
+
+<ul>
+<li> Seleccionar texto en modo <b>visual</b> </li>
+<li> Apretar la combinación: <b>:norm x</b> para agregar los comentarios </li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Tabulación con editor VIM]]></title>

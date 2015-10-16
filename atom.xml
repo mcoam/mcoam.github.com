@@ -4,13 +4,36 @@
   <title><![CDATA[Bitácora]]></title>
   <link href="http://mcoam.github.io/atom.xml" rel="self"/>
   <link href="http://mcoam.github.io/"/>
-  <updated>2015-03-26T18:50:40-03:00</updated>
+  <updated>2015-06-24T16:19:59-03:00</updated>
   <id>http://mcoam.github.io/</id>
   <author>
     <name><![CDATA[Miguel Angel Coa Morales]]></name>
     
   </author>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Seleccionar y comentar texto con VIM]]></title>
+    <link href="http://mcoam.github.io/blog/2015/06/24/seleccionar-y-comentar-texto-con-vim/"/>
+    <updated>2015-06-24T16:03:00-03:00</updated>
+    <id>http://mcoam.github.io/blog/2015/06/24/seleccionar-y-comentar-texto-con-vim</id>
+    <content type="html"><![CDATA[<p>En el caso de necesitar seleccionar texto (muchas líneas) con <code>vim</code> podemos hacer lo siguiente:</p>
+
+<ul>
+<li> Seleccionar texto en modo <b>visual</b> </li>
+<li> Apretar la combinación: <b>:norm i#</b> para agregar los comentarios </li>
+</ul>
+
+
+<p>Para quitar los comentatrios</p>
+
+<ul>
+<li> Seleccionar texto en modo <b>visual</b> </li>
+<li> Apretar la combinación: <b>:norm x</b> para agregar los comentarios </li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Instalado/Actualizando paquetes Endian Firewall]]></title>
@@ -2066,22 +2089,6 @@ Reiniciamos apache</p>
 <p><a href="http://www.productionmonkeys.net/guides/nagios/addons/pnp4nagios">http://www.productionmonkeys.net/guides/nagios/addons/pnp4nagios</a>
 <a href="http://www.academia.edu/4142933/Install_pnp4nagios_on_Cent_OS">http://www.academia.edu/4142933/Install_pnp4nagios_on_Cent_OS</a>
 <a href="http://eldespistado.com/instalacion-nagios-pnp4nagios-check_mk-nagvis-debian-7-wheezy/">http://eldespistado.com/instalacion-nagios-pnp4nagios-check_mk-nagvis-debian-7-wheezy/</a></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Tabulación con editor VIM]]></title>
-    <link href="http://mcoam.github.io/blog/2013/11/27/tabulacion-con-editor-vim/"/>
-    <updated>2013-11-27T08:32:00-03:00</updated>
-    <id>http://mcoam.github.io/blog/2013/11/27/tabulacion-con-editor-vim</id>
-    <content type="html"><![CDATA[<p>En ocasiones al copiar y pegar texto hacia una archivo que está siendo accedido por medio del editor VIM, este queda con una mala tabulación (excesivamente corrida a la derecha) al momento de pegarla. La solución para eso es que antes de pegar el texto tenemos realizar lo siguiente en la misma ventana del editor</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="nl">type:</span> <span class="n">set</span> <span class="n">paste</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Lo otro, es agregar la línea <i>set paste</i> dentro de <i>/etc/vim/vimrc</i> .</p>
 ]]></content>
   </entry>
   
