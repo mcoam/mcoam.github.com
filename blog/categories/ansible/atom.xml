@@ -4,7 +4,7 @@
   <title><![CDATA[Category: ansible, | Bitácora]]></title>
   <link href="http://mcoam.github.io/blog/categories/ansible/atom.xml" rel="self"/>
   <link href="http://mcoam.github.io/"/>
-  <updated>2015-11-07T11:24:26-03:00</updated>
+  <updated>2015-11-07T11:25:53-03:00</updated>
   <id>http://mcoam.github.io/</id>
   <author>
     <name><![CDATA[Miguel Angel Coa Morales]]></name>
@@ -29,7 +29,7 @@ vars:
       disk_name: &ldquo;/dev/sdf1&rdquo;
       filesystem: &ldquo;ext4&rdquo;
       vg_name: &ldquo;zimbra_data&rdquo;
-      lv_size: &ldquo;100%FREE&rdquo; #toma todo el espacio libre del VG zimbra_data
+      lv_size: &ldquo;100%FREE&rdquo; #ocupar todo el espacio libre del VG zimbra_data
       lv_name: &ldquo;backup&rdquo;
       path: &ldquo;/opt/zimbra/backup&rdquo;
       user: &ldquo;zimbra&rdquo;
