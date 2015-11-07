@@ -1,0 +1,168 @@
+
+<!DOCTYPE HTML>
+<html lang="en-GB">
+<head>
+	<meta charset="utf-8">
+	<title>Notas sobre imapsync  | Bitácora</title>
+
+	<meta name="author" content="Miguel Angel Coa Morales">
+
+<meta name="description" content="Un blog personal"> <meta name="keywords" content="zimbra, linux, centos, devops, puppet, opensource, virtualizar, virtualización">
+
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="Bitácora" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.png" rel="shortcut icon">
+	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+</head>
+
+
+
+<body>
+	<header id="header" class="inner"><h1><a href="/">Bitácora</a></h1>
+<span class="tagline">Miguel Angel Coa Morales</span>
+<nav id="main-nav"><ul>
+	<li><a href="/about">About</a></li>
+	<li><a href="/archives">Archives</a></li>
+	<li><a href="/contact">Contact</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul>
+	<li><a href="/about">About</a></li>
+	<li><a href="/archives">Archives</a></li>
+	<li><a href="/contact">Contact</a></li>
+</ul>
+</div>
+	</div>
+</nav>
+
+
+</header>
+
+	<div id="content" class="inner"><article class="post">
+	<header>
+		<h2 class="title">Notas Sobre Imapsync</h2>
+		<div class="meta date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-10-15T23:00:00-03:00" pubdate data-updated="true">Oct 15<span>th</span>, 2015</time></div>
+	</header>
+	<div class="entry-content"><p>En el caso de migrar la data de correos vía <code>imapsync</code> es importante tener en consideración (si se va a tener corriendo varios días el comando) utilizar la opción <code>--delete2</code> para que todo correo copiado al <i>(hosts2)</i> y que no tenga copia en el origen <i>(host1)</i> sea borrado, de lo contrario el usuario cuando se conecte al nuevo servidor tendrá correos que ya había eliminado y el buzón pesará mas de lo normal.
+De todas formas, lo anterior se puede corregir configrando el <code>imapsyn</code> con el valor <code>&mdash;minage</code> que sincroniza el buzón desde <i>X</i> días para atrás.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">imapsync</span> <span class="o">--</span><span class="n">buffersize</span> <span class="mi">8192000</span> <span class="o">--</span><span class="n">nosyncacls</span> <span class="o">--</span><span class="n">subscribe</span> <span class="o">--</span><span class="n">syncinternaldates</span> <span class="o">--</span><span class="n">authmech1</span> <span class="no">PLAIN</span> <span class="o">/</span>
+</span><span class='line'><span class="o">--</span><span class="n">host1</span> <span class="mi">192</span><span class="o">.</span><span class="mi">168</span><span class="o">.</span><span class="mi">10</span><span class="o">.</span><span class="mi">10</span> <span class="o">--</span><span class="n">user1</span> <span class="n">foo</span><span class="vi">@origen</span><span class="o">.</span><span class="n">dev</span> <span class="o">--</span><span class="n">password1</span> <span class="s1">&#39;foo&#39;</span> <span class="o">--</span><span class="n">host2</span> <span class="mi">192</span><span class="o">.</span><span class="mi">168</span><span class="o">.</span><span class="mi">10</span><span class="o">.</span><span class="mi">11</span> <span class="o">/</span>
+</span><span class='line'><span class="o">--</span><span class="n">user2</span> <span class="n">foo</span><span class="vi">@destino</span><span class="o">.</span><span class="n">dev</span> <span class="o">--</span><span class="n">password2</span> <span class="s1">&#39;foo&#39;</span> <span class="o">--</span><span class="n">authmech2</span> <span class="no">PLAIN</span> <span class="o">--</span><span class="n">nofoldersizes</span> <span class="o">--</span><span class="n">skipsize</span> <span class="o">--</span><span class="n">fast</span> <span class="o">/</span>
+</span><span class='line'><span class="o">--</span><span class="n">exclude</span> <span class="s1">&#39;(?i)\b(Junk|Spam|Trash|IMIP|Drafts)\b&#39;</span> <span class="o">--</span><span class="n">exclude</span> <span class="s1">&#39;INBOX_(.*)&#39;</span> <span class="o">--</span><span class="n">exclude</span> <span class="s1">&#39;Trash_(.*)&#39;</span><span class="o">/</span>
+</span><span class='line'> <span class="o">--</span><span class="n">exclude</span> <span class="s1">&#39;Drafts_(.*)&#39;</span> <span class="o">--</span><span class="n">exclude</span> <span class="s1">&#39;Spam_(.*)&#39;</span> <span class="o">--</span><span class="n">exclude</span> <span class="s1">&#39;Sent Items_(.*)&#39;</span> <span class="o">--</span><span class="n">regextrans2</span> <span class="o">/</span>
+</span><span class='line'><span class="s1">&#39;s#^Sent Items#Sent#&#39;</span> <span class="o">--</span><span class="n">delete2duplicates</span> <span class="o">--</span><span class="n">delete2</span> <span class="o">--</span><span class="n">minage</span> <span class="mi">5</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p></p>
+
+<p>Por ejemplo, hoy estamos a 10 y tiramos el imapsync en el destino empezará a sincronizar (borrando la data que no este en el host1) desde el día 5, con ello evitamos borrar los correos nuevos en el host2.</p>
+</div>
+	
+
+</article>
+
+	
+	<div class="share">
+		<ul>
+			<li>
+  <a href="https://twitter.com/intent/tweet?text=Notas sobre imapsync by @&url=http://mcoam.github.io/blog/2015/10/15/notas-sobre-imapsync/" title="Share Notas sobre imapsync on Twitter">
+    <img src="/images/social/twitter.png" />
+  </a>
+</li>
+
+			<li>
+  <a href="https://www.facebook.com/sharer.php?u=http://mcoam.github.io/blog/2015/10/15/notas-sobre-imapsync/" title="Share Notas sobre imapsync on Facebook">
+    <img src="/images/social/facebook.png" />
+  </a>
+</li>
+
+			<li>
+  <a href="https://plus.google.com/share?url=http://mcoam.github.io/blog/2015/10/15/notas-sobre-imapsync/" title="Share Notas sobre imapsync on Google Plus">
+    <img src="/images/social/google.png" />
+  </a>
+</li>
+
+		</ul>
+	</div>
+
+
+
+
+<section id="comment">
+    <h2 class="title">Comments</h2>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+</div>
+	<footer id="footer" class="inner">&copy; 2015
+
+    Miguel Angel Coa Morales
+
+</footer>
+	<script src="/javascripts/slash.js"></script>
+<script src="/javascripts/hyphenator.js"></script>
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'miguelcoa';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://mcoam.github.io/blog/2015/10/15/notas-sobre-imapsync/';
+        var disqus_url = 'http://mcoam.github.io/blog/2015/10/15/notas-sobre-imapsync/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-45157770-1']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+
+
+</body>
+</html>

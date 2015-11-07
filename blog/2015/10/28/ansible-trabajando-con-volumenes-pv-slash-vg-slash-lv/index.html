@@ -1,0 +1,218 @@
+
+<!DOCTYPE HTML>
+<html lang="en-GB">
+<head>
+	<meta charset="utf-8">
+	<title>Ansible: Trabajando con volumenes PV/VG/LV  | Bitácora</title>
+
+	<meta name="author" content="Miguel Angel Coa Morales">
+
+<meta name="description" content="Un blog personal"> <meta name="keywords" content="zimbra, linux, centos, devops, puppet, opensource, virtualizar, virtualización">
+
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="Bitácora" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.png" rel="shortcut icon">
+	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+</head>
+
+
+
+<body>
+	<header id="header" class="inner"><h1><a href="/">Bitácora</a></h1>
+<span class="tagline">Miguel Angel Coa Morales</span>
+<nav id="main-nav"><ul>
+	<li><a href="/about">About</a></li>
+	<li><a href="/archives">Archives</a></li>
+	<li><a href="/contact">Contact</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul>
+	<li><a href="/about">About</a></li>
+	<li><a href="/archives">Archives</a></li>
+	<li><a href="/contact">Contact</a></li>
+</ul>
+</div>
+	</div>
+</nav>
+
+
+</header>
+
+	<div id="content" class="inner"><article class="post">
+	<header>
+		<h2 class="title">Ansible: Trabajando Con Volumenes PV/VG/LV</h2>
+		<div class="meta date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-10-28T23:52:00-03:00" pubdate data-updated="true">Oct 28<span>th</span>, 2015</time></div>
+	</header>
+	<div class="entry-content"><p>Ansible cuenta con un módulos para la gestión de discos en Linux los cuales no permiten administrar nuestros volúmenes.
+En el siguiente ejemplo, se crea un volumen sobre un disco <code>/dev/sdf1</code> y será montado para los backup que realiza un servidor de correos Zimbra</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">---</span>
+</span><span class='line'><span class="o">-</span> <span class="ss">hosts</span><span class="p">:</span> <span class="n">ne_mailbox</span>
+</span><span class='line'>  <span class="ss">vars</span><span class="p">:</span>
+</span><span class='line'>        <span class="n">disk_name</span><span class="p">:</span> <span class="s2">&quot;/dev/sdf1&quot;</span>
+</span><span class='line'>        <span class="ss">filesystem</span><span class="p">:</span> <span class="s2">&quot;ext4&quot;</span>
+</span><span class='line'>        <span class="n">vg_name</span><span class="p">:</span> <span class="s2">&quot;zimbra_data&quot;</span>
+</span><span class='line'>        <span class="n">lv_size</span><span class="p">:</span> <span class="s2">&quot;100%FREE&quot;</span> <span class="c1">#toma todo el espacio libre del VG zimbra_data</span>
+</span><span class='line'>        <span class="n">lv_name</span><span class="p">:</span> <span class="s2">&quot;backup&quot;</span>
+</span><span class='line'>        <span class="ss">path</span><span class="p">:</span> <span class="s2">&quot;/opt/zimbra/backup&quot;</span>
+</span><span class='line'>        <span class="ss">user</span><span class="p">:</span> <span class="s2">&quot;zimbra&quot;</span>
+</span><span class='line'>  <span class="ss">tasks</span><span class="p">:</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="o">-</span> <span class="nb">name</span><span class="p">:</span> <span class="s2">&quot;Crear el PV sobre el disco nuevo&quot;</span>
+</span><span class='line'>          <span class="ss">command</span><span class="p">:</span> <span class="n">pvcreate</span> <span class="p"></span>
+</span><span class='line'>
+</span><span class='line'>        <span class="o">-</span> <span class="nb">name</span><span class="p">:</span> <span class="s2">&quot;Crear nuevo VG&quot;</span>
+</span><span class='line'>          <span class="ss">lvg</span><span class="p">:</span> <span class="n">vg</span><span class="o">=</span><span class="p"></span> <span class="n">pvs</span><span class="o">=</span><span class="p"></span>
+</span><span class='line'>
+</span><span class='line'>        <span class="o">-</span> <span class="nb">name</span><span class="p">:</span> <span class="s2">&quot;Crear nuevo volumen LVM&quot;</span>
+</span><span class='line'>          <span class="ss">lvol</span><span class="p">:</span> <span class="n">vg</span><span class="o">=</span><span class="p"></span> <span class="n">lv</span><span class="o">=</span><span class="p"></span> <span class="n">size</span><span class="o">=</span><span class="p"></span>
+</span><span class='line'>          <span class="ss">tags</span><span class="p">:</span> <span class="n">crea_lv</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="o">-</span> <span class="nb">name</span><span class="p">:</span> <span class="s2">&quot;Formateo de unidad LVM&quot;</span>
+</span><span class='line'>          <span class="ss">filesystem</span><span class="p">:</span> <span class="n">fstype</span><span class="o">=</span><span class="p"></span> <span class="n">dev</span><span class="o">=</span><span class="sr">/dev/</span><span class="p"></span><span class="o">/</span><span class="p"></span>
+</span><span class='line'>          <span class="ss">tags</span><span class="p">:</span> <span class="n">formatea_lv</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="o">-</span> <span class="nb">name</span><span class="p">:</span> <span class="s2">&quot;Montar disco&quot;</span>
+</span><span class='line'>          <span class="ss">mount</span><span class="p">:</span> <span class="nb">name</span><span class="o">=</span><span class="p"></span> <span class="n">src</span><span class="o">=</span><span class="sr">/dev/</span><span class="p"></span><span class="o">/</span><span class="p"></span> <span class="n">fstype</span><span class="o">=</span><span class="p"></span> <span class="n">state</span><span class="o">=</span><span class="n">mounted</span>
+</span><span class='line'>          <span class="ss">tags</span><span class="p">:</span> <span class="n">monta_lv</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="o">-</span> <span class="nb">name</span><span class="p">:</span> <span class="s2">&quot;Permisos directorio backup&quot;</span>
+</span><span class='line'>          <span class="ss">file</span><span class="p">:</span> <span class="n">path</span><span class="o">=</span><span class="p"></span> <span class="n">state</span><span class="o">=</span><span class="n">directory</span> <span class="n">mode</span><span class="o">=</span><span class="mo">0755</span> <span class="n">owner</span><span class="o">=</span><span class="p"></span> <span class="n">group</span><span class="o">=</span><span class="p"></span>
+</span><span class='line'>          <span class="ss">tags</span><span class="p">:</span> <span class="n">permisos_directorio</span>
+</span></code></pre></td></tr></table></div></figure>
+
+</div>
+	
+
+</article>
+
+	
+	<div class="share">
+		<ul>
+			<li>
+  <a href="https://twitter.com/intent/tweet?text=Ansible: Trabajando con volumenes PV/VG/LV by @&url=http://mcoam.github.io/blog/2015/10/28/ansible-trabajando-con-volumenes-pv-slash-vg-slash-lv/" title="Share Ansible: Trabajando con volumenes PV/VG/LV on Twitter">
+    <img src="/images/social/twitter.png" />
+  </a>
+</li>
+
+			<li>
+  <a href="https://www.facebook.com/sharer.php?u=http://mcoam.github.io/blog/2015/10/28/ansible-trabajando-con-volumenes-pv-slash-vg-slash-lv/" title="Share Ansible: Trabajando con volumenes PV/VG/LV on Facebook">
+    <img src="/images/social/facebook.png" />
+  </a>
+</li>
+
+			<li>
+  <a href="https://plus.google.com/share?url=http://mcoam.github.io/blog/2015/10/28/ansible-trabajando-con-volumenes-pv-slash-vg-slash-lv/" title="Share Ansible: Trabajando con volumenes PV/VG/LV on Google Plus">
+    <img src="/images/social/google.png" />
+  </a>
+</li>
+
+		</ul>
+	</div>
+
+
+
+
+<section id="comment">
+    <h2 class="title">Comments</h2>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+</div>
+	<footer id="footer" class="inner">&copy; 2015
+
+    Miguel Angel Coa Morales
+
+</footer>
+	<script src="/javascripts/slash.js"></script>
+<script src="/javascripts/hyphenator.js"></script>
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'miguelcoa';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://mcoam.github.io/blog/2015/10/28/ansible-trabajando-con-volumenes-pv-slash-vg-slash-lv/';
+        var disqus_url = 'http://mcoam.github.io/blog/2015/10/28/ansible-trabajando-con-volumenes-pv-slash-vg-slash-lv/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-45157770-1']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+
+
+</body>
+</html>

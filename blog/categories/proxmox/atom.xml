@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: proxmox, | Bitácora]]></title>
+  <link href="http://mcoam.github.io/blog/categories/proxmox/atom.xml" rel="self"/>
+  <link href="http://mcoam.github.io/"/>
+  <updated>2015-11-07T01:13:47-03:00</updated>
+  <id>http://mcoam.github.io/</id>
+  <author>
+    <name><![CDATA[Miguel Angel Coa Morales]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Migrando servidor físico a virtual en Proxmox]]></title>
+    <link href="http://mcoam.github.io/blog/2015/08/06/migrando-servidor-fisico-a-virtual-en-proxmox/"/>
+    <updated>2015-08-06T12:44:00-03:00</updated>
+    <id>http://mcoam.github.io/blog/2015/08/06/migrando-servidor-fisico-a-virtual-en-proxmox</id>
+    <content type="html"><![CDATA[
+]]></content>
+  </entry>
+  
+</feed>
