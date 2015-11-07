@@ -4,7 +4,7 @@
   <title><![CDATA[Bitácora]]></title>
   <link href="http://mcoam.github.io/atom.xml" rel="self"/>
   <link href="http://mcoam.github.io/"/>
-  <updated>2015-11-07T01:13:47-03:00</updated>
+  <updated>2015-11-07T01:15:59-03:00</updated>
   <id>http://mcoam.github.io/</id>
   <author>
     <name><![CDATA[Miguel Angel Coa Morales]]></name>
@@ -117,15 +117,6 @@ De todas formas, lo anterior se puede corregir configrando el <code>imapsyn</cod
 <p></p>
 
 <p>Por ejemplo, hoy estamos a 10 y tiramos el imapsync en el destino empezará a sincronizar (borrando la data que no este en el host1) desde el día 5, con ello evitamos borrar los correos nuevos en el host2.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Migrando servidor físico a virtual en Proxmox]]></title>
-    <link href="http://mcoam.github.io/blog/2015/08/06/migrando-servidor-fisico-a-virtual-en-proxmox/"/>
-    <updated>2015-08-06T12:44:00-03:00</updated>
-    <id>http://mcoam.github.io/blog/2015/08/06/migrando-servidor-fisico-a-virtual-en-proxmox</id>
-    <content type="html"><![CDATA[
 ]]></content>
   </entry>
   
@@ -1929,6 +1920,66 @@ En el archivo  <i>/opt/zimbra/postfix/conf/header_checks</i> adicionamos la expr
 
 
 <p>Y desde ahora, cada vez que desde el servidor zimbra salga un correo que en su asunto contenga &ldquo;MIGUELCOA&rdquo; será enviada una copia hacia la casilla mcoa\@example.com</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Migrando usuarios/password Postfix to Zimbra]]></title>
+    <link href="http://mcoam.github.io/blog/2014/01/15/migrando-usuarios-slash-password-postfix-to-zimbra/"/>
+    <updated>2014-01-15T09:58:00-03:00</updated>
+    <id>http://mcoam.github.io/blog/2014/01/15/migrando-usuarios-slash-password-postfix-to-zimbra</id>
+    <content type="html"><![CDATA[<p>La idea del siguiente script es; primero crear la cuenta con una password temporal y luego configurar la password original del usuario, ambos valores son sacados del <i>/etc/shadow</i></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="c">#!/usr/bin/python</span>
+</span><span class='line'><span class="c">##Miguel Coa M.</span>
+</span><span class='line'>
+</span><span class='line'><span class="kn">import</span> <span class="nn">csv</span>
+</span><span class='line'><span class="k">with</span> <span class="nb">open</span> <span class="p">(</span><span class="s">&#39;shadow&#39;</span><span class="p">,</span> <span class="s">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="n">reader</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">reader</span> <span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s">&#39;:&#39;</span> <span class="p">)</span>
+</span><span class='line'>        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">reader</span><span class="p">:</span>
+</span><span class='line'>
+</span><span class='line'>                <span class="n">user</span>     <span class="o">=</span> <span class="n">row</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</span><span class='line'>                <span class="n">passwd</span>   <span class="o">=</span> <span class="s">&quot;&#39;crypt{&quot;</span> <span class="o">+</span> <span class="n">row</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span><span class="s">&quot;}&#39;&quot;</span>
+</span><span class='line'>
+</span><span class='line'>                <span class="k">print</span> <span class="s">&quot;ca {}@domain.com tmpPSW&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">user</span><span class="p">)</span>
+</span><span class='line'>                <span class="k">print</span> <span class="s">&quot;ma {}@domain.com userPassword  {}  &quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">user</span><span class="p">,</span><span class="n">passwd</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Y como resultado nos arrojará por pantalla</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">ca</span> <span class="n">varaya</span><span class="nd">@domain.com</span> <span class="n">tmpPSW</span>
+</span><span class='line'><span class="n">ma</span> <span class="n">varaya</span><span class="nd">@domain.com</span> <span class="n">userPassword</span>  <span class="s">&#39;crypt{$1$6RT62jZZ$sFlv.MIII4PuKISBaap030}&#39;</span>
+</span><span class='line'><span class="n">ca</span> <span class="n">cgalaz</span><span class="nd">@domain.com</span> <span class="n">tmpPSW</span>
+</span><span class='line'><span class="n">ma</span> <span class="n">cgalaz</span><span class="nd">@domain.com</span> <span class="n">userPassword</span>  <span class="s">&#39;crypt{$1$bAEOlC0N$4t.3zCGDb.RFc0vmxd2UB0}&#39;</span>
+</span><span class='line'><span class="n">ca</span> <span class="n">ctagle</span><span class="nd">@domain.com</span> <span class="n">tmpPSW</span>
+</span><span class='line'><span class="n">ma</span> <span class="n">ctagle</span><span class="nd">@domain.com</span> <span class="n">userPassword</span>  <span class="s">&#39;crypt{$1$L7vlV7Me$orB2TCnqn.JeoVQpKsr6P0}&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>
+Valor que los podemos almacenar en un archivo y los ejecutamos pasandolo como parámetro al comando <i>zmprov</i>. Si ya tenemos creadas las cuentas podemos comentar el primer print, para que solo las modifique.</p>
 ]]></content>
   </entry>
   
