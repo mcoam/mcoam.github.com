@@ -4,7 +4,7 @@
   <title><![CDATA[Category: devops | Bitácora]]></title>
   <link href="http://mcoam.github.io/blog/categories/devops/atom.xml" rel="self"/>
   <link href="http://mcoam.github.io/"/>
-  <updated>2015-11-07T01:15:59-03:00</updated>
+  <updated>2015-11-07T11:11:45-03:00</updated>
   <id>http://mcoam.github.io/</id>
   <author>
     <name><![CDATA[Miguel Angel Coa Morales]]></name>
@@ -14,12 +14,12 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Ansible: Trabajando con volumenes PV/VG/LV]]></title>
+    <title type="html"><![CDATA[Ansible: Trabajando con volumenes lógicos PV/VG/LV en Linux]]></title>
     <link href="http://mcoam.github.io/blog/2015/10/28/ansible-trabajando-con-volumenes-pv-slash-vg-slash-lv/"/>
     <updated>2015-10-28T23:52:00-03:00</updated>
     <id>http://mcoam.github.io/blog/2015/10/28/ansible-trabajando-con-volumenes-pv-slash-vg-slash-lv</id>
     <content type="html"><![CDATA[<p>Ansible cuenta con un módulos para la gestión de discos en Linux los cuales no permiten administrar nuestros volúmenes.
-En el siguiente ejemplo, se crea un volumen sobre un disco <code>/dev/sdf1</code> y será montado para los backup que realiza un servidor de correos Zimbra</p>
+En el siguiente ejemplo, se crea un volumen sobre un disco <code>/dev/sdf1</code> y que será configurado como volumen lógico y finalmente montado para los backup que realiza un servidor de correos Zimbra.</p>
 
 <h2>```ruby</h2>
 
@@ -36,25 +36,25 @@ vars:
 tasks:</p>
 
 <pre><code>  - name: "Crear el PV sobre el disco nuevo"
-    command: pvcreate 
+    command: pvcreate \{\{ disk_name \}\}
 
   - name: "Crear nuevo VG"
-    lvg: vg= pvs=
+    lvg: vg=\{\{ vg_name \}\} pvs=\{\{ disk_name \}\}
 
   - name: "Crear nuevo volumen LVM"
-    lvol: vg= lv= size=
+    lvol: vg=\{\{ vg_name \}\} lv=\{\{ lv_name \}\} size=\{\{ lv_size \}\}
     tags: crea_lv
 
   - name: "Formateo de unidad LVM"
-    filesystem: fstype= dev=/dev//
+    filesystem: fstype=\{\{ filesystem \}\} dev=/dev/\{\{ vg_name \}\}/\{\{ lv_name \}\}
     tags: formatea_lv
 
   - name: "Montar disco"
-    mount: name= src=/dev// fstype= state=mounted
+    mount: name=\{\{ path \}\} src=/dev/\{\{ vg_name \}\}/\{\{ lv_name \}\} fstype=\{\{ filesystem \}\} state=mounted
     tags: monta_lv
 
   - name: "Permisos directorio backup"
-    file: path= state=directory mode=0755 owner= group=
+    file: path=\{\{ path \}\} state=directory mode=0755 owner=\{\{ user \}\} group=\{\{ user \}\}
     tags: permisos_directorio
 </code></pre>
 
