@@ -53,6 +53,160 @@
 	<header>
 		<h2 class="title">
 			
+			<a href="/blog/2015/10/28/ansible-trabajando-con-volumenes-pv-slash-vg-slash-lv/">
+			
+				Ansible: Trabajando Con Volumenes Lógicos PV/VG/LV en Linux</a>
+		</h2>
+		<div class="meta date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-10-28T23:52:00-03:00" pubdate data-updated="true">Oct 28<span>th</span>, 2015</time></div>
+	</header>
+	<div class="entry-content">
+		<p>Ansible cuenta con un módulos para la gestión de discos en Linux los cuales no permiten administrar nuestros volúmenes.
+En el siguiente ejemplo, se crea un volumen sobre un disco <code>/dev/sdf1</code> y que será configurado como volumen lógico y finalmente montado para los backup que realiza un servidor de correos Zimbra.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="o">---</span>
+</span><span class='line'><span class="o">-</span> <span class="nl">hosts:</span> <span class="n">ne_mailbox</span>
+</span><span class='line'>  <span class="nl">vars:</span>
+</span><span class='line'>        <span class="nl">disk_name:</span> <span class="s">&quot;/dev/sdf1&quot;</span>
+</span><span class='line'>        <span class="nl">filesystem:</span> <span class="s">&quot;ext4&quot;</span>
+</span><span class='line'>        <span class="nl">vg_name:</span> <span class="s">&quot;zimbra_data&quot;</span>
+</span><span class='line'>        <span class="nl">lv_size:</span> <span class="s">&quot;100%FREE&quot;</span> <span class="err">#</span><span class="n">ocupar</span> <span class="n">todo</span> <span class="n">el</span> <span class="n">espacio</span> <span class="n">libre</span> <span class="n">del</span> <span class="n">VG</span> <span class="n">zimbra_data</span>
+</span><span class='line'>        <span class="nl">lv_name:</span> <span class="s">&quot;backup&quot;</span>
+</span><span class='line'>        <span class="nl">path:</span> <span class="s">&quot;/opt/zimbra/backup&quot;</span>
+</span><span class='line'>        <span class="nl">user:</span> <span class="s">&quot;zimbra&quot;</span>
+</span><span class='line'>  <span class="nl">tasks:</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="o">-</span> <span class="nl">name:</span> <span class="s">&quot;Crear el PV sobre el disco nuevo&quot;</span>
+</span><span class='line'>          <span class="nl">command:</span> <span class="n">pvcreate</span> <span class="err">\</span><span class="p">{</span><span class="err">\</span><span class="p">{</span> <span class="n">disk_name</span> <span class="err">\</span><span class="p">}</span><span class="err">\</span><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="o">-</span> <span class="nl">name:</span> <span class="s">&quot;Crear nuevo VG&quot;</span>
+</span><span class='line'>          <span class="nl">lvg:</span> <span class="n">vg</span><span class="o">=</span><span class="err">\</span><span class="p">{</span><span class="err">\</span><span class="p">{</span> <span class="n">vg_name</span> <span class="err">\</span><span class="p">}</span><span class="err">\</span><span class="p">}</span> <span class="n">pvs</span><span class="o">=</span><span class="err">\</span><span class="p">{</span><span class="err">\</span><span class="p">{</span> <span class="n">disk_name</span> <span class="err">\</span><span class="p">}</span><span class="err">\</span><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="o">-</span> <span class="nl">name:</span> <span class="s">&quot;Crear nuevo volumen LVM&quot;</span>
+</span><span class='line'>          <span class="nl">lvol:</span> <span class="n">vg</span><span class="o">=</span><span class="err">\</span><span class="p">{</span><span class="err">\</span><span class="p">{</span> <span class="n">vg_name</span> <span class="err">\</span><span class="p">}</span><span class="err">\</span><span class="p">}</span> <span class="n">lv</span><span class="o">=</span><span class="err">\</span><span class="p">{</span><span class="err">\</span><span class="p">{</span> <span class="n">lv_name</span> <span class="err">\</span><span class="p">}</span><span class="err">\</span><span class="p">}</span> <span class="n">size</span><span class="o">=</span><span class="err">\</span><span class="p">{</span><span class="err">\</span><span class="p">{</span> <span class="n">lv_size</span> <span class="err">\</span><span class="p">}</span><span class="err">\</span><span class="p">}</span>
+</span><span class='line'>          <span class="nl">tags:</span> <span class="n">crea_lv</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="o">-</span> <span class="nl">name:</span> <span class="s">&quot;Formateo de unidad LVM&quot;</span>
+</span><span class='line'>          <span class="nl">filesystem:</span> <span class="n">fstype</span><span class="o">=</span><span class="err">\</span><span class="p">{</span><span class="err">\</span><span class="p">{</span> <span class="n">filesystem</span> <span class="err">\</span><span class="p">}</span><span class="err">\</span><span class="p">}</span> <span class="n">dev</span><span class="o">=/</span><span class="n">dev</span><span class="o">/</span><span class="err">\</span><span class="p">{</span><span class="err">\</span><span class="p">{</span> <span class="n">vg_name</span> <span class="err">\</span><span class="p">}</span><span class="err">\</span><span class="p">}</span><span class="o">/</span><span class="err">\</span><span class="p">{</span><span class="err">\</span><span class="p">{</span> <span class="n">lv_name</span> <span class="err">\</span><span class="p">}</span><span class="err">\</span><span class="p">}</span>
+</span><span class='line'>          <span class="nl">tags:</span> <span class="n">formatea_lv</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="o">-</span> <span class="nl">name:</span> <span class="s">&quot;Montar disco&quot;</span>
+</span><span class='line'>          <span class="nl">mount:</span> <span class="n">name</span><span class="o">=</span><span class="err">\</span><span class="p">{</span><span class="err">\</span><span class="p">{</span> <span class="n">path</span> <span class="err">\</span><span class="p">}</span><span class="err">\</span><span class="p">}</span> <span class="n">src</span><span class="o">=/</span><span class="n">dev</span><span class="o">/</span><span class="err">\</span><span class="p">{</span><span class="err">\</span><span class="p">{</span> <span class="n">vg_name</span> <span class="err">\</span><span class="p">}</span><span class="err">\</span><span class="p">}</span><span class="o">/</span><span class="err">\</span><span class="p">{</span><span class="err">\</span><span class="p">{</span> <span class="n">lv_name</span> <span class="err">\</span><span class="p">}</span><span class="err">\</span><span class="p">}</span> <span class="n">fstype</span><span class="o">=</span><span class="err">\</span><span class="p">{</span><span class="err">\</span><span class="p">{</span> <span class="n">filesystem</span> <span class="err">\</span><span class="p">}</span><span class="err">\</span><span class="p">}</span> <span class="n">state</span><span class="o">=</span><span class="n">mounted</span>
+</span><span class='line'>          <span class="nl">tags:</span> <span class="n">monta_lv</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="o">-</span> <span class="nl">name:</span> <span class="s">&quot;Permisos directorio backup&quot;</span>
+</span><span class='line'>          <span class="nl">file:</span> <span class="n">path</span><span class="o">=</span><span class="err">\</span><span class="p">{</span><span class="err">\</span><span class="p">{</span> <span class="n">path</span> <span class="err">\</span><span class="p">}</span><span class="err">\</span><span class="p">}</span> <span class="n">state</span><span class="o">=</span><span class="n">directory</span> <span class="n">mode</span><span class="o">=</span><span class="mo">0755</span> <span class="n">owner</span><span class="o">=</span><span class="err">\</span><span class="p">{</span><span class="err">\</span><span class="p">{</span> <span class="n">user</span> <span class="err">\</span><span class="p">}</span><span class="err">\</span><span class="p">}</span> <span class="n">group</span><span class="o">=</span><span class="err">\</span><span class="p">{</span><span class="err">\</span><span class="p">{</span> <span class="n">user</span> <span class="err">\</span><span class="p">}</span><span class="err">\</span><span class="p">}</span>
+</span><span class='line'>          <span class="nl">tags:</span> <span class="n">permisos_directorio</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+		
+		
+	</div>
+
+</article>
+
+
+    <article class="post">
+	<header>
+		<h2 class="title">
+			
+			<a href="/blog/2015/10/15/notas-sobre-imapsync/">
+			
+				Notas Sobre Imapsync</a>
+		</h2>
+		<div class="meta date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-10-15T23:00:00-03:00" pubdate data-updated="true">Oct 15<span>th</span>, 2015</time></div>
+	</header>
+	<div class="entry-content">
+		<p>En el caso de migrar la data de correos vía <code>imapsync</code> es importante tener en consideración (si se va a tener corriendo varios días el comando) utilizar la opción <code>--delete2</code> para que todo correo copiado al <i>(hosts2)</i> y que no tenga copia en el origen <i>(host1)</i> sea borrado, de lo contrario el usuario cuando se conecte al nuevo servidor tendrá correos que ya había eliminado y el buzón pesará mas de lo normal.
+De todas formas, lo anterior se puede corregir configrando el <code>imapsyn</code> con el valor <code>&mdash;minage</code> que sincroniza el buzón desde <i>X</i> días para atrás.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">imapsync</span> <span class="o">--</span><span class="n">buffersize</span> <span class="mi">8192000</span> <span class="o">--</span><span class="n">nosyncacls</span> <span class="o">--</span><span class="n">subscribe</span> <span class="o">--</span><span class="n">syncinternaldates</span> <span class="o">--</span><span class="n">authmech1</span> <span class="no">PLAIN</span> <span class="o">/</span>
+</span><span class='line'><span class="o">--</span><span class="n">host1</span> <span class="mi">192</span><span class="o">.</span><span class="mi">168</span><span class="o">.</span><span class="mi">10</span><span class="o">.</span><span class="mi">10</span> <span class="o">--</span><span class="n">user1</span> <span class="n">foo</span><span class="vi">@origen</span><span class="o">.</span><span class="n">dev</span> <span class="o">--</span><span class="n">password1</span> <span class="s1">&#39;foo&#39;</span> <span class="o">--</span><span class="n">host2</span> <span class="mi">192</span><span class="o">.</span><span class="mi">168</span><span class="o">.</span><span class="mi">10</span><span class="o">.</span><span class="mi">11</span> <span class="o">/</span>
+</span><span class='line'><span class="o">--</span><span class="n">user2</span> <span class="n">foo</span><span class="vi">@destino</span><span class="o">.</span><span class="n">dev</span> <span class="o">--</span><span class="n">password2</span> <span class="s1">&#39;foo&#39;</span> <span class="o">--</span><span class="n">authmech2</span> <span class="no">PLAIN</span> <span class="o">--</span><span class="n">nofoldersizes</span> <span class="o">--</span><span class="n">skipsize</span> <span class="o">--</span><span class="n">fast</span> <span class="o">/</span>
+</span><span class='line'><span class="o">--</span><span class="n">exclude</span> <span class="s1">&#39;(?i)\b(Junk|Spam|Trash|IMIP|Drafts)\b&#39;</span> <span class="o">--</span><span class="n">exclude</span> <span class="s1">&#39;INBOX_(.*)&#39;</span> <span class="o">--</span><span class="n">exclude</span> <span class="s1">&#39;Trash_(.*)&#39;</span><span class="o">/</span>
+</span><span class='line'> <span class="o">--</span><span class="n">exclude</span> <span class="s1">&#39;Drafts_(.*)&#39;</span> <span class="o">--</span><span class="n">exclude</span> <span class="s1">&#39;Spam_(.*)&#39;</span> <span class="o">--</span><span class="n">exclude</span> <span class="s1">&#39;Sent Items_(.*)&#39;</span> <span class="o">--</span><span class="n">regextrans2</span> <span class="o">/</span>
+</span><span class='line'><span class="s1">&#39;s#^Sent Items#Sent#&#39;</span> <span class="o">--</span><span class="n">delete2duplicates</span> <span class="o">--</span><span class="n">delete2</span> <span class="o">--</span><span class="n">minage</span> <span class="mi">5</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p></p>
+
+<p>Por ejemplo, hoy estamos a 10 y tiramos el imapsync en el destino empezará a sincronizar (borrando la data que no este en el host1) desde el día 5, con ello evitamos borrar los correos nuevos en el host2.</p>
+
+		
+		
+	</div>
+
+</article>
+
+
+    <article class="post">
+	<header>
+		<h2 class="title">
+			
 			<a href="/blog/2015/06/24/seleccionar-y-comentar-texto-con-vim/">
 			
 				Seleccionar Y Comentar Texto Con VIM</a>
@@ -1011,201 +1165,6 @@ Configuramos el hostname en la tabla hosts <code>/etc/hosts</code></p>
 
 
 <p>Para mas detalles del RSTA <a href="https://wiki.samba.org/index.php/Installing_RSAT_on_Windows_for_AD_Management">acá</a></p>
-
-		
-		
-	</div>
-
-</article>
-
-
-    <article class="post">
-	<header>
-		<h2 class="title">
-			
-			<a href="/blog/2014/08/02/creando-un-box-para-vagrant/">
-			
-				Creando Un Box Para Vagrant</a>
-		</h2>
-		<div class="meta date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-08-02T23:50:00-04:00" pubdate data-updated="true">Aug 2<span>nd</span>, 2014</time></div>
-	</header>
-	<div class="entry-content">
-		<p>En mi caso la máquina virtual no fue creada desde cero, ya que bajé un Box de Vagrant y lo customicé por lo que me salté los pasos previos de la creación del box <a href="https://docs.vagrantup.com/v2/boxes/base.html.">https://docs.vagrantup.com/v2/boxes/base.html.</a> Lo realizado para la creación del box fue lo siguiente:</p>
-
-<p><li> Optimización de tamaño de la VM </li></p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="err">$</span> <span class="n">sudo</span> <span class="n">dd</span> <span class="k">if</span><span class="o">=</span><span class="sr">/dev/</span><span class="n">zero</span> <span class="n">of</span><span class="o">=</span><span class="sr">/EMPTY bs=1M</span>
-</span><span class='line'><span class="sr">$ sudo rm -f /</span><span class="no">EMPTY</span>
-</span><span class='line'><span class="err">$</span> <span class="n">sudo</span> <span class="n">shutdown</span> <span class="o">-</span><span class="n">h</span> <span class="n">now</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p><li> Creación del Box </li></p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="ss">Miguel</span><span class="p">:</span><span class="no">PuppetMaster</span><span class="err">$</span> <span class="n">cd</span> <span class="o">~</span><span class="sr">/VirtualBox\ VMs/</span> <span class="c1"># directorio donde quedan alojadas las vms</span>
-</span><span class='line'><span class="ss">Miguel</span><span class="p">:</span><span class="no">VirtualBox</span> <span class="no">VMs</span><span class="err">$</span> <span class="n">vagrant</span> <span class="n">package</span> <span class="o">--</span><span class="n">base</span> <span class="n">puppetserver</span> <span class="c1">##puppetserver es el nombre de la vm en virtualbox</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p><li> Testing del Box</li>
-Agreagamos nuestro Box a nuestro Vagrant</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="ss">Miguel</span><span class="p">:</span><span class="no">PuppetMaster</span><span class="err">$</span> <span class="n">vagrant</span> <span class="n">box</span> <span class="n">add</span> <span class="no">Centos6PuppetServer</span> <span class="o">~</span><span class="sr">/VirtualBox\ VMs/</span><span class="n">package</span><span class="o">.</span><span class="n">box</span>
-</span><span class='line'><span class="o">==&gt;</span> <span class="ss">box</span><span class="p">:</span> <span class="no">Adding</span> <span class="n">box</span> <span class="s1">&#39;Centos6PuppetServer&#39;</span> <span class="p">(</span><span class="n">v0</span><span class="p">)</span> <span class="k">for</span> <span class="ss">provider</span><span class="p">:</span>
-</span><span class='line'>    <span class="ss">box</span><span class="p">:</span> <span class="ss">Downloading</span><span class="p">:</span> <span class="ss">file</span><span class="p">:</span><span class="sr">//</span><span class="o">/</span><span class="no">Users</span><span class="o">/</span><span class="no">Miguel</span><span class="o">/</span><span class="no">VirtualBox</span><span class="o">%</span><span class="mi">20</span><span class="no">VMs</span><span class="o">/</span><span class="n">package</span><span class="o">.</span><span class="n">box</span>
-</span><span class='line'><span class="o">==&gt;</span> <span class="ss">box</span><span class="p">:</span> <span class="no">Successfully</span> <span class="n">added</span> <span class="n">box</span> <span class="s1">&#39;Centos6PuppetServer&#39;</span> <span class="p">(</span><span class="n">v0</span><span class="p">)</span> <span class="k">for</span> <span class="s1">&#39;virtualbox&#39;</span><span class="o">!</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Verificamos</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="ss">Miguel</span><span class="p">:</span><span class="no">PuppetMaster</span><span class="err">$</span> <span class="n">vagrant</span> <span class="n">box</span> <span class="n">list</span>
-</span><span class='line'><span class="no">Centos6PuppetServer</span> <span class="p">(</span><span class="n">virtualbox</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="c1"># nuestro box</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Nos dirigimos a nuestro directorio de trabajo de Vagrant y crearemos un nuevo proyecto <i>testing</i></p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="ss">Miguel</span><span class="p">:</span><span class="no">VagrantVM</span><span class="err">$</span> <span class="n">mkdir</span> <span class="n">testing</span>
-</span><span class='line'><span class="ss">Miguel</span><span class="p">:</span><span class="no">VagrantVM</span><span class="err">$</span> <span class="n">cd</span> <span class="n">testing</span><span class="o">/</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Iniciamos una nueva VM</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="ss">Miguel</span><span class="p">:</span><span class="n">testing</span><span class="err">$</span> <span class="n">vagrant</span> <span class="n">init</span> <span class="no">Centos6PuppetServer</span> <span class="c1">##la iniciamos</span>
-</span><span class='line'><span class="ss">Miguel</span><span class="p">:</span><span class="n">testing</span><span class="err">$</span> <span class="n">vagrant</span> <span class="n">up</span> <span class="c1">#la arrancamos</span>
-</span><span class='line'><span class="ss">Miguel</span><span class="p">:</span><span class="n">testing</span><span class="err">$</span> <span class="n">vagrant</span> <span class="n">ssh</span> <span class="c1">#nos conectamos</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-		
-		
-	</div>
-
-</article>
-
-
-    <article class="post">
-	<header>
-		<h2 class="title">
-			
-			<a href="/blog/2014/07/30/red-publica-para-maquinas-virtuales-en-vagrant/">
-			
-				Red Pública Para Máquinas Virtuales en Vagrant</a>
-		</h2>
-		<div class="meta date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-07-30T15:05:00-04:00" pubdate data-updated="true">Jul 30<span>th</span>, 2014</time></div>
-	</header>
-	<div class="entry-content">
-		<p>Por defecto las máquinas virtuales creadas en Vagrant quedan configuradas con una ip &ldquo;privada&rdquo; y el acceso a la VM es por medio de NAT. Si deseamos configurar una ip &ldquo;publica&rdquo; en nuestra máquina virtual tenemos que editar nuestro <code>Vagranfile</code> y adicionar el parámetro <code>vm.network</code> dentro de nuestro apartado <code>config.vm.define</code>.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># -*- mode: ruby -*-</span>
-</span><span class='line'><span class="c1"># vi: set ft=ruby :</span>
-</span><span class='line'>
-</span><span class='line'><span class="no">VAGRANTFILE_API_VERSION</span> <span class="o">=</span> <span class="s2">&quot;2&quot;</span>
-</span><span class='line'>
-</span><span class='line'><span class="no">Vagrant</span><span class="o">.</span><span class="n">configure</span><span class="p">(</span><span class="no">VAGRANTFILE_API_VERSION</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">define</span> <span class="ss">:puppet</span> <span class="k">do</span> <span class="o">|</span><span class="n">puppet_config</span><span class="o">|</span>
-</span><span class='line'>     <span class="n">puppet_config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">box</span> <span class="o">=</span> <span class="s2">&quot;Centos&quot;</span>
-</span><span class='line'>     <span class="n">puppet_config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">hostname</span>  <span class="o">=</span> <span class="s2">&quot;puppetmaster.example.com&quot;</span>
-</span><span class='line'>     <span class="n">puppet_config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">network</span> <span class="ss">:public_network</span><span class="p">,</span>  <span class="ss">bridge</span><span class="p">:</span> <span class="s1">&#39;en1: Wi-Fi (AirPort)&#39;</span><span class="p">,</span> <span class="ss">ip</span><span class="p">:</span> <span class="s2">&quot;192.168.1.36&quot;</span>
-</span><span class='line'>
-</span><span class='line'>   <span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">provider</span> <span class="s2">&quot;virtualbox&quot;</span> <span class="k">do</span> <span class="o">|</span><span class="n">vboxpuppet</span><span class="o">|</span>
-</span><span class='line'>        <span class="n">vboxpuppet</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;puppetmaster&quot;</span>
-</span><span class='line'>    <span class="k">end</span> <span class="c1">##cierra config.vm.provider</span>
-</span><span class='line'>  <span class="k">end</span> <span class="c1">##cierra config.vm.define</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">end</span> <span class="c1">##cierra file</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Y si nos conectamos</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="ss">Miguel</span><span class="p">:</span><span class="no">Puppet</span><span class="err">$</span> <span class="n">vagrant</span> <span class="n">ssh</span>
-</span><span class='line'><span class="o">[</span><span class="n">vagrant</span><span class="vi">@puppetmaster</span> <span class="o">~]</span><span class="err">$</span> <span class="n">ifconfig</span>
-</span><span class='line'><span class="n">eth0</span>      <span class="no">Link</span> <span class="ss">encap</span><span class="p">:</span><span class="no">Ethernet</span>  <span class="no">HWaddr</span> <span class="mi">08</span><span class="p">:</span><span class="mo">00</span><span class="p">:</span><span class="mi">27</span><span class="p">:</span><span class="mi">97</span><span class="p">:</span><span class="mi">35</span><span class="ss">:D8</span>
-</span><span class='line'>          <span class="n">inet</span> <span class="ss">addr</span><span class="p">:</span><span class="mi">192</span><span class="o">.</span><span class="mi">168</span><span class="o">.</span><span class="mi">1</span><span class="o">.</span><span class="mi">36</span>  <span class="ss">Bcast</span><span class="p">:</span><span class="mi">192</span><span class="o">.</span><span class="mi">168</span><span class="o">.</span><span class="mi">1</span><span class="o">.</span><span class="mi">255</span>  <span class="ss">Mask</span><span class="p">:</span><span class="mi">255</span><span class="o">.</span><span class="mi">255</span><span class="o">.</span><span class="mi">255</span><span class="o">.</span><span class="mi">0</span>
-</span><span class='line'>          <span class="n">inet6</span> <span class="ss">addr</span><span class="p">:</span> <span class="ss">fe80</span><span class="p">:</span><span class="ss">:a00</span><span class="p">:</span><span class="mi">27</span><span class="ss">ff</span><span class="p">:</span><span class="ss">fe97</span><span class="p">:</span><span class="mi">35</span><span class="n">d8</span><span class="o">/</span><span class="mi">64</span> <span class="ss">Scope</span><span class="p">:</span><span class="no">Link</span>
-</span><span class='line'>          <span class="no">UP</span> <span class="no">BROADCAST</span> <span class="no">RUNNING</span> <span class="no">MULTICAST</span>  <span class="ss">MTU</span><span class="p">:</span><span class="mi">1500</span>  <span class="ss">Metric</span><span class="p">:</span><span class="mi">1</span>
-</span><span class='line'>          <span class="no">RX</span> <span class="ss">packets</span><span class="p">:</span><span class="mi">36</span> <span class="ss">errors</span><span class="p">:</span><span class="mi">0</span> <span class="ss">dropped</span><span class="p">:</span><span class="mi">0</span> <span class="ss">overruns</span><span class="p">:</span><span class="mi">0</span> <span class="ss">frame</span><span class="p">:</span><span class="mi">0</span>
-</span><span class='line'>          <span class="no">TX</span> <span class="ss">packets</span><span class="p">:</span><span class="mi">15</span> <span class="ss">errors</span><span class="p">:</span><span class="mi">0</span> <span class="ss">dropped</span><span class="p">:</span><span class="mi">0</span> <span class="ss">overruns</span><span class="p">:</span><span class="mi">0</span> <span class="ss">carrier</span><span class="p">:</span><span class="mi">0</span>
-</span><span class='line'>          <span class="ss">collisions</span><span class="p">:</span><span class="mi">0</span> <span class="ss">txqueuelen</span><span class="p">:</span><span class="mi">1000</span>
-</span><span class='line'>          <span class="no">RX</span> <span class="ss">bytes</span><span class="p">:</span><span class="mi">5256</span> <span class="p">(</span><span class="mi">5</span><span class="o">.</span><span class="mi">1</span> <span class="no">KiB</span><span class="p">)</span>  <span class="no">TX</span> <span class="ss">bytes</span><span class="p">:</span><span class="mi">998</span> <span class="p">(</span><span class="mi">998</span><span class="o">.</span><span class="mi">0</span> <span class="n">b</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Ref: <a href="https://docs.vagrantup.com/v2/networking/public_network.html">https://docs.vagrantup.com/v2/networking/public_network.html</a></p>
 
 		
 		

@@ -4,13 +4,121 @@
   <title><![CDATA[Bitácora]]></title>
   <link href="http://mcoam.github.io/atom.xml" rel="self"/>
   <link href="http://mcoam.github.io/"/>
-  <updated>2015-06-24T16:19:59-03:00</updated>
+  <updated>2015-11-07T11:25:53-03:00</updated>
   <id>http://mcoam.github.io/</id>
   <author>
     <name><![CDATA[Miguel Angel Coa Morales]]></name>
     
   </author>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Ansible: Trabajando con volumenes lógicos PV/VG/LV en Linux]]></title>
+    <link href="http://mcoam.github.io/blog/2015/10/28/ansible-trabajando-con-volumenes-pv-slash-vg-slash-lv/"/>
+    <updated>2015-10-28T23:52:00-03:00</updated>
+    <id>http://mcoam.github.io/blog/2015/10/28/ansible-trabajando-con-volumenes-pv-slash-vg-slash-lv</id>
+    <content type="html"><![CDATA[<p>Ansible cuenta con un módulos para la gestión de discos en Linux los cuales no permiten administrar nuestros volúmenes.
+En el siguiente ejemplo, se crea un volumen sobre un disco <code>/dev/sdf1</code> y que será configurado como volumen lógico y finalmente montado para los backup que realiza un servidor de correos Zimbra.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="o">---</span>
+</span><span class='line'><span class="o">-</span> <span class="nl">hosts:</span> <span class="n">ne_mailbox</span>
+</span><span class='line'>  <span class="nl">vars:</span>
+</span><span class='line'>        <span class="nl">disk_name:</span> <span class="s">&quot;/dev/sdf1&quot;</span>
+</span><span class='line'>        <span class="nl">filesystem:</span> <span class="s">&quot;ext4&quot;</span>
+</span><span class='line'>        <span class="nl">vg_name:</span> <span class="s">&quot;zimbra_data&quot;</span>
+</span><span class='line'>        <span class="nl">lv_size:</span> <span class="s">&quot;100%FREE&quot;</span> <span class="err">#</span><span class="n">ocupar</span> <span class="n">todo</span> <span class="n">el</span> <span class="n">espacio</span> <span class="n">libre</span> <span class="n">del</span> <span class="n">VG</span> <span class="n">zimbra_data</span>
+</span><span class='line'>        <span class="nl">lv_name:</span> <span class="s">&quot;backup&quot;</span>
+</span><span class='line'>        <span class="nl">path:</span> <span class="s">&quot;/opt/zimbra/backup&quot;</span>
+</span><span class='line'>        <span class="nl">user:</span> <span class="s">&quot;zimbra&quot;</span>
+</span><span class='line'>  <span class="nl">tasks:</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="o">-</span> <span class="nl">name:</span> <span class="s">&quot;Crear el PV sobre el disco nuevo&quot;</span>
+</span><span class='line'>          <span class="nl">command:</span> <span class="n">pvcreate</span> <span class="err">\</span><span class="p">{</span><span class="err">\</span><span class="p">{</span> <span class="n">disk_name</span> <span class="err">\</span><span class="p">}</span><span class="err">\</span><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="o">-</span> <span class="nl">name:</span> <span class="s">&quot;Crear nuevo VG&quot;</span>
+</span><span class='line'>          <span class="nl">lvg:</span> <span class="n">vg</span><span class="o">=</span><span class="err">\</span><span class="p">{</span><span class="err">\</span><span class="p">{</span> <span class="n">vg_name</span> <span class="err">\</span><span class="p">}</span><span class="err">\</span><span class="p">}</span> <span class="n">pvs</span><span class="o">=</span><span class="err">\</span><span class="p">{</span><span class="err">\</span><span class="p">{</span> <span class="n">disk_name</span> <span class="err">\</span><span class="p">}</span><span class="err">\</span><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="o">-</span> <span class="nl">name:</span> <span class="s">&quot;Crear nuevo volumen LVM&quot;</span>
+</span><span class='line'>          <span class="nl">lvol:</span> <span class="n">vg</span><span class="o">=</span><span class="err">\</span><span class="p">{</span><span class="err">\</span><span class="p">{</span> <span class="n">vg_name</span> <span class="err">\</span><span class="p">}</span><span class="err">\</span><span class="p">}</span> <span class="n">lv</span><span class="o">=</span><span class="err">\</span><span class="p">{</span><span class="err">\</span><span class="p">{</span> <span class="n">lv_name</span> <span class="err">\</span><span class="p">}</span><span class="err">\</span><span class="p">}</span> <span class="n">size</span><span class="o">=</span><span class="err">\</span><span class="p">{</span><span class="err">\</span><span class="p">{</span> <span class="n">lv_size</span> <span class="err">\</span><span class="p">}</span><span class="err">\</span><span class="p">}</span>
+</span><span class='line'>          <span class="nl">tags:</span> <span class="n">crea_lv</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="o">-</span> <span class="nl">name:</span> <span class="s">&quot;Formateo de unidad LVM&quot;</span>
+</span><span class='line'>          <span class="nl">filesystem:</span> <span class="n">fstype</span><span class="o">=</span><span class="err">\</span><span class="p">{</span><span class="err">\</span><span class="p">{</span> <span class="n">filesystem</span> <span class="err">\</span><span class="p">}</span><span class="err">\</span><span class="p">}</span> <span class="n">dev</span><span class="o">=/</span><span class="n">dev</span><span class="o">/</span><span class="err">\</span><span class="p">{</span><span class="err">\</span><span class="p">{</span> <span class="n">vg_name</span> <span class="err">\</span><span class="p">}</span><span class="err">\</span><span class="p">}</span><span class="o">/</span><span class="err">\</span><span class="p">{</span><span class="err">\</span><span class="p">{</span> <span class="n">lv_name</span> <span class="err">\</span><span class="p">}</span><span class="err">\</span><span class="p">}</span>
+</span><span class='line'>          <span class="nl">tags:</span> <span class="n">formatea_lv</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="o">-</span> <span class="nl">name:</span> <span class="s">&quot;Montar disco&quot;</span>
+</span><span class='line'>          <span class="nl">mount:</span> <span class="n">name</span><span class="o">=</span><span class="err">\</span><span class="p">{</span><span class="err">\</span><span class="p">{</span> <span class="n">path</span> <span class="err">\</span><span class="p">}</span><span class="err">\</span><span class="p">}</span> <span class="n">src</span><span class="o">=/</span><span class="n">dev</span><span class="o">/</span><span class="err">\</span><span class="p">{</span><span class="err">\</span><span class="p">{</span> <span class="n">vg_name</span> <span class="err">\</span><span class="p">}</span><span class="err">\</span><span class="p">}</span><span class="o">/</span><span class="err">\</span><span class="p">{</span><span class="err">\</span><span class="p">{</span> <span class="n">lv_name</span> <span class="err">\</span><span class="p">}</span><span class="err">\</span><span class="p">}</span> <span class="n">fstype</span><span class="o">=</span><span class="err">\</span><span class="p">{</span><span class="err">\</span><span class="p">{</span> <span class="n">filesystem</span> <span class="err">\</span><span class="p">}</span><span class="err">\</span><span class="p">}</span> <span class="n">state</span><span class="o">=</span><span class="n">mounted</span>
+</span><span class='line'>          <span class="nl">tags:</span> <span class="n">monta_lv</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="o">-</span> <span class="nl">name:</span> <span class="s">&quot;Permisos directorio backup&quot;</span>
+</span><span class='line'>          <span class="nl">file:</span> <span class="n">path</span><span class="o">=</span><span class="err">\</span><span class="p">{</span><span class="err">\</span><span class="p">{</span> <span class="n">path</span> <span class="err">\</span><span class="p">}</span><span class="err">\</span><span class="p">}</span> <span class="n">state</span><span class="o">=</span><span class="n">directory</span> <span class="n">mode</span><span class="o">=</span><span class="mo">0755</span> <span class="n">owner</span><span class="o">=</span><span class="err">\</span><span class="p">{</span><span class="err">\</span><span class="p">{</span> <span class="n">user</span> <span class="err">\</span><span class="p">}</span><span class="err">\</span><span class="p">}</span> <span class="n">group</span><span class="o">=</span><span class="err">\</span><span class="p">{</span><span class="err">\</span><span class="p">{</span> <span class="n">user</span> <span class="err">\</span><span class="p">}</span><span class="err">\</span><span class="p">}</span>
+</span><span class='line'>          <span class="nl">tags:</span> <span class="n">permisos_directorio</span>
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Notas sobre imapsync]]></title>
+    <link href="http://mcoam.github.io/blog/2015/10/15/notas-sobre-imapsync/"/>
+    <updated>2015-10-15T23:00:00-03:00</updated>
+    <id>http://mcoam.github.io/blog/2015/10/15/notas-sobre-imapsync</id>
+    <content type="html"><![CDATA[<p>En el caso de migrar la data de correos vía <code>imapsync</code> es importante tener en consideración (si se va a tener corriendo varios días el comando) utilizar la opción <code>--delete2</code> para que todo correo copiado al <i>(hosts2)</i> y que no tenga copia en el origen <i>(host1)</i> sea borrado, de lo contrario el usuario cuando se conecte al nuevo servidor tendrá correos que ya había eliminado y el buzón pesará mas de lo normal.
+De todas formas, lo anterior se puede corregir configrando el <code>imapsyn</code> con el valor <code>&mdash;minage</code> que sincroniza el buzón desde <i>X</i> días para atrás.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">imapsync</span> <span class="o">--</span><span class="n">buffersize</span> <span class="mi">8192000</span> <span class="o">--</span><span class="n">nosyncacls</span> <span class="o">--</span><span class="n">subscribe</span> <span class="o">--</span><span class="n">syncinternaldates</span> <span class="o">--</span><span class="n">authmech1</span> <span class="no">PLAIN</span> <span class="o">/</span>
+</span><span class='line'><span class="o">--</span><span class="n">host1</span> <span class="mi">192</span><span class="o">.</span><span class="mi">168</span><span class="o">.</span><span class="mi">10</span><span class="o">.</span><span class="mi">10</span> <span class="o">--</span><span class="n">user1</span> <span class="n">foo</span><span class="vi">@origen</span><span class="o">.</span><span class="n">dev</span> <span class="o">--</span><span class="n">password1</span> <span class="s1">&#39;foo&#39;</span> <span class="o">--</span><span class="n">host2</span> <span class="mi">192</span><span class="o">.</span><span class="mi">168</span><span class="o">.</span><span class="mi">10</span><span class="o">.</span><span class="mi">11</span> <span class="o">/</span>
+</span><span class='line'><span class="o">--</span><span class="n">user2</span> <span class="n">foo</span><span class="vi">@destino</span><span class="o">.</span><span class="n">dev</span> <span class="o">--</span><span class="n">password2</span> <span class="s1">&#39;foo&#39;</span> <span class="o">--</span><span class="n">authmech2</span> <span class="no">PLAIN</span> <span class="o">--</span><span class="n">nofoldersizes</span> <span class="o">--</span><span class="n">skipsize</span> <span class="o">--</span><span class="n">fast</span> <span class="o">/</span>
+</span><span class='line'><span class="o">--</span><span class="n">exclude</span> <span class="s1">&#39;(?i)\b(Junk|Spam|Trash|IMIP|Drafts)\b&#39;</span> <span class="o">--</span><span class="n">exclude</span> <span class="s1">&#39;INBOX_(.*)&#39;</span> <span class="o">--</span><span class="n">exclude</span> <span class="s1">&#39;Trash_(.*)&#39;</span><span class="o">/</span>
+</span><span class='line'> <span class="o">--</span><span class="n">exclude</span> <span class="s1">&#39;Drafts_(.*)&#39;</span> <span class="o">--</span><span class="n">exclude</span> <span class="s1">&#39;Spam_(.*)&#39;</span> <span class="o">--</span><span class="n">exclude</span> <span class="s1">&#39;Sent Items_(.*)&#39;</span> <span class="o">--</span><span class="n">regextrans2</span> <span class="o">/</span>
+</span><span class='line'><span class="s1">&#39;s#^Sent Items#Sent#&#39;</span> <span class="o">--</span><span class="n">delete2duplicates</span> <span class="o">--</span><span class="n">delete2</span> <span class="o">--</span><span class="n">minage</span> <span class="mi">5</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p></p>
+
+<p>Por ejemplo, hoy estamos a 10 y tiramos el imapsync en el destino empezará a sincronizar (borrando la data que no este en el host1) desde el día 5, con ello evitamos borrar los correos nuevos en el host2.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Seleccionar y comentar texto con VIM]]></title>
@@ -1872,223 +1980,6 @@ En el archivo  <i>/opt/zimbra/postfix/conf/header_checks</i> adicionamos la expr
 
 <p>
 Valor que los podemos almacenar en un archivo y los ejecutamos pasandolo como parámetro al comando <i>zmprov</i>. Si ya tenemos creadas las cuentas podemos comentar el primer print, para que solo las modifique.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Creando cuentas Zimbra desde un CSV]]></title>
-    <link href="http://mcoam.github.io/blog/2014/01/14/creando-cuentas-zimbra-desde-un-csv/"/>
-    <updated>2014-01-14T17:38:00-03:00</updated>
-    <id>http://mcoam.github.io/blog/2014/01/14/creando-cuentas-zimbra-desde-un-csv</id>
-    <content type="html"><![CDATA[<p>El siguiente script nos permite crear las cuentas en Zimbra desde un CSV y automatizar el proceso. El CSV en donde tenemos las cuentas, tiene el siguiente formato:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">cponce</span><span class="err">@</span><span class="n">example</span><span class="p">.</span><span class="n">com</span><span class="p">;</span><span class="n">Claudia</span><span class="p">;</span><span class="n">Ponce</span><span class="p">;</span><span class="n">TMPpasswd</span>
-</span><span class='line'><span class="n">cquintana</span><span class="err">@</span><span class="n">example</span><span class="p">.</span><span class="n">com</span><span class="p">;</span><span class="n">Cristofer</span><span class="p">;</span><span class="n">Quintana</span><span class="p">;</span><span class="n">TMPpasswd</span>
-</span><span class='line'><span class="n">ctello</span><span class="err">@</span><span class="n">example</span><span class="p">.</span><span class="n">com</span><span class="p">;</span><span class="n">Cristian</span><span class="p">;</span><span class="n">Tello</span><span class="p">;</span><span class="n">TMPpasswd</span>
-</span><span class='line'><span class="n">eperalta</span><span class="err">@</span><span class="n">example</span><span class="p">.</span><span class="n">com</span><span class="p">;</span><span class="n">Edgar</span><span class="p">;</span><span class="n">Peralta</span><span class="p">;</span><span class="n">TMPpasswd</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Y el script</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="cp">#!/usr/bin/python</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">import</span> <span class="n">csv</span>
-</span><span class='line'><span class="n">with</span> <span class="n">open</span> <span class="p">(</span><span class="err">&#39;</span><span class="n">Europarts</span><span class="p">.</span><span class="n">csv</span><span class="err">&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">rb</span><span class="err">&#39;</span><span class="p">)</span> <span class="n">as</span> <span class="nl">f:</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="n">reader</span> <span class="o">=</span> <span class="n">csv</span><span class="p">.</span><span class="n">reader</span> <span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="sc">&#39;;&#39;</span> <span class="p">)</span> <span class="err">#</span><span class="n">delimiter</span> <span class="n">tabulador</span> <span class="err">\</span><span class="n">t</span>
-</span><span class='line'>        <span class="k">for</span> <span class="n">row</span> <span class="k">in</span> <span class="nl">reader:</span>
-</span><span class='line'>
-</span><span class='line'>                <span class="n">mail</span>     <span class="o">=</span> <span class="n">row</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-</span><span class='line'>                <span class="n">name</span>     <span class="o">=</span> <span class="n">row</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-</span><span class='line'>                <span class="n">lastname</span> <span class="o">=</span> <span class="n">row</span> <span class="p">[</span><span class="mi">2</span><span class="p">]</span>
-</span><span class='line'>                <span class="n">name2</span>    <span class="o">=</span> <span class="n">row</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="sc">&#39; &#39;</span> <span class="o">+</span> <span class="n">row</span> <span class="p">[</span><span class="mi">2</span><span class="p">]</span>
-</span><span class='line'>      <span class="n">passwd</span>    <span class="o">=</span> <span class="n">row</span> <span class="p">[</span><span class="mi">3</span><span class="p">]</span>
-</span><span class='line'>
-</span><span class='line'>      <span class="n">print</span> <span class="s">&quot;ca {0} &#39;{1}&#39; displayName &#39;{2}&#39; sn &#39;{3}&#39; cn &#39;{4}&#39;&quot;</span><span class="p">.</span><span class="n">format</span><span class="p">(</span><span class="n">mail</span><span class="p">,</span><span class="n">passwd</span><span class="p">,</span><span class="n">name2</span><span class="p">.</span><span class="n">title</span><span class="p">(),</span><span class="n">lastname</span><span class="p">.</span><span class="n">title</span><span class="p">(),</span><span class="n">name2</span><span class="p">.</span><span class="n">title</span><span class="p">())</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Lo anterior, imprimerá por pantalla lo siguiente:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">ca</span> <span class="n">cponce</span><span class="err">@</span><span class="n">example</span><span class="p">.</span><span class="n">com</span> <span class="err">&#39;</span><span class="n">TMPpasswd</span><span class="err">&#39;</span> <span class="n">displayName</span> <span class="err">&#39;</span><span class="n">Claudia</span> <span class="n">Ponce</span><span class="err">&#39;</span> <span class="n">sn</span> <span class="err">&#39;</span><span class="n">Ponce</span><span class="err">&#39;</span> <span class="n">cn</span> <span class="err">&#39;</span><span class="n">Claudia</span> <span class="n">Ponce</span><span class="err">&#39;</span>
-</span><span class='line'><span class="n">ca</span> <span class="n">cquintana</span><span class="err">@</span><span class="n">example</span><span class="p">.</span><span class="n">com</span> <span class="err">&#39;</span><span class="n">TMPpasswd</span><span class="err">&#39;</span> <span class="n">displayName</span> <span class="err">&#39;</span><span class="n">Cristofer</span> <span class="n">Quintana</span><span class="err">&#39;</span> <span class="n">sn</span> <span class="err">&#39;</span><span class="n">Quintana</span><span class="err">&#39;</span> <span class="n">cn</span> <span class="err">&#39;</span><span class="n">Cristofer</span> <span class="n">Quintana</span><span class="err">&#39;</span>
-</span><span class='line'><span class="n">ca</span> <span class="n">ctello</span><span class="err">@</span><span class="n">example</span><span class="p">.</span><span class="n">com</span> <span class="err">&#39;</span><span class="n">TMPpasswd</span><span class="err">&#39;</span> <span class="n">displayName</span> <span class="err">&#39;</span><span class="n">Cristian</span> <span class="n">Tello</span><span class="err">&#39;</span> <span class="n">sn</span> <span class="err">&#39;</span><span class="n">Tello</span><span class="err">&#39;</span> <span class="n">cn</span> <span class="err">&#39;</span><span class="n">Cristian</span> <span class="n">Tello</span><span class="err">&#39;</span>
-</span><span class='line'><span class="n">ca</span> <span class="n">eperalta</span><span class="err">@</span><span class="n">example</span><span class="p">.</span><span class="n">com</span> <span class="err">&#39;</span><span class="n">TMPpasswd</span><span class="err">&#39;</span> <span class="n">displayName</span> <span class="err">&#39;</span><span class="n">Edgar</span> <span class="n">Peralta</span><span class="err">&#39;</span> <span class="n">sn</span> <span class="err">&#39;</span><span class="n">Peralta</span><span class="err">&#39;</span> <span class="n">cn</span> <span class="err">&#39;</span><span class="n">Edgar</span> <span class="n">Peralta</span><span class="err">&#39;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>La salida se puede mandar de forma directa dentro del script hacia un archivo y luego pasarlo por parametro al comando zmprov</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">zmprov</span> <span class="o">&lt;</span> <span class="n">zmCreateAccounts</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Configurar Nagios server y Pnp4nagios]]></title>
-    <link href="http://mcoam.github.io/blog/2013/11/29/configurar-nagios-server-y-pnp4nagios/"/>
-    <updated>2013-11-29T10:46:00-03:00</updated>
-    <id>http://mcoam.github.io/blog/2013/11/29/configurar-nagios-server-y-pnp4nagios</id>
-    <content type="html"><![CDATA[<p>Si tienes un servidor Nagios como plataforma de monitoreo de servidores, es posible que en alguna ocasión puedas necesitar generar reportes de la estadística (mensual, díaria, semanal, etc) para lo cual la versión open de Nagios Server no lo tiene integrado de forma nativa pero podemos solucionar con <a href="http://www.pnp4nagios.org/">pnp4nagios</a> y para realizarlo tenemos que hacer lo siguiente (asumiremos que ya tenemos nuestro Nagios Server funcionando)</p>
-
-<p>Tenemos que tener instalado en el servidor rrdtool, perl-rrdtool y una serie de paquetería</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">yum</span> <span class="n">install</span> <span class="n">libdbi</span> <span class="n">rrdtool</span> <span class="n">perl</span><span class="o">-</span><span class="n">rrdtool</span> <span class="n">ruby</span> <span class="n">xorg</span><span class="o">-</span><span class="n">x11</span><span class="o">-</span><span class="n">fonts</span><span class="o">-</span><span class="n">Type1</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Instalación php4nagios</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">wget</span> <span class="nl">http:</span><span class="c1">//downloads.sourceforge.net/project/pnp4nagios/PNP-0.6/pnp4nagios-0.6.21.tar.gz?r=http%3A%2F%2Fsourceforge.net%2Fprojects%2Fpnp4nagios%2F&amp;ts=1372937581&amp;use_mirror=jaist</span>
-</span><span class='line'><span class="n">tar</span> <span class="o">-</span><span class="n">zxvf</span> <span class="n">pnp4nagios</span><span class="o">-</span><span class="mf">0.6.21</span><span class="p">.</span><span class="n">tar</span><span class="p">.</span><span class="n">gz</span>
-</span><span class='line'><span class="n">cd</span> <span class="n">pnp4nagios</span><span class="o">-</span><span class="mf">0.6.21</span>
-</span><span class='line'><span class="p">.</span><span class="o">/</span><span class="n">configure</span> <span class="o">-</span><span class="n">prefix</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">pnp4nagios</span> <span class="o">-</span><span class="n">with</span><span class="o">-</span><span class="n">rrdtool</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">rrdtool</span> <span class="o">-</span><span class="n">with</span><span class="o">-</span><span class="n">nagios</span><span class="o">-</span><span class="n">user</span><span class="o">=</span><span class="n">nagios</span> <span class="o">-</span><span class="n">with</span><span class="o">-</span><span class="n">nagios</span><span class="o">-</span><span class="n">group</span><span class="o">=</span><span class="n">nagios</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Lo anterior generará todo el proceso de compilación lo que finalmente arrojará algo similar a lo siguiente:
-<img src="http://mcoam.github.io/assets/images/pnp4nagios.png"></p>
-
-<p>Y luego lo compilamos e instalamos</p>
-
-<!-- more -->
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">make</span> <span class="n">all</span> <span class="o">&amp;&amp;</span> <span class="n">make</span> <span class="n">install</span> <span class="o">&amp;&amp;</span> <span class="n">make</span> <span class="n">install</span><span class="o">-</span><span class="n">webconf</span> <span class="o">&amp;&amp;</span> <span class="n">make</span> <span class="n">install</span><span class="o">-</span><span class="n">config</span> <span class="o">&amp;&amp;</span> <span class="n">make</span> <span class="n">install</span><span class="o">-</span><span class="n">init</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Nos aseguramos que no tengamos ningún tipo de error en el proceso de compilación</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">Copiamos</span> <span class="n">los</span> <span class="n">archivos</span> <span class="n">de</span> <span class="n">configuraci</span><span class="err">ó</span><span class="n">n</span>
-</span><span class='line'><span class="n">cd</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">pnp4nagios</span><span class="o">/</span><span class="n">etc</span>
-</span><span class='line'><span class="n">cp</span> <span class="n">misccommands</span><span class="p">.</span><span class="n">cfg</span><span class="o">-</span><span class="n">sample</span> <span class="n">misccommands</span><span class="p">.</span><span class="n">cfg</span>
-</span><span class='line'><span class="n">cp</span> <span class="n">nagios</span><span class="p">.</span><span class="n">cfg</span><span class="o">-</span><span class="n">sample</span> <span class="n">nagios</span><span class="p">.</span><span class="n">cfg</span>
-</span><span class='line'><span class="n">cp</span> <span class="n">rra</span><span class="p">.</span><span class="n">cfg</span><span class="o">-</span><span class="n">sample</span> <span class="n">rra</span><span class="p">.</span><span class="n">cfg</span>
-</span><span class='line'><span class="n">cp</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">pnp4nagios</span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">pages</span><span class="o">/</span>
-</span><span class='line'><span class="n">cp</span> <span class="n">web_traffic</span><span class="p">.</span><span class="n">cfg</span><span class="o">-</span><span class="n">sample</span> <span class="n">web_traffic</span><span class="p">.</span><span class="n">cfg</span>
-</span><span class='line'><span class="n">cd</span> <span class="p">..</span><span class="o">/</span><span class="n">check_commands</span>
-</span><span class='line'><span class="n">cp</span> <span class="n">check_all_local_disks</span><span class="p">.</span><span class="n">cfg</span><span class="o">-</span><span class="n">sample</span>
-</span><span class='line'><span class="n">check_all_local_disks</span><span class="p">.</span><span class="n">cfg</span>
-</span><span class='line'><span class="n">cp</span> <span class="n">check_nrpe</span><span class="p">.</span><span class="n">cfg</span><span class="o">-</span><span class="n">sample</span> <span class="n">check_nrpe</span><span class="p">.</span><span class="n">cfg</span>
-</span><span class='line'><span class="n">cp</span> <span class="n">check_nwstat</span><span class="p">.</span><span class="n">cfg</span><span class="o">-</span><span class="n">sample</span> <span class="n">check_nwstat</span><span class="p">.</span><span class="n">cf</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Configuración de servicio npcd</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">chkconfig</span> <span class="o">--</span><span class="n">add</span> <span class="n">npcd</span>
-</span><span class='line'><span class="n">chkconfig</span> <span class="n">npcd</span> <span class="n">on</span>
-</span><span class='line'><span class="n">service</span> <span class="n">npcd</span> <span class="n">start</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Test pnp4nagios</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="nl">http:</span><span class="c1">//server-ip/pnp4nagios</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>
-Deberemos ver lo siguiente</p>
-
-<p><img src="http://mcoam.github.io/assets/images/pnp4nagios-environment.png"></p>
-
-<p>Como dice al final de la página, podemos eliminar el página de test</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">rm</span> <span class="o">-</span><span class="n">rf</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">pnp4nagios</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">install</span><span class="p">.</span><span class="n">php</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Configuración de apache de pnp4nagios, donde tenemos instanciar nuestro archivo de password de acceso nagios modificando el valor</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">AuthUserFile</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">nagios</span><span class="o">/</span><span class="n">passwd</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>
-Reiniciamos apache</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">service</span> <span class="n">httpd</span> <span class="n">restart</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Ahora tenemos que configurar nagios y que pueda interactuar y permitir la visualización de la gráfica. Para esto utilizaremos el modo <i>Bulk Mode with npcdmod</i> de pnp4nagios, para lo cual editamos el archivo de configuración nagios <i>/etc/nagios/nagios.cfg</i> , adicionando/moficiando los siguientes valores</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">broker_module</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">pnp4nagios</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">npcdmod</span><span class="p">.</span><span class="n">o</span> <span class="n">config_file</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">pnp4nagios</span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">npcd</span><span class="p">.</span><span class="n">cfg</span>
-</span><span class='line'><span class="n">process_performance_data</span><span class="o">=</span><span class="mi">1</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Finalmente, reiniciamos los servicios y empezará a ser reflejada la data de forma gráfica</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">service</span> <span class="n">npcd</span> <span class="n">restart</span> <span class="o">&amp;&amp;</span> <span class="n">service</span> <span class="n">nagios</span> <span class="n">restart</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p><img src="http://mcoam.github.io/assets/images/webpnp4.png"></p>
-
-<p>Referencias</p>
-
-<p><a href="http://www.productionmonkeys.net/guides/nagios/addons/pnp4nagios">http://www.productionmonkeys.net/guides/nagios/addons/pnp4nagios</a>
-<a href="http://www.academia.edu/4142933/Install_pnp4nagios_on_Cent_OS">http://www.academia.edu/4142933/Install_pnp4nagios_on_Cent_OS</a>
-<a href="http://eldespistado.com/instalacion-nagios-pnp4nagios-check_mk-nagvis-debian-7-wheezy/">http://eldespistado.com/instalacion-nagios-pnp4nagios-check_mk-nagvis-debian-7-wheezy/</a></p>
 ]]></content>
   </entry>
   
