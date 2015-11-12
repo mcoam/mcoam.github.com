@@ -53,6 +53,436 @@
 	<header>
 		<h2 class="title">
 			
+			<a href="/blog/2014/08/20/samba4-como-controlador-de-dominio-a-slash-d/">
+			
+				SAMBA4.localo Controlador De Dominio A/D</a>
+		</h2>
+		<div class="meta date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-08-20T10:57:00-04:00" pubdate data-updated="true">Aug 20<span>th</span>, 2014</time></div>
+	</header>
+	<div class="entry-content">
+		<p>Para Centos 6 tenemos que complilar las fuentes para instalar Samba4:</p>
+
+<p>Instalar paqueteria necesaria</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[</span><span class="n">root</span><span class="vi">@samba</span> <span class="o">~]</span><span class="err">$</span> <span class="n">yum</span> <span class="o">-</span><span class="n">y</span> <span class="n">install</span> <span class="n">gcc</span> <span class="n">make</span> <span class="n">wget</span> <span class="n">python</span><span class="o">-</span><span class="n">devel</span> <span class="n">gnutls</span><span class="o">-</span><span class="n">devel</span> <span class="n">openssl</span><span class="o">-</span><span class="n">devel</span> <span class="n">libacl</span><span class="o">-</span><span class="n">devel</span> <span class="n">krb5</span><span class="o">-</span><span class="n">server</span> <span class="n">krb5</span><span class="o">-</span><span class="n">libs</span> <span class="n">krb5</span><span class="o">-</span><span class="n">workstation</span> <span class="n">bind</span> <span class="n">bind</span><span class="o">-</span><span class="n">libs</span> <span class="n">bind</span><span class="o">-</span><span class="n">utils</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Descargamos y lo compilamos</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[</span><span class="n">root</span><span class="vi">@samba</span> <span class="o">~]</span><span class="err">$</span> <span class="n">git</span> <span class="nb">clone</span> <span class="ss">git</span><span class="p">:</span><span class="sr">//</span><span class="n">git</span><span class="o">.</span><span class="n">samba</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">samba</span><span class="o">.</span><span class="n">git</span> <span class="n">samba4</span>
+</span><span class='line'><span class="o">[</span><span class="n">root</span><span class="vi">@samba</span> <span class="o">~]</span><span class="err">$</span> <span class="n">cd</span> <span class="n">samba4</span>
+</span><span class='line'><span class="o">[</span><span class="n">root</span><span class="vi">@samba</span> <span class="o">~]</span><span class="err">$</span> <span class="o">.</span><span class="n">/configure</span> <span class="o">--</span><span class="n">enable</span><span class="o">-</span><span class="n">selftest</span>
+</span><span class='line'><span class="o">[</span><span class="n">root</span><span class="vi">@samba</span> <span class="o">~]</span><span class="err">$</span> <span class="n">make</span> <span class="o">&amp;&amp;</span> <span class="n">make</span> <span class="n">install</span> <span class="c1">#Esto demora bastante</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Terminado lo anterior y si no arroja ningún error, tendremos instalado Samba4. Ahora necesitamos configurar el controlador de dominio, lo primiero que tenemos que hacer es el <i>Provisioning</i> para el nuevo dominio.</p>
+
+<p>Unas cosas antes a considerar:
+Configuramos el hostname en la tabla hosts <code>/etc/hosts</code></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[</span><span class="n">root</span><span class="vi">@samba</span> <span class="o">~]</span><span class="err">$</span> <span class="n">cat</span> <span class="sr">/etc/</span><span class="n">hosts</span>
+</span><span class='line'><span class="mi">127</span><span class="o">.</span><span class="mi">0</span><span class="o">.</span><span class="mi">0</span><span class="o">.</span><span class="mi">1</span>   <span class="n">localhost</span> <span class="n">localhost</span><span class="o">.</span><span class="n">localdomain</span> <span class="n">localhost4</span> <span class="n">localhost4</span><span class="o">.</span><span class="n">localdomain4</span>
+</span><span class='line'><span class="o">::</span><span class="mi">1</span>         <span class="n">localhost</span> <span class="n">localhost</span><span class="o">.</span><span class="n">localdomain</span> <span class="n">localhost6</span> <span class="n">localhost6</span><span class="o">.</span><span class="n">localdomain6</span>
+</span><span class='line'>
+</span><span class='line'><span class="mi">10</span><span class="o">.</span><span class="mi">10</span><span class="o">.</span><span class="mi">0</span><span class="o">.</span><span class="mi">200</span> <span class="n">samba</span><span class="o">.</span><span class="n">example</span><span class="o">.</span><span class="n">local</span> <span class="n">samba</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Y el servidor de nombres en el <code>/etc/resolv.conf</code></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[</span><span class="n">root</span><span class="vi">@samba</span> <span class="o">~]</span><span class="err">$</span> <span class="n">cat</span> <span class="sr">/etc/</span><span class="n">resolv</span><span class="o">.</span><span class="n">conf</span>
+</span><span class='line'><span class="n">search</span> <span class="n">example</span><span class="o">.</span><span class="n">local</span>
+</span><span class='line'><span class="n">domain</span> <span class="n">example</span><span class="o">.</span><span class="n">local</span>
+</span><span class='line'><span class="n">nameserver</span> <span class="mi">127</span><span class="o">.</span><span class="mi">0</span><span class="o">.</span><span class="mi">0</span><span class="o">.</span><span class="mi">1</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Esto es necesario para los servicios Samba y Kerberos, además, tenemos que configurar el parámetro <code>dns forwarder</code> dentro del archivo de configuración del servicio (esto si no lo hacemos dentro del proceso del provisionamiento).</p>
+
+<p>NOTA: El servidor tiene que tener correctamente sincronizada la hora (utilizar NTP)</p>
+
+<h4>Provisionando el nuevo dominio</h4>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="sr">/usr/</span><span class="n">local</span><span class="o">/</span><span class="n">samba</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">samba</span><span class="o">-</span><span class="n">tool</span> <span class="n">domain</span> <span class="n">provision</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Y completamos con los datos solicitados</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">Realm</span> <span class="o">[</span><span class="no">EXAMPLE</span><span class="o">.</span><span class="n">LOCAL</span><span class="o">]</span><span class="p">:</span> <span class="p">(</span><span class="n">press</span> <span class="no">Enter</span><span class="p">)</span>
+</span><span class='line'><span class="no">Domain</span> <span class="o">[</span><span class="no">EXAMPLE</span><span class="o">]</span><span class="p">:</span> <span class="p">(</span><span class="n">press</span> <span class="no">Enter</span><span class="p">)</span> <span class="c1">#CON MAYUSCULAS</span>
+</span><span class='line'><span class="no">Server</span> <span class="no">Role</span> <span class="p">(</span><span class="n">dc</span><span class="p">,</span> <span class="n">member</span><span class="p">,</span> <span class="n">standalone</span><span class="p">)</span> <span class="o">[</span><span class="n">dc</span><span class="o">]</span><span class="p">:</span> <span class="p">(</span><span class="n">press</span> <span class="no">Enter</span><span class="p">)</span>
+</span><span class='line'><span class="no">DNS</span> <span class="n">backend</span> <span class="p">(</span><span class="no">SAMBA_INTERNAL</span><span class="p">,</span> <span class="no">BIND9_FLATFILE</span><span class="p">,</span> <span class="no">BIND9_DLZ</span><span class="p">,</span> <span class="no">NONE</span><span class="p">)</span> <span class="o">[</span><span class="no">SAMBA_INTERNAL</span><span class="o">]</span><span class="p">:</span> <span class="p">(</span><span class="n">press</span> <span class="no">Enter</span><span class="p">)</span>
+</span><span class='line'><span class="no">DNS</span> <span class="n">forwarder</span> <span class="no">IP</span> <span class="n">address</span> <span class="p">(</span><span class="n">write</span> <span class="s1">&#39;none&#39;</span> <span class="n">to</span> <span class="n">disable</span> <span class="n">forwarding</span><span class="p">)</span> <span class="o">[</span><span class="mi">10</span><span class="o">.</span><span class="mi">10</span><span class="o">.</span><span class="mi">0</span><span class="o">.</span><span class="mi">1</span><span class="o">]</span><span class="p">:</span> <span class="mi">10</span><span class="o">.</span><span class="mi">10</span><span class="o">.</span><span class="mi">0</span><span class="o">.</span><span class="mi">1</span>
+</span><span class='line'><span class="no">Administrator</span> <span class="ss">password</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">set_password</span><span class="o">&gt;</span>
+</span><span class='line'><span class="no">Retype</span> <span class="ss">password</span><span class="p">:</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Con todo el proceso anterior realizado, al final de todo veremos algo como lo siguiente</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">Fixing</span> <span class="n">provision</span> <span class="no">GUIDs</span>
+</span><span class='line'><span class="n">A</span> <span class="no">Kerberos</span> <span class="n">configuration</span> <span class="n">suitable</span> <span class="k">for</span> <span class="no">Samba</span> <span class="mi">4</span> <span class="n">has</span> <span class="n">been</span> <span class="n">generated</span> <span class="n">at</span> <span class="sr">/usr/</span><span class="n">local</span><span class="o">/</span><span class="n">samba</span><span class="o">/</span><span class="kp">private</span><span class="o">/</span><span class="n">krb5</span><span class="o">.</span><span class="n">conf</span>
+</span><span class='line'><span class="no">Once</span> <span class="n">the</span> <span class="n">above</span> <span class="n">files</span> <span class="n">are</span> <span class="n">installed</span><span class="p">,</span> <span class="n">your</span> <span class="no">Samba4</span> <span class="n">server</span> <span class="n">will</span> <span class="n">be</span> <span class="n">ready</span> <span class="n">to</span> <span class="n">use</span>
+</span><span class='line'><span class="no">Server</span> <span class="ss">Role</span><span class="p">:</span>           <span class="n">active</span> <span class="n">directory</span> <span class="n">domain</span> <span class="n">controller</span>
+</span><span class='line'><span class="ss">Hostname</span><span class="p">:</span>              <span class="n">samba</span>
+</span><span class='line'><span class="no">NetBIOS</span> <span class="ss">Domain</span><span class="p">:</span>        <span class="no">EXAMPLE</span>
+</span><span class='line'><span class="no">DNS</span> <span class="ss">Domain</span><span class="p">:</span>            <span class="n">example</span><span class="o">.</span><span class="n">local</span>
+</span><span class='line'><span class="no">DOMAIN</span> <span class="ss">SID</span><span class="p">:</span>            <span class="n">S</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="mi">5</span><span class="o">-</span><span class="mi">21</span><span class="o">-</span><span class="mi">3438009546</span><span class="o">-</span><span class="mi">7273</span><span class="no">XXXX</span><span class="o">-</span><span class="no">XXXXXXXXX</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Y luego reiniciamos el servidor</p>
+
+<p>El path de instalación de Samaba4 queda bajo <code>/usr/local/samba/</code> los mismo sucede con los binarios <code>/usr/local/samba/bin/</code> y <code>/usr/local/samba/sbin/</code> para lo cual vamos a configurar la variable <code>$PATH</code> en nuestro bash.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[</span><span class="n">root</span><span class="vi">@samba</span> <span class="o">~]</span><span class="c1"># vim ~/.bashrc</span>
+</span><span class='line'><span class="c1">#Dentro colocamos</span>
+</span><span class='line'><span class="n">export</span> <span class="no">PATH</span><span class="o">=</span><span class="s2">&quot;/usr/local/samba/sbin:/usr/local/samba/bin:$PATH&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Para ver que quedó todo en orden ejecutamos</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[</span><span class="n">root</span><span class="vi">@samba</span> <span class="o">~]</span><span class="c1"># samba -V</span>
+</span><span class='line'><span class="no">Version</span> <span class="mi">4</span><span class="o">.</span><span class="mi">1</span><span class="o">.</span><span class="mi">11</span>
+</span><span class='line'><span class="o">[</span><span class="n">root</span><span class="vi">@samba</span> <span class="o">~]</span><span class="c1"># smbclient -V</span>
+</span><span class='line'><span class="no">Version</span> <span class="mi">4</span><span class="o">.</span><span class="mi">1</span><span class="o">.</span><span class="mi">11</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Chequeamos la configuración local al Samba y los procesos corriendo</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[</span><span class="n">root</span><span class="vi">@samba</span> <span class="o">~]</span><span class="c1">#  ps -ef | grep samba</span>
+</span><span class='line'><span class="n">root</span>     <span class="mi">23010</span>     <span class="mi">1</span>  <span class="mi">1</span> <span class="mi">12</span><span class="p">:</span><span class="mi">32</span> <span class="o">?</span>        <span class="mo">00</span><span class="p">:</span><span class="mo">00</span><span class="p">:</span><span class="mo">00</span> <span class="n">samba</span>
+</span><span class='line'><span class="n">root</span>     <span class="mi">23011</span> <span class="mi">23010</span>  <span class="mi">0</span> <span class="mi">12</span><span class="p">:</span><span class="mi">32</span> <span class="o">?</span>        <span class="mo">00</span><span class="p">:</span><span class="mo">00</span><span class="p">:</span><span class="mo">00</span> <span class="n">samba</span>
+</span><span class='line'><span class="n">root</span>     <span class="mi">23012</span> <span class="mi">23010</span>  <span class="mi">0</span> <span class="mi">12</span><span class="p">:</span><span class="mi">32</span> <span class="o">?</span>        <span class="mo">00</span><span class="p">:</span><span class="mo">00</span><span class="p">:</span><span class="mo">00</span> <span class="n">samba</span>
+</span><span class='line'><span class="n">root</span>     <span class="mi">23013</span> <span class="mi">23010</span>  <span class="mi">0</span> <span class="mi">12</span><span class="p">:</span><span class="mi">32</span> <span class="o">?</span>        <span class="mo">00</span><span class="p">:</span><span class="mo">00</span><span class="p">:</span><span class="mo">00</span> <span class="n">samba</span>
+</span><span class='line'><span class="n">root</span>     <span class="mi">23014</span> <span class="mi">23010</span>  <span class="mi">0</span> <span class="mi">12</span><span class="p">:</span><span class="mi">32</span> <span class="o">?</span>        <span class="mo">00</span><span class="p">:</span><span class="mo">00</span><span class="p">:</span><span class="mo">00</span> <span class="n">samba</span>
+</span><span class='line'><span class="n">root</span>     <span class="mi">23015</span> <span class="mi">23011</span>  <span class="mi">1</span> <span class="mi">12</span><span class="p">:</span><span class="mi">32</span> <span class="o">?</span>        <span class="mo">00</span><span class="p">:</span><span class="mo">00</span><span class="p">:</span><span class="mo">00</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">samba</span><span class="o">/</span><span class="n">sbin</span><span class="o">/</span><span class="n">smbd</span> <span class="o">-</span><span class="n">D</span> <span class="o">--</span><span class="n">option</span><span class="o">=</span><span class="n">server</span> <span class="n">role</span> <span class="ss">check</span><span class="p">:</span><span class="n">inhibit</span><span class="o">=</span><span class="n">yes</span> <span class="o">--</span><span class="n">foreground</span>
+</span><span class='line'><span class="n">root</span>     <span class="mi">23016</span> <span class="mi">23010</span>  <span class="mi">2</span> <span class="mi">12</span><span class="p">:</span><span class="mi">32</span> <span class="o">?</span>        <span class="mo">00</span><span class="p">:</span><span class="mo">00</span><span class="p">:</span><span class="mo">00</span> <span class="n">samba</span>
+</span><span class='line'><span class="n">root</span>     <span class="mi">23017</span> <span class="mi">23010</span>  <span class="mi">0</span> <span class="mi">12</span><span class="p">:</span><span class="mi">32</span> <span class="o">?</span>        <span class="mo">00</span><span class="p">:</span><span class="mo">00</span><span class="p">:</span><span class="mo">00</span> <span class="n">samba</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[</span><span class="n">root</span><span class="vi">@samba</span> <span class="o">~]</span><span class="c1"># /usr/local/samba/bin/smbclient -L localhost -U%</span>
+</span><span class='line'><span class="no">Domain</span><span class="o">=[</span><span class="no">EXAMPLE</span><span class="o">]</span> <span class="no">OS</span><span class="o">=[</span><span class="no">Unix</span><span class="o">]</span> <span class="no">Server</span><span class="o">=[</span><span class="no">Samba</span> <span class="mi">4</span><span class="o">.</span><span class="mi">1</span><span class="o">.</span><span class="mi">11</span><span class="o">]</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="no">Sharename</span>       <span class="no">Type</span>      <span class="no">Comment</span>
+</span><span class='line'>        <span class="o">---------</span>       <span class="o">----</span>      <span class="o">-------</span>
+</span><span class='line'>        <span class="n">netlogon</span>        <span class="no">Disk</span>
+</span><span class='line'>        <span class="n">sysvol</span>          <span class="no">Disk</span>
+</span><span class='line'>        <span class="no">IPC</span><span class="err">$</span>            <span class="no">IPC</span>       <span class="no">IPC</span> <span class="no">Service</span> <span class="p">(</span><span class="no">Samba</span> <span class="mi">4</span><span class="o">.</span><span class="mi">1</span><span class="o">.</span><span class="mi">11</span><span class="p">)</span>
+</span><span class='line'><span class="no">Domain</span><span class="o">=[</span><span class="no">EXAMPLE</span><span class="o">]</span> <span class="no">OS</span><span class="o">=[</span><span class="no">Unix</span><span class="o">]</span> <span class="no">Server</span><span class="o">=[</span><span class="no">Samba</span> <span class="mi">4</span><span class="o">.</span><span class="mi">1</span><span class="o">.</span><span class="mi">11</span><span class="o">]</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="no">Server</span>               <span class="no">Comment</span>
+</span><span class='line'>        <span class="o">---------</span>            <span class="o">-------</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="no">Workgroup</span>            <span class="no">Master</span>
+</span><span class='line'>        <span class="o">---------</span>            <span class="o">-------</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>El proceso de configuración del Samba va a crear un archivo kerberos de la configuración relaizada, tenemos que enlazarlo al directorio <code>/etc</code></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[</span><span class="n">root</span><span class="vi">@samba</span> <span class="o">~]</span><span class="err">$</span> <span class="n">mv</span> <span class="sr">/etc/</span><span class="n">krb5</span><span class="o">.</span><span class="n">conf</span> <span class="sr">/etc/</span><span class="n">krb5</span><span class="o">.</span><span class="n">conf</span><span class="o">.</span><span class="n">ORG</span>
+</span><span class='line'><span class="o">[</span><span class="n">root</span><span class="vi">@samba</span> <span class="o">~]</span><span class="err">$</span> <span class="n">ln</span> <span class="o">-</span><span class="n">s</span> <span class="sr">/usr/</span><span class="n">local</span><span class="o">/</span><span class="n">samba</span><span class="o">/</span><span class="kp">private</span><span class="o">/</span><span class="n">krb5</span><span class="o">.</span><span class="n">conf</span>  <span class="sr">/etc/</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Comprobamos el funcionamiento en kerberos</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[</span><span class="n">root</span><span class="vi">@samba</span> <span class="o">~]</span><span class="c1"># host -t SRV _ldap._tcp.example.local.</span>
+</span><span class='line'><span class="n">_ldap</span><span class="o">.</span><span class="n">_tcp</span><span class="o">.</span><span class="n">example</span><span class="o">.</span><span class="n">local</span> <span class="n">has</span> <span class="no">SRV</span> <span class="n">record</span> <span class="mi">0</span> <span class="mi">100</span> <span class="mi">389</span> <span class="n">samba</span><span class="o">.</span><span class="n">example</span><span class="o">.</span><span class="n">local</span><span class="o">.</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Comprobamos la autentificación contra kerberos</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[</span><span class="n">root</span><span class="vi">@samba</span> <span class="o">~]</span><span class="c1"># kinit administrator@EXAMPLE.LOCAL </span>
+</span><span class='line'><span class="no">Password</span> <span class="k">for</span> <span class="n">administrator</span><span class="vi">@EXAMPLE</span><span class="o">.</span><span class="n">LOCAL</span><span class="p">:</span>
+</span><span class='line'><span class="ss">Warning</span><span class="p">:</span> <span class="no">Your</span> <span class="n">password</span> <span class="n">will</span> <span class="n">expire</span> <span class="k">in</span> <span class="mi">41</span> <span class="n">days</span> <span class="n">on</span> <span class="no">Wed</span> <span class="no">Oct</span>  <span class="mi">1</span> <span class="mi">16</span><span class="p">:</span><span class="mi">28</span><span class="p">:</span><span class="mi">11</span> <span class="mi">2014</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Si por el contrario nos arroja algún error, tenemos que ver las configuraciones realizadas o reconfigurar el servicio samba</p>
+
+<h4>Script de arranque</h4>
+
+<p>Para el control del servicio creamos el siguiente script</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[</span><span class="n">root</span><span class="vi">@samba</span> <span class="o">~]</span><span class="err">$</span> <span class="n">cat</span> <span class="sr">/etc/ini</span><span class="n">t</span><span class="o">.</span><span class="n">d</span><span class="o">/</span><span class="n">samba4</span>
+</span><span class='line'><span class="c1">#! /bin/bash</span>
+</span><span class='line'><span class="c1">#</span>
+</span><span class='line'><span class="c1"># samba4 Bring up/down samba4 service</span>
+</span><span class='line'><span class="c1">#</span>
+</span><span class='line'><span class="c1"># chkconfig: - 90 10</span>
+</span><span class='line'><span class="c1"># description: Activates/Deactivates all samba4 interfaces configured to#</span>
+</span><span class='line'><span class="c1"># chkconfig: - 90 10</span>
+</span><span class='line'><span class="c1"># description: Activates/Deactivates all samba4 interfaces configured to</span>
+</span><span class='line'><span class="c1"># start at boot time.</span>
+</span><span class='line'><span class="c1">#</span>
+</span><span class='line'><span class="c1">### BEGIN INIT INFO</span>
+</span><span class='line'><span class="c1"># Provides:</span>
+</span><span class='line'><span class="c1"># Should-Start:</span>
+</span><span class='line'><span class="c1"># Short-Description: Bring up/down samba4</span>
+</span><span class='line'><span class="c1"># Description: Bring up/down samba4</span>
+</span><span class='line'><span class="c1">### END INIT INFO</span>
+</span><span class='line'><span class="c1"># Source function library.</span>
+</span><span class='line'><span class="o">.</span> <span class="sr">/etc/ini</span><span class="n">t</span><span class="o">.</span><span class="n">d</span><span class="o">/</span><span class="n">functions</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">if</span> <span class="o">[</span> <span class="o">-</span><span class="n">f</span> <span class="sr">/etc/s</span><span class="n">ysconfig</span><span class="o">/</span><span class="n">samba4</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span><span class='line'><span class="o">.</span> <span class="sr">/etc/s</span><span class="n">ysconfig</span><span class="o">/</span><span class="n">samba4</span>
+</span><span class='line'><span class="n">fi</span>
+</span><span class='line'>
+</span><span class='line'><span class="no">CWD</span><span class="o">=</span><span class="err">$</span><span class="p">(</span><span class="n">pwd</span><span class="p">)</span>
+</span><span class='line'><span class="n">prog</span><span class="o">=</span><span class="s2">&quot;samba4&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">start</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'><span class="c1"># Attach irda device</span>
+</span><span class='line'><span class="n">echo</span> <span class="o">-</span><span class="n">n</span> <span class="vg">$&quot;</span><span class="no">Starting</span> <span class="vg">$prog</span><span class="p">:</span> <span class="s2">&quot;</span>
+</span><span class='line'><span class="s2">/usr/local/samba/sbin/samba</span>
+</span><span class='line'><span class="s2">sleep 2</span>
+</span><span class='line'><span class="s2">if ps ax | grep -v &quot;</span><span class="n">grep</span><span class="s2">&quot; | grep -q /samba/sbin/samba ; then success $&quot;</span><span class="n">samba4</span> <span class="n">startup</span><span class="s2">&quot;; else failure $&quot;</span><span class="n">samba4</span> <span class="n">startup</span><span class="s2">&quot;; fi</span>
+</span><span class='line'><span class="s2">echo</span>
+</span><span class='line'><span class="s2">}</span>
+</span><span class='line'><span class="s2">stop() {</span>
+</span><span class='line'><span class="s2"># Stop service.</span>
+</span><span class='line'><span class="s2">echo -n $&quot;</span><span class="no">Shutting</span> <span class="n">down</span> <span class="vg">$prog</span><span class="p">:</span> <span class="s2">&quot;</span>
+</span><span class='line'><span class="s2">killall samba</span>
+</span><span class='line'><span class="s2">sleep 2</span>
+</span><span class='line'><span class="s2">if ps ax | grep -v &quot;</span><span class="n">grep</span><span class="s2">&quot; | grep -q /samba/sbin/samba ; then failure $&quot;</span><span class="n">samba4</span> <span class="n">shutdown</span><span class="s2">&quot;; else success $&quot;</span><span class="n">samba4</span> <span class="n">shutdown</span><span class="s2">&quot;; fi</span>
+</span><span class='line'><span class="s2">echo</span>
+</span><span class='line'><span class="s2">}</span>
+</span><span class='line'><span class="s2">status() {</span>
+</span><span class='line'><span class="s2">/usr/local/samba/sbin/samba --show-build</span>
+</span><span class='line'><span class="s2">}</span>
+</span><span class='line'><span class="s2"> </span>
+</span><span class='line'><span class="s2"># See how we were called.</span>
+</span><span class='line'><span class="s2">case &quot;</span><span class="vg">$1</span><span class="s2">&quot; in</span>
+</span><span class='line'><span class="s2">start)</span>
+</span><span class='line'><span class="s2">start</span>
+</span><span class='line'><span class="s2">;;</span>
+</span><span class='line'><span class="s2">stop)</span>
+</span><span class='line'><span class="s2">stop</span>
+</span><span class='line'><span class="s2">;;</span>
+</span><span class='line'><span class="s2">status)</span>
+</span><span class='line'><span class="s2">status irattach</span>
+</span><span class='line'><span class="s2">;;</span>
+</span><span class='line'><span class="s2">restart|reload)</span>
+</span><span class='line'><span class="s2">stop</span>
+</span><span class='line'><span class="s2">start</span>
+</span><span class='line'><span class="s2">;;</span>
+</span><span class='line'><span class="s2">*)</span>
+</span><span class='line'><span class="s2">echo $&quot;</span><span class="ss">Usage</span><span class="p">:</span> <span class="vg">$0</span> <span class="p">{</span><span class="n">start</span><span class="o">|</span><span class="n">stop</span><span class="o">|</span><span class="n">restart</span><span class="o">|</span><span class="n">status</span><span class="p">}</span><span class="s2">&quot;</span>
+</span><span class='line'><span class="s2">exit 1</span>
+</span><span class='line'><span class="s2">esac</span>
+</span><span class='line'><span class="s2"> </span>
+</span><span class='line'><span class="s2">exit 0</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Configuramos los permisos</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[</span><span class="n">root</span><span class="vi">@samba</span> <span class="o">~]</span><span class="err">$</span> <span class="n">chmod</span> <span class="o">+</span><span class="n">x</span> <span class="sr">/etc/ini</span><span class="n">t</span><span class="o">.</span><span class="n">d</span><span class="o">/</span><span class="n">samba4</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Finalmente dejamos los servicios para correr por defecto</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[</span><span class="n">root</span><span class="vi">@samba</span> <span class="o">~]</span><span class="err">$</span> <span class="n">chkconfig</span> <span class="o">--</span><span class="n">levels</span> <span class="mi">235</span> <span class="n">samba4</span> <span class="n">on</span>
+</span><span class='line'><span class="o">[</span><span class="n">root</span><span class="vi">@samba</span> <span class="o">~]</span><span class="err">$</span> <span class="n">chkconfig</span> <span class="o">--</span><span class="n">levels</span> <span class="mi">235</span> <span class="n">ntp</span> <span class="n">on</span>
+</span><span class='line'><span class="o">[</span><span class="n">root</span><span class="vi">@samba</span> <span class="o">~]</span><span class="err">$</span> <span class="n">chkconfig</span> <span class="o">--</span><span class="n">levels</span> <span class="mi">235</span> <span class="n">named</span> <span class="n">on</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Ahora ya tenemos configurado el Samba, desde ahora podemos empezar a conectar a los usuarios.</p>
+
+<h4>Uniendo una máquina al dominio</h4>
+
+<h4>Getión remota del controlado de dominio (Remote Server Administration Tool)</h4>
+
+<p>Para la gestión remota del controlador de dominio descargamos <i>Remote Server Administration Tool</i> desde <a href="http://www.microsoft.com/es-es/download/details.aspx?id=7887">acá</a>:
+ Instalación</p>
+
+<ol>
+<li>Lo instalamos como cualquier exe</li>
+<li>Panel de control </li>
+<li>Programas y caracteristicas</li>
+<li>Activar o desactivar caracteristicas</li>
+<li>Seleccionamos las caracteristicas asociadas al A/D</li>
+<li>Reinciamos la máquina Windows</li>
+<li>Inicio -> Ejecutar -> &#8220;Usuarios y Equipos de Active Directory&#8221; y veremos el arbol de nuestro Samba4</li>
+</ol>
+
+
+<p>Para mas detalles del RSTA <a href="https://wiki.samba.org/index.php/Installing_RSAT_on_Windows_for_AD_Management">acá</a></p>
+
+		
+		
+	</div>
+
+</article>
+
+
+    <article class="post">
+	<header>
+		<h2 class="title">
+			
 			<a href="/blog/2014/08/02/creando-un-box-para-vagrant/">
 			
 				Creando Un Box Para Vagrant</a>
@@ -987,89 +1417,6 @@ En el archivo  <i>/opt/zimbra/postfix/conf/header_checks</i> adicionamos la expr
 
 
 <p>Y desde ahora, cada vez que desde el servidor zimbra salga un correo que en su asunto contenga &ldquo;MIGUELCOA&rdquo; será enviada una copia hacia la casilla mcoa\@example.com</p>
-
-		
-		
-	</div>
-
-</article>
-
-
-    <article class="post">
-	<header>
-		<h2 class="title">
-			
-			<a href="/blog/2014/01/15/migrando-usuarios-slash-password-postfix-to-zimbra/">
-			
-				Migrando Usuarios/password Postfix to Zimbra</a>
-		</h2>
-		<div class="meta date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-01-15T09:58:00-03:00" pubdate data-updated="true">Jan 15<span>th</span>, 2014</time></div>
-	</header>
-	<div class="entry-content">
-		<p>La idea del siguiente script es; primero crear la cuenta con una password temporal y luego configurar la password original del usuario, ambos valores son sacados del <i>/etc/shadow</i></p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="c">#!/usr/bin/python</span>
-</span><span class='line'><span class="c">##Miguel Coa M.</span>
-</span><span class='line'>
-</span><span class='line'><span class="kn">import</span> <span class="nn">csv</span>
-</span><span class='line'><span class="k">with</span> <span class="nb">open</span> <span class="p">(</span><span class="s">&#39;shadow&#39;</span><span class="p">,</span> <span class="s">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="n">reader</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">reader</span> <span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s">&#39;:&#39;</span> <span class="p">)</span>
-</span><span class='line'>        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">reader</span><span class="p">:</span>
-</span><span class='line'>
-</span><span class='line'>                <span class="n">user</span>     <span class="o">=</span> <span class="n">row</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-</span><span class='line'>                <span class="n">passwd</span>   <span class="o">=</span> <span class="s">&quot;&#39;crypt{&quot;</span> <span class="o">+</span> <span class="n">row</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span><span class="s">&quot;}&#39;&quot;</span>
-</span><span class='line'>
-</span><span class='line'>                <span class="k">print</span> <span class="s">&quot;ca {}@domain.com tmpPSW&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">user</span><span class="p">)</span>
-</span><span class='line'>                <span class="k">print</span> <span class="s">&quot;ma {}@domain.com userPassword  {}  &quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">user</span><span class="p">,</span><span class="n">passwd</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Y como resultado nos arrojará por pantalla</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">ca</span> <span class="n">varaya</span><span class="nd">@domain.com</span> <span class="n">tmpPSW</span>
-</span><span class='line'><span class="n">ma</span> <span class="n">varaya</span><span class="nd">@domain.com</span> <span class="n">userPassword</span>  <span class="s">&#39;crypt{$1$6RT62jZZ$sFlv.MIII4PuKISBaap030}&#39;</span>
-</span><span class='line'><span class="n">ca</span> <span class="n">cgalaz</span><span class="nd">@domain.com</span> <span class="n">tmpPSW</span>
-</span><span class='line'><span class="n">ma</span> <span class="n">cgalaz</span><span class="nd">@domain.com</span> <span class="n">userPassword</span>  <span class="s">&#39;crypt{$1$bAEOlC0N$4t.3zCGDb.RFc0vmxd2UB0}&#39;</span>
-</span><span class='line'><span class="n">ca</span> <span class="n">ctagle</span><span class="nd">@domain.com</span> <span class="n">tmpPSW</span>
-</span><span class='line'><span class="n">ma</span> <span class="n">ctagle</span><span class="nd">@domain.com</span> <span class="n">userPassword</span>  <span class="s">&#39;crypt{$1$L7vlV7Me$orB2TCnqn.JeoVQpKsr6P0}&#39;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>
-Valor que los podemos almacenar en un archivo y los ejecutamos pasandolo como parámetro al comando <i>zmprov</i>. Si ya tenemos creadas las cuentas podemos comentar el primer print, para que solo las modifique.</p>
 
 		
 		
