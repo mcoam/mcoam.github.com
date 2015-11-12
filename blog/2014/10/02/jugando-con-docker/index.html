@@ -1,0 +1,271 @@
+
+<!DOCTYPE HTML>
+<html lang="en-GB">
+<head>
+	<meta charset="utf-8">
+	<title>Jugando Con Docker  | Bitácora</title>
+
+	<meta name="author" content="Miguel Angel Coa Morales">
+
+<meta name="description" content="Un blog personal"> <meta name="keywords" content="zimbra, linux, centos, devops, puppet, opensource, virtualizar, virtualización">
+
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="Bitácora" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.png" rel="shortcut icon">
+	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+</head>
+
+
+
+<body>
+	<header id="header" class="inner"><h1><a href="/">Bitácora</a></h1>
+<span class="tagline">Miguel Angel Coa Morales</span>
+<nav id="main-nav"><ul>
+	<li><a href="/about">About</a></li>
+	<li><a href="/archives">Archives</a></li>
+	<li><a href="/contact">Contact</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul>
+	<li><a href="/about">About</a></li>
+	<li><a href="/archives">Archives</a></li>
+	<li><a href="/contact">Contact</a></li>
+</ul>
+</div>
+	</div>
+</nav>
+
+
+</header>
+
+	<div id="content" class="inner"><article class="post">
+	<header>
+		<h2 class="title">Jugando Con Docker</h2>
+		<div class="meta date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-10-02T16:01:00-03:00" pubdate data-updated="true">Oct 2<span>nd</span>, 2014</time></div>
+	</header>
+	<div class="entry-content"><h4>Imagenes, Contenedores y Capas con Docker</h4>
+
+<p>Al momento de empezar a trabajar con Docker aparecen varios items que si bien no son nuevos en la virtualización tradicional (mediante hypervisores) de la forma que los trabaja Docker tienen un valor agregado no por si mismos sino por la suma de todos a la vez.</p>
+
+<h4>Capas en Docker</h4>
+
+<p>Las capas en Docker son los <i>bloques</i> en donde se van almacenando todos los cambios que puede tener un contenedor (Ej. instalación de paquetes, update del SO, etc) por cada cambio que se realiza en el contenedor se crea una capa nueva de escritura que va solapando las capas anteriores que quedan de solo lectura, es por ello que una capas al momento en que trabajamos con ella.</p>
+
+<h4>Docker image  Images never change once they are created.  Images can be linked.  A image that is stacked on another image can be referred to in a child parent analogy with the lower image being the parent.  The bottommost image is referred to as the base image and has no parent image.</h4>
+
+<p>A docker container – When you start a container you reference an image.  Docker pulls the required image and pulls the images parent image.  It continues to pull the parent images until it reaches the base image.  In addition, it creates a read-write layer for changes to be stored in when the container is running.  All of these layers as well as other container configuration information is stored in the container.</p>
+
+<p>Lo primero es crear el archivo Dockerfile con el siguiente contenido</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># Version: 0.0.2</span>
+</span><span class='line'><span class="no">From</span> <span class="ss">centos</span><span class="p">:</span><span class="n">latest</span>
+</span><span class='line'><span class="no">MAINTAINER</span> <span class="no">Miguel</span> <span class="no">Coa</span> <span class="s2">&quot;mcoa@example.com&quot;</span>
+</span><span class='line'><span class="c1">#RUN apt-get update</span>
+</span><span class='line'><span class="no">RUN</span> <span class="n">yum</span> <span class="n">install</span> <span class="n">httpd</span> <span class="o">-</span><span class="n">y</span>
+</span><span class='line'><span class="no">RUN</span> <span class="n">echo</span> <span class="s1">&#39;Hello world&#39;</span> <span class="o">&gt;</span> <span class="sr">/var/</span><span class="n">www</span><span class="o">/</span><span class="n">html</span><span class="o">/</span><span class="n">index</span><span class="o">.</span><span class="n">html</span>
+</span><span class='line'><span class="no">CMD</span> <span class="n">service</span> <span class="n">httpd</span> <span class="n">start</span>
+</span><span class='line'>
+</span><span class='line'><span class="no">EXPOSE</span> <span class="mi">80</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Lo anterior va a crear un contenedor en centos <i>latest</i>, le instalará apache, creará el index.html y dejara el servicio corriendo. Una vez que tengamos creado el Dockerfile, lanzamos el comando para crear el contenedor.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[</span><span class="n">root</span><span class="vi">@vagrant</span><span class="o">-</span><span class="n">centos7</span> <span class="n">static_web</span><span class="o">]</span><span class="c1"># docker build -t=&quot;mcoa01/static_web:v2&quot; . </span>
+</span><span class='line'><span class="no">Uploading</span> <span class="n">context</span>  <span class="mi">2</span><span class="o">.</span><span class="mi">56</span> <span class="n">kB</span>
+</span><span class='line'><span class="no">Uploading</span> <span class="n">context</span>
+</span><span class='line'><span class="no">Step</span> <span class="mi">0</span> <span class="p">:</span> <span class="no">From</span> <span class="ss">centos</span><span class="p">:</span><span class="n">latest</span>
+</span><span class='line'> <span class="o">---&gt;</span> <span class="mi">87</span><span class="n">e5b6b3ccc1</span>
+</span><span class='line'><span class="no">Step</span> <span class="mi">1</span> <span class="p">:</span> <span class="no">MAINTANER</span> <span class="no">Miguel</span> <span class="no">Coa</span> <span class="s2">&quot;mcoa@example.com&quot;</span>
+</span><span class='line'><span class="c1"># Skipping unknown instruction MAINTANER</span>
+</span><span class='line'><span class="no">Step</span> <span class="mi">2</span> <span class="p">:</span> <span class="no">RUN</span> <span class="n">yum</span> <span class="n">install</span> <span class="n">httpd</span> <span class="o">-</span><span class="n">y</span>
+</span><span class='line'> <span class="o">---&gt;</span> <span class="no">Using</span> <span class="n">cache</span>
+</span><span class='line'> <span class="o">---&gt;</span> <span class="mi">9</span><span class="n">ed85d674aab</span>
+</span><span class='line'><span class="no">Step</span> <span class="mi">3</span> <span class="p">:</span> <span class="no">RUN</span> <span class="n">echo</span> <span class="s1">&#39;Hi, I am in you container&#39;</span> <span class="o">&gt;</span> <span class="sr">/var/</span><span class="n">www</span><span class="o">/</span><span class="n">html</span><span class="o">/</span><span class="n">index</span><span class="o">.</span><span class="n">html</span>
+</span><span class='line'> <span class="o">---&gt;</span> <span class="no">Using</span> <span class="n">cache</span>
+</span><span class='line'> <span class="o">---&gt;</span> <span class="n">a7cac0dce7d7</span>
+</span><span class='line'><span class="no">Step</span> <span class="mi">4</span> <span class="p">:</span> <span class="no">CMD</span> <span class="n">service</span> <span class="n">httpd</span> <span class="n">start</span>
+</span><span class='line'> <span class="o">---&gt;</span> <span class="no">Using</span> <span class="n">cache</span>
+</span><span class='line'> <span class="o">---&gt;</span> <span class="mi">72</span><span class="n">e4df843d86</span>
+</span><span class='line'><span class="no">Step</span> <span class="mi">5</span> <span class="p">:</span> <span class="no">CMD</span> <span class="n">service</span> <span class="n">sshd</span> <span class="n">start</span>
+</span><span class='line'> <span class="o">---&gt;</span> <span class="no">Running</span> <span class="k">in</span> <span class="mi">475</span><span class="n">c04052b5e</span>
+</span><span class='line'> <span class="o">---&gt;</span> <span class="mi">88515</span><span class="n">c279ac0</span>
+</span><span class='line'><span class="no">Removing</span> <span class="n">intermediate</span> <span class="n">container</span> <span class="mi">475</span><span class="n">c04052b5e</span>
+</span><span class='line'><span class="no">Step</span> <span class="mi">6</span> <span class="p">:</span> <span class="no">EXPOSE</span> <span class="mi">80</span>
+</span><span class='line'> <span class="o">---&gt;</span> <span class="no">Running</span> <span class="k">in</span> <span class="mi">5</span><span class="n">b3b8cc184ed</span>
+</span><span class='line'> <span class="o">---&gt;</span> <span class="n">e080d67b10f4</span>
+</span><span class='line'><span class="no">Removing</span> <span class="n">intermediate</span> <span class="n">container</span> <span class="mi">5</span><span class="n">b3b8cc184ed</span>
+</span><span class='line'><span class="no">Successfully</span> <span class="n">built</span> <span class="n">e080d67b10f4</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Y vemos la imagen creada</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[</span><span class="n">root</span><span class="vi">@vagrant</span><span class="o">-</span><span class="n">centos7</span> <span class="n">static_web</span><span class="o">]</span><span class="c1"># docker images</span>
+</span><span class='line'><span class="no">REPOSITORY</span>          <span class="no">TAG</span>                 <span class="no">IMAGE</span> <span class="no">ID</span>            <span class="no">CREATED</span>             <span class="no">VIRTUAL</span> <span class="no">SIZE</span>
+</span><span class='line'><span class="n">mcoa01</span><span class="o">/</span><span class="n">static_web</span>   <span class="n">v2</span>                  <span class="n">e080d67b10f4</span>        <span class="mi">12</span> <span class="n">minutes</span> <span class="n">ago</span>      <span class="mi">321</span><span class="o">.</span><span class="mi">8</span> <span class="no">MB</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>Verificando nuestra imagen</h4>
+
+<h4>Creando el contenedor a partir de la imagen creada</h4>
+
+<p>Creando el contenedor</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[</span><span class="n">root</span><span class="vi">@vagrant</span><span class="o">-</span><span class="n">centos7</span> <span class="n">static_web</span><span class="o">]</span><span class="c1"># docker run -t -i -d -p 10.10.0.50:8080:80 --name static_web  mcoa01/static_web:v3  /bin/bash </span>
+</span><span class='line'><span class="mo">05014</span><span class="mi">89</span><span class="n">ccabc4ace605069fa0de4ade00bf9720913b137248650c66d17ce25b5</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Listamos los contenedores</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[</span><span class="n">root</span><span class="vi">@vagrant</span><span class="o">-</span><span class="n">centos7</span> <span class="n">static_web</span><span class="o">]</span><span class="c1"># docker ps -a</span>
+</span><span class='line'><span class="no">CONTAINER</span> <span class="no">ID</span>        <span class="no">IMAGE</span>                  <span class="no">COMMAND</span>             <span class="no">CREATED</span>             <span class="no">STATUS</span>              <span class="no">PORTS</span>                     <span class="no">NAMES</span>
+</span><span class='line'><span class="mo">05014</span><span class="mi">89</span><span class="n">ccabc</span>        <span class="n">mcoa01</span><span class="o">/</span><span class="n">static_web</span><span class="ss">:v3</span>   <span class="sr">/bin/</span><span class="n">bash</span>           <span class="mi">2</span> <span class="n">seconds</span> <span class="n">ago</span>       <span class="no">Up</span> <span class="mi">2</span> <span class="n">seconds</span>        <span class="mi">10</span><span class="o">.</span><span class="mi">10</span><span class="o">.</span><span class="mi">0</span><span class="o">.</span><span class="mi">50</span><span class="p">:</span><span class="mi">8080</span><span class="o">-&gt;</span><span class="mi">80</span><span class="o">/</span><span class="n">tcp</span>   <span class="n">static_web</span>
+</span></code></pre></td></tr></table></div></figure>
+
+</div>
+	
+
+</article>
+
+	
+	<div class="share">
+		<ul>
+			<li>
+  <a href="https://twitter.com/intent/tweet?text=Jugando Con Docker by @&url=http://mcoam.github.io/blog/2014/10/02/jugando-con-docker/" title="Share Jugando Con Docker on Twitter">
+    <img src="/images/social/twitter.png" />
+  </a>
+</li>
+
+			<li>
+  <a href="https://www.facebook.com/sharer.php?u=http://mcoam.github.io/blog/2014/10/02/jugando-con-docker/" title="Share Jugando Con Docker on Facebook">
+    <img src="/images/social/facebook.png" />
+  </a>
+</li>
+
+			<li>
+  <a href="https://plus.google.com/share?url=http://mcoam.github.io/blog/2014/10/02/jugando-con-docker/" title="Share Jugando Con Docker on Google Plus">
+    <img src="/images/social/google.png" />
+  </a>
+</li>
+
+		</ul>
+	</div>
+
+
+
+
+<section id="comment">
+    <h2 class="title">Comments</h2>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+</div>
+	<footer id="footer" class="inner">&copy; 2015
+
+    Miguel Angel Coa Morales
+
+</footer>
+	<script src="/javascripts/slash.js"></script>
+<script src="/javascripts/hyphenator.js"></script>
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'miguelcoa';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://mcoam.github.io/blog/2014/10/02/jugando-con-docker/';
+        var disqus_url = 'http://mcoam.github.io/blog/2014/10/02/jugando-con-docker/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-45157770-1']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+
+
+</body>
+</html>

@@ -53,6 +53,92 @@
 	<header>
 		<h2 class="title">
 			
+			<a href="/blog/2015/11/12/ansible-configurando-volumen-de-datos-hsm-en-zimbra/">
+			
+				Ansible: Configurando Volúmen De Datos HSM en Zimbra</a>
+		</h2>
+		<div class="meta date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-11-12T18:34:00-03:00" pubdate data-updated="true">Nov 12<span>th</span>, 2015</time></div>
+	</header>
+	<div class="entry-content">
+		<p>El siguiente <code>Playbook</code> permite configurar un nuevo volúmen para datos (store) en un servidor Zimbra NE.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="o">---</span>
+</span><span class='line'><span class="o">-</span> <span class="nl">hosts:</span> <span class="n">ne_mailbox</span>
+</span><span class='line'>  <span class="nl">remote_user:</span> <span class="n">root</span>
+</span><span class='line'>  <span class="nl">vars:</span>
+</span><span class='line'>        <span class="nl">zmvolume:</span> <span class="s">&quot;/opt/zimbra/bin/zmvolume&quot;</span>
+</span><span class='line'>        <span class="nl">zmhsm:</span> <span class="s">&quot;/opt/zimbra/bin/zmhsm&quot;</span>
+</span><span class='line'>        <span class="nl">zmprov:</span> <span class="s">&quot;/opt/zimbra/bin/zmprov&quot;</span>
+</span><span class='line'>        <span class="nl">hsm_name:</span> <span class="s">&quot;hsm02&quot;</span>
+</span><span class='line'>        <span class="nl">hsm_id:</span> <span class="s">&quot;4&quot;</span> <span class="err">#</span> <span class="n">check</span> <span class="kt">id</span> <span class="n">zmvolume</span> <span class="o">-</span><span class="n">l</span> <span class="o">|</span><span class="n">grep</span> <span class="o">-</span><span class="n">B1</span> <span class="n">hsm02</span>
+</span><span class='line'>        <span class="nl">path:</span> <span class="s">&quot;/opt/zimbra/store_hsm_02/&quot;</span>
+</span><span class='line'>        <span class="nl">policy_option:</span> <span class="s">&quot; &#39;message,document,task,appointment,contact:before:-1month is:anywhere&#39; &quot;</span>
+</span><span class='line'>  <span class="nl">tasks:</span>
+</span><span class='line'>        <span class="o">-</span> <span class="nl">name:</span> <span class="s">&quot;Configura volumen HSM como volumen secundario&quot;</span>
+</span><span class='line'>          <span class="nl">command:</span> <span class="s">&quot;{ { zmvolume } } -a -name  -c true -t secondaryMessage -p { { path } }&quot;</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="o">-</span> <span class="nl">name:</span> <span class="s">&quot;Activamos nuevo volumen para manejar data&quot;</span>
+</span><span class='line'>          <span class="nl">command:</span> <span class="s">&quot;{ { zmvolume } } -sc -id { { hsm_id } } &quot;</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="o">-</span> <span class="nl">name:</span> <span class="s">&quot;Configuramos politica HSM: Todo por sobre 1 mes se mueve al nuevo volumen&quot;</span>
+</span><span class='line'>          <span class="nl">command:</span> <span class="s">&quot;{ { zmprov } } ms { { ansible_fqdn } } zimbraHsmPolicy { { policy_option } }&quot;</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="o">-</span> <span class="nl">name:</span> <span class="s">&quot;Arrancamos el proceso para mover correos al nuevo HSM&quot;</span>
+</span><span class='line'>          <span class="nl">command:</span> <span class="s">&quot;{ { zmhsm } } -t&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><b>Donde:<br></b>
+<code>path: "/opt/zimbra/store_hsm_02/"</code>: Corresponde al punto de montaje del nuevo recurso HSM.<br>
+<code>hsm_id: 4"</code>: Corresponde al ID que le asigna Zimbra al nuevo volúmen (disco).<br>
+<code>hsm_name: hsm02</code>: Corresponde al nombre que le colocamos al recurso HSM.<br></p>
+
+		
+		
+	</div>
+
+</article>
+
+
+    <article class="post">
+	<header>
+		<h2 class="title">
+			
 			<a href="/blog/2015/11/12/montar-leer-y-escribir-en-usb-con-formato-ntfs/">
 			
 				Montar, Leer Y Escribir en USB Con Formato NTFS en OSX Capitan</a>
@@ -249,6 +335,38 @@ De todas formas, lo anterior se puede corregir configrando el <code>imapsyn</cod
 <p></p>
 
 <p>Por ejemplo, hoy estamos a 10 y tiramos el imapsync en el destino empezará a sincronizar (borrando la data que no este en el host1) desde el día 5, con ello evitamos borrar los correos nuevos en el host2.</p>
+
+		
+		
+	</div>
+
+</article>
+
+
+    <article class="post">
+	<header>
+		<h2 class="title">
+			
+			<a href="/blog/2015/08/06/migrando-servidor-fisico-a-virtual-en-proxmox/">
+			
+				Migrando Servidor Físico a Virtual en Proxmox</a>
+		</h2>
+		<div class="meta date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-08-06T12:44:00-03:00" pubdate data-updated="true">Aug 6<span>th</span>, 2015</time></div>
+	</header>
+	<div class="entry-content">
+		
 
 		
 		
@@ -526,9 +644,9 @@ Para el caso, tenemos que tener las cuentas de correos en el archivo <code>/var/
 	<header>
 		<h2 class="title">
 			
-			<a href="/blog/2014/10/13/eliminar-vm-vagrant/">
+			<a href="/blog/2014/11/27/instalacion-desatentida-de-zimbra/">
 			
-				Eliminar VM Vagrant</a>
+				Instalación Desatentida De Zimbra</a>
 		</h2>
 		<div class="meta date">
 
@@ -542,214 +660,54 @@ Para el caso, tenemos que tener las cuentas de correos en el archivo <code>/var/
   
 
 
-<time datetime="2014-10-13T16:44:00-03:00" pubdate data-updated="true">Oct 13<span>th</span>, 2014</time></div>
+<time datetime="2014-11-27T17:20:00-03:00" pubdate data-updated="true">Nov 27<span>th</span>, 2014</time></div>
 	</header>
 	<div class="entry-content">
-		<p>En <code>Vagrant</code> nuestra máquinas virtuales son borradas con el comando <code>vm destroy</code> pero sucede que aveces hemos borrado el directorio de la VM o el Vagrantfile y esta ya no puede ser referenciada mediante Vagrant para ser eliminada. Como Vagrant trabaja con <code>VirtualBox</code> podemos utilizar el comando <code>VBoxManage</code> para que la podamos eliminar.</p>
+		<p>Muchas veces al momento de instalar nuestro servidor de correos hemos pensado como poder automatizar este proceso, ya que en muchos casos las instalaciones son siempre las mismas,  por lo cual optimizar este trabajo mediante Kickstart sería de gran utilidad.  Por suerte en el caso de Zimbra es posible realizar esto mediante un archivo de configuración <i>Kickstart</i> donde le pasamos todos los datos necesarios que permitan realizar esta tarea (dominio, password admin, hostname, etc).</p>
 
-<p>Listamos todas la VM</p>
+<p>En el presente caso, vamos a realizar una instalación multi-servidor en un ambiente virtual donde instalaremos 4 servidores con distintos roles:
+<li>1 Zimbra Ldap Master</li>
+<li>1 Zimbra Ldap Replica</li>
+<li>1 Zimbra Mailbox</li>
+<li>1 Zimbra MTA/Proxy</li></p>
+
+<p>La gracia de esta instalación  es que nos permitirá ir creciendo de forma horizontal e ir adiconando servidores en la medida que necesitamos con solo ejecutar un par de comando y de forma totalmente desatendida.</p>
+
+<h4>Explicando el escenario</h4>
+
+<p>Como nuestro ambiente de instalación es virtual, todas los servidores serán clonados a partir de servidores que llamamos <i>templates</i> en donde previamente se realizó la instalación de los paquetes para cada tipo de rol. Por ejemplo para el servidor template Zimbra Ldap Master, realizamos una instalación con el comando:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">.</span><span class="n">/install</span><span class="o">.</span><span class="n">sh</span> <span class="o">-</span><span class="n">s</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Donde al momento de la consulta de que paquetes instalar le damos <i>Y</i> solo a la opción <code>zimbra-ldap</code>, por defecto esto también instalará el paquete <code>zimbra-core</code>.</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="ss">Miguel</span><span class="p">:</span><span class="n">zimbra</span><span class="err">$</span> <span class="no">VBoxManage</span> <span class="n">list</span> <span class="n">vms</span>
-</span><span class='line'><span class="s2">&quot;puppetserver&quot;</span> <span class="p">{</span><span class="mi">3830</span><span class="n">b010</span><span class="o">-</span><span class="mi">4</span><span class="n">fca</span><span class="o">-</span><span class="mi">4</span><span class="n">c29</span><span class="o">-</span><span class="mi">9225</span><span class="o">-</span><span class="mi">6647</span><span class="n">b1edcd7f</span><span class="p">}</span>
-</span><span class='line'><span class="s2">&quot;nagiosserver&quot;</span> <span class="p">{</span><span class="mi">3178</span><span class="n">a761</span><span class="o">-</span><span class="mi">0</span><span class="n">c61</span><span class="o">-</span><span class="mi">4</span><span class="n">ffb</span><span class="o">-</span><span class="mi">8</span><span class="n">fc8</span><span class="o">-</span><span class="n">d4bd4853be22</span><span class="p">}</span>
-</span><span class='line'><span class="s2">&quot;nagiosnode1&quot;</span> <span class="p">{</span><span class="mi">90</span><span class="n">da5db9</span><span class="o">-</span><span class="mi">2538</span><span class="o">-</span><span class="mi">4</span><span class="n">fe5</span><span class="o">-</span><span class="n">b76f</span><span class="o">-</span><span class="n">af68f83a8397</span><span class="p">}</span>
-</span><span class='line'><span class="s2">&quot;nagiosnode2&quot;</span> <span class="p">{</span><span class="n">e32fb9be</span><span class="o">-</span><span class="n">fb34</span><span class="o">-</span><span class="mi">4663</span><span class="o">-</span><span class="n">befb</span><span class="o">-</span><span class="mi">900</span><span class="n">f43b60cfb</span><span class="p">}</span>
-</span><span class='line'><span class="s2">&quot;samba4&quot;</span> <span class="p">{</span><span class="n">f5c753c3</span><span class="o">-</span><span class="n">c8e0</span><span class="o">-</span><span class="mi">4117</span><span class="o">-</span><span class="n">b05c</span><span class="o">-</span><span class="n">f635ebcae06d</span><span class="p">}</span>
-</span><span class='line'><span class="s2">&quot;docker.example.com&quot;</span> <span class="p">{</span><span class="mi">0</span><span class="n">c5213d4</span><span class="o">-</span><span class="mi">6</span><span class="n">d1a</span><span class="o">-</span><span class="mi">40</span><span class="n">b9</span><span class="o">-</span><span class="mi">9</span><span class="n">e44</span><span class="o">-</span><span class="n">cff9c3829d73</span><span class="p">}</span>
-</span><span class='line'><span class="s2">&quot;zimbra_default_1413222975386_53519&quot;</span> <span class="p">{</span><span class="mi">969175</span><span class="n">c2</span><span class="o">-</span><span class="mi">451</span><span class="n">c</span><span class="o">-</span><span class="mi">42</span><span class="n">fc</span><span class="o">-</span><span class="mi">98</span><span class="n">fd</span><span class="o">-</span><span class="mi">7946</span><span class="n">d6796bcc</span><span class="p">}</span>
-</span><span class='line'><span class="s2">&quot;zimbra&quot;</span> <span class="p">{</span><span class="mi">35</span><span class="n">ed5012</span><span class="o">-</span><span class="mi">4</span><span class="n">b33</span><span class="o">-</span><span class="mi">4</span><span class="n">b30</span><span class="o">-</span><span class="mi">869</span><span class="n">b</span><span class="o">-</span><span class="mi">35654</span><span class="n">b3e88b8</span><span class="p">}</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">zimbra</span><span class="o">-</span><span class="n">core</span><span class="o">-</span><span class="mi">8</span><span class="o">.</span><span class="mi">5</span><span class="o">.</span><span class="mi">1</span><span class="n">_GA_3056</span><span class="o">.</span><span class="n">RHEL6_64</span><span class="o">-</span><span class="mi">20141103151539</span><span class="o">.</span><span class="n">x86_64</span><span class="o">.</span><span class="n">rpm</span>
+</span><span class='line'><span class="n">zimbra</span><span class="o">-</span><span class="n">ldap</span><span class="o">-</span><span class="mi">8</span><span class="o">.</span><span class="mi">5</span><span class="o">.</span><span class="mi">1</span><span class="n">_GA_3056</span><span class="o">.</span><span class="n">RHEL6_64</span><span class="o">-</span><span class="mi">20141103151539</span><span class="o">.</span><span class="n">x86_64</span><span class="o">.</span><span class="n">rpm</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Vamos a eliminar la máquina de la línea nº8 UID <code>969175c2-451c-42fc-98fd-7946d6796bcc</code></p>
+<p>Y así con los restantes servidores, lo anterior tiene por objetivo que cuando clonemos el servidor template, este ya tenga los paquetes instalados y solo con ejecutar un comando se haga todo de forma desatendida.</p>
+
+<h4>Manos a la obra</h4>
+
+<p><li>Nota nº1: Antes que todo, tenemos que tener claro que para realizar una instalación de este tipo, tenemos que realizar la instalación en el siguiente orden: Zimbra Ldap Master &ndash;> Zimbra Mailbox &ndash;> Zimbra MTA &ndash;> Zimbra Ldap Réplica </li>
+<li>Nota nº2: Tenemos que tener la precaución de corregir el hostname y la tabla hosts de cada uno de los nuevos servidores a instalar </li></p>
+
+<h5>Instalando Zimbra Ldap Master</h5>
+
+<p>Para realizar la intalación del servidor Zimbra Ldap Master ejecutamos el comando:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="ss">Miguel</span><span class="p">:</span><span class="n">zimbra</span><span class="err">$</span> <span class="no">VBoxManage</span> <span class="n">unregistervm</span> <span class="mi">969175</span><span class="n">c2</span><span class="o">-</span><span class="mi">451</span><span class="n">c</span><span class="o">-</span><span class="mi">42</span><span class="n">fc</span><span class="o">-</span><span class="mi">98</span><span class="n">fd</span><span class="o">-</span><span class="mi">7946</span><span class="n">d6796bcc</span> <span class="o">-</span><span class="n">delete</span>
-</span><span class='line'><span class="mi">0</span><span class="sx">%..</span><span class="o">.</span><span class="mi">10</span><span class="sx">%..</span><span class="o">.</span><span class="mi">20</span><span class="sx">%..</span><span class="o">.</span><span class="mi">30</span><span class="sx">%..</span><span class="o">.</span><span class="mi">40</span><span class="sx">%..</span><span class="o">.</span><span class="mi">50</span><span class="sx">%..</span><span class="o">.</span><span class="mi">60</span><span class="sx">%..</span><span class="o">.</span><span class="mi">70</span><span class="sx">%..</span><span class="o">.</span><span class="mi">80</span><span class="sx">%..</span><span class="o">.</span><span class="mi">90</span><span class="sx">%..</span><span class="o">.</span><span class="mi">100</span><span class="o">%</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="sr">/opt/</span><span class="n">zimbra</span><span class="o">/</span><span class="n">libexec</span><span class="o">/</span><span class="n">zmsetup</span><span class="o">.</span><span class="n">pl</span>  <span class="o">-</span><span class="n">c</span> <span class="sr">/root/</span><span class="n">zimbra</span><span class="o">-</span><span class="n">conf</span><span class="o">/</span><span class="n">zcsOpenLdapMasterConfig</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Y ahora vemos que ya no esta</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="ss">Miguel</span><span class="p">:</span><span class="n">zimbra</span><span class="err">$</span> <span class="no">VBoxManage</span> <span class="n">list</span> <span class="n">vms</span>
-</span><span class='line'><span class="s2">&quot;puppetserver&quot;</span> <span class="p">{</span><span class="mi">3830</span><span class="n">b010</span><span class="o">-</span><span class="mi">4</span><span class="n">fca</span><span class="o">-</span><span class="mi">4</span><span class="n">c29</span><span class="o">-</span><span class="mi">9225</span><span class="o">-</span><span class="mi">6647</span><span class="n">b1edcd7f</span><span class="p">}</span>
-</span><span class='line'><span class="s2">&quot;CentOS-6.4-x86_64_1407080394847_1407&quot;</span> <span class="p">{</span><span class="n">bd5b11c8</span><span class="o">-</span><span class="n">a7e4</span><span class="o">-</span><span class="mi">4</span><span class="n">c6e</span><span class="o">-</span><span class="n">b6f2</span><span class="o">-</span><span class="mi">1646775</span><span class="n">e7f9a</span><span class="p">}</span>
-</span><span class='line'><span class="s2">&quot;nagiosServer_default_1407266455588_52667&quot;</span> <span class="p">{</span><span class="mi">2</span><span class="n">f3d8ae9</span><span class="o">-</span><span class="n">c8e5</span><span class="o">-</span><span class="mi">4557</span><span class="o">-</span><span class="n">a79e</span><span class="o">-</span><span class="mi">503</span><span class="n">a1af4646a</span><span class="p">}</span>
-</span><span class='line'><span class="s2">&quot;nagiosserver&quot;</span> <span class="p">{</span><span class="mi">3178</span><span class="n">a761</span><span class="o">-</span><span class="mi">0</span><span class="n">c61</span><span class="o">-</span><span class="mi">4</span><span class="n">ffb</span><span class="o">-</span><span class="mi">8</span><span class="n">fc8</span><span class="o">-</span><span class="n">d4bd4853be22</span><span class="p">}</span>
-</span><span class='line'><span class="s2">&quot;nagiosnode1&quot;</span> <span class="p">{</span><span class="mi">90</span><span class="n">da5db9</span><span class="o">-</span><span class="mi">2538</span><span class="o">-</span><span class="mi">4</span><span class="n">fe5</span><span class="o">-</span><span class="n">b76f</span><span class="o">-</span><span class="n">af68f83a8397</span><span class="p">}</span>
-</span><span class='line'><span class="s2">&quot;nagiosnode2&quot;</span> <span class="p">{</span><span class="n">e32fb9be</span><span class="o">-</span><span class="n">fb34</span><span class="o">-</span><span class="mi">4663</span><span class="o">-</span><span class="n">befb</span><span class="o">-</span><span class="mi">900</span><span class="n">f43b60cfb</span><span class="p">}</span>
-</span><span class='line'><span class="s2">&quot;samba4&quot;</span> <span class="p">{</span><span class="n">f5c753c3</span><span class="o">-</span><span class="n">c8e0</span><span class="o">-</span><span class="mi">4117</span><span class="o">-</span><span class="n">b05c</span><span class="o">-</span><span class="n">f635ebcae06d</span><span class="p">}</span>
-</span><span class='line'><span class="s2">&quot;docker.example.com&quot;</span> <span class="p">{</span><span class="mi">0</span><span class="n">c5213d4</span><span class="o">-</span><span class="mi">6</span><span class="n">d1a</span><span class="o">-</span><span class="mi">40</span><span class="n">b9</span><span class="o">-</span><span class="mi">9</span><span class="n">e44</span><span class="o">-</span><span class="n">cff9c3829d73</span><span class="p">}</span>
-</span><span class='line'><span class="s2">&quot;zimbra&quot;</span> <span class="p">{</span><span class="mi">35</span><span class="n">ed5012</span><span class="o">-</span><span class="mi">4</span><span class="n">b33</span><span class="o">-</span><span class="mi">4</span><span class="n">b30</span><span class="o">-</span><span class="mi">869</span><span class="n">b</span><span class="o">-</span><span class="mi">35654</span><span class="n">b3e88b8</span><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-		
-		
-	</div>
-
-</article>
-
-
-    <article class="post">
-	<header>
-		<h2 class="title">
-			
-			<a href="/blog/2014/08/26/eliminar-y-purgar-nodo-de-puppetdb-storeconfig/">
-			
-				Eliminar Y Purgar Nodo De PuppetDB (Storeconfig)</a>
-		</h2>
-		<div class="meta date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-08-26T11:43:00-04:00" pubdate data-updated="true">Aug 26<span>th</span>, 2014</time></div>
-	</header>
-	<div class="entry-content">
-		<p>Error:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="ss">Error</span><span class="p">:</span> <span class="no">Could</span> <span class="ow">not</span> <span class="n">retrieve</span> <span class="n">catalog</span> <span class="n">from</span> <span class="n">remote</span> <span class="ss">server</span><span class="p">:</span> <span class="no">Error</span> <span class="mi">400</span> <span class="n">on</span> <span class="ss">SERVER</span><span class="p">:</span> <span class="n">A</span> <span class="n">duplicate</span> <span class="n">resource</span> <span class="n">was</span> <span class="n">found</span> <span class="k">while</span> <span class="n">collecting</span> <span class="n">exported</span> <span class="n">resources</span><span class="p">,</span> <span class="n">with</span> <span class="n">the</span> <span class="n">type</span> <span class="ow">and</span> <span class="n">title</span> <span class="no">Nagios_host</span><span class="o">[</span><span class="k">next</span><span class="o">-</span><span class="n">haproxy</span><span class="o">-</span><span class="mi">1</span><span class="o">.</span><span class="n">domain</span><span class="o">.</span><span class="n">org</span><span class="o">]</span> <span class="n">on</span> <span class="n">node</span> <span class="n">nagios</span><span class="o">.</span><span class="n">domain</span><span class="o">.</span><span class="n">org</span>
-</span><span class='line'><span class="ss">Warning</span><span class="p">:</span> <span class="no">Not</span> <span class="n">using</span> <span class="n">cache</span> <span class="n">on</span> <span class="n">failed</span> <span class="n">catalog</span>
-</span><span class='line'><span class="ss">Error</span><span class="p">:</span> <span class="no">Could</span> <span class="ow">not</span> <span class="n">retrieve</span> <span class="n">catalog</span><span class="p">;</span> <span class="n">skipping</span> <span class="n">run</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Lo anterior era por que el node estaba registrado dos veces en PuppetDB una con el fqdn completo <i>next-haproxy-1.domain.org</i> y otra sin el dominio <i>next-haproxy-1</i> lo que generaba error al exportar los recursos. La solución fue eliminar uno y luego purgar el contenido de la base de datos:</p>
-
-<p><li>Remover el nodo de PuppetDB</li></p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[</span><span class="n">root</span><span class="vi">@nagios</span> <span class="n">servers</span><span class="o">]</span><span class="err">$</span> <span class="n">puppet</span> <span class="n">node</span> <span class="n">deactivate</span> <span class="k">next</span><span class="o">-</span><span class="n">haproxy</span><span class="o">-</span><span class="mi">1</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p><li>Remover el nodo de la DB</li></p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[</span><span class="n">root</span><span class="vi">@puppet</span> <span class="o">~]</span><span class="err">$</span> <span class="n">psql</span> <span class="o">-</span><span class="n">h</span> <span class="mi">127</span><span class="o">.</span><span class="mi">0</span><span class="o">.</span><span class="mi">0</span><span class="o">.</span><span class="mi">1</span> <span class="n">puppetdb</span> <span class="n">puppetdb</span>
-</span><span class='line'><span class="no">Password</span> <span class="k">for</span> <span class="n">user</span> <span class="ss">puppetdb</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">colocar</span> <span class="n">password</span><span class="o">&gt;</span>
-</span><span class='line'><span class="c1">#EJECUTAR</span>
-</span><span class='line'><span class="n">puppetdb</span><span class="o">=&gt;</span> <span class="n">delete</span> <span class="n">from</span> <span class="n">catalogs</span> <span class="n">where</span> <span class="n">certname</span> <span class="k">in</span> <span class="p">(</span><span class="nb">select</span> <span class="nb">name</span> <span class="n">from</span> <span class="n">certnames</span> <span class="n">where</span> <span class="n">deactivated</span> <span class="n">is</span> <span class="ow">not</span> <span class="n">null</span><span class="p">);</span>
-</span><span class='line'><span class="no">DELETE</span> <span class="mi">1</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-		
-		
-	</div>
-
-</article>
-
-
-    <article class="post">
-	<header>
-		<h2 class="title">
-			
-			<a href="/blog/2014/08/20/error-samba4-y-bind/">
-			
-				Error Kerberos Y Bind Con Samba4</a>
-		</h2>
-		<div class="meta date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-08-20T18:17:00-04:00" pubdate data-updated="true">Aug 20<span>th</span>, 2014</time></div>
-	</header>
-	<div class="entry-content">
-		<p>Al momento de validar la configuración de kerberos del usuario admin arrojaba lo siguiente:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[</span><span class="n">root</span><span class="vi">@samba</span> <span class="o">~]</span><span class="err">$</span> <span class="n">kinit</span> <span class="n">administrator</span><span class="vi">@EXAMPLE</span><span class="o">.</span><span class="n">LOCAL</span>
-</span><span class='line'><span class="ss">kinit</span><span class="p">:</span> <span class="no">Cannot</span> <span class="n">resolve</span> <span class="n">servers</span> <span class="k">for</span> <span class="no">KDC</span> <span class="k">in</span> <span class="n">realm</span> <span class="s2">&quot;EXAMPLE.LOCAL&quot;</span> <span class="k">while</span> <span class="n">getting</span> <span class="n">initial</span> <span class="n">credentials</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Al chequear las configuraciones DNS de de Samba arrojaba</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[</span><span class="n">root</span><span class="vi">@samba</span> <span class="o">~]</span><span class="err">$</span> <span class="n">samba_dnsupdate</span> <span class="o">--</span><span class="n">verbose</span> <span class="o">--</span><span class="n">all</span><span class="o">-</span><span class="n">names</span>
-</span><span class='line'><span class="ss">IPs</span><span class="p">:</span> <span class="o">[</span><span class="s1">&#39;10.0.2.15&#39;</span><span class="p">,</span> <span class="s1">&#39;10.10.0.200&#39;</span><span class="o">]</span>
-</span><span class='line'><span class="no">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">):</span>
-</span><span class='line'>  <span class="no">File</span> <span class="s2">&quot;/usr/local/samba/sbin/samba_dnsupdate&quot;</span><span class="p">,</span> <span class="n">line</span> <span class="mi">511</span><span class="p">,</span> <span class="k">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-</span><span class='line'>    <span class="n">get_credentials</span><span class="p">(</span><span class="n">lp</span><span class="p">)</span>
-</span><span class='line'>  <span class="no">File</span> <span class="s2">&quot;/usr/local/samba/sbin/samba_dnsupdate&quot;</span><span class="p">,</span> <span class="n">line</span> <span class="mi">124</span><span class="p">,</span> <span class="k">in</span> <span class="n">get_credentials</span>
-</span><span class='line'>    <span class="k">raise</span> <span class="n">e</span>
-</span><span class='line'><span class="ss">RuntimeError</span><span class="p">:</span> <span class="n">kinit</span> <span class="k">for</span> <span class="no">SAMBA</span><span class="vg">$@</span><span class="no">EXAMPLE</span><span class="o">.</span><span class="n">LOCAL</span> <span class="n">failed</span> <span class="p">(</span><span class="no">Cannot</span> <span class="n">contact</span> <span class="n">any</span> <span class="no">KDC</span> <span class="k">for</span> <span class="n">requested</span> <span class="n">realm</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h4>Solución ELIMINAR Bind</h4>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[</span><span class="n">root</span><span class="vi">@samba</span> <span class="o">~]</span><span class="err">$</span> <span class="n">yum</span> <span class="n">remove</span> <span class="n">bind</span> <span class="o">-</span><span class="n">y</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h4>Comprobamos</h4>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[</span><span class="n">root</span><span class="vi">@samba</span> <span class="o">~]</span><span class="c1"># kinit administrator@EXAMPLE.LOCAL</span>
-</span><span class='line'><span class="no">Password</span> <span class="k">for</span> <span class="n">administrator</span><span class="vi">@EXAMPLE</span><span class="o">.</span><span class="n">LOCAL</span><span class="p">:</span>
-</span><span class='line'><span class="ss">Warning</span><span class="p">:</span> <span class="no">Your</span> <span class="n">password</span> <span class="n">will</span> <span class="n">expire</span> <span class="k">in</span> <span class="mi">41</span> <span class="n">days</span> <span class="n">on</span> <span class="no">Wed</span> <span class="no">Oct</span>  <span class="mi">1</span> <span class="mi">17</span><span class="p">:</span><span class="mi">54</span><span class="p">:</span><span class="mo">00</span> <span class="mi">2014</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Y chequeamos la configuracion de DNS de Samba</p>
+<p>El contenido del archivo <i>zcsOpenLdapMasterConfig</i> es el siguiente:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -768,23 +726,121 @@ Para el caso, tenemos que tener las cuentas de correos en el archivo <code>/var/
 <span class='line-number'>15</span>
 <span class='line-number'>16</span>
 <span class='line-number'>17</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[</span><span class="n">root</span><span class="vi">@samba</span> <span class="o">~]</span><span class="c1"># samba_dnsupdate --verbose --all-names</span>
-</span><span class='line'><span class="ss">IPs</span><span class="p">:</span> <span class="o">[</span><span class="s1">&#39;10.0.2.15&#39;</span><span class="p">,</span> <span class="s1">&#39;10.10.0.200&#39;</span><span class="o">]</span>
-</span><span class='line'><span class="no">Calling</span> <span class="n">nsupdate</span> <span class="k">for</span> <span class="n">A</span> <span class="n">example</span><span class="o">.</span><span class="n">local</span> <span class="mi">10</span><span class="o">.</span><span class="mi">0</span><span class="o">.</span><span class="mi">2</span><span class="o">.</span><span class="mi">15</span>
-</span><span class='line'><span class="no">Outgoing</span> <span class="n">update</span> <span class="ss">query</span><span class="p">:</span>
-</span><span class='line'><span class="p">;;</span> <span class="o">-&gt;&gt;</span><span class="no">HEADER</span><span class="o">&lt;&lt;-</span> <span class="ss">opcode</span><span class="p">:</span> <span class="no">UPDATE</span><span class="p">,</span> <span class="ss">status</span><span class="p">:</span> <span class="no">NOERROR</span><span class="p">,</span> <span class="nb">id</span><span class="p">:</span>      <span class="mi">0</span>
-</span><span class='line'><span class="p">;;</span> <span class="ss">flags</span><span class="p">:;</span> <span class="ss">ZONE</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="ss">PREREQ</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="ss">UPDATE</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="ss">ADDITIONAL</span><span class="p">:</span> <span class="mi">0</span>
-</span><span class='line'><span class="p">;;</span> <span class="no">UPDATE</span> <span class="ss">SECTION</span><span class="p">:</span>
-</span><span class='line'><span class="n">example</span><span class="o">.</span><span class="n">local</span><span class="o">.</span>        <span class="mi">900</span> <span class="no">IN</span>  <span class="n">A</span>    <span class="mi">10</span><span class="o">.</span><span class="mi">0</span><span class="o">.</span><span class="mi">2</span><span class="o">.</span><span class="mi">15</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">;</span> <span class="no">TSIG</span> <span class="n">error</span> <span class="n">with</span> <span class="ss">server</span><span class="p">:</span> <span class="n">tsig</span> <span class="n">verify</span> <span class="n">failure</span>
-</span><span class='line'><span class="no">Failed</span> <span class="ss">nsupdate</span><span class="p">:</span> <span class="mi">2</span>
-</span><span class='line'><span class="no">Calling</span> <span class="n">nsupdate</span> <span class="k">for</span> <span class="n">A</span> <span class="n">samba</span><span class="o">.</span><span class="n">example</span><span class="o">.</span><span class="n">local</span> <span class="mi">10</span><span class="o">.</span><span class="mi">0</span><span class="o">.</span><span class="mi">2</span><span class="o">.</span><span class="mi">15</span>
-</span><span class='line'><span class="no">Outgoing</span> <span class="n">update</span> <span class="ss">query</span><span class="p">:</span>
-</span><span class='line'><span class="p">;;</span> <span class="o">-&gt;&gt;</span><span class="no">HEADER</span><span class="o">&lt;&lt;-</span> <span class="ss">opcode</span><span class="p">:</span> <span class="no">UPDATE</span><span class="p">,</span> <span class="ss">status</span><span class="p">:</span> <span class="no">NOERROR</span><span class="p">,</span> <span class="nb">id</span><span class="p">:</span>      <span class="mi">0</span>
-</span><span class='line'><span class="p">;;</span> <span class="ss">flags</span><span class="p">:;</span> <span class="ss">ZONE</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="ss">PREREQ</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="ss">UPDATE</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="ss">ADDITIONAL</span><span class="p">:</span> <span class="mi">0</span>
-</span><span class='line'><span class="p">;;</span> <span class="no">UPDATE</span> <span class="ss">SECTION</span><span class="p">:</span>
-</span><span class='line'><span class="n">samba</span><span class="o">.</span><span class="n">example</span><span class="o">.</span><span class="n">local</span><span class="o">.</span>    <span class="mi">900</span> <span class="no">IN</span>  <span class="n">A</span>    <span class="mi">10</span><span class="o">.</span><span class="mi">0</span><span class="o">.</span><span class="mi">2</span><span class="o">.</span><span class="mi">15</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">CREATEADMINPASS</span><span class="o">=</span><span class="s2">&quot;zimbra.passwd&quot;</span>
+</span><span class='line'><span class="no">LDAPROOTPASS</span><span class="o">=</span><span class="s2">&quot;c1bumJP_&quot;</span>
+</span><span class='line'><span class="no">LDAPADMINPASS</span><span class="o">=</span><span class="s2">&quot;c1bumJP_&quot;</span>
+</span><span class='line'><span class="no">LDAPREPPASS</span><span class="o">=</span><span class="s2">&quot;c1bumJP_&quot;</span>
+</span><span class='line'><span class="no">AVDOMAIN</span><span class="o">=</span><span class="s2">&quot;example-open.local&quot;</span>
+</span><span class='line'><span class="no">AVUSER</span><span class="o">=</span><span class="s2">&quot;admin@example-open.local&quot;</span>
+</span><span class='line'><span class="no">CREATEADMIN</span><span class="o">=</span><span class="s2">&quot;admin@example-open.local&quot;</span>
+</span><span class='line'><span class="no">CREATEDOMAIN</span><span class="o">=</span><span class="s2">&quot;example-open.local&quot;</span>
+</span><span class='line'><span class="no">DOCREATEADMIN</span><span class="o">=</span><span class="s2">&quot;no&quot;</span>
+</span><span class='line'><span class="no">DOCREATEDOMAIN</span><span class="o">=</span><span class="s2">&quot;yes&quot;</span>
+</span><span class='line'><span class="no">EXPANDMENU</span><span class="o">=</span><span class="s2">&quot;no&quot;</span>
+</span><span class='line'><span class="no">HOSTNAME</span><span class="o">=</span><span class="s2">&quot;zco-ldapmaster-1.example.com&quot;</span>
+</span><span class='line'><span class="no">HTTPPORT</span><span class="o">=</span><span class="s2">&quot;80&quot;</span>
+</span><span class='line'><span class="no">HTTPPROXY</span><span class="o">=</span><span class="s2">&quot;FALSE&quot;</span>
+</span><span class='line'><span class="no">HTTPPROXYPORT</span><span class="o">=</span><span class="s2">&quot;8080&quot;</span>
+</span><span class='line'><span class="no">HTTPSPORT</span><span class="o">=</span><span class="s2">&quot;443&quot;</span>
+</span><span class='line'><span class="no">HTTPSPROXYPORT</span><span class="o">=</span><span class="s2">&quot;8443&quot;</span>
+</span><span class='line'><span class="no">IMAPPORT</span><span class="o">=</span><span class="s2">&quot;143&quot;</span>
+</span><span class='line'><span class="no">IMAPPROXYPORT</span><span class="o">=</span><span class="s2">&quot;7143&quot;</span>
+</span><span class='line'><span class="no">IMAPSSLPORT</span><span class="o">=</span><span class="s2">&quot;993&quot;</span>
+</span><span class='line'><span class="no">IMAPSSLPROXYPORT</span><span class="o">=</span><span class="s2">&quot;7993&quot;</span>
+</span><span class='line'><span class="no">INSTALL_WEBAPPS</span><span class="o">=</span><span class="s2">&quot;zimlet&quot;</span>
+</span><span class='line'><span class="no">JAVAHOME</span><span class="o">=</span><span class="s2">&quot;/opt/zimbra/java&quot;</span>
+</span><span class='line'><span class="no">LDAPBESSEARCHSET</span><span class="o">=</span><span class="s2">&quot;set&quot;</span>
+</span><span class='line'><span class="no">LDAPHOST</span><span class="o">=</span><span class="s2">&quot;zco-ldapmaster-1.example.com&quot;</span>
+</span><span class='line'><span class="no">LDAPPORT</span><span class="o">=</span><span class="s2">&quot;389&quot;</span>
+</span><span class='line'><span class="no">LDAPREPLICATIONTYPE</span><span class="o">=</span><span class="s2">&quot;master&quot;</span>
+</span><span class='line'><span class="no">LDAPSERVERID</span><span class="o">=</span><span class="s2">&quot;2&quot;</span>
+</span><span class='line'><span class="no">MAILBOXDMEMORY</span><span class="o">=</span><span class="s2">&quot;1971&quot;</span>
+</span><span class='line'><span class="no">MAILPROXY</span><span class="o">=</span><span class="s2">&quot;FALSE&quot;</span>
+</span><span class='line'><span class="no">MODE</span><span class="o">=</span><span class="s2">&quot;https&quot;</span>
+</span><span class='line'><span class="no">MYSQLMEMORYPERCENT</span><span class="o">=</span><span class="s2">&quot;30&quot;</span>
+</span><span class='line'><span class="no">POPPORT</span><span class="o">=</span><span class="s2">&quot;110&quot;</span>
+</span><span class='line'><span class="no">POPPROXYPORT</span><span class="o">=</span><span class="s2">&quot;7110&quot;</span>
+</span><span class='line'><span class="no">POPSSLPORT</span><span class="o">=</span><span class="s2">&quot;995&quot;</span>
+</span><span class='line'><span class="no">POPSSLPROXYPORT</span><span class="o">=</span><span class="s2">&quot;7995&quot;</span>
+</span><span class='line'><span class="no">PROXYMODE</span><span class="o">=</span><span class="s2">&quot;https&quot;</span>
+</span><span class='line'><span class="no">REMOVE</span><span class="o">=</span><span class="s2">&quot;no&quot;</span>
+</span><span class='line'><span class="no">RUNVMHA</span><span class="o">=</span><span class="s2">&quot;no&quot;</span>
+</span><span class='line'><span class="no">SMTPDEST</span><span class="o">=</span><span class="s2">&quot;admin@example-open.local&quot;</span>
+</span><span class='line'><span class="no">SMTPHOST</span><span class="o">=</span><span class="s2">&quot;&quot;</span>
+</span><span class='line'><span class="no">SMTPNOTIFY</span><span class="o">=</span><span class="s2">&quot;yes&quot;</span>
+</span><span class='line'><span class="no">SMTPSOURCE</span><span class="o">=</span><span class="s2">&quot;admin@example-open.local&quot;</span>
+</span><span class='line'><span class="no">SNMPNOTIFY</span><span class="o">=</span><span class="s2">&quot;yes&quot;</span>
+</span><span class='line'><span class="no">SNMPTRAPHOST</span><span class="o">=</span><span class="s2">&quot;zco-ldapmaster-1.example.com&quot;</span>
+</span><span class='line'><span class="no">SPELLURL</span><span class="o">=</span><span class="s2">&quot;&quot;</span>
+</span><span class='line'><span class="no">STARTSERVERS</span><span class="o">=</span><span class="s2">&quot;yes&quot;</span>
+</span><span class='line'><span class="no">SYSTEMMEMORY</span><span class="o">=</span><span class="s2">&quot;7.7&quot;</span>
+</span><span class='line'><span class="no">UPGRADE</span><span class="o">=</span><span class="s2">&quot;yes&quot;</span>
+</span><span class='line'><span class="no">USESPELL</span><span class="o">=</span><span class="s2">&quot;no&quot;</span>
+</span><span class='line'><span class="no">ZIMBRA_REQ_SECURITY</span><span class="o">=</span><span class="s2">&quot;yes&quot;</span>
+</span><span class='line'><span class="n">ldap_bes_searcher_password</span><span class="o">=</span><span class="s2">&quot;ixXXkIh01&quot;</span>
+</span><span class='line'><span class="n">ldap_dit_base_dn_config</span><span class="o">=</span><span class="s2">&quot;cn=zimbra&quot;</span>
+</span><span class='line'><span class="n">ldap_nginx_password</span><span class="o">=</span><span class="s2">&quot;ixXXkIh01&quot;</span>
+</span><span class='line'><span class="n">mailboxd_directory</span><span class="o">=</span><span class="s2">&quot;/opt/zimbra/mailboxd&quot;</span>
+</span><span class='line'><span class="n">mailboxd_keystore</span><span class="o">=</span><span class="s2">&quot;/opt/zimbra/conf/keystore&quot;</span>
+</span><span class='line'><span class="n">mailboxd_keystore_password</span><span class="o">=</span><span class="s2">&quot;U3m8S3yK&quot;</span>
+</span><span class='line'><span class="n">mailboxd_truststore</span><span class="o">=</span><span class="s2">&quot;/opt/zimbra/java/jre/lib/security/cacerts&quot;</span>
+</span><span class='line'><span class="n">mailboxd_truststore_password</span><span class="o">=</span><span class="s2">&quot;changeit&quot;</span>
+</span><span class='line'><span class="n">ssl_default_digest</span><span class="o">=</span><span class="s2">&quot;sha256&quot;</span>
+</span><span class='line'><span class="n">zimbraClusterType</span><span class="o">=</span><span class="s2">&quot;none&quot;</span>
+</span><span class='line'><span class="n">zimbraIPMode</span><span class="o">=</span><span class="s2">&quot;ipv4&quot;</span>
+</span><span class='line'><span class="n">zimbraPrefTimeZoneId</span><span class="o">=</span><span class="s2">&quot;America/Santiago&quot;</span>
+</span><span class='line'><span class="n">zimbra_ldap_userdn</span><span class="o">=</span><span class="s2">&quot;uid=zimbra,cn=admins,cn=zimbra&quot;</span>
+</span><span class='line'><span class="n">zimbra_require_interprocess_security</span><span class="o">=</span><span class="s2">&quot;1&quot;</span>
+</span><span class='line'><span class="no">INSTALL_PACKAGES</span><span class="o">=</span><span class="s2">&quot;zimbra-core zimbra-ldap &quot;</span>
 </span></code></pre></td></tr></table></div></figure>
 
 

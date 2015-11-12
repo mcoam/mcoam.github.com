@@ -4,13 +4,76 @@
   <title><![CDATA[Bitácora]]></title>
   <link href="http://mcoam.github.io/atom.xml" rel="self"/>
   <link href="http://mcoam.github.io/"/>
-  <updated>2015-11-12T18:31:21-03:00</updated>
+  <updated>2015-11-12T18:52:51-03:00</updated>
   <id>http://mcoam.github.io/</id>
   <author>
     <name><![CDATA[Miguel Angel Coa Morales]]></name>
     
   </author>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Ansible: Configurando volúmen de datos HSM en Zimbra]]></title>
+    <link href="http://mcoam.github.io/blog/2015/11/12/ansible-configurando-volumen-de-datos-hsm-en-zimbra/"/>
+    <updated>2015-11-12T18:34:00-03:00</updated>
+    <id>http://mcoam.github.io/blog/2015/11/12/ansible-configurando-volumen-de-datos-hsm-en-zimbra</id>
+    <content type="html"><![CDATA[<p>El siguiente <code>Playbook</code> permite configurar un nuevo volúmen para datos (store) en un servidor Zimbra NE.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="o">---</span>
+</span><span class='line'><span class="o">-</span> <span class="nl">hosts:</span> <span class="n">ne_mailbox</span>
+</span><span class='line'>  <span class="nl">remote_user:</span> <span class="n">root</span>
+</span><span class='line'>  <span class="nl">vars:</span>
+</span><span class='line'>        <span class="nl">zmvolume:</span> <span class="s">&quot;/opt/zimbra/bin/zmvolume&quot;</span>
+</span><span class='line'>        <span class="nl">zmhsm:</span> <span class="s">&quot;/opt/zimbra/bin/zmhsm&quot;</span>
+</span><span class='line'>        <span class="nl">zmprov:</span> <span class="s">&quot;/opt/zimbra/bin/zmprov&quot;</span>
+</span><span class='line'>        <span class="nl">hsm_name:</span> <span class="s">&quot;hsm02&quot;</span>
+</span><span class='line'>        <span class="nl">hsm_id:</span> <span class="s">&quot;4&quot;</span> <span class="err">#</span> <span class="n">check</span> <span class="kt">id</span> <span class="n">zmvolume</span> <span class="o">-</span><span class="n">l</span> <span class="o">|</span><span class="n">grep</span> <span class="o">-</span><span class="n">B1</span> <span class="n">hsm02</span>
+</span><span class='line'>        <span class="nl">path:</span> <span class="s">&quot;/opt/zimbra/store_hsm_02/&quot;</span>
+</span><span class='line'>        <span class="nl">policy_option:</span> <span class="s">&quot; &#39;message,document,task,appointment,contact:before:-1month is:anywhere&#39; &quot;</span>
+</span><span class='line'>  <span class="nl">tasks:</span>
+</span><span class='line'>        <span class="o">-</span> <span class="nl">name:</span> <span class="s">&quot;Configura volumen HSM como volumen secundario&quot;</span>
+</span><span class='line'>          <span class="nl">command:</span> <span class="s">&quot;{ { zmvolume } } -a -name  -c true -t secondaryMessage -p { { path } }&quot;</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="o">-</span> <span class="nl">name:</span> <span class="s">&quot;Activamos nuevo volumen para manejar data&quot;</span>
+</span><span class='line'>          <span class="nl">command:</span> <span class="s">&quot;{ { zmvolume } } -sc -id { { hsm_id } } &quot;</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="o">-</span> <span class="nl">name:</span> <span class="s">&quot;Configuramos politica HSM: Todo por sobre 1 mes se mueve al nuevo volumen&quot;</span>
+</span><span class='line'>          <span class="nl">command:</span> <span class="s">&quot;{ { zmprov } } ms { { ansible_fqdn } } zimbraHsmPolicy { { policy_option } }&quot;</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="o">-</span> <span class="nl">name:</span> <span class="s">&quot;Arrancamos el proceso para mover correos al nuevo HSM&quot;</span>
+</span><span class='line'>          <span class="nl">command:</span> <span class="s">&quot;{ { zmhsm } } -t&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><b>Donde:<br></b>
+<code>path: "/opt/zimbra/store_hsm_02/"</code>: Corresponde al punto de montaje del nuevo recurso HSM.<br>
+<code>hsm_id: 4"</code>: Corresponde al ID que le asigna Zimbra al nuevo volúmen (disco).<br>
+<code>hsm_name: hsm02</code>: Corresponde al nombre que le colocamos al recurso HSM.<br></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Montar, leer y escribir en USB con formato NTFS en OSX Capitan]]></title>
@@ -148,6 +211,15 @@ De todas formas, lo anterior se puede corregir configrando el <code>imapsyn</cod
 <p></p>
 
 <p>Por ejemplo, hoy estamos a 10 y tiramos el imapsync en el destino empezará a sincronizar (borrando la data que no este en el host1) desde el día 5, con ello evitamos borrar los correos nuevos en el host2.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Migrando servidor físico a virtual en Proxmox]]></title>
+    <link href="http://mcoam.github.io/blog/2015/08/06/migrando-servidor-fisico-a-virtual-en-proxmox/"/>
+    <updated>2015-08-06T12:44:00-03:00</updated>
+    <id>http://mcoam.github.io/blog/2015/08/06/migrando-servidor-fisico-a-virtual-en-proxmox</id>
+    <content type="html"><![CDATA[
 ]]></content>
   </entry>
   
@@ -325,6 +397,196 @@ Para el caso, tenemos que tener las cuentas de correos en el archivo <code>/var/
   </entry>
   
   <entry>
+    <title type="html"><![CDATA[Instalación desatentida de Zimbra]]></title>
+    <link href="http://mcoam.github.io/blog/2014/11/27/instalacion-desatentida-de-zimbra/"/>
+    <updated>2014-11-27T17:20:00-03:00</updated>
+    <id>http://mcoam.github.io/blog/2014/11/27/instalacion-desatentida-de-zimbra</id>
+    <content type="html"><![CDATA[<p>Muchas veces al momento de instalar nuestro servidor de correos hemos pensado como poder automatizar este proceso, ya que en muchos casos las instalaciones son siempre las mismas,  por lo cual optimizar este trabajo mediante Kickstart sería de gran utilidad.  Por suerte en el caso de Zimbra es posible realizar esto mediante un archivo de configuración <i>Kickstart</i> donde le pasamos todos los datos necesarios que permitan realizar esta tarea (dominio, password admin, hostname, etc).</p>
+
+<p>En el presente caso, vamos a realizar una instalación multi-servidor en un ambiente virtual donde instalaremos 4 servidores con distintos roles:
+<li>1 Zimbra Ldap Master</li>
+<li>1 Zimbra Ldap Replica</li>
+<li>1 Zimbra Mailbox</li>
+<li>1 Zimbra MTA/Proxy</li></p>
+
+<p>La gracia de esta instalación  es que nos permitirá ir creciendo de forma horizontal e ir adiconando servidores en la medida que necesitamos con solo ejecutar un par de comando y de forma totalmente desatendida.</p>
+
+<h4>Explicando el escenario</h4>
+
+<p>Como nuestro ambiente de instalación es virtual, todas los servidores serán clonados a partir de servidores que llamamos <i>templates</i> en donde previamente se realizó la instalación de los paquetes para cada tipo de rol. Por ejemplo para el servidor template Zimbra Ldap Master, realizamos una instalación con el comando:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">.</span><span class="n">/install</span><span class="o">.</span><span class="n">sh</span> <span class="o">-</span><span class="n">s</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Donde al momento de la consulta de que paquetes instalar le damos <i>Y</i> solo a la opción <code>zimbra-ldap</code>, por defecto esto también instalará el paquete <code>zimbra-core</code>.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">zimbra</span><span class="o">-</span><span class="n">core</span><span class="o">-</span><span class="mi">8</span><span class="o">.</span><span class="mi">5</span><span class="o">.</span><span class="mi">1</span><span class="n">_GA_3056</span><span class="o">.</span><span class="n">RHEL6_64</span><span class="o">-</span><span class="mi">20141103151539</span><span class="o">.</span><span class="n">x86_64</span><span class="o">.</span><span class="n">rpm</span>
+</span><span class='line'><span class="n">zimbra</span><span class="o">-</span><span class="n">ldap</span><span class="o">-</span><span class="mi">8</span><span class="o">.</span><span class="mi">5</span><span class="o">.</span><span class="mi">1</span><span class="n">_GA_3056</span><span class="o">.</span><span class="n">RHEL6_64</span><span class="o">-</span><span class="mi">20141103151539</span><span class="o">.</span><span class="n">x86_64</span><span class="o">.</span><span class="n">rpm</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Y así con los restantes servidores, lo anterior tiene por objetivo que cuando clonemos el servidor template, este ya tenga los paquetes instalados y solo con ejecutar un comando se haga todo de forma desatendida.</p>
+
+<h4>Manos a la obra</h4>
+
+<p><li>Nota nº1: Antes que todo, tenemos que tener claro que para realizar una instalación de este tipo, tenemos que realizar la instalación en el siguiente orden: Zimbra Ldap Master &ndash;> Zimbra Mailbox &ndash;> Zimbra MTA &ndash;> Zimbra Ldap Réplica </li>
+<li>Nota nº2: Tenemos que tener la precaución de corregir el hostname y la tabla hosts de cada uno de los nuevos servidores a instalar </li></p>
+
+<h5>Instalando Zimbra Ldap Master</h5>
+
+<p>Para realizar la intalación del servidor Zimbra Ldap Master ejecutamos el comando:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="sr">/opt/</span><span class="n">zimbra</span><span class="o">/</span><span class="n">libexec</span><span class="o">/</span><span class="n">zmsetup</span><span class="o">.</span><span class="n">pl</span>  <span class="o">-</span><span class="n">c</span> <span class="sr">/root/</span><span class="n">zimbra</span><span class="o">-</span><span class="n">conf</span><span class="o">/</span><span class="n">zcsOpenLdapMasterConfig</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>El contenido del archivo <i>zcsOpenLdapMasterConfig</i> es el siguiente:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">CREATEADMINPASS</span><span class="o">=</span><span class="s2">&quot;zimbra.passwd&quot;</span>
+</span><span class='line'><span class="no">LDAPROOTPASS</span><span class="o">=</span><span class="s2">&quot;c1bumJP_&quot;</span>
+</span><span class='line'><span class="no">LDAPADMINPASS</span><span class="o">=</span><span class="s2">&quot;c1bumJP_&quot;</span>
+</span><span class='line'><span class="no">LDAPREPPASS</span><span class="o">=</span><span class="s2">&quot;c1bumJP_&quot;</span>
+</span><span class='line'><span class="no">AVDOMAIN</span><span class="o">=</span><span class="s2">&quot;example-open.local&quot;</span>
+</span><span class='line'><span class="no">AVUSER</span><span class="o">=</span><span class="s2">&quot;admin@example-open.local&quot;</span>
+</span><span class='line'><span class="no">CREATEADMIN</span><span class="o">=</span><span class="s2">&quot;admin@example-open.local&quot;</span>
+</span><span class='line'><span class="no">CREATEDOMAIN</span><span class="o">=</span><span class="s2">&quot;example-open.local&quot;</span>
+</span><span class='line'><span class="no">DOCREATEADMIN</span><span class="o">=</span><span class="s2">&quot;no&quot;</span>
+</span><span class='line'><span class="no">DOCREATEDOMAIN</span><span class="o">=</span><span class="s2">&quot;yes&quot;</span>
+</span><span class='line'><span class="no">EXPANDMENU</span><span class="o">=</span><span class="s2">&quot;no&quot;</span>
+</span><span class='line'><span class="no">HOSTNAME</span><span class="o">=</span><span class="s2">&quot;zco-ldapmaster-1.example.com&quot;</span>
+</span><span class='line'><span class="no">HTTPPORT</span><span class="o">=</span><span class="s2">&quot;80&quot;</span>
+</span><span class='line'><span class="no">HTTPPROXY</span><span class="o">=</span><span class="s2">&quot;FALSE&quot;</span>
+</span><span class='line'><span class="no">HTTPPROXYPORT</span><span class="o">=</span><span class="s2">&quot;8080&quot;</span>
+</span><span class='line'><span class="no">HTTPSPORT</span><span class="o">=</span><span class="s2">&quot;443&quot;</span>
+</span><span class='line'><span class="no">HTTPSPROXYPORT</span><span class="o">=</span><span class="s2">&quot;8443&quot;</span>
+</span><span class='line'><span class="no">IMAPPORT</span><span class="o">=</span><span class="s2">&quot;143&quot;</span>
+</span><span class='line'><span class="no">IMAPPROXYPORT</span><span class="o">=</span><span class="s2">&quot;7143&quot;</span>
+</span><span class='line'><span class="no">IMAPSSLPORT</span><span class="o">=</span><span class="s2">&quot;993&quot;</span>
+</span><span class='line'><span class="no">IMAPSSLPROXYPORT</span><span class="o">=</span><span class="s2">&quot;7993&quot;</span>
+</span><span class='line'><span class="no">INSTALL_WEBAPPS</span><span class="o">=</span><span class="s2">&quot;zimlet&quot;</span>
+</span><span class='line'><span class="no">JAVAHOME</span><span class="o">=</span><span class="s2">&quot;/opt/zimbra/java&quot;</span>
+</span><span class='line'><span class="no">LDAPBESSEARCHSET</span><span class="o">=</span><span class="s2">&quot;set&quot;</span>
+</span><span class='line'><span class="no">LDAPHOST</span><span class="o">=</span><span class="s2">&quot;zco-ldapmaster-1.example.com&quot;</span>
+</span><span class='line'><span class="no">LDAPPORT</span><span class="o">=</span><span class="s2">&quot;389&quot;</span>
+</span><span class='line'><span class="no">LDAPREPLICATIONTYPE</span><span class="o">=</span><span class="s2">&quot;master&quot;</span>
+</span><span class='line'><span class="no">LDAPSERVERID</span><span class="o">=</span><span class="s2">&quot;2&quot;</span>
+</span><span class='line'><span class="no">MAILBOXDMEMORY</span><span class="o">=</span><span class="s2">&quot;1971&quot;</span>
+</span><span class='line'><span class="no">MAILPROXY</span><span class="o">=</span><span class="s2">&quot;FALSE&quot;</span>
+</span><span class='line'><span class="no">MODE</span><span class="o">=</span><span class="s2">&quot;https&quot;</span>
+</span><span class='line'><span class="no">MYSQLMEMORYPERCENT</span><span class="o">=</span><span class="s2">&quot;30&quot;</span>
+</span><span class='line'><span class="no">POPPORT</span><span class="o">=</span><span class="s2">&quot;110&quot;</span>
+</span><span class='line'><span class="no">POPPROXYPORT</span><span class="o">=</span><span class="s2">&quot;7110&quot;</span>
+</span><span class='line'><span class="no">POPSSLPORT</span><span class="o">=</span><span class="s2">&quot;995&quot;</span>
+</span><span class='line'><span class="no">POPSSLPROXYPORT</span><span class="o">=</span><span class="s2">&quot;7995&quot;</span>
+</span><span class='line'><span class="no">PROXYMODE</span><span class="o">=</span><span class="s2">&quot;https&quot;</span>
+</span><span class='line'><span class="no">REMOVE</span><span class="o">=</span><span class="s2">&quot;no&quot;</span>
+</span><span class='line'><span class="no">RUNVMHA</span><span class="o">=</span><span class="s2">&quot;no&quot;</span>
+</span><span class='line'><span class="no">SMTPDEST</span><span class="o">=</span><span class="s2">&quot;admin@example-open.local&quot;</span>
+</span><span class='line'><span class="no">SMTPHOST</span><span class="o">=</span><span class="s2">&quot;&quot;</span>
+</span><span class='line'><span class="no">SMTPNOTIFY</span><span class="o">=</span><span class="s2">&quot;yes&quot;</span>
+</span><span class='line'><span class="no">SMTPSOURCE</span><span class="o">=</span><span class="s2">&quot;admin@example-open.local&quot;</span>
+</span><span class='line'><span class="no">SNMPNOTIFY</span><span class="o">=</span><span class="s2">&quot;yes&quot;</span>
+</span><span class='line'><span class="no">SNMPTRAPHOST</span><span class="o">=</span><span class="s2">&quot;zco-ldapmaster-1.example.com&quot;</span>
+</span><span class='line'><span class="no">SPELLURL</span><span class="o">=</span><span class="s2">&quot;&quot;</span>
+</span><span class='line'><span class="no">STARTSERVERS</span><span class="o">=</span><span class="s2">&quot;yes&quot;</span>
+</span><span class='line'><span class="no">SYSTEMMEMORY</span><span class="o">=</span><span class="s2">&quot;7.7&quot;</span>
+</span><span class='line'><span class="no">UPGRADE</span><span class="o">=</span><span class="s2">&quot;yes&quot;</span>
+</span><span class='line'><span class="no">USESPELL</span><span class="o">=</span><span class="s2">&quot;no&quot;</span>
+</span><span class='line'><span class="no">ZIMBRA_REQ_SECURITY</span><span class="o">=</span><span class="s2">&quot;yes&quot;</span>
+</span><span class='line'><span class="n">ldap_bes_searcher_password</span><span class="o">=</span><span class="s2">&quot;ixXXkIh01&quot;</span>
+</span><span class='line'><span class="n">ldap_dit_base_dn_config</span><span class="o">=</span><span class="s2">&quot;cn=zimbra&quot;</span>
+</span><span class='line'><span class="n">ldap_nginx_password</span><span class="o">=</span><span class="s2">&quot;ixXXkIh01&quot;</span>
+</span><span class='line'><span class="n">mailboxd_directory</span><span class="o">=</span><span class="s2">&quot;/opt/zimbra/mailboxd&quot;</span>
+</span><span class='line'><span class="n">mailboxd_keystore</span><span class="o">=</span><span class="s2">&quot;/opt/zimbra/conf/keystore&quot;</span>
+</span><span class='line'><span class="n">mailboxd_keystore_password</span><span class="o">=</span><span class="s2">&quot;U3m8S3yK&quot;</span>
+</span><span class='line'><span class="n">mailboxd_truststore</span><span class="o">=</span><span class="s2">&quot;/opt/zimbra/java/jre/lib/security/cacerts&quot;</span>
+</span><span class='line'><span class="n">mailboxd_truststore_password</span><span class="o">=</span><span class="s2">&quot;changeit&quot;</span>
+</span><span class='line'><span class="n">ssl_default_digest</span><span class="o">=</span><span class="s2">&quot;sha256&quot;</span>
+</span><span class='line'><span class="n">zimbraClusterType</span><span class="o">=</span><span class="s2">&quot;none&quot;</span>
+</span><span class='line'><span class="n">zimbraIPMode</span><span class="o">=</span><span class="s2">&quot;ipv4&quot;</span>
+</span><span class='line'><span class="n">zimbraPrefTimeZoneId</span><span class="o">=</span><span class="s2">&quot;America/Santiago&quot;</span>
+</span><span class='line'><span class="n">zimbra_ldap_userdn</span><span class="o">=</span><span class="s2">&quot;uid=zimbra,cn=admins,cn=zimbra&quot;</span>
+</span><span class='line'><span class="n">zimbra_require_interprocess_security</span><span class="o">=</span><span class="s2">&quot;1&quot;</span>
+</span><span class='line'><span class="no">INSTALL_PACKAGES</span><span class="o">=</span><span class="s2">&quot;zimbra-core zimbra-ldap &quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[Eliminar VM Vagrant]]></title>
     <link href="http://mcoam.github.io/blog/2014/10/13/eliminar-vm-vagrant/"/>
     <updated>2014-10-13T16:44:00-03:00</updated>
@@ -385,6 +647,138 @@ Para el caso, tenemos que tener las cuentas de correos en el archivo <code>/var/
 </span><span class='line'><span class="s2">&quot;samba4&quot;</span> <span class="p">{</span><span class="n">f5c753c3</span><span class="o">-</span><span class="n">c8e0</span><span class="o">-</span><span class="mi">4117</span><span class="o">-</span><span class="n">b05c</span><span class="o">-</span><span class="n">f635ebcae06d</span><span class="p">}</span>
 </span><span class='line'><span class="s2">&quot;docker.example.com&quot;</span> <span class="p">{</span><span class="mi">0</span><span class="n">c5213d4</span><span class="o">-</span><span class="mi">6</span><span class="n">d1a</span><span class="o">-</span><span class="mi">40</span><span class="n">b9</span><span class="o">-</span><span class="mi">9</span><span class="n">e44</span><span class="o">-</span><span class="n">cff9c3829d73</span><span class="p">}</span>
 </span><span class='line'><span class="s2">&quot;zimbra&quot;</span> <span class="p">{</span><span class="mi">35</span><span class="n">ed5012</span><span class="o">-</span><span class="mi">4</span><span class="n">b33</span><span class="o">-</span><span class="mi">4</span><span class="n">b30</span><span class="o">-</span><span class="mi">869</span><span class="n">b</span><span class="o">-</span><span class="mi">35654</span><span class="n">b3e88b8</span><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Jugando Con Docker]]></title>
+    <link href="http://mcoam.github.io/blog/2014/10/02/jugando-con-docker/"/>
+    <updated>2014-10-02T16:01:00-03:00</updated>
+    <id>http://mcoam.github.io/blog/2014/10/02/jugando-con-docker</id>
+    <content type="html"><![CDATA[<h4>Imagenes, Contenedores y Capas con Docker</h4>
+
+<p>Al momento de empezar a trabajar con Docker aparecen varios items que si bien no son nuevos en la virtualización tradicional (mediante hypervisores) de la forma que los trabaja Docker tienen un valor agregado no por si mismos sino por la suma de todos a la vez.</p>
+
+<h4>Capas en Docker</h4>
+
+<p>Las capas en Docker son los <i>bloques</i> en donde se van almacenando todos los cambios que puede tener un contenedor (Ej. instalación de paquetes, update del SO, etc) por cada cambio que se realiza en el contenedor se crea una capa nueva de escritura que va solapando las capas anteriores que quedan de solo lectura, es por ello que una capas al momento en que trabajamos con ella.</p>
+
+<h4>Docker image  Images never change once they are created.  Images can be linked.  A image that is stacked on another image can be referred to in a child parent analogy with the lower image being the parent.  The bottommost image is referred to as the base image and has no parent image.</h4>
+
+<p>A docker container – When you start a container you reference an image.  Docker pulls the required image and pulls the images parent image.  It continues to pull the parent images until it reaches the base image.  In addition, it creates a read-write layer for changes to be stored in when the container is running.  All of these layers as well as other container configuration information is stored in the container.</p>
+
+<p>Lo primero es crear el archivo Dockerfile con el siguiente contenido</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># Version: 0.0.2</span>
+</span><span class='line'><span class="no">From</span> <span class="ss">centos</span><span class="p">:</span><span class="n">latest</span>
+</span><span class='line'><span class="no">MAINTAINER</span> <span class="no">Miguel</span> <span class="no">Coa</span> <span class="s2">&quot;mcoa@example.com&quot;</span>
+</span><span class='line'><span class="c1">#RUN apt-get update</span>
+</span><span class='line'><span class="no">RUN</span> <span class="n">yum</span> <span class="n">install</span> <span class="n">httpd</span> <span class="o">-</span><span class="n">y</span>
+</span><span class='line'><span class="no">RUN</span> <span class="n">echo</span> <span class="s1">&#39;Hello world&#39;</span> <span class="o">&gt;</span> <span class="sr">/var/</span><span class="n">www</span><span class="o">/</span><span class="n">html</span><span class="o">/</span><span class="n">index</span><span class="o">.</span><span class="n">html</span>
+</span><span class='line'><span class="no">CMD</span> <span class="n">service</span> <span class="n">httpd</span> <span class="n">start</span>
+</span><span class='line'>
+</span><span class='line'><span class="no">EXPOSE</span> <span class="mi">80</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Lo anterior va a crear un contenedor en centos <i>latest</i>, le instalará apache, creará el index.html y dejara el servicio corriendo. Una vez que tengamos creado el Dockerfile, lanzamos el comando para crear el contenedor.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[</span><span class="n">root</span><span class="vi">@vagrant</span><span class="o">-</span><span class="n">centos7</span> <span class="n">static_web</span><span class="o">]</span><span class="c1"># docker build -t=&quot;mcoa01/static_web:v2&quot; . </span>
+</span><span class='line'><span class="no">Uploading</span> <span class="n">context</span>  <span class="mi">2</span><span class="o">.</span><span class="mi">56</span> <span class="n">kB</span>
+</span><span class='line'><span class="no">Uploading</span> <span class="n">context</span>
+</span><span class='line'><span class="no">Step</span> <span class="mi">0</span> <span class="p">:</span> <span class="no">From</span> <span class="ss">centos</span><span class="p">:</span><span class="n">latest</span>
+</span><span class='line'> <span class="o">---&gt;</span> <span class="mi">87</span><span class="n">e5b6b3ccc1</span>
+</span><span class='line'><span class="no">Step</span> <span class="mi">1</span> <span class="p">:</span> <span class="no">MAINTANER</span> <span class="no">Miguel</span> <span class="no">Coa</span> <span class="s2">&quot;mcoa@example.com&quot;</span>
+</span><span class='line'><span class="c1"># Skipping unknown instruction MAINTANER</span>
+</span><span class='line'><span class="no">Step</span> <span class="mi">2</span> <span class="p">:</span> <span class="no">RUN</span> <span class="n">yum</span> <span class="n">install</span> <span class="n">httpd</span> <span class="o">-</span><span class="n">y</span>
+</span><span class='line'> <span class="o">---&gt;</span> <span class="no">Using</span> <span class="n">cache</span>
+</span><span class='line'> <span class="o">---&gt;</span> <span class="mi">9</span><span class="n">ed85d674aab</span>
+</span><span class='line'><span class="no">Step</span> <span class="mi">3</span> <span class="p">:</span> <span class="no">RUN</span> <span class="n">echo</span> <span class="s1">&#39;Hi, I am in you container&#39;</span> <span class="o">&gt;</span> <span class="sr">/var/</span><span class="n">www</span><span class="o">/</span><span class="n">html</span><span class="o">/</span><span class="n">index</span><span class="o">.</span><span class="n">html</span>
+</span><span class='line'> <span class="o">---&gt;</span> <span class="no">Using</span> <span class="n">cache</span>
+</span><span class='line'> <span class="o">---&gt;</span> <span class="n">a7cac0dce7d7</span>
+</span><span class='line'><span class="no">Step</span> <span class="mi">4</span> <span class="p">:</span> <span class="no">CMD</span> <span class="n">service</span> <span class="n">httpd</span> <span class="n">start</span>
+</span><span class='line'> <span class="o">---&gt;</span> <span class="no">Using</span> <span class="n">cache</span>
+</span><span class='line'> <span class="o">---&gt;</span> <span class="mi">72</span><span class="n">e4df843d86</span>
+</span><span class='line'><span class="no">Step</span> <span class="mi">5</span> <span class="p">:</span> <span class="no">CMD</span> <span class="n">service</span> <span class="n">sshd</span> <span class="n">start</span>
+</span><span class='line'> <span class="o">---&gt;</span> <span class="no">Running</span> <span class="k">in</span> <span class="mi">475</span><span class="n">c04052b5e</span>
+</span><span class='line'> <span class="o">---&gt;</span> <span class="mi">88515</span><span class="n">c279ac0</span>
+</span><span class='line'><span class="no">Removing</span> <span class="n">intermediate</span> <span class="n">container</span> <span class="mi">475</span><span class="n">c04052b5e</span>
+</span><span class='line'><span class="no">Step</span> <span class="mi">6</span> <span class="p">:</span> <span class="no">EXPOSE</span> <span class="mi">80</span>
+</span><span class='line'> <span class="o">---&gt;</span> <span class="no">Running</span> <span class="k">in</span> <span class="mi">5</span><span class="n">b3b8cc184ed</span>
+</span><span class='line'> <span class="o">---&gt;</span> <span class="n">e080d67b10f4</span>
+</span><span class='line'><span class="no">Removing</span> <span class="n">intermediate</span> <span class="n">container</span> <span class="mi">5</span><span class="n">b3b8cc184ed</span>
+</span><span class='line'><span class="no">Successfully</span> <span class="n">built</span> <span class="n">e080d67b10f4</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Y vemos la imagen creada</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[</span><span class="n">root</span><span class="vi">@vagrant</span><span class="o">-</span><span class="n">centos7</span> <span class="n">static_web</span><span class="o">]</span><span class="c1"># docker images</span>
+</span><span class='line'><span class="no">REPOSITORY</span>          <span class="no">TAG</span>                 <span class="no">IMAGE</span> <span class="no">ID</span>            <span class="no">CREATED</span>             <span class="no">VIRTUAL</span> <span class="no">SIZE</span>
+</span><span class='line'><span class="n">mcoa01</span><span class="o">/</span><span class="n">static_web</span>   <span class="n">v2</span>                  <span class="n">e080d67b10f4</span>        <span class="mi">12</span> <span class="n">minutes</span> <span class="n">ago</span>      <span class="mi">321</span><span class="o">.</span><span class="mi">8</span> <span class="no">MB</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>Verificando nuestra imagen</h4>
+
+<h4>Creando el contenedor a partir de la imagen creada</h4>
+
+<p>Creando el contenedor</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[</span><span class="n">root</span><span class="vi">@vagrant</span><span class="o">-</span><span class="n">centos7</span> <span class="n">static_web</span><span class="o">]</span><span class="c1"># docker run -t -i -d -p 10.10.0.50:8080:80 --name static_web  mcoa01/static_web:v3  /bin/bash </span>
+</span><span class='line'><span class="mo">05014</span><span class="mi">89</span><span class="n">ccabc4ace605069fa0de4ade00bf9720913b137248650c66d17ce25b5</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Listamos los contenedores</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[</span><span class="n">root</span><span class="vi">@vagrant</span><span class="o">-</span><span class="n">centos7</span> <span class="n">static_web</span><span class="o">]</span><span class="c1"># docker ps -a</span>
+</span><span class='line'><span class="no">CONTAINER</span> <span class="no">ID</span>        <span class="no">IMAGE</span>                  <span class="no">COMMAND</span>             <span class="no">CREATED</span>             <span class="no">STATUS</span>              <span class="no">PORTS</span>                     <span class="no">NAMES</span>
+</span><span class='line'><span class="mo">05014</span><span class="mi">89</span><span class="n">ccabc</span>        <span class="n">mcoa01</span><span class="o">/</span><span class="n">static_web</span><span class="ss">:v3</span>   <span class="sr">/bin/</span><span class="n">bash</span>           <span class="mi">2</span> <span class="n">seconds</span> <span class="n">ago</span>       <span class="no">Up</span> <span class="mi">2</span> <span class="n">seconds</span>        <span class="mi">10</span><span class="o">.</span><span class="mi">10</span><span class="o">.</span><span class="mi">0</span><span class="o">.</span><span class="mi">50</span><span class="p">:</span><span class="mi">8080</span><span class="o">-&gt;</span><span class="mi">80</span><span class="o">/</span><span class="n">tcp</span>   <span class="n">static_web</span>
 </span></code></pre></td></tr></table></div></figure>
 
 ]]></content>
@@ -1329,628 +1723,6 @@ Luego de tener creado nuestro <code>Vagrantfile</code> creado, podemos iniciar n
 
 
 <p>No esta demás el link de la <a href="https://docs.vagrantup.com">documentación</a></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Módulo SSH Puppet y Hiera]]></title>
-    <link href="http://mcoam.github.io/blog/2014/06/26/modulo-ssh-puppet-y-hiera/"/>
-    <updated>2014-06-26T21:28:00-04:00</updated>
-    <id>http://mcoam.github.io/blog/2014/06/26/modulo-ssh-puppet-y-hiera</id>
-    <content type="html"><![CDATA[<p>El siguiente es un módulo de Puppet para la administración del servicio ssh en Linux (Rhel/Debian). La idea, de módulo es tomar los valores de las variables <code>port</code> <code>usedns</code> y <code>permit_root_login</code>.</p>
-
-<p><li>Clase init.pp</li>
-Esta clase lo que hace es heredar las definición de variables que nosotros tenemos en nuestra clase <code>params.pp</code> e instancia el orden de la ejecución de las clases.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[</span><span class="n">root</span><span class="vi">@master</span> <span class="n">manifests</span><span class="o">]</span><span class="err">$</span> <span class="n">cat</span> <span class="n">init</span><span class="o">.</span><span class="n">pp</span>
-</span><span class='line'><span class="k">class</span> <span class="n">sshmcoa</span> <span class="p">(</span>
-</span><span class='line'>    <span class="vg">$port</span>               <span class="o">=</span> <span class="vg">$sshmcoa</span><span class="o">::</span><span class="ss">params</span><span class="p">:</span><span class="ss">:port</span><span class="p">,</span>
-</span><span class='line'>    <span class="vg">$usedns</span>             <span class="o">=</span> <span class="vg">$sshmcoa</span><span class="o">::</span><span class="ss">params</span><span class="p">:</span><span class="ss">:usedns</span><span class="p">,</span>
-</span><span class='line'>    <span class="vg">$ensure</span>             <span class="o">=</span> <span class="vg">$sshmcoa</span><span class="o">::</span><span class="ss">params</span><span class="p">:</span><span class="ss">:ensure</span><span class="p">,</span>
-</span><span class='line'>    <span class="vg">$permit_root_login</span>  <span class="o">=</span> <span class="vg">$sshmcoa</span><span class="o">::</span><span class="ss">params</span><span class="p">:</span><span class="ss">:permit_root_login</span><span class="p">,</span>
-</span><span class='line'>    <span class="vg">$port</span>             <span class="o">=</span> <span class="vg">$sshmcoa</span><span class="o">::</span><span class="ss">params</span><span class="p">:</span><span class="ss">:port</span><span class="p">,</span>
-</span><span class='line'>    <span class="vg">$service_name</span> <span class="o">=</span> <span class="vg">$sshmcoa</span><span class="o">::</span><span class="ss">params</span><span class="p">:</span><span class="ss">:service_name</span><span class="p">,</span>
-</span><span class='line'>    <span class="vg">$config_file</span>  <span class="o">=</span> <span class="vg">$sshmcoa</span><span class="o">::</span><span class="ss">params</span><span class="p">:</span><span class="ss">:config_file</span><span class="p">,</span>
-</span><span class='line'>    <span class="vg">$package_name</span> <span class="o">=</span> <span class="vg">$sshmcoa</span><span class="o">::</span><span class="ss">params</span><span class="p">:</span><span class="ss">:package_name</span><span class="p">,</span>
-</span><span class='line'>    <span class="vg">$config_template</span>    <span class="o">=</span> <span class="vg">$sshmcoa</span><span class="o">::</span><span class="ss">params</span><span class="p">:</span><span class="ss">:config_template</span><span class="p">,</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">)</span> <span class="n">inherits</span> <span class="ss">sshmcoa</span><span class="p">:</span><span class="ss">:params</span> <span class="p">{</span>
-</span><span class='line'>  <span class="k">class</span> <span class="p">{</span><span class="s1">&#39;::sshmcoa::install&#39;</span><span class="p">:</span> <span class="p">}</span> <span class="o">-&gt;</span>
-</span><span class='line'>  <span class="k">class</span> <span class="p">{</span><span class="s1">&#39;::sshmcoa::config&#39;</span><span class="p">:}</span>  <span class="o">-&gt;</span>
-</span><span class='line'>  <span class="k">class</span> <span class="p">{</span><span class="s1">&#39;::sshmcoa::service&#39;</span><span class="p">:}</span>  <span class="o">-&gt;</span>
-</span><span class='line'>  <span class="no">Class</span> <span class="o">[</span><span class="s1">&#39;sshmcoa&#39;</span><span class="o">]</span>
-</span><span class='line'> <span class="c1">#notify {&quot;EL PUERTO ES: $port&quot;:}</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p><li>Clase params.pp</li>
-En esta clase se definen todos los parámetros a configurar por la clase dependiendo del sistema operativo (familia RedHat o familia Debian)</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[</span><span class="n">root</span><span class="vi">@master</span> <span class="n">manifests</span><span class="o">]</span><span class="err">$</span> <span class="n">cat</span> <span class="n">params</span><span class="o">.</span><span class="n">pp</span>
-</span><span class='line'><span class="k">class</span> <span class="ss">sshmcoa</span><span class="p">:</span><span class="ss">:params</span><span class="p">{</span>
-</span><span class='line'>    <span class="vg">$port</span>     <span class="o">=</span> <span class="s1">&#39;&#39;</span>
-</span><span class='line'>    <span class="vg">$usedns</span>       <span class="o">=</span> <span class="s1">&#39;&#39;</span>
-</span><span class='line'>    <span class="vg">$ensure</span>             <span class="o">=</span> <span class="s1">&#39;present&#39;</span>
-</span><span class='line'>    <span class="vg">$permit_root_login</span>  <span class="o">=</span> <span class="s1">&#39;&#39;</span>
-</span><span class='line'>    <span class="vg">$listen_address</span>     <span class="o">=</span> <span class="s1">&#39;0.0.0.0&#39;</span>
-</span><span class='line'>    <span class="vg">$config_template</span>    <span class="o">=</span> <span class="s1">&#39;sshmcoa/sshd_config.conf.erb&#39;</span>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'><span class="k">case</span> <span class="vg">$:</span><span class="ss">:osfamily</span> <span class="p">{</span>
-</span><span class='line'>          <span class="s1">&#39;Debian&#39;</span><span class="p">:{</span>
-</span><span class='line'>      <span class="vg">$config_file</span>  <span class="o">=</span> <span class="s1">&#39;/etc/ssh/sshd_config&#39;</span>
-</span><span class='line'>      <span class="vg">$service_name</span> <span class="o">=</span> <span class="s1">&#39;ssh&#39;</span>
-</span><span class='line'>      <span class="vg">$package_name</span> <span class="o">=</span> <span class="s1">&#39;ssh&#39;</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>          <span class="ss">default</span><span class="p">:{</span>
-</span><span class='line'>      <span class="vg">$config_file</span>  <span class="o">=</span> <span class="s1">&#39;/etc/ssh/sshd_config&#39;</span>
-</span><span class='line'>      <span class="vg">$service_name</span> <span class="o">=</span> <span class="s1">&#39;sshd&#39;</span>
-</span><span class='line'>      <span class="vg">$package_name</span> <span class="o">=</span> <span class="s1">&#39;openssh-server&#39;</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>     <span class="p">}</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<!-- more -->
-
-
-<p><li>Clase install.pp</li>
-Esta es la clase encargada de la instalación del paquete para el servicio ssh, dependiendo del <code>osfamily</code> se instalará el pauete <code>ssh</code> o <code>openssh-server</code></p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[</span><span class="n">root</span><span class="vi">@master</span> <span class="n">manifests</span><span class="o">]</span><span class="err">$</span> <span class="n">cat</span> <span class="n">install</span><span class="o">.</span><span class="n">pp</span>
-</span><span class='line'><span class="k">class</span> <span class="ss">sshmcoa</span><span class="p">:</span><span class="ss">:install</span> <span class="n">inherits</span> <span class="n">sshmcoa</span> <span class="p">{</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">case</span> <span class="vg">$:</span><span class="ss">:osfamily</span> <span class="p">{</span>
-</span><span class='line'>        <span class="s1">&#39;Debian&#39;</span><span class="p">:{</span>
-</span><span class='line'>                <span class="n">package</span> <span class="p">{</span><span class="s2">&quot;$package_name&quot;</span><span class="p">:</span>
-</span><span class='line'>                        <span class="k">ensure</span> <span class="o">=&gt;</span> <span class="s1">&#39;installed&#39;</span>
-</span><span class='line'>                <span class="p">}</span>
-</span><span class='line'>        <span class="p">}</span>
-</span><span class='line'>        <span class="ss">default</span><span class="p">:{</span>
-</span><span class='line'>                <span class="n">package</span> <span class="p">{</span><span class="s2">&quot;$package_name&quot;</span><span class="p">:</span>
-</span><span class='line'>                        <span class="k">ensure</span> <span class="o">=&gt;</span> <span class="s1">&#39;installed&#39;</span>
-</span><span class='line'>          <span class="p">}</span>
-</span><span class='line'>      <span class="p">}</span>
-</span><span class='line'>   <span class="p">}</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p><li>Clase service.pp</li>
-Se configurar las opciones propias del servicio ssh</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[</span><span class="n">root</span><span class="vi">@master</span> <span class="n">manifests</span><span class="o">]</span><span class="err">$</span> <span class="n">cat</span> <span class="n">service</span><span class="o">.</span><span class="n">pp</span>
-</span><span class='line'><span class="k">class</span> <span class="ss">sshmcoa</span><span class="p">:</span><span class="ss">:service</span> <span class="n">inherits</span> <span class="n">sshmcoa</span> <span class="p">{</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="n">service</span> <span class="p">{</span><span class="s2">&quot;$service_name&quot;</span><span class="p">:</span>
-</span><span class='line'>          <span class="k">ensure</span>     <span class="o">=&gt;</span> <span class="n">running</span><span class="p">,</span>
-</span><span class='line'>          <span class="n">hasstatus</span>  <span class="o">=&gt;</span> <span class="kp">true</span><span class="p">,</span>
-</span><span class='line'>          <span class="n">hasrestart</span> <span class="o">=&gt;</span> <span class="kp">true</span><span class="p">,</span>
-</span><span class='line'>          <span class="n">enable</span>      <span class="o">=&gt;</span> <span class="kp">true</span><span class="p">,</span>
-</span><span class='line'>          <span class="nb">require</span>    <span class="o">=&gt;</span> <span class="no">Class</span><span class="o">[</span><span class="ss">sshmcoa</span><span class="p">:</span><span class="ss">:config</span><span class="o">]</span>
-</span><span class='line'>  <span class="p">}</span>    
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p><li>Clase config.pp</li>
-Configuramos los valores del archivo sshd_config. El nombre del archivo viene heredado de la de la clase principal bajo la variable <code>$config_file</code>, y el contenido <code>content</code> que tendrá el archivo es creado mediante un template <code>.erb</code></p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[</span><span class="n">root</span><span class="vi">@master</span> <span class="n">manifests</span><span class="o">]</span><span class="c1"># cat config.pp </span>
-</span><span class='line'><span class="k">class</span> <span class="ss">sshmcoa</span><span class="p">:</span><span class="ss">:config</span> <span class="n">inherits</span> <span class="n">sshmcoa</span> <span class="p">{</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="n">file</span> <span class="p">{</span> <span class="vg">$config_file</span><span class="p">:</span>
-</span><span class='line'>          <span class="k">ensure</span>  <span class="o">=&gt;</span> <span class="vg">$ensure</span><span class="p">,</span>
-</span><span class='line'>          <span class="n">owner</span>   <span class="o">=&gt;</span> <span class="s1">&#39;root&#39;</span><span class="p">,</span>
-</span><span class='line'>          <span class="n">group</span>   <span class="o">=&gt;</span> <span class="s1">&#39;root&#39;</span><span class="p">,</span>
-</span><span class='line'>          <span class="n">mode</span>    <span class="o">=&gt;</span> <span class="s1">&#39;600&#39;</span><span class="p">,</span>
-</span><span class='line'>          <span class="n">content</span> <span class="o">=&gt;</span> <span class="n">template</span><span class="p">(</span><span class="vg">$config_template</span><span class="p">),</span>
-</span><span class='line'>      <span class="n">notify</span>  <span class="o">=&gt;</span> <span class="no">Service</span><span class="o">[</span><span class="s2">&quot;$service_name&quot;</span><span class="o">]</span>
-</span><span class='line'>      <span class="p">}</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p><li>Archivo sshd_config.conf.erb</li>
-Este es el arhivo .erb que se crea con el contenido dinámico con el valor de las variables que fueron ingresadas desde <code>Hiera</code>. Para el caso de la clase, los valores que modificamos son <code>port</code> <code>usedns</code> y <code>permit_root_login</code> y para importalos al template tenemos que utilizar el formato <code>&lt;%= @NOMBRE_DE_VARIABLE %></code></p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[</span><span class="n">root</span><span class="vi">@master</span> <span class="n">manifests</span><span class="o">]</span><span class="err">$</span> <span class="n">cat</span> <span class="o">.</span><span class="n">.</span><span class="o">/</span><span class="n">templates</span><span class="o">/</span><span class="n">sshd_config</span><span class="o">.</span><span class="n">conf</span><span class="o">.</span><span class="n">erb</span>
-</span><span class='line'><span class="c1"># sshd.conf: Managed by Puppet.</span>
-</span><span class='line'><span class="c1">#</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1">#Port Puppet</span>
-</span><span class='line'><span class="no">Port</span> <span class="o">&lt;</span><span class="sx">%= @port %&gt;</span>
-</span><span class='line'><span class="sx">Protocol 2</span>
-</span><span class='line'><span class="sx">SyslogFacility AUTHPRIV</span>
-</span><span class='line'><span class="sx">PasswordAuthentication yes</span>
-</span><span class='line'><span class="sx">ChallengeResponseAuthentication no</span>
-</span><span class='line'><span class="sx">GSSAPIAuthentication yes</span>
-</span><span class='line'><span class="sx">GSSAPICleanupCredentials yes</span>
-</span><span class='line'><span class="sx">##PermitRootLogin Puppet</span>
-</span><span class='line'><span class="sx">PermitRootLogin &lt;%=</span> <span class="vi">@permit_root_login</span> <span class="sx">%&gt;</span>
-</span><span class='line'><span class="sx">UsePAM yes</span>
-</span><span class='line'><span class="sx">#UseDNS Puppet</span>
-</span><span class='line'><span class="sx">UseDNS &lt;%= @usedns %&gt;</span>
-</span><span class='line'><span class="no">AcceptEnv</span> <span class="no">LANG</span> <span class="no">LC_CTYPE</span> <span class="no">LC_NUMERIC</span> <span class="no">LC_TIME</span> <span class="no">LC_COLLATE</span> <span class="no">LC_MONETARY</span> <span class="no">LC_MESSAGES</span>
-</span><span class='line'><span class="no">AcceptEnv</span> <span class="no">LC_PAPER</span> <span class="no">LC_NAME</span> <span class="no">LC_ADDRESS</span> <span class="no">LC_TELEPHONE</span> <span class="no">LC_MEASUREMENT</span>
-</span><span class='line'><span class="no">AcceptEnv</span> <span class="no">LC_IDENTIFICATION</span> <span class="no">LC_ALL</span> <span class="no">LANGUAGE</span>
-</span><span class='line'><span class="no">AcceptEnv</span> <span class="no">XMODIFIERS</span>
-</span><span class='line'><span class="no">X11Forwarding</span> <span class="n">yes</span>
-</span><span class='line'><span class="no">Subsystem</span> <span class="n">sftp</span> <span class="sr">/usr/</span><span class="n">libexec</span><span class="o">/</span><span class="n">openssh</span><span class="o">/</span><span class="n">sftp</span><span class="o">-</span><span class="n">server</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p><li>Archivo Hiera.yaml</li>
-Dentro de nuestro <code>common.yaml</code> configuramos los valores que tendrán las variables del servicio ssh.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[</span><span class="n">root</span><span class="vi">@master</span> <span class="n">hieradata</span><span class="o">]</span><span class="err">$</span> <span class="n">cat</span> <span class="n">common</span><span class="o">.</span><span class="n">yaml</span>
-</span><span class='line'><span class="o">---</span>
-</span><span class='line'><span class="ss">classes</span><span class="p">:</span>
-</span><span class='line'>     <span class="o">-</span> <span class="n">sshmcoa</span>
-</span><span class='line'>
-</span><span class='line'><span class="ss">sshmcoa</span><span class="p">:</span><span class="ss">:port</span><span class="p">:</span> <span class="s1">&#39;2222&#39;</span>
-</span><span class='line'><span class="ss">sshmcoa</span><span class="p">:</span><span class="ss">:usedns</span><span class="p">:</span> <span class="s1">&#39;no&#39;</span>
-</span><span class='line'><span class="ss">sshmcoa</span><span class="p">:</span><span class="ss">:permit_root_login</span><span class="p">:</span> <span class="s1">&#39;no&#39;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Finalmente cuando conectemos el nodo veremos como se ejecuta la clase con los valores que le hemos pasado</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[</span><span class="n">root</span><span class="vi">@node1</span> <span class="n">etc</span><span class="o">]</span><span class="c1"># !puppet</span>
-</span><span class='line'><span class="n">puppet</span> <span class="n">agent</span> <span class="o">--</span><span class="nb">test</span>
-</span><span class='line'><span class="ss">Info</span><span class="p">:</span> <span class="no">Retrieving</span> <span class="n">plugin</span>
-</span><span class='line'><span class="ss">Info</span><span class="p">:</span> <span class="no">Loading</span> <span class="n">facts</span> <span class="k">in</span> <span class="sr">/var/</span><span class="n">lib</span><span class="o">/</span><span class="n">puppet</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">facter</span><span class="o">/</span><span class="n">root_home</span><span class="o">.</span><span class="n">rb</span>
-</span><span class='line'><span class="ss">Info</span><span class="p">:</span> <span class="no">Loading</span> <span class="n">facts</span> <span class="k">in</span> <span class="sr">/var/</span><span class="n">lib</span><span class="o">/</span><span class="n">puppet</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">facter</span><span class="o">/</span><span class="n">puppet_vardir</span><span class="o">.</span><span class="n">rb</span>
-</span><span class='line'><span class="ss">Info</span><span class="p">:</span> <span class="no">Loading</span> <span class="n">facts</span> <span class="k">in</span> <span class="sr">/var/</span><span class="n">lib</span><span class="o">/</span><span class="n">puppet</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">facter</span><span class="o">/</span><span class="n">pe_version</span><span class="o">.</span><span class="n">rb</span>
-</span><span class='line'><span class="ss">Info</span><span class="p">:</span> <span class="no">Loading</span> <span class="n">facts</span> <span class="k">in</span> <span class="sr">/var/</span><span class="n">lib</span><span class="o">/</span><span class="n">puppet</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">facter</span><span class="o">/</span><span class="n">hosts_managed</span><span class="o">.</span><span class="n">rb</span>
-</span><span class='line'><span class="ss">Info</span><span class="p">:</span> <span class="no">Loading</span> <span class="n">facts</span> <span class="k">in</span> <span class="sr">/var/</span><span class="n">lib</span><span class="o">/</span><span class="n">puppet</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">facter</span><span class="o">/</span><span class="n">facter_dot_d</span><span class="o">.</span><span class="n">rb</span>
-</span><span class='line'><span class="ss">Info</span><span class="p">:</span> <span class="no">Caching</span> <span class="n">catalog</span> <span class="k">for</span> <span class="n">node1</span><span class="o">.</span><span class="n">example</span><span class="o">.</span><span class="n">com</span>
-</span><span class='line'><span class="ss">Info</span><span class="p">:</span> <span class="no">Applying</span> <span class="n">configuration</span> <span class="n">version</span> <span class="s1">&#39;1401042981&#39;</span>
-</span><span class='line'><span class="ss">Notice</span><span class="p">:</span> <span class="sr">/Stage[main]/</span><span class="ss">Sshmcoa</span><span class="p">:</span><span class="ss">:Install</span><span class="o">/</span><span class="no">Package</span><span class="o">[</span><span class="n">openssh</span><span class="o">-</span><span class="n">server</span><span class="o">]/</span><span class="k">ensure</span><span class="p">:</span> <span class="n">created</span>
-</span><span class='line'><span class="ss">Notice</span><span class="p">:</span> <span class="sr">/File[/e</span><span class="n">tc</span><span class="o">/</span><span class="n">ssh</span><span class="o">/</span><span class="n">sshd_config</span><span class="o">]/</span><span class="ss">content</span><span class="p">:</span>
-</span><span class='line'><span class="o">---</span> <span class="sr">/etc/ss</span><span class="n">h</span><span class="o">/</span><span class="n">sshd_config</span>  <span class="mi">2013</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">22</span> <span class="mi">19</span><span class="p">:</span><span class="mi">40</span><span class="p">:</span><span class="mo">03</span><span class="o">.</span><span class="mo">000000000</span> <span class="o">-</span><span class="mo">0300</span>
-</span><span class='line'><span class="o">.</span><span class="n">.</span><span class="o">.</span><span class="n">.</span>
-</span><span class='line'><span class="o">.</span><span class="n">.</span><span class="o">.</span><span class="n">.</span>
-</span><span class='line'><span class="o">.</span><span class="n">.</span><span class="o">.</span><span class="n">.</span>
-</span><span class='line'><span class="ss">Info</span><span class="p">:</span> <span class="no">FileBucket</span> <span class="n">adding</span> <span class="p">{</span><span class="n">md5</span><span class="p">}</span><span class="mi">53</span><span class="n">ad75eb1f2269d23f6e4228353cbca3</span>
-</span><span class='line'><span class="ss">Info</span><span class="p">:</span> <span class="sr">/File[/e</span><span class="n">tc</span><span class="o">/</span><span class="n">ssh</span><span class="o">/</span><span class="n">sshd_config</span><span class="o">]</span><span class="p">:</span> <span class="no">Filebucketed</span> <span class="sr">/etc/ss</span><span class="n">h</span><span class="o">/</span><span class="n">sshd_config</span> <span class="n">to</span> <span class="n">puppet</span> <span class="n">with</span> <span class="n">sum</span> <span class="mi">53</span><span class="n">ad75eb1f2269d23f6e4228353cbca3</span>
-</span><span class='line'><span class="ss">Notice</span><span class="p">:</span> <span class="sr">/File[/e</span><span class="n">tc</span><span class="o">/</span><span class="n">ssh</span><span class="o">/</span><span class="n">sshd_config</span><span class="o">]/</span><span class="ss">content</span><span class="p">:</span> <span class="n">content</span> <span class="n">changed</span> <span class="s1">&#39;{md5}53ad75eb1f2269d23f6e4228353cbca3&#39;</span> <span class="n">to</span> <span class="s1">&#39;{md5}22a041c1bbfd208de0259a2403bf3cbb&#39;</span>
-</span><span class='line'><span class="ss">Info</span><span class="p">:</span> <span class="sr">/File[/e</span><span class="n">tc</span><span class="o">/</span><span class="n">ssh</span><span class="o">/</span><span class="n">sshd_config</span><span class="o">]</span><span class="p">:</span> <span class="no">Scheduling</span> <span class="n">refresh</span> <span class="n">of</span> <span class="no">Service</span><span class="o">[</span><span class="n">sshd</span><span class="o">]</span>
-</span><span class='line'><span class="ss">Notice</span><span class="p">:</span> <span class="sr">/Stage[main]/</span><span class="ss">Sshmcoa</span><span class="p">:</span><span class="ss">:Service</span><span class="o">/</span><span class="no">Service</span><span class="o">[</span><span class="n">sshd</span><span class="o">]/</span><span class="k">ensure</span><span class="p">:</span> <span class="k">ensure</span> <span class="n">changed</span> <span class="s1">&#39;stopped&#39;</span> <span class="n">to</span> <span class="s1">&#39;running&#39;</span>
-</span><span class='line'><span class="ss">Info</span><span class="p">:</span> <span class="sr">/Stage[main]/</span><span class="ss">Sshmcoa</span><span class="p">:</span><span class="ss">:Service</span><span class="o">/</span><span class="no">Service</span><span class="o">[</span><span class="n">sshd</span><span class="o">]</span><span class="p">:</span> <span class="no">Unscheduling</span> <span class="n">refresh</span> <span class="n">on</span> <span class="no">Service</span><span class="o">[</span><span class="n">sshd</span><span class="o">]</span>
-</span><span class='line'><span class="ss">Notice</span><span class="p">:</span> <span class="no">EL</span> <span class="no">PUERTO</span> <span class="ss">ES</span><span class="p">:</span> <span class="mi">2222</span>
-</span><span class='line'><span class="ss">Notice</span><span class="p">:</span> <span class="sr">/Stage[main]/</span><span class="no">Sshmcoa</span><span class="o">/</span><span class="no">Notify</span><span class="o">[</span><span class="no">EL</span> <span class="no">PUERTO</span> <span class="ss">ES</span><span class="p">:</span> <span class="mi">2222</span><span class="o">]/</span><span class="ss">message</span><span class="p">:</span> <span class="n">defined</span> <span class="s1">&#39;message&#39;</span> <span class="n">as</span> <span class="s1">&#39;EL PUERTO ES: 2222&#39;</span>
-</span><span class='line'><span class="ss">Notice</span><span class="p">:</span> <span class="no">Finished</span> <span class="n">catalog</span> <span class="n">run</span> <span class="k">in</span> <span class="mi">16</span><span class="o">.</span><span class="mi">27</span> <span class="n">seconds</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Si vemos el contenido observaremos que se creó tal cual esta definido en nuestro template erb.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[</span><span class="n">root</span><span class="vi">@node1</span> <span class="n">etc</span><span class="o">]</span><span class="c1"># cat /etc/ssh/sshd_config </span>
-</span><span class='line'><span class="c1"># sshd.conf: Managed by Puppet.</span>
-</span><span class='line'><span class="c1">#</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1">#Port Puppet</span>
-</span><span class='line'><span class="no">Port</span> <span class="mi">2222</span>
-</span><span class='line'><span class="no">Protocol</span> <span class="mi">2</span>
-</span><span class='line'><span class="no">SyslogFacility</span> <span class="no">AUTHPRIV</span>
-</span><span class='line'><span class="no">PasswordAuthentication</span> <span class="n">yes</span>
-</span><span class='line'><span class="no">ChallengeResponseAuthentication</span> <span class="n">no</span>
-</span><span class='line'><span class="no">GSSAPIAuthentication</span> <span class="n">yes</span>
-</span><span class='line'><span class="no">GSSAPICleanupCredentials</span> <span class="n">yes</span>
-</span><span class='line'><span class="c1">##PermitRootLogin Puppet</span>
-</span><span class='line'><span class="no">PermitRootLogin</span> <span class="n">no</span>
-</span><span class='line'><span class="no">UsePAM</span> <span class="n">yes</span>
-</span><span class='line'><span class="c1">#UseDNS Puppet</span>
-</span><span class='line'><span class="no">UseDNS</span> <span class="n">no</span>
-</span><span class='line'><span class="no">AcceptEnv</span> <span class="no">LANG</span> <span class="no">LC_CTYPE</span> <span class="no">LC_NUMERIC</span> <span class="no">LC_TIME</span> <span class="no">LC_COLLATE</span> <span class="no">LC_MONETARY</span> <span class="no">LC_MESSAGES</span>
-</span><span class='line'><span class="no">AcceptEnv</span> <span class="no">LC_PAPER</span> <span class="no">LC_NAME</span> <span class="no">LC_ADDRESS</span> <span class="no">LC_TELEPHONE</span> <span class="no">LC_MEASUREMENT</span>
-</span><span class='line'><span class="no">AcceptEnv</span> <span class="no">LC_IDENTIFICATION</span> <span class="no">LC_ALL</span> <span class="no">LANGUAGE</span>
-</span><span class='line'><span class="no">AcceptEnv</span> <span class="no">XMODIFIERS</span>
-</span><span class='line'><span class="no">X11Forwarding</span> <span class="n">yes</span>
-</span><span class='line'><span class="no">Subsystem</span> <span class="n">sftp</span> <span class="sr">/usr/</span><span class="n">libexec</span><span class="o">/</span><span class="n">openssh</span><span class="o">/</span><span class="n">sftp</span><span class="o">-</span><span class="n">server</span>
-</span></code></pre></td></tr></table></div></figure>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Desactivar nodo PuppetDB]]></title>
-    <link href="http://mcoam.github.io/blog/2014/06/03/desactivar-nodo-puppetdb/"/>
-    <updated>2014-06-03T18:44:00-04:00</updated>
-    <id>http://mcoam.github.io/blog/2014/06/03/desactivar-nodo-puppetdb</id>
-    <content type="html"><![CDATA[<p>En el caso de querer <i>desactivar</i> un nodo de PuppetDB lo podemos realizar con el comando:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="err">$</span> <span class="n">puppet</span> <span class="n">node</span> <span class="n">deactivate</span> <span class="n">node1</span><span class="o">.</span><span class="n">example</span><span class="o">.</span><span class="n">com</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Con lo anterior, el nodo &ldquo;desaparecerá&rdquo; de nuestro Dashboard .</p>
-
-<p>Referencia <a href="http://docs.puppetlabs.com/puppetdb/1/maintain_and_tune.html#deactivate-decommissioned-nodes">acá</a></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Configurar PuppetBoard]]></title>
-    <link href="http://mcoam.github.io/blog/2014/06/01/configurar-puppetboard/"/>
-    <updated>2014-06-01T22:39:00-04:00</updated>
-    <id>http://mcoam.github.io/blog/2014/06/01/configurar-puppetboard</id>
-    <content type="html"><![CDATA[<p>Para facilitar la administración de Puppet (opensource) tenemos una nueva herramienta que se llama PuppetBoard su objetivo es dar accesos a la data que nosotros tenemos almacenada en nuestro PuppetDB de forma gráfica vía web, además de permitirnos ver el funcionamiento y reportes de los nodos al momentos de conectarse al nuestro Master.
-PuppetBoard difiere de Pupet Dansboard en:
-<li>Esta escrito en Python no en Ruby </li>
-<li>No almacena ningún tipo de data, toda información es requerida del PuppetDB</li>
-<li>No es posible funcionar sin PuppetDB</li></p>
-
-<p>La instalación del servicio no es compleja, puedes ver con lujo y detalle todos los pasos <a href="https://github.com/nedap/puppetboard">acá</a>. Para nuestro caso el proceso de instalación es el siguiente:</p>
-
-<h4>Instalación</h4>
-
-<p><img src="http://mcoam.github.io/images/puppetboard.png"></p>
-
-<p>Nota: Nuestra instalación será en base a Apache + mod-wsi</p>
-
-<p>Creamos nuestro directorio web de PuppetBoard</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="err">$</span> <span class="n">mkdir</span> <span class="o">-</span><span class="nb">p</span> <span class="sr">/var/</span><span class="n">www</span><span class="o">/</span><span class="n">puppetboard</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Clonamos el fuente</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">git</span> <span class="nb">clone</span> <span class="ss">https</span><span class="p">:</span><span class="sr">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">nedap</span><span class="o">/</span><span class="n">puppetboard</span><span class="o">.</span><span class="n">git</span> <span class="sr">/var/</span><span class="n">www</span><span class="o">/</span><span class="n">puppetboard</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>O lo instalamos de forma manual</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">pip</span> <span class="n">install</span> <span class="n">puppetboard</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Instalamos paquetería necesaria</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">yum</span> <span class="n">install</span> <span class="n">mod_wsgi</span> <span class="n">python</span><span class="o">-</span><span class="n">pip</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Copiamos el archivo de ejemplo <i>/usr/lib/python2.6/site-packages/puppetboard/default_settings.py</i> a la ruta <i>/var/www/puppetboard</i>, la nombramos <i>settings.py</i></p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="err">$</span> <span class="n">cp</span> <span class="sr">/usr/</span><span class="n">lib</span><span class="o">/</span><span class="n">python2</span><span class="o">.</span><span class="mi">6</span><span class="o">/</span><span class="n">site</span><span class="o">-</span><span class="n">packages</span><span class="o">/</span><span class="n">puppetboard</span><span class="o">/</span><span class="n">default_settings</span><span class="o">.</span><span class="n">py</span> <span class="sr">/var/</span><span class="n">www</span><span class="o">/</span><span class="n">puppetboard</span>
-</span><span class='line'><span class="err">$</span> <span class="n">mv</span> <span class="sr">/var/</span><span class="n">www</span><span class="o">/</span><span class="n">puppetboard</span><span class="o">/</span><span class="n">default_settings</span><span class="o">.</span><span class="n">py</span> <span class="sr">/var/</span><span class="n">www</span><span class="o">/</span><span class="n">puppetboard</span><span class="o">/</span><span class="n">settings</span><span class="o">.</span><span class="n">py</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Y colocamos el siguiente contenido</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">PUPPETDB_HOST</span> <span class="o">=</span> <span class="s1">&#39;127.0.0.1&#39;</span>
-</span><span class='line'><span class="no">PUPPETDB_PORT</span> <span class="o">=</span> <span class="mi">8080</span>
-</span><span class='line'><span class="c1">#PUPPETDB_SSL_VERIFY = True</span>
-</span><span class='line'><span class="no">PUPPETDB_KEY</span> <span class="o">=</span> <span class="no">None</span>
-</span><span class='line'><span class="no">PUPPETDB_CERT</span> <span class="o">=</span> <span class="no">None</span>
-</span><span class='line'><span class="no">PUPPETDB_TIMEOUT</span> <span class="o">=</span> <span class="mi">20</span>
-</span><span class='line'><span class="no">DEV_LISTEN_HOST</span> <span class="o">=</span> <span class="s1">&#39;127.0.0.1&#39;</span>
-</span><span class='line'><span class="no">DEV_LISTEN_PORT</span> <span class="o">=</span> <span class="mi">5000</span>
-</span><span class='line'><span class="no">UNRESPONSIVE_HOURS</span> <span class="o">=</span> <span class="mi">2</span>
-</span><span class='line'><span class="no">ENABLE_QUERY</span> <span class="o">=</span> <span class="no">True</span>
-</span><span class='line'><span class="no">LOGLEVEL</span> <span class="o">=</span> <span class="s1">&#39;info&#39;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>En el mismo directorio del PuppetBoard, creamos el archivo <i>wsgi.py</i> con el siguiente contenido</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">from</span> <span class="n">__future__</span> <span class="n">import</span> <span class="n">absolute_import</span>
-</span><span class='line'><span class="n">import</span> <span class="n">os</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1"># Needed if a settings.py file exists</span>
-</span><span class='line'><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">[</span><span class="s1">&#39;PUPPETBOARD_SETTINGS&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="s1">&#39;/var/www/puppetboard/settings.py&#39;</span>
-</span><span class='line'><span class="n">from</span> <span class="n">puppetboard</span><span class="o">.</span><span class="n">app</span> <span class="n">import</span> <span class="n">app</span> <span class="n">as</span> <span class="n">application</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Ahora, creamos el archivo <i>/etc/httpd/conf.d/wdgi.conf</i> para cargar el módulo en Apache con el siguiente contenido</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">LoadModule</span> <span class="n">wsgi_module</span> <span class="n">modules</span><span class="o">/</span><span class="n">mod_wsgi</span><span class="o">.</span><span class="n">so</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Finalmente, creamos el archivo de configuración para el virtualhosts que nos permita el acceso al PuppetBoard vía web</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="err">$</span> <span class="n">touch</span> <span class="sr">/etc/</span><span class="n">httpd</span><span class="o">/</span><span class="n">conf</span><span class="o">.</span><span class="n">d</span><span class="o">/</span><span class="n">puppetboard</span><span class="o">.</span><span class="n">conf</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Y colocamos la siguiente configuración</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">&lt;</span><span class="no">VirtualHost</span> <span class="o">*</span><span class="p">:</span><span class="mi">80</span><span class="o">&gt;</span>
-</span><span class='line'>    <span class="no">ServerName</span> <span class="n">puppet</span><span class="o">.</span><span class="n">example</span><span class="o">.</span><span class="n">com</span>
-</span><span class='line'>    <span class="no">WSGIDaemonProcess</span> <span class="n">puppetboard</span> <span class="n">user</span><span class="o">=</span><span class="n">apache</span> <span class="n">group</span><span class="o">=</span><span class="n">apache</span> <span class="n">threads</span><span class="o">=</span><span class="mi">5</span>
-</span><span class='line'>    <span class="no">WSGIScriptAlias</span> <span class="o">/</span> <span class="sr">/var/</span><span class="n">www</span><span class="o">/</span><span class="n">puppetboard</span><span class="o">/</span><span class="n">wsgi</span><span class="o">.</span><span class="n">py</span>
-</span><span class='line'>    <span class="no">ErrorLog</span> <span class="sr">/var/</span><span class="n">log</span><span class="o">/</span><span class="n">httpd</span><span class="o">/</span><span class="n">puppetboard</span><span class="o">.</span><span class="n">error</span><span class="o">.</span><span class="n">log</span>
-</span><span class='line'>    <span class="no">CustomLog</span> <span class="sr">/var/</span><span class="n">log</span><span class="o">/</span><span class="n">httpd</span><span class="o">/</span><span class="n">puppetboard</span><span class="o">.</span><span class="n">access</span><span class="o">.</span><span class="n">log</span> <span class="n">combined</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="no">Alias</span> <span class="sr">/static /us</span><span class="n">r</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python2</span><span class="o">.</span><span class="mi">6</span><span class="o">/</span><span class="n">site</span><span class="o">-</span><span class="n">packages</span><span class="o">/</span><span class="n">puppetboard</span><span class="o">/</span><span class="n">static</span><span class="o">/</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="o">&lt;</span><span class="no">Directory</span> <span class="sr">/usr/</span><span class="n">lib</span><span class="o">/</span><span class="n">python2</span><span class="o">.</span><span class="mi">6</span><span class="o">/</span><span class="n">site</span><span class="o">-</span><span class="n">packages</span><span class="o">/</span><span class="n">puppetboard</span><span class="o">&gt;</span>
-</span><span class='line'>        <span class="no">AuthType</span> <span class="no">Basic</span>
-</span><span class='line'>        <span class="no">AuthName</span> <span class="s2">&quot;Authentication Required&quot;</span>
-</span><span class='line'>        <span class="no">AuthUserFile</span> <span class="s2">&quot;/var/www/puppetboard/.htpasswd&quot;</span>
-</span><span class='line'>        <span class="no">Require</span> <span class="n">valid</span><span class="o">-</span><span class="n">user</span>
-</span><span class='line'>        <span class="no">Order</span> <span class="n">allow</span><span class="p">,</span><span class="n">deny</span>
-</span><span class='line'>        <span class="no">Allow</span> <span class="n">from</span> <span class="n">all</span>
-</span><span class='line'>       <span class="no">WSGIProcessGroup</span> <span class="n">puppetboard</span>
-</span><span class='line'>        <span class="no">WSGIApplicationGroup</span> <span class="sx">%{GLOBAL}</span>
-</span><span class='line'>      <span class="c1">#  Require all granted</span>
-</span><span class='line'><span class="c1">#      Order deny,allow</span>
-</span><span class='line'><span class="c1">#        Allow from all</span>
-</span><span class='line'>    <span class="o">&lt;</span><span class="sr">/Directory&gt;</span>
-</span><span class='line'><span class="sr">&lt;/</span><span class="no">VirtualHost</span><span class="o">&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Creando el usuario para el acceso web</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[</span><span class="n">root</span><span class="vi">@master</span> <span class="n">puppetboard</span><span class="o">]</span><span class="err">$</span> <span class="n">cd</span> <span class="sr">/var/</span><span class="n">www</span><span class="o">/</span><span class="n">puppetboard</span><span class="o">/</span>
-</span><span class='line'><span class="o">[</span><span class="n">root</span><span class="vi">@master</span> <span class="n">puppetboard</span><span class="o">]</span><span class="err">$</span> <span class="n">htpasswd</span> <span class="o">-</span><span class="n">c</span> <span class="o">.</span><span class="n">htpasswd</span> <span class="n">admin</span> <span class="c1">#colocamos el Password para el acceso web</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Finalmente podemos acceder luego de ingresar el usuario y password.</p>
-
-<p><img src="http://mcoam.github.io/images/puppetboardnodes.png"></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Reenviar un correo en zimbra basado en el Subject]]></title>
-    <link href="http://mcoam.github.io/blog/2014/03/21/reenviar-un-correo-en-zimbra-basado-en-el-subject/"/>
-    <updated>2014-03-21T14:10:00-03:00</updated>
-    <id>http://mcoam.github.io/blog/2014/03/21/reenviar-un-correo-en-zimbra-basado-en-el-subject</id>
-    <content type="html"><![CDATA[<p>Para reenviar un que contenga un <i>Subject</i> en particular hacia otra casilla en Zimbra podemos realizar los siguiente</p>
-
-<p>En el archivo de configuración de postfix <i>/opt/zimbra/postfix/conf/main.cf.default</i> colocamos la referencia al hash para header_checks</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">header_checks</span> <span class="o">=</span> <span class="nl">regexp:</span><span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">zimbra</span><span class="o">/</span><span class="n">postfix</span><span class="o">/</span><span class="n">conf</span><span class="o">/</span><span class="n">header_checks</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Dependiendo de la versión de Zimbra, la anterior configuración funcionará sin problemas, de lo contrario la configuración referente al header_checks tenemos que hacerla en el archivo <i>/opt/zimbra/postfix/conf/zmmta.cf</i> donde adicionaremos la siguiente línea (antes del parámetro RESTART mta)</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">POSTCONF</span> <span class="n">header_checks</span>  <span class="nl">regexp:</span><span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">zimbra</span><span class="o">/</span><span class="n">postfix</span><span class="o">/</span><span class="n">conf</span><span class="o">/</span><span class="n">header_checks</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>
-En el archivo  <i>/opt/zimbra/postfix/conf/header_checks</i> adicionamos la expresión regular que tendrá el subject</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="o">/^</span><span class="nl">Subject:</span> <span class="n">MIGUELCOA</span><span class="o">/</span> <span class="n">REDIRECT</span> <span class="n">mcoa</span><span class="err">@</span><span class="n">example</span><span class="p">.</span><span class="n">com</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Recargarmos el servicio MTA</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">zmmtactl</span> <span class="n">reload</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Y desde ahora, cada vez que desde el servidor zimbra salga un correo que en su asunto contenga &ldquo;MIGUELCOA&rdquo; será enviada una copia hacia la casilla mcoa\@example.com</p>
 ]]></content>
   </entry>
   

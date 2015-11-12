@@ -63,8 +63,18 @@
         <lastmod>2014-06-03T18:51:04-04:00</lastmod>
     </url>
     <url>
+        <loc>
+            http://mcoam.github.io/blog/2014/06/18/configurando-modulo-sudo-con-puppet-y-hiera/
+        </loc>
+        <lastmod>2014-06-18T12:39:44-04:00</lastmod>
+    </url>
+    <url>
         <loc>http://mcoam.github.io/blog/2014/06/26/modulo-ssh-puppet-y-hiera/</loc>
         <lastmod>2014-06-26T22:41:40-04:00</lastmod>
+    </url>
+    <url>
+        <loc>http://mcoam.github.io/blog/2014/07/04/probando-vagrant/</loc>
+        <lastmod>2014-07-07T15:11:47-04:00</lastmod>
     </url>
     <url>
         <loc>http://mcoam.github.io/blog/2014/07/07/configurando-vagrant-en-osx/</loc>
@@ -109,8 +119,16 @@
         <lastmod>2014-08-26T11:56:11-04:00</lastmod>
     </url>
     <url>
+        <loc>http://mcoam.github.io/blog/2014/10/02/jugando-con-docker/</loc>
+        <lastmod>2014-10-03T09:13:56-03:00</lastmod>
+    </url>
+    <url>
         <loc>http://mcoam.github.io/blog/2014/10/13/eliminar-vm-vagrant/</loc>
         <lastmod>2014-10-15T16:58:31-03:00</lastmod>
+    </url>
+    <url>
+        <loc>http://mcoam.github.io/blog/2014/11/27/instalacion-desatentida-de-zimbra/</loc>
+        <lastmod>2014-11-27T20:23:03-03:00</lastmod>
     </url>
     <url>
         <loc>http://mcoam.github.io/blog/2014/11/28/atachando-sesion-screen-dropeada/</loc>
@@ -133,6 +151,12 @@
         <lastmod>2015-06-24T16:17:57-03:00</lastmod>
     </url>
     <url>
+        <loc>
+            http://mcoam.github.io/blog/2015/08/06/migrando-servidor-fisico-a-virtual-en-proxmox/
+        </loc>
+        <lastmod>2015-11-07T01:15:51-03:00</lastmod>
+    </url>
+    <url>
         <loc>http://mcoam.github.io/blog/2015/10/15/notas-sobre-imapsync/</loc>
         <lastmod>2015-11-03T19:49:47-03:00</lastmod>
     </url>
@@ -149,20 +173,26 @@
         <lastmod>2015-11-12T18:31:18-03:00</lastmod>
     </url>
     <url>
+        <loc>
+            http://mcoam.github.io/blog/2015/11/12/ansible-configurando-volumen-de-datos-hsm-en-zimbra/
+        </loc>
+        <lastmod>2015-11-12T18:52:45-03:00</lastmod>
+    </url>
+    <url>
         <loc>http://mcoam.github.io/about/</loc>
         <lastmod>2014-02-28T11:17:23-03:00</lastmod>
     </url>
     <url>
         <loc>http://mcoam.github.io/archives/</loc>
-        <lastmod>2015-11-12T18:31:18-03:00</lastmod>
+        <lastmod>2015-11-12T18:52:45-03:00</lastmod>
     </url>
     <url>
         <loc>http://mcoam.github.io/blog/archives/</loc>
-        <lastmod>2015-11-12T18:31:18-03:00</lastmod>
+        <lastmod>2015-11-12T18:52:45-03:00</lastmod>
     </url>
     <url>
         <loc>http://mcoam.github.io/blog/</loc>
-        <lastmod>2015-11-12T18:31:18-03:00</lastmod>
+        <lastmod>2015-11-12T18:52:45-03:00</lastmod>
     </url>
     <url>
         <loc>http://mcoam.github.io/contact/</loc>
@@ -170,7 +200,7 @@
     </url>
     <url>
         <loc>http://mcoam.github.io/</loc>
-        <lastmod>2015-11-12T18:31:18-03:00</lastmod>
+        <lastmod>2015-11-12T18:52:45-03:00</lastmod>
     </url>
     <url>
         <loc>http://mcoam.github.io/robots.txt</loc>
