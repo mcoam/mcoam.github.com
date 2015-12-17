@@ -10,6 +10,7 @@ Si necesitamos chequear la existencia de un directorio antes de realizar cualqui
 <li>Se instala apache</li>
 <li>Se chequea que el directorio <code>conf.d</code> exista</li>
 <li>Se copia el archivo <code>site.conf</code></li>
+<li>Reiniciar apache</code></li>
 </ol>
 ```objc
 - name: Install apache
