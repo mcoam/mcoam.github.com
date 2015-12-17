@@ -23,4 +23,8 @@ Si necesitamos chequear la existencia de un directorio antes de realizar cualqui
 - name: "Copy configuration file"
   copy: src=site.conf dest=/etc/httpd/conf.d
   when: apache_path.stat.exists == True
+
+- name: "Restart apache"
+  service: name=httpd state=restarted
+  when: apache_path.stat.exists == True
 ```
