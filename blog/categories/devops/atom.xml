@@ -4,7 +4,7 @@
   <title><![CDATA[Category: devops | Bitácora]]></title>
   <link href="http://mcoam.github.io/blog/categories/devops/atom.xml" rel="self"/>
   <link href="http://mcoam.github.io/"/>
-  <updated>2015-12-17T17:15:01-03:00</updated>
+  <updated>2015-12-17T17:16:13-03:00</updated>
   <id>http://mcoam.github.io/</id>
   <author>
     <name><![CDATA[Miguel Angel Coa Morales]]></name>
@@ -38,6 +38,9 @@ stat: path=/etc/httpd/conf.d
 register: apache_path</p></li>
 <li><p>name: &ldquo;Copy configuration file&rdquo;
 copy: src=site.conf dest=/etc/httpd/conf.d
+when: apache_path.stat.exists == True</p></li>
+<li><p>name: &ldquo;Restart apache&rdquo;
+service: name=httpd state=restarted
 when: apache_path.stat.exists == True
 ```</p></li>
 </ul>

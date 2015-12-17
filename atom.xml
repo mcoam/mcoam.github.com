@@ -4,7 +4,7 @@
   <title><![CDATA[Bitácora]]></title>
   <link href="http://mcoam.github.io/atom.xml" rel="self"/>
   <link href="http://mcoam.github.io/"/>
-  <updated>2015-12-17T17:15:01-03:00</updated>
+  <updated>2015-12-17T17:16:13-03:00</updated>
   <id>http://mcoam.github.io/</id>
   <author>
     <name><![CDATA[Miguel Angel Coa Morales]]></name>
@@ -37,6 +37,10 @@
 <span class='line-number'>8</span>
 <span class='line-number'>9</span>
 <span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
 </pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">-</span> <span class="nf">name:</span> <span class="n">Install</span> <span class="n">apache</span>
 </span><span class='line'>  <span class="nl">yum:</span> <span class="n">name</span><span class="o">=</span><span class="n">httpd</span> <span class="n">state</span><span class="o">=</span><span class="n">latest</span>
 </span><span class='line'>
@@ -46,6 +50,10 @@
 </span><span class='line'>
 </span><span class='line'><span class="o">-</span> <span class="nl">name:</span> <span class="s">&quot;Copy configuration file&quot;</span>
 </span><span class='line'>  <span class="nl">copy:</span> <span class="n">src</span><span class="o">=</span><span class="n">site</span><span class="p">.</span><span class="n">conf</span> <span class="n">dest</span><span class="o">=/</span><span class="n">etc</span><span class="o">/</span><span class="n">httpd</span><span class="o">/</span><span class="n">conf</span><span class="p">.</span><span class="n">d</span>
+</span><span class='line'>  <span class="nl">when:</span> <span class="n">apache_path</span><span class="p">.</span><span class="n">stat</span><span class="p">.</span><span class="n">exists</span> <span class="o">==</span> <span class="n">True</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">-</span> <span class="nl">name:</span> <span class="s">&quot;Restart apache&quot;</span>
+</span><span class='line'>  <span class="nl">service:</span> <span class="n">name</span><span class="o">=</span><span class="n">httpd</span> <span class="n">state</span><span class="o">=</span><span class="n">restarted</span>
 </span><span class='line'>  <span class="nl">when:</span> <span class="n">apache_path</span><span class="p">.</span><span class="n">stat</span><span class="p">.</span><span class="n">exists</span> <span class="o">==</span> <span class="n">True</span>
 </span></code></pre></td></tr></table></div></figure>
 
