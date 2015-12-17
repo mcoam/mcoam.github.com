@@ -112,7 +112,7 @@ En el siguiente ejemplo, se crea un volumen sobre un disco <code>/dev/sdf1</code
 </span><span class='line'>  <span class="nl">tasks:</span>
 </span><span class='line'>
 </span><span class='line'>        <span class="o">-</span> <span class="nl">name:</span> <span class="s">&quot;Crear el PV sobre el disco nuevo&quot;</span>
-</span><span class='line'>          <span class="nl">command:</span> <span class="n">pvcreate</span> <span class="p"></span>
+</span><span class='line'>          <span class="nl">command:</span> <span class="n">pvcreate</span> <span class="p">{</span> <span class="p">{</span> <span class="n">disk_name</span> <span class="p">}</span> <span class="p">}</span>
 </span><span class='line'>
 </span><span class='line'>        <span class="o">-</span> <span class="nl">name:</span> <span class="s">&quot;Crear nuevo VG&quot;</span>
 </span><span class='line'>          <span class="nl">lvg:</span> <span class="n">vg</span><span class="o">=</span><span class="err">\</span><span class="p">{</span><span class="err">\</span><span class="p">{</span> <span class="n">vg_name</span> <span class="err">\</span><span class="p">}</span><span class="err">\</span><span class="p">}</span> <span class="n">pvs</span><span class="o">=</span><span class="err">\</span><span class="p">{</span><span class="err">\</span><span class="p">{</span> <span class="n">disk_name</span> <span class="err">\</span><span class="p">}</span><span class="err">\</span><span class="p">}</span>

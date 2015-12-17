@@ -4,7 +4,7 @@
   <title><![CDATA[Category: ansible, | Bitácora]]></title>
   <link href="http://mcoam.github.io/blog/categories/ansible/atom.xml" rel="self"/>
   <link href="http://mcoam.github.io/"/>
-  <updated>2015-11-12T18:52:51-03:00</updated>
+  <updated>2015-12-17T17:10:54-03:00</updated>
   <id>http://mcoam.github.io/</id>
   <author>
     <name><![CDATA[Miguel Angel Coa Morales]]></name>
@@ -12,6 +12,37 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Ansible: chequeando la existencia de un directorio]]></title>
+    <link href="http://mcoam.github.io/blog/2015/12/17/ansible-chequeando-la-existencia-de-un-directorio/"/>
+    <updated>2015-12-17T16:55:00-03:00</updated>
+    <id>http://mcoam.github.io/blog/2015/12/17/ansible-chequeando-la-existencia-de-un-directorio</id>
+    <content type="html"><![CDATA[<p>Si necesitamos chequear la existencia de un directorio antes de realizar cualquier tipo de operación (copiear, instalar, etc) se puede utilizar el valor que nos trae el comando <code>stat</code>. Por ejemplo, el el siguiente ejemplo, se realiza lo siguiente:</p>
+
+<ol>
+<li>Se instala apache</li>
+<li>Se chequea que el directorio <code>conf.d</code> exista</li>
+<li>Se copia el archivo <code>site.conf</code></li>
+</ol>
+
+
+<p>```objc
+&ndash; name: Install apache
+  yum: name=httpd state=latest</p>
+
+<ul>
+<li><p>name: &ldquo;Check apache path&rdquo;
+stat: path=/etc/httpd/conf.d
+register: apache_path</p></li>
+<li><p>name: &ldquo;Copy configuration file&rdquo;
+copy: src=site.conf dest=/etc/httpd/conf.d
+when: apache_path.stat.exists == True
+```</p></li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Ansible: Configurando volúmen de datos HSM en Zimbra]]></title>
@@ -81,7 +112,7 @@ vars:
 tasks:</p>
 
 <pre><code>  - name: "Crear el PV sobre el disco nuevo"
-    command: pvcreate 
+    command: pvcreate { { disk_name } }
 
   - name: "Crear nuevo VG"
     lvg: vg=\{\{ vg_name \}\} pvs=\{\{ disk_name \}\}
