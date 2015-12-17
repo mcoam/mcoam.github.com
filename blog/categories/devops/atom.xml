@@ -4,7 +4,7 @@
   <title><![CDATA[Category: devops | Bitácora]]></title>
   <link href="http://mcoam.github.io/blog/categories/devops/atom.xml" rel="self"/>
   <link href="http://mcoam.github.io/"/>
-  <updated>2015-12-17T17:10:54-03:00</updated>
+  <updated>2015-12-17T17:15:01-03:00</updated>
   <id>http://mcoam.github.io/</id>
   <author>
     <name><![CDATA[Miguel Angel Coa Morales]]></name>
@@ -24,6 +24,7 @@
 <li>Se instala apache</li>
 <li>Se chequea que el directorio <code>conf.d</code> exista</li>
 <li>Se copia el archivo <code>site.conf</code></li>
+<li>Reiniciar apache</code></li>
 </ol>
 
 
