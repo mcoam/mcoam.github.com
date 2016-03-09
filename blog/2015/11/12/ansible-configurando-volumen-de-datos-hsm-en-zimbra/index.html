@@ -1,0 +1,202 @@
+
+<!DOCTYPE HTML>
+<html lang="en-GB">
+<head>
+	<meta charset="utf-8">
+	<title>Ansible: Configurando volúmen de datos HSM en Zimbra  | Bitácora</title>
+
+	<meta name="author" content="Miguel Angel Coa Morales">
+
+<meta name="description" content="Un blog personal"> <meta name="keywords" content="zimbra, linux, centos, devops, puppet, opensource, virtualizar, virtualización">
+
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="Bitácora" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.png" rel="shortcut icon">
+	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+</head>
+
+
+
+<body>
+	<header id="header" class="inner"><h1><a href="/">Bitácora</a></h1>
+<span class="tagline">Miguel Angel Coa Morales</span>
+<nav id="main-nav"><ul>
+	<li><a href="/about">About</a></li>
+	<li><a href="/archives">Archives</a></li>
+	<li><a href="/contact">Contact</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul>
+	<li><a href="/about">About</a></li>
+	<li><a href="/archives">Archives</a></li>
+	<li><a href="/contact">Contact</a></li>
+</ul>
+</div>
+	</div>
+</nav>
+
+
+</header>
+
+	<div id="content" class="inner"><article class="post">
+	<header>
+		<h2 class="title">Ansible: Configurando Volúmen De Datos HSM en Zimbra</h2>
+		<div class="meta date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-11-12T18:34:00-03:00" pubdate data-updated="true">Nov 12<span>th</span>, 2015</time></div>
+	</header>
+	<div class="entry-content"><p>El siguiente <code>Playbook</code> permite configurar un nuevo volúmen para datos (store) en un servidor Zimbra NE.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="o">---</span>
+</span><span class='line'><span class="o">-</span> <span class="nl">hosts:</span> <span class="n">ne_mailbox</span>
+</span><span class='line'>  <span class="nl">remote_user:</span> <span class="n">root</span>
+</span><span class='line'>  <span class="nl">vars:</span>
+</span><span class='line'>        <span class="nl">zmvolume:</span> <span class="s">&quot;/opt/zimbra/bin/zmvolume&quot;</span>
+</span><span class='line'>        <span class="nl">zmhsm:</span> <span class="s">&quot;/opt/zimbra/bin/zmhsm&quot;</span>
+</span><span class='line'>        <span class="nl">zmprov:</span> <span class="s">&quot;/opt/zimbra/bin/zmprov&quot;</span>
+</span><span class='line'>        <span class="nl">hsm_name:</span> <span class="s">&quot;hsm02&quot;</span>
+</span><span class='line'>        <span class="nl">hsm_id:</span> <span class="s">&quot;4&quot;</span> <span class="err">#</span> <span class="n">check</span> <span class="kt">id</span> <span class="n">zmvolume</span> <span class="o">-</span><span class="n">l</span> <span class="o">|</span><span class="n">grep</span> <span class="o">-</span><span class="n">B1</span> <span class="n">hsm02</span>
+</span><span class='line'>        <span class="nl">path:</span> <span class="s">&quot;/opt/zimbra/store_hsm_02/&quot;</span>
+</span><span class='line'>        <span class="nl">policy_option:</span> <span class="s">&quot; &#39;message,document,task,appointment,contact:before:-1month is:anywhere&#39; &quot;</span>
+</span><span class='line'>  <span class="nl">tasks:</span>
+</span><span class='line'>        <span class="o">-</span> <span class="nl">name:</span> <span class="s">&quot;Configura volumen HSM como volumen secundario&quot;</span>
+</span><span class='line'>          <span class="nl">command:</span> <span class="s">&quot;{ { zmvolume } } -a -name  -c true -t secondaryMessage -p { { path } }&quot;</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="o">-</span> <span class="nl">name:</span> <span class="s">&quot;Activamos nuevo volumen para manejar data&quot;</span>
+</span><span class='line'>          <span class="nl">command:</span> <span class="s">&quot;{ { zmvolume } } -sc -id { { hsm_id } } &quot;</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="o">-</span> <span class="nl">name:</span> <span class="s">&quot;Configuramos politica HSM: Todo por sobre 1 mes se mueve al nuevo volumen&quot;</span>
+</span><span class='line'>          <span class="nl">command:</span> <span class="s">&quot;{ { zmprov } } ms { { ansible_fqdn } } zimbraHsmPolicy { { policy_option } }&quot;</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="o">-</span> <span class="nl">name:</span> <span class="s">&quot;Arrancamos el proceso para mover correos al nuevo HSM&quot;</span>
+</span><span class='line'>          <span class="nl">command:</span> <span class="s">&quot;{ { zmhsm } } -t&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><b>Donde:<br></b>
+<code>path: "/opt/zimbra/store_hsm_02/"</code>: Corresponde al punto de montaje del nuevo recurso HSM.<br>
+<code>hsm_id: 4"</code>: Corresponde al ID que le asigna Zimbra al nuevo volúmen (disco).<br>
+<code>hsm_name: hsm02</code>: Corresponde al nombre que le colocamos al recurso HSM.<br></p>
+</div>
+	
+
+</article>
+
+	
+	<div class="share">
+		<ul>
+			<li>
+  <a href="https://twitter.com/intent/tweet?text=Ansible: Configurando volúmen de datos HSM en Zimbra by @&url=http://mcoam.github.io/blog/2015/11/12/ansible-configurando-volumen-de-datos-hsm-en-zimbra/" title="Share Ansible: Configurando volúmen de datos HSM en Zimbra on Twitter">
+    <img src="/images/social/twitter.png" />
+  </a>
+</li>
+
+			<li>
+  <a href="https://www.facebook.com/sharer.php?u=http://mcoam.github.io/blog/2015/11/12/ansible-configurando-volumen-de-datos-hsm-en-zimbra/" title="Share Ansible: Configurando volúmen de datos HSM en Zimbra on Facebook">
+    <img src="/images/social/facebook.png" />
+  </a>
+</li>
+
+			<li>
+  <a href="https://plus.google.com/share?url=http://mcoam.github.io/blog/2015/11/12/ansible-configurando-volumen-de-datos-hsm-en-zimbra/" title="Share Ansible: Configurando volúmen de datos HSM en Zimbra on Google Plus">
+    <img src="/images/social/google.png" />
+  </a>
+</li>
+
+		</ul>
+	</div>
+
+
+
+
+<section id="comment">
+    <h2 class="title">Comments</h2>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+</div>
+	<footer id="footer" class="inner">&copy; 2015
+
+    Miguel Angel Coa Morales
+
+</footer>
+	<script src="/javascripts/slash.js"></script>
+<script src="/javascripts/hyphenator.js"></script>
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'miguelcoa';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://mcoam.github.io/blog/2015/11/12/ansible-configurando-volumen-de-datos-hsm-en-zimbra/';
+        var disqus_url = 'http://mcoam.github.io/blog/2015/11/12/ansible-configurando-volumen-de-datos-hsm-en-zimbra/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-45157770-1']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+
+
+</body>
+</html>

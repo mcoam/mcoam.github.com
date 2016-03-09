@@ -140,7 +140,25 @@
         <loc>
             http://mcoam.github.io/blog/2015/10/28/ansible-trabajando-con-volumenes-pv-slash-vg-slash-lv/
         </loc>
-        <lastmod>2015-11-07T11:25:50-03:00</lastmod>
+        <lastmod>2015-11-15T22:32:17-03:00</lastmod>
+    </url>
+    <url>
+        <loc>
+            http://mcoam.github.io/blog/2015/11/12/montar-leer-y-escribir-en-usb-con-formato-ntfs/
+        </loc>
+        <lastmod>2015-11-12T18:31:18-03:00</lastmod>
+    </url>
+    <url>
+        <loc>
+            http://mcoam.github.io/blog/2015/11/12/ansible-configurando-volumen-de-datos-hsm-en-zimbra/
+        </loc>
+        <lastmod>2015-11-12T18:52:45-03:00</lastmod>
+    </url>
+    <url>
+        <loc>
+            http://mcoam.github.io/blog/2015/12/17/ansible-chequeando-la-existencia-de-un-directorio/
+        </loc>
+        <lastmod>2015-12-17T17:15:58-03:00</lastmod>
     </url>
     <url>
         <loc>http://mcoam.github.io/about/</loc>
@@ -148,15 +166,15 @@
     </url>
     <url>
         <loc>http://mcoam.github.io/archives/</loc>
-        <lastmod>2015-11-07T11:25:50-03:00</lastmod>
+        <lastmod>2015-12-17T17:15:58-03:00</lastmod>
     </url>
     <url>
         <loc>http://mcoam.github.io/blog/archives/</loc>
-        <lastmod>2015-11-07T11:25:50-03:00</lastmod>
+        <lastmod>2015-12-17T17:15:58-03:00</lastmod>
     </url>
     <url>
         <loc>http://mcoam.github.io/blog/</loc>
-        <lastmod>2015-11-07T11:25:50-03:00</lastmod>
+        <lastmod>2015-12-17T17:15:58-03:00</lastmod>
     </url>
     <url>
         <loc>http://mcoam.github.io/contact/</loc>
@@ -164,7 +182,7 @@
     </url>
     <url>
         <loc>http://mcoam.github.io/</loc>
-        <lastmod>2015-11-07T11:25:50-03:00</lastmod>
+        <lastmod>2015-12-17T17:15:58-03:00</lastmod>
     </url>
     <url>
         <loc>http://mcoam.github.io/robots.txt</loc>

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: devops | Bitácora]]></title>
   <link href="http://mcoam.github.io/blog/categories/devops/atom.xml" rel="self"/>
   <link href="http://mcoam.github.io/"/>
-  <updated>2015-11-07T11:25:53-03:00</updated>
+  <updated>2015-12-17T17:16:13-03:00</updated>
   <id>http://mcoam.github.io/</id>
   <author>
     <name><![CDATA[Miguel Angel Coa Morales]]></name>
@@ -12,6 +12,86 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Ansible: chequeando la existencia de un directorio]]></title>
+    <link href="http://mcoam.github.io/blog/2015/12/17/ansible-chequeando-la-existencia-de-un-directorio/"/>
+    <updated>2015-12-17T16:55:00-03:00</updated>
+    <id>http://mcoam.github.io/blog/2015/12/17/ansible-chequeando-la-existencia-de-un-directorio</id>
+    <content type="html"><![CDATA[<p>Si necesitamos chequear la existencia de un directorio antes de realizar cualquier tipo de operación (copiear, instalar, etc) se puede utilizar el valor que nos trae el comando <code>stat</code>. Por ejemplo, el el siguiente ejemplo, se realiza lo siguiente:</p>
+
+<ol>
+<li>Se instala apache</li>
+<li>Se chequea que el directorio <code>conf.d</code> exista</li>
+<li>Se copia el archivo <code>site.conf</code></li>
+<li>Reiniciar apache</code></li>
+</ol>
+
+
+<p>```objc
+&ndash; name: Install apache
+  yum: name=httpd state=latest</p>
+
+<ul>
+<li><p>name: &ldquo;Check apache path&rdquo;
+stat: path=/etc/httpd/conf.d
+register: apache_path</p></li>
+<li><p>name: &ldquo;Copy configuration file&rdquo;
+copy: src=site.conf dest=/etc/httpd/conf.d
+when: apache_path.stat.exists == True</p></li>
+<li><p>name: &ldquo;Restart apache&rdquo;
+service: name=httpd state=restarted
+when: apache_path.stat.exists == True
+```</p></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Ansible: Configurando volúmen de datos HSM en Zimbra]]></title>
+    <link href="http://mcoam.github.io/blog/2015/11/12/ansible-configurando-volumen-de-datos-hsm-en-zimbra/"/>
+    <updated>2015-11-12T18:34:00-03:00</updated>
+    <id>http://mcoam.github.io/blog/2015/11/12/ansible-configurando-volumen-de-datos-hsm-en-zimbra</id>
+    <content type="html"><![CDATA[<p>El siguiente <code>Playbook</code> permite configurar un nuevo volúmen para datos (store) en un servidor Zimbra NE.</p>
+
+<h2>```objc</h2>
+
+<ul>
+<li>hosts: ne_mailbox
+remote_user: root
+vars:
+      zmvolume: &ldquo;/opt/zimbra/bin/zmvolume&rdquo;
+      zmhsm: &ldquo;/opt/zimbra/bin/zmhsm&rdquo;
+      zmprov: &ldquo;/opt/zimbra/bin/zmprov&rdquo;
+      hsm_name: &ldquo;hsm02&rdquo;
+      hsm_id: &ldquo;4&rdquo; # check id zmvolume -l |grep -B1 hsm02
+      path: &ldquo;/opt/zimbra/store_hsm_02/&rdquo;
+      policy_option: &ldquo; &lsquo;message,document,task,appointment,contact:before:-1month is:anywhere&rsquo; &rdquo;
+tasks:
+
+<pre><code>  - name: "Configura volumen HSM como volumen secundario"
+    command: "{ { zmvolume } } -a -name  -c true -t secondaryMessage -p { { path } }"
+
+  - name: "Activamos nuevo volumen para manejar data"
+    command: "{ { zmvolume } } -sc -id { { hsm_id } } " 
+
+  - name: "Configuramos politica HSM: Todo por sobre 1 mes se mueve al nuevo volumen"
+    command: "{ { zmprov } } ms { { ansible_fqdn } } zimbraHsmPolicy { { policy_option } }"
+
+  - name: "Arrancamos el proceso para mover correos al nuevo HSM"
+    command: "{ { zmhsm } } -t"
+</code></pre>
+
+<p><code>``
+&lt;b&gt;Donde:&lt;br&gt;&lt;/b&gt;
+</code>path: &ldquo;/opt/zimbra/store_hsm_02/&rdquo;<code>: Corresponde al punto de montaje del nuevo recurso HSM.&lt;br&gt;
+</code>hsm_id: 4"<code>: Corresponde al ID que le asigna Zimbra al nuevo volúmen (disco).&lt;br&gt;
+</code>hsm_name: hsm02`: Corresponde al nombre que le colocamos al recurso HSM.<br></p></li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Ansible: Trabajando con volumenes lógicos PV/VG/LV en Linux]]></title>
@@ -36,7 +116,7 @@ vars:
 tasks:</p>
 
 <pre><code>  - name: "Crear el PV sobre el disco nuevo"
-    command: pvcreate \{\{ disk_name \}\}
+    command: pvcreate { { disk_name } }
 
   - name: "Crear nuevo VG"
     lvg: vg=\{\{ vg_name \}\} pvs=\{\{ disk_name \}\}
