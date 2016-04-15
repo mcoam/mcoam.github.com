@@ -4,7 +4,7 @@
   <title><![CDATA[Category: fail2ban | Bitácora]]></title>
   <link href="http://www.miguelcoa.cl/blog/categories/fail2ban/atom.xml" rel="self"/>
   <link href="http://www.miguelcoa.cl/"/>
-  <updated>2016-04-15T15:55:33-03:00</updated>
+  <updated>2016-04-15T15:56:42-03:00</updated>
   <id>http://www.miguelcoa.cl/</id>
   <author>
     <name><![CDATA[Miguel Angel Coa Morales]]></name>
@@ -113,7 +113,6 @@ actionunban = /bin/true
 name = REPEAT
 ```
 <li>Archivo <code>ip.blocklist.exim2</code>: Contiene las direcciones ip que se van bloqueando por intentos fallidos y que se va autocompletando con los bloqueos propios del `fail2ban` ej: <li>
-
 ```objc
 122.154.29.30 # fail2ban/2016-04-15 00:21:45: auto-add for repeat offender
 95.183.52.100 # fail2ban/2016-04-15 00:35:51: auto-add for repeat offender
