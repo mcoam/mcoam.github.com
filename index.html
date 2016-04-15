@@ -290,38 +290,6 @@
 	<header>
 		<h2 class="title">
 			
-			<a href="/blog/2016/04/15/new-post/">
-			
-				New Post</a>
-		</h2>
-		<div class="meta date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2016-04-15T13:23:00-03:00" pubdate data-updated="true">Apr 15<span>th</span>, 2016</time></div>
-	</header>
-	<div class="entry-content">
-		
-
-		
-		
-	</div>
-
-</article>
-
-
-    <article class="post">
-	<header>
-		<h2 class="title">
-			
 			<a href="/blog/2016/03/09/proxmox-4-y-ansible/">
 			
 				Proxmox 4 Y Ansible, Automatizando La Creación De Contenedores</a>
@@ -825,6 +793,102 @@ De todas formas, lo anterior se puede corregir configrando el <code>imapsyn</cod
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">smart</span> <span class="n">config</span> <span class="o">--</span><span class="n">set</span>  <span class="n">rpm</span><span class="o">-</span><span class="n">check</span><span class="o">-</span><span class="n">signatures</span><span class="o">=</span><span class="kp">false</span>
 </span></code></pre></td></tr></table></div></figure>
+
+
+		
+		
+	</div>
+
+</article>
+
+
+    <article class="post">
+	<header>
+		<h2 class="title">
+			
+			<a href="/blog/2015/01/15/script-para-buscar-y-borrar-un-correo-en-zimbra/">
+			
+				Script Para Buscar Y Borrar Un Correo en Zimbra</a>
+		</h2>
+		<div class="meta date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-01-15T12:49:00-03:00" pubdate data-updated="true">Jan 15<span>th</span>, 2015</time></div>
+	</header>
+	<div class="entry-content">
+		<p>El siguiente script permite buscar y borrar un correo mediante consola desde los mailbox de los usuarios.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1">#!/bin/bash</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">zimbraAccounts</span><span class="o">=</span><span class="s1">&#39;/var/tmp/cuentas&#39;</span>
+</span><span class='line'><span class="n">zimbraCMD</span><span class="o">=</span><span class="s1">&#39;/opt/zimbra/bin/zmmailbox&#39;</span>
+</span><span class='line'> <span class="k">for</span> <span class="n">a</span> <span class="k">in</span> <span class="sb">`cat $zimbraAccounts`</span>
+</span><span class='line'>    <span class="k">do</span>
+</span><span class='line'>        <span class="c1">#user=`$a`</span>
+</span><span class='line'>        <span class="n">emailID</span><span class="o">=</span><span class="p">(</span> <span class="err">$</span><span class="p">(</span><span class="vg">$zimbraCMD</span> <span class="o">-</span><span class="n">z</span> <span class="o">-</span><span class="n">m</span> <span class="vg">$a</span> <span class="n">search</span> <span class="s2">&quot;de haber superado debido a la alta tasa de correos spam&quot;</span> <span class="o">|</span><span class="n">grep</span> <span class="n">conv</span> <span class="o">|</span><span class="n">awk</span> <span class="p">{</span><span class="s1">&#39;print $2&#39;</span><span class="p">}</span> <span class="o">|</span><span class="n">sed</span> <span class="s1">&#39;s/-//g&#39;</span><span class="p">)</span> <span class="p">)</span>
+</span><span class='line'>        <span class="n">echo</span> <span class="vg">$user</span>
+</span><span class='line'>        <span class="c1">#echo ${emailID[1]}</span>
+</span><span class='line'>            <span class="k">for</span> <span class="n">i</span> <span class="k">in</span> <span class="s2">&quot;${emailID[@]}&quot;</span>
+</span><span class='line'>                <span class="k">do</span>
+</span><span class='line'>                    <span class="vg">$zimbraCMD</span> <span class="o">-</span><span class="n">z</span> <span class="o">-</span><span class="n">m</span> <span class="vg">$a</span> <span class="n">dm</span> <span class="vg">$i</span>
+</span><span class='line'>          <span class="n">echo</span> <span class="s2">&quot;cuenta: $a&quot;</span> <span class="o">&gt;&gt;</span> <span class="sr">/var/</span><span class="n">tmp</span><span class="o">/</span><span class="n">casillasConEmail</span>
+</span><span class='line'>                <span class="n">done</span>
+</span><span class='line'>    <span class="n">done</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>En la línea nº8 tenemos que cambiar el texto a buscar, y que corresponde a lo que esta dentro de comillas.
+Para el caso, tenemos que tener las cuentas de correos en el archivo <code>/var/tmp/cuentas</code> que las podemos obtener con el comando:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">zmprov</span> <span class="o">-</span><span class="n">l</span> <span class="n">gaa</span> <span class="o">|</span><span class="n">egrep</span> <span class="o">-</span><span class="n">vi</span> <span class="s1">&#39;spam|virus|galsyn|archiv&#39;</span><span class="o">|</span> <span class="n">sort</span> <span class="o">&gt;</span> <span class="sr">/var/</span><span class="n">tmp</span><span class="o">/</span><span class="n">cuentas</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Demás esta decir que lo realizado en el comando anterior se puede hacer dentro del mismo script sin tener que hacer esto de forma separada.  Una vez ejecutado el script, podremos ver la información de las cuentas en donde fue borrado el correo:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[</span><span class="n">zimbra</span><span class="vi">@mail1</span> <span class="n">tmp</span><span class="o">]</span><span class="err">$</span> <span class="n">tail</span> <span class="o">-</span><span class="n">f</span> <span class="sr">/var/</span><span class="n">tmp</span><span class="o">/</span><span class="n">casillasConEmail</span>
+</span><span class='line'><span class="ss">cuenta</span><span class="p">:</span> <span class="n">ahidalgo</span><span class="vi">@example</span><span class="o">.</span><span class="n">com</span>
+</span><span class='line'><span class="ss">cuenta</span><span class="p">:</span> <span class="n">alinay</span><span class="vi">@example</span><span class="o">.</span><span class="n">com</span>
+</span><span class='line'><span class="ss">cuenta</span><span class="p">:</span> <span class="n">chernandez</span><span class="vi">@example</span><span class="o">.</span><span class="n">com</span>
+</span><span class='line'><span class="ss">cuenta</span><span class="p">:</span> <span class="n">currutia</span><span class="vi">@example</span><span class="o">.</span><span class="n">com</span>
+</span><span class='line'><span class="ss">cuenta</span><span class="p">:</span> <span class="n">cvaldes</span><span class="vi">@example</span><span class="o">.</span><span class="n">com</span>
+</span><span class='line'><span class="ss">cuenta</span><span class="p">:</span> <span class="n">evalencia</span><span class="vi">@example</span><span class="o">.</span><span class="n">com</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
 
 
 		
