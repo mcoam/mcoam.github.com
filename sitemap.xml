@@ -1,195 +1,207 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>
     <url>
-        <loc>http://mcoam.github.io/blog/2013/10/22/cambiar-theme-octopress/</loc>
-        <lastmod>2014-02-28T11:17:23-03:00</lastmod>
-    </url>
-    <url>
-        <loc>http://mcoam.github.io/blog/2013/10/23/configurar-octopress-y-github-para-blog/</loc>
-        <lastmod>2014-02-28T11:17:23-03:00</lastmod>
-    </url>
-    <url>
-        <loc>http://mcoam.github.io/blog/2013/10/26/migrar-correos-en-zimbra-con-imapsync/</loc>
-        <lastmod>2014-02-28T11:17:23-03:00</lastmod>
-    </url>
-    <url>
-        <loc>http://mcoam.github.io/blog/2013/10/30/expresiones-regulares-con-puppet/</loc>
-        <lastmod>2014-02-28T11:17:23-03:00</lastmod>
-    </url>
-    <url>
-        <loc>http://mcoam.github.io/blog/2013/11/04/filtro-de-correos-salientes-zimbra/</loc>
-        <lastmod>2014-02-28T11:17:23-03:00</lastmod>
-    </url>
-    <url>
-        <loc>http://mcoam.github.io/blog/2013/11/06/script-para-ver-quota-de-casilla-zimbra/</loc>
-        <lastmod>2014-02-28T11:17:23-03:00</lastmod>
+        <loc>http://www.miguelcoa.cl/blog/2013/10/22/cambiar-theme-octopress/</loc>
+        <lastmod>2016-04-15T13:18:59-03:00</lastmod>
     </url>
     <url>
         <loc>
-            http://mcoam.github.io/blog/2013/11/11/automatizando-instalaciones-redhat-slash-centos-con-quickstart/
+            http://www.miguelcoa.cl/blog/2013/10/23/configurar-octopress-y-github-para-blog/
         </loc>
-        <lastmod>2014-02-28T11:17:23-03:00</lastmod>
+        <lastmod>2016-04-15T13:18:59-03:00</lastmod>
     </url>
     <url>
-        <loc>http://mcoam.github.io/blog/2013/11/27/tabulacion-con-editor-vim/</loc>
-        <lastmod>2014-02-28T11:17:23-03:00</lastmod>
+        <loc>http://www.miguelcoa.cl/blog/2013/10/26/migrar-correos-en-zimbra-con-imapsync/</loc>
+        <lastmod>2016-04-15T13:18:59-03:00</lastmod>
     </url>
     <url>
-        <loc>http://mcoam.github.io/blog/2013/11/29/configurar-nagios-server-y-pnp4nagios/</loc>
-        <lastmod>2014-02-28T11:17:23-03:00</lastmod>
+        <loc>http://www.miguelcoa.cl/blog/2013/10/30/expresiones-regulares-con-puppet/</loc>
+        <lastmod>2016-04-15T13:18:59-03:00</lastmod>
     </url>
     <url>
-        <loc>http://mcoam.github.io/blog/2014/01/14/creando-cuentas-zimbra-desde-un-csv/</loc>
-        <lastmod>2014-02-28T12:08:35-03:00</lastmod>
+        <loc>http://www.miguelcoa.cl/blog/2013/11/04/filtro-de-correos-salientes-zimbra/</loc>
+        <lastmod>2016-04-15T13:18:59-03:00</lastmod>
     </url>
     <url>
         <loc>
-            http://mcoam.github.io/blog/2014/01/15/migrando-usuarios-slash-password-postfix-to-zimbra/
+            http://www.miguelcoa.cl/blog/2013/11/06/script-para-ver-quota-de-casilla-zimbra/
         </loc>
-        <lastmod>2014-02-28T11:17:23-03:00</lastmod>
+        <lastmod>2016-04-15T13:18:59-03:00</lastmod>
     </url>
     <url>
         <loc>
-            http://mcoam.github.io/blog/2014/03/21/reenviar-un-correo-en-zimbra-basado-en-el-subject/
+            http://www.miguelcoa.cl/blog/2013/11/11/automatizando-instalaciones-redhat-slash-centos-con-quickstart/
         </loc>
-        <lastmod>2014-03-21T19:51:35-03:00</lastmod>
+        <lastmod>2016-04-15T13:18:59-03:00</lastmod>
     </url>
     <url>
-        <loc>http://mcoam.github.io/blog/2014/06/01/configurar-puppetboard/</loc>
-        <lastmod>2014-08-02T23:05:47-04:00</lastmod>
+        <loc>http://www.miguelcoa.cl/blog/2013/11/27/tabulacion-con-editor-vim/</loc>
+        <lastmod>2016-04-15T13:18:59-03:00</lastmod>
     </url>
     <url>
-        <loc>http://mcoam.github.io/blog/2014/06/03/desactivar-nodo-puppetdb/</loc>
-        <lastmod>2014-06-03T18:51:04-04:00</lastmod>
+        <loc>http://www.miguelcoa.cl/blog/2013/11/29/configurar-nagios-server-y-pnp4nagios/</loc>
+        <lastmod>2016-04-15T13:18:59-03:00</lastmod>
     </url>
     <url>
-        <loc>http://mcoam.github.io/blog/2014/06/26/modulo-ssh-puppet-y-hiera/</loc>
-        <lastmod>2014-06-26T22:41:40-04:00</lastmod>
-    </url>
-    <url>
-        <loc>http://mcoam.github.io/blog/2014/07/07/configurando-vagrant-en-osx/</loc>
-        <lastmod>2014-07-07T15:38:42-04:00</lastmod>
+        <loc>http://www.miguelcoa.cl/blog/2014/01/14/creando-cuentas-zimbra-desde-un-csv/</loc>
+        <lastmod>2016-04-15T13:18:59-03:00</lastmod>
     </url>
     <url>
         <loc>
-            http://mcoam.github.io/blog/2014/07/23/controlando-la-ejecucion-de-exec-en-puppet/
+            http://www.miguelcoa.cl/blog/2014/01/15/migrando-usuarios-slash-password-postfix-to-zimbra/
         </loc>
-        <lastmod>2014-07-24T12:25:48-04:00</lastmod>
+        <lastmod>2016-04-15T13:18:59-03:00</lastmod>
     </url>
     <url>
         <loc>
-            http://mcoam.github.io/blog/2014/07/24/path-global-para-todos-los-execs-en-puppet/
+            http://www.miguelcoa.cl/blog/2014/03/21/reenviar-un-correo-en-zimbra-basado-en-el-subject/
         </loc>
-        <lastmod>2014-07-24T14:48:22-04:00</lastmod>
+        <lastmod>2016-04-15T13:18:59-03:00</lastmod>
+    </url>
+    <url>
+        <loc>http://www.miguelcoa.cl/blog/2014/06/01/configurar-puppetboard/</loc>
+        <lastmod>2016-04-15T13:18:59-03:00</lastmod>
+    </url>
+    <url>
+        <loc>http://www.miguelcoa.cl/blog/2014/06/03/desactivar-nodo-puppetdb/</loc>
+        <lastmod>2016-04-15T13:18:59-03:00</lastmod>
+    </url>
+    <url>
+        <loc>http://www.miguelcoa.cl/blog/2014/06/26/modulo-ssh-puppet-y-hiera/</loc>
+        <lastmod>2016-04-15T13:18:59-03:00</lastmod>
+    </url>
+    <url>
+        <loc>http://www.miguelcoa.cl/blog/2014/07/07/configurando-vagrant-en-osx/</loc>
+        <lastmod>2016-04-15T13:18:59-03:00</lastmod>
     </url>
     <url>
         <loc>
-            http://mcoam.github.io/blog/2014/07/30/red-publica-para-maquinas-virtuales-en-vagrant/
+            http://www.miguelcoa.cl/blog/2014/07/23/controlando-la-ejecucion-de-exec-en-puppet/
         </loc>
-        <lastmod>2014-08-01T10:43:39-04:00</lastmod>
-    </url>
-    <url>
-        <loc>http://mcoam.github.io/blog/2014/08/02/creando-un-box-para-vagrant/</loc>
-        <lastmod>2014-08-03T00:06:27-04:00</lastmod>
+        <lastmod>2016-04-15T13:18:59-03:00</lastmod>
     </url>
     <url>
         <loc>
-            http://mcoam.github.io/blog/2014/08/20/samba4-como-controlador-de-dominio-a-slash-d/
+            http://www.miguelcoa.cl/blog/2014/07/24/path-global-para-todos-los-execs-en-puppet/
         </loc>
-        <lastmod>2014-09-22T14:33:00-03:00</lastmod>
-    </url>
-    <url>
-        <loc>http://mcoam.github.io/blog/2014/08/20/error-samba4-y-bind/</loc>
-        <lastmod>2014-08-20T18:28:42-04:00</lastmod>
+        <lastmod>2016-04-15T13:18:59-03:00</lastmod>
     </url>
     <url>
         <loc>
-            http://mcoam.github.io/blog/2014/08/26/eliminar-y-purgar-nodo-de-puppetdb-storeconfig/
+            http://www.miguelcoa.cl/blog/2014/07/30/red-publica-para-maquinas-virtuales-en-vagrant/
         </loc>
-        <lastmod>2014-08-26T11:56:11-04:00</lastmod>
+        <lastmod>2016-04-15T13:18:59-03:00</lastmod>
     </url>
     <url>
-        <loc>http://mcoam.github.io/blog/2014/10/13/eliminar-vm-vagrant/</loc>
-        <lastmod>2014-10-15T16:58:31-03:00</lastmod>
-    </url>
-    <url>
-        <loc>http://mcoam.github.io/blog/2014/11/28/atachando-sesion-screen-dropeada/</loc>
-        <lastmod>2014-11-28T13:38:44-03:00</lastmod>
+        <loc>http://www.miguelcoa.cl/blog/2014/08/02/creando-un-box-para-vagrant/</loc>
+        <lastmod>2016-04-15T13:18:59-03:00</lastmod>
     </url>
     <url>
         <loc>
-            http://mcoam.github.io/blog/2015/01/15/script-para-buscar-y-borrar-un-correo-en-zimbra/
+            http://www.miguelcoa.cl/blog/2014/08/20/samba4-como-controlador-de-dominio-a-slash-d/
         </loc>
-        <lastmod>2015-02-26T11:25:03-03:00</lastmod>
+        <lastmod>2016-04-15T13:18:59-03:00</lastmod>
+    </url>
+    <url>
+        <loc>http://www.miguelcoa.cl/blog/2014/08/20/error-samba4-y-bind/</loc>
+        <lastmod>2016-04-15T13:18:59-03:00</lastmod>
     </url>
     <url>
         <loc>
-            http://mcoam.github.io/blog/2015/03/26/instalado-slash-actualizando-paquetes-endian-firewall/
+            http://www.miguelcoa.cl/blog/2014/08/26/eliminar-y-purgar-nodo-de-puppetdb-storeconfig/
         </loc>
-        <lastmod>2015-03-26T18:50:33-03:00</lastmod>
+        <lastmod>2016-04-15T13:18:59-03:00</lastmod>
     </url>
     <url>
-        <loc>http://mcoam.github.io/blog/2015/06/24/seleccionar-y-comentar-texto-con-vim/</loc>
-        <lastmod>2015-06-24T16:17:57-03:00</lastmod>
+        <loc>http://www.miguelcoa.cl/blog/2014/10/13/eliminar-vm-vagrant/</loc>
+        <lastmod>2016-04-15T13:18:59-03:00</lastmod>
     </url>
     <url>
-        <loc>http://mcoam.github.io/blog/2015/10/15/notas-sobre-imapsync/</loc>
-        <lastmod>2015-11-03T19:49:47-03:00</lastmod>
+        <loc>http://www.miguelcoa.cl/blog/2014/11/28/atachando-sesion-screen-dropeada/</loc>
+        <lastmod>2016-04-15T13:18:59-03:00</lastmod>
     </url>
     <url>
         <loc>
-            http://mcoam.github.io/blog/2015/10/28/ansible-trabajando-con-volumenes-pv-slash-vg-slash-lv/
+            http://www.miguelcoa.cl/blog/2015/01/15/script-para-buscar-y-borrar-un-correo-en-zimbra/
         </loc>
-        <lastmod>2015-11-15T22:32:17-03:00</lastmod>
+        <lastmod>2016-04-15T13:18:59-03:00</lastmod>
     </url>
     <url>
         <loc>
-            http://mcoam.github.io/blog/2015/11/12/montar-leer-y-escribir-en-usb-con-formato-ntfs/
+            http://www.miguelcoa.cl/blog/2015/03/26/instalado-slash-actualizando-paquetes-endian-firewall/
         </loc>
-        <lastmod>2015-11-12T18:31:18-03:00</lastmod>
+        <lastmod>2016-04-15T13:18:59-03:00</lastmod>
+    </url>
+    <url>
+        <loc>http://www.miguelcoa.cl/blog/2015/06/24/seleccionar-y-comentar-texto-con-vim/</loc>
+        <lastmod>2016-04-15T13:18:59-03:00</lastmod>
+    </url>
+    <url>
+        <loc>http://www.miguelcoa.cl/blog/2015/10/15/notas-sobre-imapsync/</loc>
+        <lastmod>2016-04-15T13:18:59-03:00</lastmod>
     </url>
     <url>
         <loc>
-            http://mcoam.github.io/blog/2015/11/12/ansible-configurando-volumen-de-datos-hsm-en-zimbra/
+            http://www.miguelcoa.cl/blog/2015/10/28/ansible-trabajando-con-volumenes-pv-slash-vg-slash-lv/
         </loc>
-        <lastmod>2015-11-12T18:52:45-03:00</lastmod>
+        <lastmod>2016-04-15T13:18:59-03:00</lastmod>
     </url>
     <url>
         <loc>
-            http://mcoam.github.io/blog/2015/12/17/ansible-chequeando-la-existencia-de-un-directorio/
+            http://www.miguelcoa.cl/blog/2015/11/12/montar-leer-y-escribir-en-usb-con-formato-ntfs/
         </loc>
-        <lastmod>2015-12-17T17:15:58-03:00</lastmod>
+        <lastmod>2016-04-15T13:18:59-03:00</lastmod>
     </url>
     <url>
-        <loc>http://mcoam.github.io/about/</loc>
-        <lastmod>2014-02-28T11:17:23-03:00</lastmod>
+        <loc>
+            http://www.miguelcoa.cl/blog/2015/11/12/ansible-configurando-volumen-de-datos-hsm-en-zimbra/
+        </loc>
+        <lastmod>2016-04-15T13:18:59-03:00</lastmod>
     </url>
     <url>
-        <loc>http://mcoam.github.io/archives/</loc>
-        <lastmod>2015-12-17T17:15:58-03:00</lastmod>
+        <loc>
+            http://www.miguelcoa.cl/blog/2015/12/17/ansible-chequeando-la-existencia-de-un-directorio/
+        </loc>
+        <lastmod>2016-04-15T13:18:59-03:00</lastmod>
     </url>
     <url>
-        <loc>http://mcoam.github.io/blog/archives/</loc>
-        <lastmod>2015-12-17T17:15:58-03:00</lastmod>
+        <loc>http://www.miguelcoa.cl/blog/2016/03/09/proxmox-4-y-ansible/</loc>
+        <lastmod>2016-04-15T13:18:59-03:00</lastmod>
     </url>
     <url>
-        <loc>http://mcoam.github.io/blog/</loc>
-        <lastmod>2015-12-17T17:15:58-03:00</lastmod>
+        <loc>http://www.miguelcoa.cl/blog/2016/04/15/new-post/</loc>
+        <lastmod>2016-04-15T13:23:39-03:00</lastmod>
     </url>
     <url>
-        <loc>http://mcoam.github.io/contact/</loc>
-        <lastmod>2014-02-28T11:17:23-03:00</lastmod>
+        <loc>http://www.miguelcoa.cl/about/</loc>
+        <lastmod>2016-04-15T13:18:59-03:00</lastmod>
     </url>
     <url>
-        <loc>http://mcoam.github.io/</loc>
-        <lastmod>2015-12-17T17:15:58-03:00</lastmod>
+        <loc>http://www.miguelcoa.cl/archives/</loc>
+        <lastmod>2016-04-15T13:23:39-03:00</lastmod>
     </url>
     <url>
-        <loc>http://mcoam.github.io/robots.txt</loc>
-        <lastmod>2014-02-28T11:17:23-03:00</lastmod>
+        <loc>http://www.miguelcoa.cl/blog/archives/</loc>
+        <lastmod>2016-04-15T13:23:39-03:00</lastmod>
     </url>
     <url>
-        <loc>http://mcoam.github.io/search.html</loc>
-        <lastmod>2014-02-28T11:17:23-03:00</lastmod>
+        <loc>http://www.miguelcoa.cl/blog/</loc>
+        <lastmod>2016-04-15T13:23:39-03:00</lastmod>
+    </url>
+    <url>
+        <loc>http://www.miguelcoa.cl/contact/</loc>
+        <lastmod>2016-04-15T13:18:59-03:00</lastmod>
+    </url>
+    <url>
+        <loc>http://www.miguelcoa.cl/</loc>
+        <lastmod>2016-04-15T13:23:39-03:00</lastmod>
+    </url>
+    <url>
+        <loc>http://www.miguelcoa.cl/robots.txt</loc>
+        <lastmod>2016-04-15T13:18:59-03:00</lastmod>
+    </url>
+    <url>
+        <loc>http://www.miguelcoa.cl/search.html</loc>
+        <lastmod>2016-04-15T13:18:59-03:00</lastmod>
     </url>
 </urlset>

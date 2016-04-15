@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: kickstart | Bitácora]]></title>
-  <link href="http://mcoam.github.io/blog/categories/kickstart/atom.xml" rel="self"/>
-  <link href="http://mcoam.github.io/"/>
-  <updated>2015-12-17T17:16:13-03:00</updated>
-  <id>http://mcoam.github.io/</id>
+  <link href="http://www.miguelcoa.cl/blog/categories/kickstart/atom.xml" rel="self"/>
+  <link href="http://www.miguelcoa.cl/"/>
+  <updated>2016-04-15T13:24:10-03:00</updated>
+  <id>http://www.miguelcoa.cl/</id>
   <author>
     <name><![CDATA[Miguel Angel Coa Morales]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Automatizando instalaciones RedHat/Centos con KickStart]]></title>
-    <link href="http://mcoam.github.io/blog/2013/11/11/automatizando-instalaciones-redhat-slash-centos-con-quickstart/"/>
+    <link href="http://www.miguelcoa.cl/blog/2013/11/11/automatizando-instalaciones-redhat-slash-centos-con-quickstart/"/>
     <updated>2013-11-11T20:04:00-03:00</updated>
-    <id>http://mcoam.github.io/blog/2013/11/11/automatizando-instalaciones-redhat-slash-centos-con-quickstart</id>
+    <id>http://www.miguelcoa.cl/blog/2013/11/11/automatizando-instalaciones-redhat-slash-centos-con-quickstart</id>
     <content type="html"><![CDATA[<p>En ocasiones y ante la repetitividad de la operación en algunas instalaciones y estar aburrido de realizar la misma operación por &ldquo;x&rdquo; veces, lo mejor en este escenario es automatizar la instalación mediante el método &ldquo;kickstart&rdquo;. Cuando uno hace una instalación mediante insterfaz gráfica en Redhat/Centos/Fedora (instalador RedHat) al final del proceso se crea un archivo de la instalación bajo <i>/root/anaconda-ks.cfg</i>. Este archivo lo podemos tomar y complementar la instalación que igura en el.
 Bueno, si queremos utilizarlo como &ldquo;plantilla&rdquo; para otra instalación solo tenemos que tomar ese archivo y lo copiamos en un medio extraible (Ej. Usb).
 Por ejemplo, y en el siguiente escenario, vamos a realizar una instalación tomando un archivo kickstart que sacamos de otra instalación y lo alojamos en un Usb el que será instanciado una vez que instalemos el SO.</p>

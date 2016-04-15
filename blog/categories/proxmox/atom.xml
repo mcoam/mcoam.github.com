@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: proxmox | Bitácora]]></title>
+  <link href="http://www.miguelcoa.cl/blog/categories/proxmox/atom.xml" rel="self"/>
+  <link href="http://www.miguelcoa.cl/"/>
+  <updated>2016-04-15T13:24:10-03:00</updated>
+  <id>http://www.miguelcoa.cl/</id>
+  <author>
+    <name><![CDATA[Miguel Angel Coa Morales]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Proxmox 4 y Ansible, automatizando la creación de contenedores]]></title>
+    <link href="http://www.miguelcoa.cl/blog/2016/03/09/proxmox-4-y-ansible/"/>
+    <updated>2016-03-09T11:19:00-03:00</updated>
+    <id>http://www.miguelcoa.cl/blog/2016/03/09/proxmox-4-y-ansible</id>
+    <content type="html"><![CDATA[<p><code>Proxmox 4</code> soporta contenedores LXC para la virtualización, en el caso de querer automatizar dicha tarea con <code>Ansible</code> y se puede realizar mediante el repositorio <code>git@github.com:mcoam/proxmox4_container_lxc.git</code> donde se detallan los pasos y prerrequisitos a seguir.</p>
+]]></content>
+  </entry>
+  
+</feed>

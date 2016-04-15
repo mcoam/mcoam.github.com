@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: linux, | Bitácora]]></title>
-  <link href="http://mcoam.github.io/blog/categories/linux/atom.xml" rel="self"/>
-  <link href="http://mcoam.github.io/"/>
-  <updated>2015-12-17T17:16:13-03:00</updated>
-  <id>http://mcoam.github.io/</id>
+  <link href="http://www.miguelcoa.cl/blog/categories/linux/atom.xml" rel="self"/>
+  <link href="http://www.miguelcoa.cl/"/>
+  <updated>2016-04-15T13:24:10-03:00</updated>
+  <id>http://www.miguelcoa.cl/</id>
   <author>
     <name><![CDATA[Miguel Angel Coa Morales]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Error screen: There is no screen to be resumed matching ]]></title>
-    <link href="http://mcoam.github.io/blog/2014/11/28/atachando-sesion-screen-dropeada/"/>
+    <link href="http://www.miguelcoa.cl/blog/2014/11/28/atachando-sesion-screen-dropeada/"/>
     <updated>2014-11-28T13:14:00-03:00</updated>
-    <id>http://mcoam.github.io/blog/2014/11/28/atachando-sesion-screen-dropeada</id>
+    <id>http://www.miguelcoa.cl/blog/2014/11/28/atachando-sesion-screen-dropeada</id>
     <content type="html"><![CDATA[<p>Si al momento de querer recuperar una sesión <code>screen</code> donde tenemos un proceso corriendo y utilizamos el comando <code>scren -r</code>, como resultado de la operación obtenemos el siguiente mensaje:
 <code>ruby
 [root@mail-old ~]$ screen -r '1866.zimbra-mta'
@@ -34,9 +34,9 @@ La solución es pasar el comando con la opción <i>&lsquo;-D&rsquo;</i> que nos 
   
   <entry>
     <title type="html"><![CDATA[Tabulación con editor VIM]]></title>
-    <link href="http://mcoam.github.io/blog/2013/11/27/tabulacion-con-editor-vim/"/>
+    <link href="http://www.miguelcoa.cl/blog/2013/11/27/tabulacion-con-editor-vim/"/>
     <updated>2013-11-27T08:32:00-03:00</updated>
-    <id>http://mcoam.github.io/blog/2013/11/27/tabulacion-con-editor-vim</id>
+    <id>http://www.miguelcoa.cl/blog/2013/11/27/tabulacion-con-editor-vim</id>
     <content type="html"><![CDATA[<p>En ocasiones al copiar y pegar texto hacia una archivo que está siendo accedido por medio del editor VIM, este queda con una mala tabulación (excesivamente corrida a la derecha) al momento de pegarla. La solución para eso es que antes de pegar el texto tenemos realizar lo siguiente en la misma ventana del editor</p>
 
 <p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
@@ -49,9 +49,9 @@ La solución es pasar el comando con la opción <i>&lsquo;-D&rsquo;</i> que nos 
   
   <entry>
     <title type="html"><![CDATA[Automatizando instalaciones RedHat/Centos con KickStart]]></title>
-    <link href="http://mcoam.github.io/blog/2013/11/11/automatizando-instalaciones-redhat-slash-centos-con-quickstart/"/>
+    <link href="http://www.miguelcoa.cl/blog/2013/11/11/automatizando-instalaciones-redhat-slash-centos-con-quickstart/"/>
     <updated>2013-11-11T20:04:00-03:00</updated>
-    <id>http://mcoam.github.io/blog/2013/11/11/automatizando-instalaciones-redhat-slash-centos-con-quickstart</id>
+    <id>http://www.miguelcoa.cl/blog/2013/11/11/automatizando-instalaciones-redhat-slash-centos-con-quickstart</id>
     <content type="html"><![CDATA[<p>En ocasiones y ante la repetitividad de la operación en algunas instalaciones y estar aburrido de realizar la misma operación por &ldquo;x&rdquo; veces, lo mejor en este escenario es automatizar la instalación mediante el método &ldquo;kickstart&rdquo;. Cuando uno hace una instalación mediante insterfaz gráfica en Redhat/Centos/Fedora (instalador RedHat) al final del proceso se crea un archivo de la instalación bajo <i>/root/anaconda-ks.cfg</i>. Este archivo lo podemos tomar y complementar la instalación que igura en el.
 Bueno, si queremos utilizarlo como &ldquo;plantilla&rdquo; para otra instalación solo tenemos que tomar ese archivo y lo copiamos en un medio extraible (Ej. Usb).
 Por ejemplo, y en el siguiente escenario, vamos a realizar una instalación tomando un archivo kickstart que sacamos de otra instalación y lo alojamos en un Usb el que será instanciado una vez que instalemos el SO.</p>

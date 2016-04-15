@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: puppetboard | Bitácora]]></title>
-  <link href="http://mcoam.github.io/blog/categories/puppetboard/atom.xml" rel="self"/>
-  <link href="http://mcoam.github.io/"/>
-  <updated>2015-12-17T17:16:13-03:00</updated>
-  <id>http://mcoam.github.io/</id>
+  <link href="http://www.miguelcoa.cl/blog/categories/puppetboard/atom.xml" rel="self"/>
+  <link href="http://www.miguelcoa.cl/"/>
+  <updated>2016-04-15T13:24:10-03:00</updated>
+  <id>http://www.miguelcoa.cl/</id>
   <author>
     <name><![CDATA[Miguel Angel Coa Morales]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Configurar PuppetBoard]]></title>
-    <link href="http://mcoam.github.io/blog/2014/06/01/configurar-puppetboard/"/>
+    <link href="http://www.miguelcoa.cl/blog/2014/06/01/configurar-puppetboard/"/>
     <updated>2014-06-01T22:39:00-04:00</updated>
-    <id>http://mcoam.github.io/blog/2014/06/01/configurar-puppetboard</id>
+    <id>http://www.miguelcoa.cl/blog/2014/06/01/configurar-puppetboard</id>
     <content type="html"><![CDATA[<p>Para facilitar la administración de Puppet (opensource) tenemos una nueva herramienta que se llama PuppetBoard su objetivo es dar accesos a la data que nosotros tenemos almacenada en nuestro PuppetDB de forma gráfica vía web, además de permitirnos ver el funcionamiento y reportes de los nodos al momentos de conectarse al nuestro Master.
 PuppetBoard difiere de Pupet Dansboard en:
 <li>Esta escrito en Python no en Ruby </li>

@@ -53,6 +53,107 @@
 	<header>
 		<h2 class="title">
 			
+			<a href="/blog/2013/11/04/filtro-de-correos-salientes-zimbra/">
+			
+				Filtro De Correos Salientes Zimbra</a>
+		</h2>
+		<div class="meta date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-11-04T17:38:00-03:00" pubdate data-updated="true">Nov 4<span>th</span>, 2013</time></div>
+	</header>
+	<div class="entry-content">
+		<p>Aveces es necesario en Zimbra &ldquo;copiar&rdquo; los correos salientes desde una casilla hacia otra cuenta (algo así como un forward). Esto en zimbra se puede realizar mediante la configuración del servicio postfix de la siguiente forma:</p>
+
+<p>Editamos el archivo</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">zimbra</span><span class="o">/</span><span class="n">postfix</span><span class="o">/</span><span class="n">conf</span><span class="o">/</span><span class="n">main</span><span class="p">.</span><span class="n">cf</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Y al principio del archivo agregamos la siguiente definición</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">sender_bcc_maps</span> <span class="o">=</span> <span class="nl">hash:</span><span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">zimbra</span><span class="o">/</span><span class="n">postfix</span><span class="o">/</span><span class="n">conf</span><span class="o">/</span><span class="n">sender_bcc</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Creamos el archivo y colocamos los permisos respectivo</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">zimbra</span><span class="o">/</span><span class="n">postfix</span><span class="o">/</span><span class="n">conf</span><span class="o">/</span><span class="n">sender_bcc</span>
+</span><span class='line'><span class="n">chown</span> <span class="n">zimbra</span><span class="p">.</span><span class="n">zimbra</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">zimbra</span><span class="o">/</span><span class="n">postfix</span><span class="o">/</span><span class="n">conf</span><span class="o">/</span><span class="n">sender_bcc</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Dentro del archivo tenemos que definir en la primera columna la cuenta de correo &ldquo;origen&rdquo; y en la segunda la cuenta de correo &ldquo;destino&rdquo; a la cual le llegará una copia de los correos salientes desde la primera.</p>
+
+<p> 
+		
+		<a href="/blog/2013/11/04/filtro-de-correos-salientes-zimbra/" class="more-link">Read on &rarr;</a>
+	</div>
+
+</article>
+
+
+    <article class="post">
+	<header>
+		<h2 class="title">
+			
+			<a href="/blog/2013/10/30/expresiones-regulares-con-puppet/">
+			
+				Expresiones Regulares Con Puppet</a>
+		</h2>
+		<div class="meta date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-10-30T15:06:00-03:00" pubdate data-updated="true">Oct 30<span>th</span>, 2013</time></div>
+	</header>
+	<div class="entry-content">
+		<p>Puppet permite la declarición de nodos mediante expresiones regulares, esto permite definir dentro de una sola declaraciones &ldquo;n&rdquo; nodos, lo que nos ayudará a manejar de mejor forma nuestra administración de nodos. Por ejemplo:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">node</span> <span class="o">/</span><span class="p">.</span><span class="o">*</span><span class="err">\</span><span class="p">.</span><span class="n">example</span><span class="err">\</span><span class="p">.</span><span class="n">com</span><span class="o">/</span> <span class="n">inherits</span> <span class="n">basenode</span> <span class="p">{</span>
+</span><span class='line'>    <span class="n">class</span> <span class="n">ntp</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Lo anterior dice que, todo nodo del tipo *.example.com <i>(www.example.com, ftp.example.com, mail.example.com)</i> aplicará la <i>clase ntp</i> y heredará la <i>clase basenode</i>. Para más infomación puedes ver la doc de puppet <a href="http://docs.puppetlabs.com/puppet/2.7/reference/lang_node_definitions.html">Puppet Docs</a></p>
+
+		
+		
+	</div>
+
+</article>
+
+
+    <article class="post">
+	<header>
+		<h2 class="title">
+			
 			<a href="/blog/2013/10/26/migrar-correos-en-zimbra-con-imapsync/">
 			
 				Migrar Correos en Zimbra Con Imapsync</a>
@@ -252,7 +353,7 @@ La sintaxis del comando a utilizar dependedará de las configuraciones de los se
     </nav>
 
 </div>
-	<footer id="footer" class="inner">&copy; 2015
+	<footer id="footer" class="inner">&copy; 2016
 
     Miguel Angel Coa Morales
 

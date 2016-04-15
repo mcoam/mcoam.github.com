@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Bitácora]]></title>
-  <link href="http://mcoam.github.io/atom.xml" rel="self"/>
-  <link href="http://mcoam.github.io/"/>
-  <updated>2015-12-17T17:16:13-03:00</updated>
-  <id>http://mcoam.github.io/</id>
+  <link href="http://www.miguelcoa.cl/atom.xml" rel="self"/>
+  <link href="http://www.miguelcoa.cl/"/>
+  <updated>2016-04-15T13:24:10-03:00</updated>
+  <id>http://www.miguelcoa.cl/</id>
   <author>
     <name><![CDATA[Miguel Angel Coa Morales]]></name>
     
@@ -13,10 +13,28 @@
 
   
   <entry>
+    <title type="html"><![CDATA[New post]]></title>
+    <link href="http://www.miguelcoa.cl/blog/2016/04/15/new-post/"/>
+    <updated>2016-04-15T13:23:00-03:00</updated>
+    <id>http://www.miguelcoa.cl/blog/2016/04/15/new-post</id>
+    <content type="html"><![CDATA[
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Proxmox 4 y Ansible, automatizando la creación de contenedores]]></title>
+    <link href="http://www.miguelcoa.cl/blog/2016/03/09/proxmox-4-y-ansible/"/>
+    <updated>2016-03-09T11:19:00-03:00</updated>
+    <id>http://www.miguelcoa.cl/blog/2016/03/09/proxmox-4-y-ansible</id>
+    <content type="html"><![CDATA[<p><code>Proxmox 4</code> soporta contenedores LXC para la virtualización, en el caso de querer automatizar dicha tarea con <code>Ansible</code> y se puede realizar mediante el repositorio <code>git@github.com:mcoam/proxmox4_container_lxc.git</code> donde se detallan los pasos y prerrequisitos a seguir.</p>
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[Ansible: chequeando la existencia de un directorio]]></title>
-    <link href="http://mcoam.github.io/blog/2015/12/17/ansible-chequeando-la-existencia-de-un-directorio/"/>
+    <link href="http://www.miguelcoa.cl/blog/2015/12/17/ansible-chequeando-la-existencia-de-un-directorio/"/>
     <updated>2015-12-17T16:55:00-03:00</updated>
-    <id>http://mcoam.github.io/blog/2015/12/17/ansible-chequeando-la-existencia-de-un-directorio</id>
+    <id>http://www.miguelcoa.cl/blog/2015/12/17/ansible-chequeando-la-existencia-de-un-directorio</id>
     <content type="html"><![CDATA[<p>Si necesitamos chequear la existencia de un directorio antes de realizar cualquier tipo de operación (copiear, instalar, etc) se puede utilizar el valor que nos trae el comando <code>stat</code>. Por ejemplo, el el siguiente ejemplo, se realiza lo siguiente:</p>
 
 <ol>
@@ -62,9 +80,9 @@
   
   <entry>
     <title type="html"><![CDATA[Ansible: Configurando volúmen de datos HSM en Zimbra]]></title>
-    <link href="http://mcoam.github.io/blog/2015/11/12/ansible-configurando-volumen-de-datos-hsm-en-zimbra/"/>
+    <link href="http://www.miguelcoa.cl/blog/2015/11/12/ansible-configurando-volumen-de-datos-hsm-en-zimbra/"/>
     <updated>2015-11-12T18:34:00-03:00</updated>
-    <id>http://mcoam.github.io/blog/2015/11/12/ansible-configurando-volumen-de-datos-hsm-en-zimbra</id>
+    <id>http://www.miguelcoa.cl/blog/2015/11/12/ansible-configurando-volumen-de-datos-hsm-en-zimbra</id>
     <content type="html"><![CDATA[<p>El siguiente <code>Playbook</code> permite configurar un nuevo volúmen para datos (store) en un servidor Zimbra NE.</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
@@ -125,9 +143,9 @@
   
   <entry>
     <title type="html"><![CDATA[Montar, leer y escribir en USB con formato NTFS en OSX Capitan]]></title>
-    <link href="http://mcoam.github.io/blog/2015/11/12/montar-leer-y-escribir-en-usb-con-formato-ntfs/"/>
+    <link href="http://www.miguelcoa.cl/blog/2015/11/12/montar-leer-y-escribir-en-usb-con-formato-ntfs/"/>
     <updated>2015-11-12T18:17:00-03:00</updated>
-    <id>http://mcoam.github.io/blog/2015/11/12/montar-leer-y-escribir-en-usb-con-formato-ntfs</id>
+    <id>http://www.miguelcoa.cl/blog/2015/11/12/montar-leer-y-escribir-en-usb-con-formato-ntfs</id>
     <content type="html"><![CDATA[<p>Con una terminal, ejecutar:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
@@ -156,9 +174,9 @@ El <code>DRIVE_NAME</code> corresponde el nombre del dispositivo que conectamos 
   
   <entry>
     <title type="html"><![CDATA[Ansible: Trabajando con volumenes lógicos PV/VG/LV en Linux]]></title>
-    <link href="http://mcoam.github.io/blog/2015/10/28/ansible-trabajando-con-volumenes-pv-slash-vg-slash-lv/"/>
+    <link href="http://www.miguelcoa.cl/blog/2015/10/28/ansible-trabajando-con-volumenes-pv-slash-vg-slash-lv/"/>
     <updated>2015-10-28T23:52:00-03:00</updated>
-    <id>http://mcoam.github.io/blog/2015/10/28/ansible-trabajando-con-volumenes-pv-slash-vg-slash-lv</id>
+    <id>http://www.miguelcoa.cl/blog/2015/10/28/ansible-trabajando-con-volumenes-pv-slash-vg-slash-lv</id>
     <content type="html"><![CDATA[<p>Ansible cuenta con un módulos para la gestión de discos en Linux los cuales no permiten administrar nuestros volúmenes.
 En el siguiente ejemplo, se crea un volumen sobre un disco <code>/dev/sdf1</code> y que será configurado como volumen lógico y finalmente montado para los backup que realiza un servidor de correos Zimbra.</p>
 
@@ -235,9 +253,9 @@ En el siguiente ejemplo, se crea un volumen sobre un disco <code>/dev/sdf1</code
   
   <entry>
     <title type="html"><![CDATA[Notas sobre imapsync]]></title>
-    <link href="http://mcoam.github.io/blog/2015/10/15/notas-sobre-imapsync/"/>
+    <link href="http://www.miguelcoa.cl/blog/2015/10/15/notas-sobre-imapsync/"/>
     <updated>2015-10-15T23:00:00-03:00</updated>
-    <id>http://mcoam.github.io/blog/2015/10/15/notas-sobre-imapsync</id>
+    <id>http://www.miguelcoa.cl/blog/2015/10/15/notas-sobre-imapsync</id>
     <content type="html"><![CDATA[<p>En el caso de migrar la data de correos vía <code>imapsync</code> es importante tener en consideración (si se va a tener corriendo varios días el comando) utilizar la opción <code>--delete2</code> para que todo correo copiado al <i>(hosts2)</i> y que no tenga copia en el origen <i>(host1)</i> sea borrado, de lo contrario el usuario cuando se conecte al nuevo servidor tendrá correos que ya había eliminado y el buzón pesará mas de lo normal.
 De todas formas, lo anterior se puede corregir configrando el <code>imapsyn</code> con el valor <code>&mdash;minage</code> que sincroniza el buzón desde <i>X</i> días para atrás.</p>
 
@@ -264,9 +282,9 @@ De todas formas, lo anterior se puede corregir configrando el <code>imapsyn</cod
   
   <entry>
     <title type="html"><![CDATA[Seleccionar y comentar texto con VIM]]></title>
-    <link href="http://mcoam.github.io/blog/2015/06/24/seleccionar-y-comentar-texto-con-vim/"/>
+    <link href="http://www.miguelcoa.cl/blog/2015/06/24/seleccionar-y-comentar-texto-con-vim/"/>
     <updated>2015-06-24T16:03:00-03:00</updated>
-    <id>http://mcoam.github.io/blog/2015/06/24/seleccionar-y-comentar-texto-con-vim</id>
+    <id>http://www.miguelcoa.cl/blog/2015/06/24/seleccionar-y-comentar-texto-con-vim</id>
     <content type="html"><![CDATA[<p>En el caso de necesitar seleccionar texto (muchas líneas) con <code>vim</code> podemos hacer lo siguiente:</p>
 
 <ul>
@@ -287,9 +305,9 @@ De todas formas, lo anterior se puede corregir configrando el <code>imapsyn</cod
   
   <entry>
     <title type="html"><![CDATA[Instalado/Actualizando paquetes Endian Firewall]]></title>
-    <link href="http://mcoam.github.io/blog/2015/03/26/instalado-slash-actualizando-paquetes-endian-firewall/"/>
+    <link href="http://www.miguelcoa.cl/blog/2015/03/26/instalado-slash-actualizando-paquetes-endian-firewall/"/>
     <updated>2015-03-26T18:35:00-03:00</updated>
-    <id>http://mcoam.github.io/blog/2015/03/26/instalado-slash-actualizando-paquetes-endian-firewall</id>
+    <id>http://www.miguelcoa.cl/blog/2015/03/26/instalado-slash-actualizando-paquetes-endian-firewall</id>
     <content type="html"><![CDATA[<p>Para instalar paquetes en Endian Firewall podemos utilizar el comando <code>smart</code> que es un administrador de paquetes que viene incorporado en la distro. Lo primero que hay que realizar es instalar el repositorio:</p>
 
 <p><li>Para Endian 2.4.x</li></p>
@@ -337,9 +355,9 @@ De todas formas, lo anterior se puede corregir configrando el <code>imapsyn</cod
   
   <entry>
     <title type="html"><![CDATA[Script para buscar y borrar un correo en zimbra]]></title>
-    <link href="http://mcoam.github.io/blog/2015/01/15/script-para-buscar-y-borrar-un-correo-en-zimbra/"/>
+    <link href="http://www.miguelcoa.cl/blog/2015/01/15/script-para-buscar-y-borrar-un-correo-en-zimbra/"/>
     <updated>2015-01-15T12:49:00-03:00</updated>
-    <id>http://mcoam.github.io/blog/2015/01/15/script-para-buscar-y-borrar-un-correo-en-zimbra</id>
+    <id>http://www.miguelcoa.cl/blog/2015/01/15/script-para-buscar-y-borrar-un-correo-en-zimbra</id>
     <content type="html"><![CDATA[<p>El siguiente script permite buscar y borrar un correo mediante consola desde los mailbox de los usuarios.</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
@@ -410,9 +428,9 @@ Para el caso, tenemos que tener las cuentas de correos en el archivo <code>/var/
   
   <entry>
     <title type="html"><![CDATA[Error screen: There is no screen to be resumed matching ]]></title>
-    <link href="http://mcoam.github.io/blog/2014/11/28/atachando-sesion-screen-dropeada/"/>
+    <link href="http://www.miguelcoa.cl/blog/2014/11/28/atachando-sesion-screen-dropeada/"/>
     <updated>2014-11-28T13:14:00-03:00</updated>
-    <id>http://mcoam.github.io/blog/2014/11/28/atachando-sesion-screen-dropeada</id>
+    <id>http://www.miguelcoa.cl/blog/2014/11/28/atachando-sesion-screen-dropeada</id>
     <content type="html"><![CDATA[<p>Si al momento de querer recuperar una sesión <code>screen</code> donde tenemos un proceso corriendo y utilizamos el comando <code>scren -r</code>, como resultado de la operación obtenemos el siguiente mensaje:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
@@ -437,9 +455,9 @@ Para el caso, tenemos que tener las cuentas de correos en el archivo <code>/var/
   
   <entry>
     <title type="html"><![CDATA[Eliminar VM Vagrant]]></title>
-    <link href="http://mcoam.github.io/blog/2014/10/13/eliminar-vm-vagrant/"/>
+    <link href="http://www.miguelcoa.cl/blog/2014/10/13/eliminar-vm-vagrant/"/>
     <updated>2014-10-13T16:44:00-03:00</updated>
-    <id>http://mcoam.github.io/blog/2014/10/13/eliminar-vm-vagrant</id>
+    <id>http://www.miguelcoa.cl/blog/2014/10/13/eliminar-vm-vagrant</id>
     <content type="html"><![CDATA[<p>En <code>Vagrant</code> nuestra máquinas virtuales son borradas con el comando <code>vm destroy</code> pero sucede que aveces hemos borrado el directorio de la VM o el Vagrantfile y esta ya no puede ser referenciada mediante Vagrant para ser eliminada. Como Vagrant trabaja con <code>VirtualBox</code> podemos utilizar el comando <code>VBoxManage</code> para que la podamos eliminar.</p>
 
 <p>Listamos todas la VM</p>
@@ -503,9 +521,9 @@ Para el caso, tenemos que tener las cuentas de correos en el archivo <code>/var/
   
   <entry>
     <title type="html"><![CDATA[Eliminar y purgar nodo de PuppetDB (storeconfig)]]></title>
-    <link href="http://mcoam.github.io/blog/2014/08/26/eliminar-y-purgar-nodo-de-puppetdb-storeconfig/"/>
+    <link href="http://www.miguelcoa.cl/blog/2014/08/26/eliminar-y-purgar-nodo-de-puppetdb-storeconfig/"/>
     <updated>2014-08-26T11:43:00-04:00</updated>
-    <id>http://mcoam.github.io/blog/2014/08/26/eliminar-y-purgar-nodo-de-puppetdb-storeconfig</id>
+    <id>http://www.miguelcoa.cl/blog/2014/08/26/eliminar-y-purgar-nodo-de-puppetdb-storeconfig</id>
     <content type="html"><![CDATA[<p>Error:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
@@ -547,9 +565,9 @@ Para el caso, tenemos que tener las cuentas de correos en el archivo <code>/var/
   
   <entry>
     <title type="html"><![CDATA[Error Kerberos y Bind con Samba4]]></title>
-    <link href="http://mcoam.github.io/blog/2014/08/20/error-samba4-y-bind/"/>
+    <link href="http://www.miguelcoa.cl/blog/2014/08/20/error-samba4-y-bind/"/>
     <updated>2014-08-20T18:17:00-04:00</updated>
-    <id>http://mcoam.github.io/blog/2014/08/20/error-samba4-y-bind</id>
+    <id>http://www.miguelcoa.cl/blog/2014/08/20/error-samba4-y-bind</id>
     <content type="html"><![CDATA[<p>Al momento de validar la configuración de kerberos del usuario admin arrojaba lo siguiente:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
@@ -643,9 +661,9 @@ Para el caso, tenemos que tener las cuentas de correos en el archivo <code>/var/
   
   <entry>
     <title type="html"><![CDATA[SAMBA4.localo controlador de dominio A/D]]></title>
-    <link href="http://mcoam.github.io/blog/2014/08/20/samba4-como-controlador-de-dominio-a-slash-d/"/>
+    <link href="http://www.miguelcoa.cl/blog/2014/08/20/samba4-como-controlador-de-dominio-a-slash-d/"/>
     <updated>2014-08-20T10:57:00-04:00</updated>
-    <id>http://mcoam.github.io/blog/2014/08/20/samba4-como-controlador-de-dominio-a-slash-d</id>
+    <id>http://www.miguelcoa.cl/blog/2014/08/20/samba4-como-controlador-de-dominio-a-slash-d</id>
     <content type="html"><![CDATA[<p>Para Centos 6 tenemos que complilar las fuentes para instalar Samba4:</p>
 
 <p>Instalar paqueteria necesaria</p>
@@ -1050,9 +1068,9 @@ Configuramos el hostname en la tabla hosts <code>/etc/hosts</code></p>
   
   <entry>
     <title type="html"><![CDATA[Creando un Box para Vagrant]]></title>
-    <link href="http://mcoam.github.io/blog/2014/08/02/creando-un-box-para-vagrant/"/>
+    <link href="http://www.miguelcoa.cl/blog/2014/08/02/creando-un-box-para-vagrant/"/>
     <updated>2014-08-02T23:50:00-04:00</updated>
-    <id>http://mcoam.github.io/blog/2014/08/02/creando-un-box-para-vagrant</id>
+    <id>http://www.miguelcoa.cl/blog/2014/08/02/creando-un-box-para-vagrant</id>
     <content type="html"><![CDATA[<p>En mi caso la máquina virtual no fue creada desde cero, ya que bajé un Box de Vagrant y lo customicé por lo que me salté los pasos previos de la creación del box <a href="https://docs.vagrantup.com/v2/boxes/base.html.">https://docs.vagrantup.com/v2/boxes/base.html.</a> Lo realizado para la creación del box fue lo siguiente:</p>
 
 <p><li> Optimización de tamaño de la VM </li></p>
@@ -1124,9 +1142,9 @@ Agreagamos nuestro Box a nuestro Vagrant</p>
   
   <entry>
     <title type="html"><![CDATA[Red pública para máquinas virtuales en Vagrant ]]></title>
-    <link href="http://mcoam.github.io/blog/2014/07/30/red-publica-para-maquinas-virtuales-en-vagrant/"/>
+    <link href="http://www.miguelcoa.cl/blog/2014/07/30/red-publica-para-maquinas-virtuales-en-vagrant/"/>
     <updated>2014-07-30T15:05:00-04:00</updated>
-    <id>http://mcoam.github.io/blog/2014/07/30/red-publica-para-maquinas-virtuales-en-vagrant</id>
+    <id>http://www.miguelcoa.cl/blog/2014/07/30/red-publica-para-maquinas-virtuales-en-vagrant</id>
     <content type="html"><![CDATA[<p>Por defecto las máquinas virtuales creadas en Vagrant quedan configuradas con una ip &ldquo;privada&rdquo; y el acceso a la VM es por medio de NAT. Si deseamos configurar una ip &ldquo;publica&rdquo; en nuestra máquina virtual tenemos que editar nuestro <code>Vagranfile</code> y adicionar el parámetro <code>vm.network</code> dentro de nuestro apartado <code>config.vm.define</code>.</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
@@ -1199,9 +1217,9 @@ Agreagamos nuestro Box a nuestro Vagrant</p>
   
   <entry>
     <title type="html"><![CDATA[Path Global para todos los Execs en Puppet]]></title>
-    <link href="http://mcoam.github.io/blog/2014/07/24/path-global-para-todos-los-execs-en-puppet/"/>
+    <link href="http://www.miguelcoa.cl/blog/2014/07/24/path-global-para-todos-los-execs-en-puppet/"/>
     <updated>2014-07-24T14:37:00-04:00</updated>
-    <id>http://mcoam.github.io/blog/2014/07/24/path-global-para-todos-los-execs-en-puppet</id>
+    <id>http://www.miguelcoa.cl/blog/2014/07/24/path-global-para-todos-los-execs-en-puppet</id>
     <content type="html"><![CDATA[<p>En Puppet si tenemos varios <code>Exec</code> para ejecutar comandos del sistema operativo podemos configurar el atributo <code>path</code> de forma global dentro del <code>site.pp</code> y con ello evitamos repetir código.</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
@@ -1230,9 +1248,9 @@ Agreagamos nuestro Box a nuestro Vagrant</p>
   
   <entry>
     <title type="html"><![CDATA[Controlando la ejecución de Exec en Puppet]]></title>
-    <link href="http://mcoam.github.io/blog/2014/07/23/controlando-la-ejecucion-de-exec-en-puppet/"/>
+    <link href="http://www.miguelcoa.cl/blog/2014/07/23/controlando-la-ejecucion-de-exec-en-puppet/"/>
     <updated>2014-07-23T21:25:00-04:00</updated>
-    <id>http://mcoam.github.io/blog/2014/07/23/controlando-la-ejecucion-de-exec-en-puppet</id>
+    <id>http://www.miguelcoa.cl/blog/2014/07/23/controlando-la-ejecucion-de-exec-en-puppet</id>
     <content type="html"><![CDATA[<p>En Puppet podemos ejecutar comando a nivel del sistema operativo por medio de <code>Exec</code>, en ocasiones sucede que tenemos declarada la sintaxis a ejecutar pero sucede que esta se aplica cada vez que corre el agente Puppet, Ejemplo:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
@@ -1289,9 +1307,9 @@ Funciona del modo que para ejecutar el atributo <code>command</code> el resultad
   
   <entry>
     <title type="html"><![CDATA[Configurando Vagrant en OSX]]></title>
-    <link href="http://mcoam.github.io/blog/2014/07/07/configurando-vagrant-en-osx/"/>
+    <link href="http://www.miguelcoa.cl/blog/2014/07/07/configurando-vagrant-en-osx/"/>
     <updated>2014-07-07T15:30:00-04:00</updated>
-    <id>http://mcoam.github.io/blog/2014/07/07/configurando-vagrant-en-osx</id>
+    <id>http://www.miguelcoa.cl/blog/2014/07/07/configurando-vagrant-en-osx</id>
     <content type="html"><![CDATA[<p>En la búsqueda de correr máquinas virtuales de forma mas simple me he decidido instalar <code>Vagrant</code>, que es un entorno para la gestión de máquinas virtuales bajo mbiente VirtualBox. La mágia de Vagrant viene de la mano de VirtualBox ya que este tiene soporte para correr máquinas virtuales del tipo <i>headless</i> (algo así como máquinas que corren en un servidor pero no sabes donde).</p>
 
 <h4>Instalación de Vagrant en OSX 10.9.3</h4>
@@ -1399,7 +1417,7 @@ Luego de tener creado nuestro <code>Vagrantfile</code> creado, podemos iniciar n
 
 <p>Por defecto el nombre con que queda la VM y se puede ver mediante la GUI de VirtualBox no es para nada descriptivo, pero puede ser modificado editando el archivo <code>Vagranfile</code> adicionando la variable <code>name</code> de la sección <code>config.vm.provider</code> (líneas nº 9,10,11)  .</p>
 
-<p><img class="center" src="http://mcoam.github.io/images/vagrantDefaultName.png"></p>
+<p><img class="center" src="http://www.miguelcoa.cl/images/vagrantDefaultName.png"></p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -1440,408 +1458,6 @@ Luego de tener creado nuestro <code>Vagrantfile</code> creado, podemos iniciar n
 
 
 <p>No esta demás el link de la <a href="https://docs.vagrantup.com">documentación</a></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Módulo SSH Puppet y Hiera]]></title>
-    <link href="http://mcoam.github.io/blog/2014/06/26/modulo-ssh-puppet-y-hiera/"/>
-    <updated>2014-06-26T21:28:00-04:00</updated>
-    <id>http://mcoam.github.io/blog/2014/06/26/modulo-ssh-puppet-y-hiera</id>
-    <content type="html"><![CDATA[<p>El siguiente es un módulo de Puppet para la administración del servicio ssh en Linux (Rhel/Debian). La idea, de módulo es tomar los valores de las variables <code>port</code> <code>usedns</code> y <code>permit_root_login</code>.</p>
-
-<p><li>Clase init.pp</li>
-Esta clase lo que hace es heredar las definición de variables que nosotros tenemos en nuestra clase <code>params.pp</code> e instancia el orden de la ejecución de las clases.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[</span><span class="n">root</span><span class="vi">@master</span> <span class="n">manifests</span><span class="o">]</span><span class="err">$</span> <span class="n">cat</span> <span class="n">init</span><span class="o">.</span><span class="n">pp</span>
-</span><span class='line'><span class="k">class</span> <span class="n">sshmcoa</span> <span class="p">(</span>
-</span><span class='line'>    <span class="vg">$port</span>               <span class="o">=</span> <span class="vg">$sshmcoa</span><span class="o">::</span><span class="ss">params</span><span class="p">:</span><span class="ss">:port</span><span class="p">,</span>
-</span><span class='line'>    <span class="vg">$usedns</span>             <span class="o">=</span> <span class="vg">$sshmcoa</span><span class="o">::</span><span class="ss">params</span><span class="p">:</span><span class="ss">:usedns</span><span class="p">,</span>
-</span><span class='line'>    <span class="vg">$ensure</span>             <span class="o">=</span> <span class="vg">$sshmcoa</span><span class="o">::</span><span class="ss">params</span><span class="p">:</span><span class="ss">:ensure</span><span class="p">,</span>
-</span><span class='line'>    <span class="vg">$permit_root_login</span>  <span class="o">=</span> <span class="vg">$sshmcoa</span><span class="o">::</span><span class="ss">params</span><span class="p">:</span><span class="ss">:permit_root_login</span><span class="p">,</span>
-</span><span class='line'>    <span class="vg">$port</span>             <span class="o">=</span> <span class="vg">$sshmcoa</span><span class="o">::</span><span class="ss">params</span><span class="p">:</span><span class="ss">:port</span><span class="p">,</span>
-</span><span class='line'>    <span class="vg">$service_name</span> <span class="o">=</span> <span class="vg">$sshmcoa</span><span class="o">::</span><span class="ss">params</span><span class="p">:</span><span class="ss">:service_name</span><span class="p">,</span>
-</span><span class='line'>    <span class="vg">$config_file</span>  <span class="o">=</span> <span class="vg">$sshmcoa</span><span class="o">::</span><span class="ss">params</span><span class="p">:</span><span class="ss">:config_file</span><span class="p">,</span>
-</span><span class='line'>    <span class="vg">$package_name</span> <span class="o">=</span> <span class="vg">$sshmcoa</span><span class="o">::</span><span class="ss">params</span><span class="p">:</span><span class="ss">:package_name</span><span class="p">,</span>
-</span><span class='line'>    <span class="vg">$config_template</span>    <span class="o">=</span> <span class="vg">$sshmcoa</span><span class="o">::</span><span class="ss">params</span><span class="p">:</span><span class="ss">:config_template</span><span class="p">,</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">)</span> <span class="n">inherits</span> <span class="ss">sshmcoa</span><span class="p">:</span><span class="ss">:params</span> <span class="p">{</span>
-</span><span class='line'>  <span class="k">class</span> <span class="p">{</span><span class="s1">&#39;::sshmcoa::install&#39;</span><span class="p">:</span> <span class="p">}</span> <span class="o">-&gt;</span>
-</span><span class='line'>  <span class="k">class</span> <span class="p">{</span><span class="s1">&#39;::sshmcoa::config&#39;</span><span class="p">:}</span>  <span class="o">-&gt;</span>
-</span><span class='line'>  <span class="k">class</span> <span class="p">{</span><span class="s1">&#39;::sshmcoa::service&#39;</span><span class="p">:}</span>  <span class="o">-&gt;</span>
-</span><span class='line'>  <span class="no">Class</span> <span class="o">[</span><span class="s1">&#39;sshmcoa&#39;</span><span class="o">]</span>
-</span><span class='line'> <span class="c1">#notify {&quot;EL PUERTO ES: $port&quot;:}</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p><li>Clase params.pp</li>
-En esta clase se definen todos los parámetros a configurar por la clase dependiendo del sistema operativo (familia RedHat o familia Debian)</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[</span><span class="n">root</span><span class="vi">@master</span> <span class="n">manifests</span><span class="o">]</span><span class="err">$</span> <span class="n">cat</span> <span class="n">params</span><span class="o">.</span><span class="n">pp</span>
-</span><span class='line'><span class="k">class</span> <span class="ss">sshmcoa</span><span class="p">:</span><span class="ss">:params</span><span class="p">{</span>
-</span><span class='line'>    <span class="vg">$port</span>     <span class="o">=</span> <span class="s1">&#39;&#39;</span>
-</span><span class='line'>    <span class="vg">$usedns</span>       <span class="o">=</span> <span class="s1">&#39;&#39;</span>
-</span><span class='line'>    <span class="vg">$ensure</span>             <span class="o">=</span> <span class="s1">&#39;present&#39;</span>
-</span><span class='line'>    <span class="vg">$permit_root_login</span>  <span class="o">=</span> <span class="s1">&#39;&#39;</span>
-</span><span class='line'>    <span class="vg">$listen_address</span>     <span class="o">=</span> <span class="s1">&#39;0.0.0.0&#39;</span>
-</span><span class='line'>    <span class="vg">$config_template</span>    <span class="o">=</span> <span class="s1">&#39;sshmcoa/sshd_config.conf.erb&#39;</span>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'><span class="k">case</span> <span class="vg">$:</span><span class="ss">:osfamily</span> <span class="p">{</span>
-</span><span class='line'>          <span class="s1">&#39;Debian&#39;</span><span class="p">:{</span>
-</span><span class='line'>      <span class="vg">$config_file</span>  <span class="o">=</span> <span class="s1">&#39;/etc/ssh/sshd_config&#39;</span>
-</span><span class='line'>      <span class="vg">$service_name</span> <span class="o">=</span> <span class="s1">&#39;ssh&#39;</span>
-</span><span class='line'>      <span class="vg">$package_name</span> <span class="o">=</span> <span class="s1">&#39;ssh&#39;</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>          <span class="ss">default</span><span class="p">:{</span>
-</span><span class='line'>      <span class="vg">$config_file</span>  <span class="o">=</span> <span class="s1">&#39;/etc/ssh/sshd_config&#39;</span>
-</span><span class='line'>      <span class="vg">$service_name</span> <span class="o">=</span> <span class="s1">&#39;sshd&#39;</span>
-</span><span class='line'>      <span class="vg">$package_name</span> <span class="o">=</span> <span class="s1">&#39;openssh-server&#39;</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>     <span class="p">}</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<!-- more -->
-
-
-<p><li>Clase install.pp</li>
-Esta es la clase encargada de la instalación del paquete para el servicio ssh, dependiendo del <code>osfamily</code> se instalará el pauete <code>ssh</code> o <code>openssh-server</code></p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[</span><span class="n">root</span><span class="vi">@master</span> <span class="n">manifests</span><span class="o">]</span><span class="err">$</span> <span class="n">cat</span> <span class="n">install</span><span class="o">.</span><span class="n">pp</span>
-</span><span class='line'><span class="k">class</span> <span class="ss">sshmcoa</span><span class="p">:</span><span class="ss">:install</span> <span class="n">inherits</span> <span class="n">sshmcoa</span> <span class="p">{</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">case</span> <span class="vg">$:</span><span class="ss">:osfamily</span> <span class="p">{</span>
-</span><span class='line'>        <span class="s1">&#39;Debian&#39;</span><span class="p">:{</span>
-</span><span class='line'>                <span class="n">package</span> <span class="p">{</span><span class="s2">&quot;$package_name&quot;</span><span class="p">:</span>
-</span><span class='line'>                        <span class="k">ensure</span> <span class="o">=&gt;</span> <span class="s1">&#39;installed&#39;</span>
-</span><span class='line'>                <span class="p">}</span>
-</span><span class='line'>        <span class="p">}</span>
-</span><span class='line'>        <span class="ss">default</span><span class="p">:{</span>
-</span><span class='line'>                <span class="n">package</span> <span class="p">{</span><span class="s2">&quot;$package_name&quot;</span><span class="p">:</span>
-</span><span class='line'>                        <span class="k">ensure</span> <span class="o">=&gt;</span> <span class="s1">&#39;installed&#39;</span>
-</span><span class='line'>          <span class="p">}</span>
-</span><span class='line'>      <span class="p">}</span>
-</span><span class='line'>   <span class="p">}</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p><li>Clase service.pp</li>
-Se configurar las opciones propias del servicio ssh</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[</span><span class="n">root</span><span class="vi">@master</span> <span class="n">manifests</span><span class="o">]</span><span class="err">$</span> <span class="n">cat</span> <span class="n">service</span><span class="o">.</span><span class="n">pp</span>
-</span><span class='line'><span class="k">class</span> <span class="ss">sshmcoa</span><span class="p">:</span><span class="ss">:service</span> <span class="n">inherits</span> <span class="n">sshmcoa</span> <span class="p">{</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="n">service</span> <span class="p">{</span><span class="s2">&quot;$service_name&quot;</span><span class="p">:</span>
-</span><span class='line'>          <span class="k">ensure</span>     <span class="o">=&gt;</span> <span class="n">running</span><span class="p">,</span>
-</span><span class='line'>          <span class="n">hasstatus</span>  <span class="o">=&gt;</span> <span class="kp">true</span><span class="p">,</span>
-</span><span class='line'>          <span class="n">hasrestart</span> <span class="o">=&gt;</span> <span class="kp">true</span><span class="p">,</span>
-</span><span class='line'>          <span class="n">enable</span>      <span class="o">=&gt;</span> <span class="kp">true</span><span class="p">,</span>
-</span><span class='line'>          <span class="nb">require</span>    <span class="o">=&gt;</span> <span class="no">Class</span><span class="o">[</span><span class="ss">sshmcoa</span><span class="p">:</span><span class="ss">:config</span><span class="o">]</span>
-</span><span class='line'>  <span class="p">}</span>    
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p><li>Clase config.pp</li>
-Configuramos los valores del archivo sshd_config. El nombre del archivo viene heredado de la de la clase principal bajo la variable <code>$config_file</code>, y el contenido <code>content</code> que tendrá el archivo es creado mediante un template <code>.erb</code></p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[</span><span class="n">root</span><span class="vi">@master</span> <span class="n">manifests</span><span class="o">]</span><span class="c1"># cat config.pp </span>
-</span><span class='line'><span class="k">class</span> <span class="ss">sshmcoa</span><span class="p">:</span><span class="ss">:config</span> <span class="n">inherits</span> <span class="n">sshmcoa</span> <span class="p">{</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="n">file</span> <span class="p">{</span> <span class="vg">$config_file</span><span class="p">:</span>
-</span><span class='line'>          <span class="k">ensure</span>  <span class="o">=&gt;</span> <span class="vg">$ensure</span><span class="p">,</span>
-</span><span class='line'>          <span class="n">owner</span>   <span class="o">=&gt;</span> <span class="s1">&#39;root&#39;</span><span class="p">,</span>
-</span><span class='line'>          <span class="n">group</span>   <span class="o">=&gt;</span> <span class="s1">&#39;root&#39;</span><span class="p">,</span>
-</span><span class='line'>          <span class="n">mode</span>    <span class="o">=&gt;</span> <span class="s1">&#39;600&#39;</span><span class="p">,</span>
-</span><span class='line'>          <span class="n">content</span> <span class="o">=&gt;</span> <span class="n">template</span><span class="p">(</span><span class="vg">$config_template</span><span class="p">),</span>
-</span><span class='line'>      <span class="n">notify</span>  <span class="o">=&gt;</span> <span class="no">Service</span><span class="o">[</span><span class="s2">&quot;$service_name&quot;</span><span class="o">]</span>
-</span><span class='line'>      <span class="p">}</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p><li>Archivo sshd_config.conf.erb</li>
-Este es el arhivo .erb que se crea con el contenido dinámico con el valor de las variables que fueron ingresadas desde <code>Hiera</code>. Para el caso de la clase, los valores que modificamos son <code>port</code> <code>usedns</code> y <code>permit_root_login</code> y para importalos al template tenemos que utilizar el formato <code>&lt;%= @NOMBRE_DE_VARIABLE %></code></p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[</span><span class="n">root</span><span class="vi">@master</span> <span class="n">manifests</span><span class="o">]</span><span class="err">$</span> <span class="n">cat</span> <span class="o">.</span><span class="n">.</span><span class="o">/</span><span class="n">templates</span><span class="o">/</span><span class="n">sshd_config</span><span class="o">.</span><span class="n">conf</span><span class="o">.</span><span class="n">erb</span>
-</span><span class='line'><span class="c1"># sshd.conf: Managed by Puppet.</span>
-</span><span class='line'><span class="c1">#</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1">#Port Puppet</span>
-</span><span class='line'><span class="no">Port</span> <span class="o">&lt;</span><span class="sx">%= @port %&gt;</span>
-</span><span class='line'><span class="sx">Protocol 2</span>
-</span><span class='line'><span class="sx">SyslogFacility AUTHPRIV</span>
-</span><span class='line'><span class="sx">PasswordAuthentication yes</span>
-</span><span class='line'><span class="sx">ChallengeResponseAuthentication no</span>
-</span><span class='line'><span class="sx">GSSAPIAuthentication yes</span>
-</span><span class='line'><span class="sx">GSSAPICleanupCredentials yes</span>
-</span><span class='line'><span class="sx">##PermitRootLogin Puppet</span>
-</span><span class='line'><span class="sx">PermitRootLogin &lt;%=</span> <span class="vi">@permit_root_login</span> <span class="sx">%&gt;</span>
-</span><span class='line'><span class="sx">UsePAM yes</span>
-</span><span class='line'><span class="sx">#UseDNS Puppet</span>
-</span><span class='line'><span class="sx">UseDNS &lt;%= @usedns %&gt;</span>
-</span><span class='line'><span class="no">AcceptEnv</span> <span class="no">LANG</span> <span class="no">LC_CTYPE</span> <span class="no">LC_NUMERIC</span> <span class="no">LC_TIME</span> <span class="no">LC_COLLATE</span> <span class="no">LC_MONETARY</span> <span class="no">LC_MESSAGES</span>
-</span><span class='line'><span class="no">AcceptEnv</span> <span class="no">LC_PAPER</span> <span class="no">LC_NAME</span> <span class="no">LC_ADDRESS</span> <span class="no">LC_TELEPHONE</span> <span class="no">LC_MEASUREMENT</span>
-</span><span class='line'><span class="no">AcceptEnv</span> <span class="no">LC_IDENTIFICATION</span> <span class="no">LC_ALL</span> <span class="no">LANGUAGE</span>
-</span><span class='line'><span class="no">AcceptEnv</span> <span class="no">XMODIFIERS</span>
-</span><span class='line'><span class="no">X11Forwarding</span> <span class="n">yes</span>
-</span><span class='line'><span class="no">Subsystem</span> <span class="n">sftp</span> <span class="sr">/usr/</span><span class="n">libexec</span><span class="o">/</span><span class="n">openssh</span><span class="o">/</span><span class="n">sftp</span><span class="o">-</span><span class="n">server</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p><li>Archivo Hiera.yaml</li>
-Dentro de nuestro <code>common.yaml</code> configuramos los valores que tendrán las variables del servicio ssh.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[</span><span class="n">root</span><span class="vi">@master</span> <span class="n">hieradata</span><span class="o">]</span><span class="err">$</span> <span class="n">cat</span> <span class="n">common</span><span class="o">.</span><span class="n">yaml</span>
-</span><span class='line'><span class="o">---</span>
-</span><span class='line'><span class="ss">classes</span><span class="p">:</span>
-</span><span class='line'>     <span class="o">-</span> <span class="n">sshmcoa</span>
-</span><span class='line'>
-</span><span class='line'><span class="ss">sshmcoa</span><span class="p">:</span><span class="ss">:port</span><span class="p">:</span> <span class="s1">&#39;2222&#39;</span>
-</span><span class='line'><span class="ss">sshmcoa</span><span class="p">:</span><span class="ss">:usedns</span><span class="p">:</span> <span class="s1">&#39;no&#39;</span>
-</span><span class='line'><span class="ss">sshmcoa</span><span class="p">:</span><span class="ss">:permit_root_login</span><span class="p">:</span> <span class="s1">&#39;no&#39;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Finalmente cuando conectemos el nodo veremos como se ejecuta la clase con los valores que le hemos pasado</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[</span><span class="n">root</span><span class="vi">@node1</span> <span class="n">etc</span><span class="o">]</span><span class="c1"># !puppet</span>
-</span><span class='line'><span class="n">puppet</span> <span class="n">agent</span> <span class="o">--</span><span class="nb">test</span>
-</span><span class='line'><span class="ss">Info</span><span class="p">:</span> <span class="no">Retrieving</span> <span class="n">plugin</span>
-</span><span class='line'><span class="ss">Info</span><span class="p">:</span> <span class="no">Loading</span> <span class="n">facts</span> <span class="k">in</span> <span class="sr">/var/</span><span class="n">lib</span><span class="o">/</span><span class="n">puppet</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">facter</span><span class="o">/</span><span class="n">root_home</span><span class="o">.</span><span class="n">rb</span>
-</span><span class='line'><span class="ss">Info</span><span class="p">:</span> <span class="no">Loading</span> <span class="n">facts</span> <span class="k">in</span> <span class="sr">/var/</span><span class="n">lib</span><span class="o">/</span><span class="n">puppet</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">facter</span><span class="o">/</span><span class="n">puppet_vardir</span><span class="o">.</span><span class="n">rb</span>
-</span><span class='line'><span class="ss">Info</span><span class="p">:</span> <span class="no">Loading</span> <span class="n">facts</span> <span class="k">in</span> <span class="sr">/var/</span><span class="n">lib</span><span class="o">/</span><span class="n">puppet</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">facter</span><span class="o">/</span><span class="n">pe_version</span><span class="o">.</span><span class="n">rb</span>
-</span><span class='line'><span class="ss">Info</span><span class="p">:</span> <span class="no">Loading</span> <span class="n">facts</span> <span class="k">in</span> <span class="sr">/var/</span><span class="n">lib</span><span class="o">/</span><span class="n">puppet</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">facter</span><span class="o">/</span><span class="n">hosts_managed</span><span class="o">.</span><span class="n">rb</span>
-</span><span class='line'><span class="ss">Info</span><span class="p">:</span> <span class="no">Loading</span> <span class="n">facts</span> <span class="k">in</span> <span class="sr">/var/</span><span class="n">lib</span><span class="o">/</span><span class="n">puppet</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">facter</span><span class="o">/</span><span class="n">facter_dot_d</span><span class="o">.</span><span class="n">rb</span>
-</span><span class='line'><span class="ss">Info</span><span class="p">:</span> <span class="no">Caching</span> <span class="n">catalog</span> <span class="k">for</span> <span class="n">node1</span><span class="o">.</span><span class="n">example</span><span class="o">.</span><span class="n">com</span>
-</span><span class='line'><span class="ss">Info</span><span class="p">:</span> <span class="no">Applying</span> <span class="n">configuration</span> <span class="n">version</span> <span class="s1">&#39;1401042981&#39;</span>
-</span><span class='line'><span class="ss">Notice</span><span class="p">:</span> <span class="sr">/Stage[main]/</span><span class="ss">Sshmcoa</span><span class="p">:</span><span class="ss">:Install</span><span class="o">/</span><span class="no">Package</span><span class="o">[</span><span class="n">openssh</span><span class="o">-</span><span class="n">server</span><span class="o">]/</span><span class="k">ensure</span><span class="p">:</span> <span class="n">created</span>
-</span><span class='line'><span class="ss">Notice</span><span class="p">:</span> <span class="sr">/File[/e</span><span class="n">tc</span><span class="o">/</span><span class="n">ssh</span><span class="o">/</span><span class="n">sshd_config</span><span class="o">]/</span><span class="ss">content</span><span class="p">:</span>
-</span><span class='line'><span class="o">---</span> <span class="sr">/etc/ss</span><span class="n">h</span><span class="o">/</span><span class="n">sshd_config</span>  <span class="mi">2013</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">22</span> <span class="mi">19</span><span class="p">:</span><span class="mi">40</span><span class="p">:</span><span class="mo">03</span><span class="o">.</span><span class="mo">000000000</span> <span class="o">-</span><span class="mo">0300</span>
-</span><span class='line'><span class="o">.</span><span class="n">.</span><span class="o">.</span><span class="n">.</span>
-</span><span class='line'><span class="o">.</span><span class="n">.</span><span class="o">.</span><span class="n">.</span>
-</span><span class='line'><span class="o">.</span><span class="n">.</span><span class="o">.</span><span class="n">.</span>
-</span><span class='line'><span class="ss">Info</span><span class="p">:</span> <span class="no">FileBucket</span> <span class="n">adding</span> <span class="p">{</span><span class="n">md5</span><span class="p">}</span><span class="mi">53</span><span class="n">ad75eb1f2269d23f6e4228353cbca3</span>
-</span><span class='line'><span class="ss">Info</span><span class="p">:</span> <span class="sr">/File[/e</span><span class="n">tc</span><span class="o">/</span><span class="n">ssh</span><span class="o">/</span><span class="n">sshd_config</span><span class="o">]</span><span class="p">:</span> <span class="no">Filebucketed</span> <span class="sr">/etc/ss</span><span class="n">h</span><span class="o">/</span><span class="n">sshd_config</span> <span class="n">to</span> <span class="n">puppet</span> <span class="n">with</span> <span class="n">sum</span> <span class="mi">53</span><span class="n">ad75eb1f2269d23f6e4228353cbca3</span>
-</span><span class='line'><span class="ss">Notice</span><span class="p">:</span> <span class="sr">/File[/e</span><span class="n">tc</span><span class="o">/</span><span class="n">ssh</span><span class="o">/</span><span class="n">sshd_config</span><span class="o">]/</span><span class="ss">content</span><span class="p">:</span> <span class="n">content</span> <span class="n">changed</span> <span class="s1">&#39;{md5}53ad75eb1f2269d23f6e4228353cbca3&#39;</span> <span class="n">to</span> <span class="s1">&#39;{md5}22a041c1bbfd208de0259a2403bf3cbb&#39;</span>
-</span><span class='line'><span class="ss">Info</span><span class="p">:</span> <span class="sr">/File[/e</span><span class="n">tc</span><span class="o">/</span><span class="n">ssh</span><span class="o">/</span><span class="n">sshd_config</span><span class="o">]</span><span class="p">:</span> <span class="no">Scheduling</span> <span class="n">refresh</span> <span class="n">of</span> <span class="no">Service</span><span class="o">[</span><span class="n">sshd</span><span class="o">]</span>
-</span><span class='line'><span class="ss">Notice</span><span class="p">:</span> <span class="sr">/Stage[main]/</span><span class="ss">Sshmcoa</span><span class="p">:</span><span class="ss">:Service</span><span class="o">/</span><span class="no">Service</span><span class="o">[</span><span class="n">sshd</span><span class="o">]/</span><span class="k">ensure</span><span class="p">:</span> <span class="k">ensure</span> <span class="n">changed</span> <span class="s1">&#39;stopped&#39;</span> <span class="n">to</span> <span class="s1">&#39;running&#39;</span>
-</span><span class='line'><span class="ss">Info</span><span class="p">:</span> <span class="sr">/Stage[main]/</span><span class="ss">Sshmcoa</span><span class="p">:</span><span class="ss">:Service</span><span class="o">/</span><span class="no">Service</span><span class="o">[</span><span class="n">sshd</span><span class="o">]</span><span class="p">:</span> <span class="no">Unscheduling</span> <span class="n">refresh</span> <span class="n">on</span> <span class="no">Service</span><span class="o">[</span><span class="n">sshd</span><span class="o">]</span>
-</span><span class='line'><span class="ss">Notice</span><span class="p">:</span> <span class="no">EL</span> <span class="no">PUERTO</span> <span class="ss">ES</span><span class="p">:</span> <span class="mi">2222</span>
-</span><span class='line'><span class="ss">Notice</span><span class="p">:</span> <span class="sr">/Stage[main]/</span><span class="no">Sshmcoa</span><span class="o">/</span><span class="no">Notify</span><span class="o">[</span><span class="no">EL</span> <span class="no">PUERTO</span> <span class="ss">ES</span><span class="p">:</span> <span class="mi">2222</span><span class="o">]/</span><span class="ss">message</span><span class="p">:</span> <span class="n">defined</span> <span class="s1">&#39;message&#39;</span> <span class="n">as</span> <span class="s1">&#39;EL PUERTO ES: 2222&#39;</span>
-</span><span class='line'><span class="ss">Notice</span><span class="p">:</span> <span class="no">Finished</span> <span class="n">catalog</span> <span class="n">run</span> <span class="k">in</span> <span class="mi">16</span><span class="o">.</span><span class="mi">27</span> <span class="n">seconds</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Si vemos el contenido observaremos que se creó tal cual esta definido en nuestro template erb.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[</span><span class="n">root</span><span class="vi">@node1</span> <span class="n">etc</span><span class="o">]</span><span class="c1"># cat /etc/ssh/sshd_config </span>
-</span><span class='line'><span class="c1"># sshd.conf: Managed by Puppet.</span>
-</span><span class='line'><span class="c1">#</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1">#Port Puppet</span>
-</span><span class='line'><span class="no">Port</span> <span class="mi">2222</span>
-</span><span class='line'><span class="no">Protocol</span> <span class="mi">2</span>
-</span><span class='line'><span class="no">SyslogFacility</span> <span class="no">AUTHPRIV</span>
-</span><span class='line'><span class="no">PasswordAuthentication</span> <span class="n">yes</span>
-</span><span class='line'><span class="no">ChallengeResponseAuthentication</span> <span class="n">no</span>
-</span><span class='line'><span class="no">GSSAPIAuthentication</span> <span class="n">yes</span>
-</span><span class='line'><span class="no">GSSAPICleanupCredentials</span> <span class="n">yes</span>
-</span><span class='line'><span class="c1">##PermitRootLogin Puppet</span>
-</span><span class='line'><span class="no">PermitRootLogin</span> <span class="n">no</span>
-</span><span class='line'><span class="no">UsePAM</span> <span class="n">yes</span>
-</span><span class='line'><span class="c1">#UseDNS Puppet</span>
-</span><span class='line'><span class="no">UseDNS</span> <span class="n">no</span>
-</span><span class='line'><span class="no">AcceptEnv</span> <span class="no">LANG</span> <span class="no">LC_CTYPE</span> <span class="no">LC_NUMERIC</span> <span class="no">LC_TIME</span> <span class="no">LC_COLLATE</span> <span class="no">LC_MONETARY</span> <span class="no">LC_MESSAGES</span>
-</span><span class='line'><span class="no">AcceptEnv</span> <span class="no">LC_PAPER</span> <span class="no">LC_NAME</span> <span class="no">LC_ADDRESS</span> <span class="no">LC_TELEPHONE</span> <span class="no">LC_MEASUREMENT</span>
-</span><span class='line'><span class="no">AcceptEnv</span> <span class="no">LC_IDENTIFICATION</span> <span class="no">LC_ALL</span> <span class="no">LANGUAGE</span>
-</span><span class='line'><span class="no">AcceptEnv</span> <span class="no">XMODIFIERS</span>
-</span><span class='line'><span class="no">X11Forwarding</span> <span class="n">yes</span>
-</span><span class='line'><span class="no">Subsystem</span> <span class="n">sftp</span> <span class="sr">/usr/</span><span class="n">libexec</span><span class="o">/</span><span class="n">openssh</span><span class="o">/</span><span class="n">sftp</span><span class="o">-</span><span class="n">server</span>
-</span></code></pre></td></tr></table></div></figure>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Desactivar nodo PuppetDB]]></title>
-    <link href="http://mcoam.github.io/blog/2014/06/03/desactivar-nodo-puppetdb/"/>
-    <updated>2014-06-03T18:44:00-04:00</updated>
-    <id>http://mcoam.github.io/blog/2014/06/03/desactivar-nodo-puppetdb</id>
-    <content type="html"><![CDATA[<p>En el caso de querer <i>desactivar</i> un nodo de PuppetDB lo podemos realizar con el comando:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="err">$</span> <span class="n">puppet</span> <span class="n">node</span> <span class="n">deactivate</span> <span class="n">node1</span><span class="o">.</span><span class="n">example</span><span class="o">.</span><span class="n">com</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Con lo anterior, el nodo &ldquo;desaparecerá&rdquo; de nuestro Dashboard .</p>
-
-<p>Referencia <a href="http://docs.puppetlabs.com/puppetdb/1/maintain_and_tune.html#deactivate-decommissioned-nodes">acá</a></p>
 ]]></content>
   </entry>
   

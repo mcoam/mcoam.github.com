@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: devops | Bitácora]]></title>
-  <link href="http://mcoam.github.io/blog/categories/devops/atom.xml" rel="self"/>
-  <link href="http://mcoam.github.io/"/>
-  <updated>2015-12-17T17:16:13-03:00</updated>
-  <id>http://mcoam.github.io/</id>
+  <link href="http://www.miguelcoa.cl/blog/categories/devops/atom.xml" rel="self"/>
+  <link href="http://www.miguelcoa.cl/"/>
+  <updated>2016-04-15T13:24:10-03:00</updated>
+  <id>http://www.miguelcoa.cl/</id>
   <author>
     <name><![CDATA[Miguel Angel Coa Morales]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Ansible: chequeando la existencia de un directorio]]></title>
-    <link href="http://mcoam.github.io/blog/2015/12/17/ansible-chequeando-la-existencia-de-un-directorio/"/>
+    <link href="http://www.miguelcoa.cl/blog/2015/12/17/ansible-chequeando-la-existencia-de-un-directorio/"/>
     <updated>2015-12-17T16:55:00-03:00</updated>
-    <id>http://mcoam.github.io/blog/2015/12/17/ansible-chequeando-la-existencia-de-un-directorio</id>
+    <id>http://www.miguelcoa.cl/blog/2015/12/17/ansible-chequeando-la-existencia-de-un-directorio</id>
     <content type="html"><![CDATA[<p>Si necesitamos chequear la existencia de un directorio antes de realizar cualquier tipo de operación (copiear, instalar, etc) se puede utilizar el valor que nos trae el comando <code>stat</code>. Por ejemplo, el el siguiente ejemplo, se realiza lo siguiente:</p>
 
 <ol>
@@ -50,9 +50,9 @@ when: apache_path.stat.exists == True
   
   <entry>
     <title type="html"><![CDATA[Ansible: Configurando volúmen de datos HSM en Zimbra]]></title>
-    <link href="http://mcoam.github.io/blog/2015/11/12/ansible-configurando-volumen-de-datos-hsm-en-zimbra/"/>
+    <link href="http://www.miguelcoa.cl/blog/2015/11/12/ansible-configurando-volumen-de-datos-hsm-en-zimbra/"/>
     <updated>2015-11-12T18:34:00-03:00</updated>
-    <id>http://mcoam.github.io/blog/2015/11/12/ansible-configurando-volumen-de-datos-hsm-en-zimbra</id>
+    <id>http://www.miguelcoa.cl/blog/2015/11/12/ansible-configurando-volumen-de-datos-hsm-en-zimbra</id>
     <content type="html"><![CDATA[<p>El siguiente <code>Playbook</code> permite configurar un nuevo volúmen para datos (store) en un servidor Zimbra NE.</p>
 
 <h2>```objc</h2>
@@ -95,9 +95,9 @@ tasks:
   
   <entry>
     <title type="html"><![CDATA[Ansible: Trabajando con volumenes lógicos PV/VG/LV en Linux]]></title>
-    <link href="http://mcoam.github.io/blog/2015/10/28/ansible-trabajando-con-volumenes-pv-slash-vg-slash-lv/"/>
+    <link href="http://www.miguelcoa.cl/blog/2015/10/28/ansible-trabajando-con-volumenes-pv-slash-vg-slash-lv/"/>
     <updated>2015-10-28T23:52:00-03:00</updated>
-    <id>http://mcoam.github.io/blog/2015/10/28/ansible-trabajando-con-volumenes-pv-slash-vg-slash-lv</id>
+    <id>http://www.miguelcoa.cl/blog/2015/10/28/ansible-trabajando-con-volumenes-pv-slash-vg-slash-lv</id>
     <content type="html"><![CDATA[<p>Ansible cuenta con un módulos para la gestión de discos en Linux los cuales no permiten administrar nuestros volúmenes.
 En el siguiente ejemplo, se crea un volumen sobre un disco <code>/dev/sdf1</code> y que será configurado como volumen lógico y finalmente montado para los backup que realiza un servidor de correos Zimbra.</p>
 
@@ -146,9 +146,9 @@ tasks:</p>
   
   <entry>
     <title type="html"><![CDATA[Path Global para todos los Execs en Puppet]]></title>
-    <link href="http://mcoam.github.io/blog/2014/07/24/path-global-para-todos-los-execs-en-puppet/"/>
+    <link href="http://www.miguelcoa.cl/blog/2014/07/24/path-global-para-todos-los-execs-en-puppet/"/>
     <updated>2014-07-24T14:37:00-04:00</updated>
-    <id>http://mcoam.github.io/blog/2014/07/24/path-global-para-todos-los-execs-en-puppet</id>
+    <id>http://www.miguelcoa.cl/blog/2014/07/24/path-global-para-todos-los-execs-en-puppet</id>
     <content type="html"><![CDATA[<p>En Puppet si tenemos varios <code>Exec</code> para ejecutar comandos del sistema operativo podemos configurar el atributo <code>path</code> de forma global dentro del <code>site.pp</code> y con ello evitamos repetir código.
 <code>ruby
 exec { "restart-dns":

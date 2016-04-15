@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: python, | Bitácora]]></title>
-  <link href="http://mcoam.github.io/blog/categories/python/atom.xml" rel="self"/>
-  <link href="http://mcoam.github.io/"/>
-  <updated>2015-12-17T17:16:13-03:00</updated>
-  <id>http://mcoam.github.io/</id>
+  <link href="http://www.miguelcoa.cl/blog/categories/python/atom.xml" rel="self"/>
+  <link href="http://www.miguelcoa.cl/"/>
+  <updated>2016-04-15T13:24:10-03:00</updated>
+  <id>http://www.miguelcoa.cl/</id>
   <author>
     <name><![CDATA[Miguel Angel Coa Morales]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Migrando usuarios/password Postfix to Zimbra]]></title>
-    <link href="http://mcoam.github.io/blog/2014/01/15/migrando-usuarios-slash-password-postfix-to-zimbra/"/>
+    <link href="http://www.miguelcoa.cl/blog/2014/01/15/migrando-usuarios-slash-password-postfix-to-zimbra/"/>
     <updated>2014-01-15T09:58:00-03:00</updated>
-    <id>http://mcoam.github.io/blog/2014/01/15/migrando-usuarios-slash-password-postfix-to-zimbra</id>
+    <id>http://www.miguelcoa.cl/blog/2014/01/15/migrando-usuarios-slash-password-postfix-to-zimbra</id>
     <content type="html"><![CDATA[<p>La idea del siguiente script es; primero crear la cuenta con una password temporal y luego configurar la password original del usuario, ambos valores son sacados del <i>/etc/shadow</i></p>
 
 <p>``` python</p>

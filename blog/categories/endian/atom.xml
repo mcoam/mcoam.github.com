@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: endian | Bitácora]]></title>
-  <link href="http://mcoam.github.io/blog/categories/endian/atom.xml" rel="self"/>
-  <link href="http://mcoam.github.io/"/>
-  <updated>2015-12-17T17:16:13-03:00</updated>
-  <id>http://mcoam.github.io/</id>
+  <link href="http://www.miguelcoa.cl/blog/categories/endian/atom.xml" rel="self"/>
+  <link href="http://www.miguelcoa.cl/"/>
+  <updated>2016-04-15T13:24:10-03:00</updated>
+  <id>http://www.miguelcoa.cl/</id>
   <author>
     <name><![CDATA[Miguel Angel Coa Morales]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Instalado/Actualizando paquetes Endian Firewall]]></title>
-    <link href="http://mcoam.github.io/blog/2015/03/26/instalado-slash-actualizando-paquetes-endian-firewall/"/>
+    <link href="http://www.miguelcoa.cl/blog/2015/03/26/instalado-slash-actualizando-paquetes-endian-firewall/"/>
     <updated>2015-03-26T18:35:00-03:00</updated>
-    <id>http://mcoam.github.io/blog/2015/03/26/instalado-slash-actualizando-paquetes-endian-firewall</id>
+    <id>http://www.miguelcoa.cl/blog/2015/03/26/instalado-slash-actualizando-paquetes-endian-firewall</id>
     <content type="html"><![CDATA[<p>Para instalar paquetes en Endian Firewall podemos utilizar el comando <code>smart</code> que es un administrador de paquetes que viene incorporado en la distro. Lo primero que hay que realizar es instalar el repositorio:</p>
 
 <p><li>Para Endian 2.4.x</li>

@@ -53,6 +53,70 @@
 	<header>
 		<h2 class="title">
 			
+			<a href="/blog/2016/04/15/new-post/">
+			
+				New Post</a>
+		</h2>
+		<div class="meta date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2016-04-15T13:23:00-03:00" pubdate data-updated="true">Apr 15<span>th</span>, 2016</time></div>
+	</header>
+	<div class="entry-content">
+		
+
+		
+		
+	</div>
+
+</article>
+
+
+    <article class="post">
+	<header>
+		<h2 class="title">
+			
+			<a href="/blog/2016/03/09/proxmox-4-y-ansible/">
+			
+				Proxmox 4 Y Ansible, Automatizando La Creación De Contenedores</a>
+		</h2>
+		<div class="meta date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2016-03-09T11:19:00-03:00" pubdate data-updated="true">Mar 9<span>th</span>, 2016</time></div>
+	</header>
+	<div class="entry-content">
+		<p><code>Proxmox 4</code> soporta contenedores LXC para la virtualización, en el caso de querer automatizar dicha tarea con <code>Ansible</code> y se puede realizar mediante el repositorio <code>git@github.com:mcoam/proxmox4_container_lxc.git</code> donde se detallan los pasos y prerrequisitos a seguir.</p>
+
+		
+		
+	</div>
+
+</article>
+
+
+    <article class="post">
+	<header>
+		<h2 class="title">
+			
 			<a href="/blog/2015/12/17/ansible-chequeando-la-existencia-de-un-directorio/">
 			
 				Ansible: Chequeando La Existencia De Un Directorio</a>
@@ -628,145 +692,6 @@ Para el caso, tenemos que tener las cuentas de correos en el archivo <code>/var/
 
 </article>
 
-
-    <article class="post">
-	<header>
-		<h2 class="title">
-			
-			<a href="/blog/2014/11/28/atachando-sesion-screen-dropeada/">
-			
-				Error Screen: There Is No Screen to Be Resumed Matching</a>
-		</h2>
-		<div class="meta date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-11-28T13:14:00-03:00" pubdate data-updated="true">Nov 28<span>th</span>, 2014</time></div>
-	</header>
-	<div class="entry-content">
-		<p>Si al momento de querer recuperar una sesión <code>screen</code> donde tenemos un proceso corriendo y utilizamos el comando <code>scren -r</code>, como resultado de la operación obtenemos el siguiente mensaje:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[</span><span class="n">root</span><span class="vi">@mail</span><span class="o">-</span><span class="n">old</span> <span class="o">~]</span><span class="err">$</span> <span class="n">screen</span> <span class="o">-</span><span class="n">r</span> <span class="s1">&#39;1866.zimbra-mta&#39;</span>
-</span><span class='line'><span class="no">There</span> <span class="n">is</span> <span class="n">a</span> <span class="n">screen</span> <span class="ss">on</span><span class="p">:</span>
-</span><span class='line'><span class="mi">1866</span><span class="o">.</span><span class="n">zimbra</span><span class="o">-</span><span class="n">mta</span> <span class="p">(</span><span class="no">Attached</span><span class="p">)</span>
-</span><span class='line'><span class="no">There</span> <span class="n">is</span> <span class="n">no</span> <span class="n">screen</span> <span class="n">to</span> <span class="n">be</span> <span class="n">resumed</span> <span class="n">matching</span> <span class="mi">1866</span><span class="o">.</span><span class="n">zimbra</span><span class="o">-</span><span class="n">mta</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>La solución es pasar el comando con la opción <i>&lsquo;-D&rsquo;</i> que nos permite desatachar la sessión remota y atacharla en nuestra tty.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[</span><span class="n">root</span><span class="vi">@mail</span><span class="o">-</span><span class="n">old</span> <span class="o">~]</span><span class="err">$</span> <span class="n">screen</span> <span class="o">-</span><span class="n">r</span> <span class="o">-</span><span class="n">D</span> <span class="s1">&#39;1866.zimbra-mta&#39;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-		
-		
-	</div>
-
-</article>
-
-
-    <article class="post">
-	<header>
-		<h2 class="title">
-			
-			<a href="/blog/2014/10/13/eliminar-vm-vagrant/">
-			
-				Eliminar VM Vagrant</a>
-		</h2>
-		<div class="meta date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-10-13T16:44:00-03:00" pubdate data-updated="true">Oct 13<span>th</span>, 2014</time></div>
-	</header>
-	<div class="entry-content">
-		<p>En <code>Vagrant</code> nuestra máquinas virtuales son borradas con el comando <code>vm destroy</code> pero sucede que aveces hemos borrado el directorio de la VM o el Vagrantfile y esta ya no puede ser referenciada mediante Vagrant para ser eliminada. Como Vagrant trabaja con <code>VirtualBox</code> podemos utilizar el comando <code>VBoxManage</code> para que la podamos eliminar.</p>
-
-<p>Listamos todas la VM</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="ss">Miguel</span><span class="p">:</span><span class="n">zimbra</span><span class="err">$</span> <span class="no">VBoxManage</span> <span class="n">list</span> <span class="n">vms</span>
-</span><span class='line'><span class="s2">&quot;puppetserver&quot;</span> <span class="p">{</span><span class="mi">3830</span><span class="n">b010</span><span class="o">-</span><span class="mi">4</span><span class="n">fca</span><span class="o">-</span><span class="mi">4</span><span class="n">c29</span><span class="o">-</span><span class="mi">9225</span><span class="o">-</span><span class="mi">6647</span><span class="n">b1edcd7f</span><span class="p">}</span>
-</span><span class='line'><span class="s2">&quot;nagiosserver&quot;</span> <span class="p">{</span><span class="mi">3178</span><span class="n">a761</span><span class="o">-</span><span class="mi">0</span><span class="n">c61</span><span class="o">-</span><span class="mi">4</span><span class="n">ffb</span><span class="o">-</span><span class="mi">8</span><span class="n">fc8</span><span class="o">-</span><span class="n">d4bd4853be22</span><span class="p">}</span>
-</span><span class='line'><span class="s2">&quot;nagiosnode1&quot;</span> <span class="p">{</span><span class="mi">90</span><span class="n">da5db9</span><span class="o">-</span><span class="mi">2538</span><span class="o">-</span><span class="mi">4</span><span class="n">fe5</span><span class="o">-</span><span class="n">b76f</span><span class="o">-</span><span class="n">af68f83a8397</span><span class="p">}</span>
-</span><span class='line'><span class="s2">&quot;nagiosnode2&quot;</span> <span class="p">{</span><span class="n">e32fb9be</span><span class="o">-</span><span class="n">fb34</span><span class="o">-</span><span class="mi">4663</span><span class="o">-</span><span class="n">befb</span><span class="o">-</span><span class="mi">900</span><span class="n">f43b60cfb</span><span class="p">}</span>
-</span><span class='line'><span class="s2">&quot;samba4&quot;</span> <span class="p">{</span><span class="n">f5c753c3</span><span class="o">-</span><span class="n">c8e0</span><span class="o">-</span><span class="mi">4117</span><span class="o">-</span><span class="n">b05c</span><span class="o">-</span><span class="n">f635ebcae06d</span><span class="p">}</span>
-</span><span class='line'><span class="s2">&quot;docker.example.com&quot;</span> <span class="p">{</span><span class="mi">0</span><span class="n">c5213d4</span><span class="o">-</span><span class="mi">6</span><span class="n">d1a</span><span class="o">-</span><span class="mi">40</span><span class="n">b9</span><span class="o">-</span><span class="mi">9</span><span class="n">e44</span><span class="o">-</span><span class="n">cff9c3829d73</span><span class="p">}</span>
-</span><span class='line'><span class="s2">&quot;zimbra_default_1413222975386_53519&quot;</span> <span class="p">{</span><span class="mi">969175</span><span class="n">c2</span><span class="o">-</span><span class="mi">451</span><span class="n">c</span><span class="o">-</span><span class="mi">42</span><span class="n">fc</span><span class="o">-</span><span class="mi">98</span><span class="n">fd</span><span class="o">-</span><span class="mi">7946</span><span class="n">d6796bcc</span><span class="p">}</span>
-</span><span class='line'><span class="s2">&quot;zimbra&quot;</span> <span class="p">{</span><span class="mi">35</span><span class="n">ed5012</span><span class="o">-</span><span class="mi">4</span><span class="n">b33</span><span class="o">-</span><span class="mi">4</span><span class="n">b30</span><span class="o">-</span><span class="mi">869</span><span class="n">b</span><span class="o">-</span><span class="mi">35654</span><span class="n">b3e88b8</span><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Vamos a eliminar la máquina de la línea nº8 UID <code>969175c2-451c-42fc-98fd-7946d6796bcc</code></p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="ss">Miguel</span><span class="p">:</span><span class="n">zimbra</span><span class="err">$</span> <span class="no">VBoxManage</span> <span class="n">unregistervm</span> <span class="mi">969175</span><span class="n">c2</span><span class="o">-</span><span class="mi">451</span><span class="n">c</span><span class="o">-</span><span class="mi">42</span><span class="n">fc</span><span class="o">-</span><span class="mi">98</span><span class="n">fd</span><span class="o">-</span><span class="mi">7946</span><span class="n">d6796bcc</span> <span class="o">-</span><span class="n">delete</span>
-</span><span class='line'><span class="mi">0</span><span class="sx">%..</span><span class="o">.</span><span class="mi">10</span><span class="sx">%..</span><span class="o">.</span><span class="mi">20</span><span class="sx">%..</span><span class="o">.</span><span class="mi">30</span><span class="sx">%..</span><span class="o">.</span><span class="mi">40</span><span class="sx">%..</span><span class="o">.</span><span class="mi">50</span><span class="sx">%..</span><span class="o">.</span><span class="mi">60</span><span class="sx">%..</span><span class="o">.</span><span class="mi">70</span><span class="sx">%..</span><span class="o">.</span><span class="mi">80</span><span class="sx">%..</span><span class="o">.</span><span class="mi">90</span><span class="sx">%..</span><span class="o">.</span><span class="mi">100</span><span class="o">%</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Y ahora vemos que ya no esta</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="ss">Miguel</span><span class="p">:</span><span class="n">zimbra</span><span class="err">$</span> <span class="no">VBoxManage</span> <span class="n">list</span> <span class="n">vms</span>
-</span><span class='line'><span class="s2">&quot;puppetserver&quot;</span> <span class="p">{</span><span class="mi">3830</span><span class="n">b010</span><span class="o">-</span><span class="mi">4</span><span class="n">fca</span><span class="o">-</span><span class="mi">4</span><span class="n">c29</span><span class="o">-</span><span class="mi">9225</span><span class="o">-</span><span class="mi">6647</span><span class="n">b1edcd7f</span><span class="p">}</span>
-</span><span class='line'><span class="s2">&quot;CentOS-6.4-x86_64_1407080394847_1407&quot;</span> <span class="p">{</span><span class="n">bd5b11c8</span><span class="o">-</span><span class="n">a7e4</span><span class="o">-</span><span class="mi">4</span><span class="n">c6e</span><span class="o">-</span><span class="n">b6f2</span><span class="o">-</span><span class="mi">1646775</span><span class="n">e7f9a</span><span class="p">}</span>
-</span><span class='line'><span class="s2">&quot;nagiosServer_default_1407266455588_52667&quot;</span> <span class="p">{</span><span class="mi">2</span><span class="n">f3d8ae9</span><span class="o">-</span><span class="n">c8e5</span><span class="o">-</span><span class="mi">4557</span><span class="o">-</span><span class="n">a79e</span><span class="o">-</span><span class="mi">503</span><span class="n">a1af4646a</span><span class="p">}</span>
-</span><span class='line'><span class="s2">&quot;nagiosserver&quot;</span> <span class="p">{</span><span class="mi">3178</span><span class="n">a761</span><span class="o">-</span><span class="mi">0</span><span class="n">c61</span><span class="o">-</span><span class="mi">4</span><span class="n">ffb</span><span class="o">-</span><span class="mi">8</span><span class="n">fc8</span><span class="o">-</span><span class="n">d4bd4853be22</span><span class="p">}</span>
-</span><span class='line'><span class="s2">&quot;nagiosnode1&quot;</span> <span class="p">{</span><span class="mi">90</span><span class="n">da5db9</span><span class="o">-</span><span class="mi">2538</span><span class="o">-</span><span class="mi">4</span><span class="n">fe5</span><span class="o">-</span><span class="n">b76f</span><span class="o">-</span><span class="n">af68f83a8397</span><span class="p">}</span>
-</span><span class='line'><span class="s2">&quot;nagiosnode2&quot;</span> <span class="p">{</span><span class="n">e32fb9be</span><span class="o">-</span><span class="n">fb34</span><span class="o">-</span><span class="mi">4663</span><span class="o">-</span><span class="n">befb</span><span class="o">-</span><span class="mi">900</span><span class="n">f43b60cfb</span><span class="p">}</span>
-</span><span class='line'><span class="s2">&quot;samba4&quot;</span> <span class="p">{</span><span class="n">f5c753c3</span><span class="o">-</span><span class="n">c8e0</span><span class="o">-</span><span class="mi">4117</span><span class="o">-</span><span class="n">b05c</span><span class="o">-</span><span class="n">f635ebcae06d</span><span class="p">}</span>
-</span><span class='line'><span class="s2">&quot;docker.example.com&quot;</span> <span class="p">{</span><span class="mi">0</span><span class="n">c5213d4</span><span class="o">-</span><span class="mi">6</span><span class="n">d1a</span><span class="o">-</span><span class="mi">40</span><span class="n">b9</span><span class="o">-</span><span class="mi">9</span><span class="n">e44</span><span class="o">-</span><span class="n">cff9c3829d73</span><span class="p">}</span>
-</span><span class='line'><span class="s2">&quot;zimbra&quot;</span> <span class="p">{</span><span class="mi">35</span><span class="n">ed5012</span><span class="o">-</span><span class="mi">4</span><span class="n">b33</span><span class="o">-</span><span class="mi">4</span><span class="n">b30</span><span class="o">-</span><span class="mi">869</span><span class="n">b</span><span class="o">-</span><span class="mi">35654</span><span class="n">b3e88b8</span><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-		
-		
-	</div>
-
-</article>
-
 <nav id="pagenavi">
     
     
@@ -774,7 +699,7 @@ Para el caso, tenemos que tener las cuentas de correos en el archivo <code>/var/
     
 </nav>
 </div>
-	<footer id="footer" class="inner">&copy; 2015
+	<footer id="footer" class="inner">&copy; 2016
 
     Miguel Angel Coa Morales
 

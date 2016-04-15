@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: Pupet, | Bitácora]]></title>
-  <link href="http://mcoam.github.io/blog/categories/pupet/atom.xml" rel="self"/>
-  <link href="http://mcoam.github.io/"/>
-  <updated>2015-12-17T17:16:13-03:00</updated>
-  <id>http://mcoam.github.io/</id>
+  <link href="http://www.miguelcoa.cl/blog/categories/pupet/atom.xml" rel="self"/>
+  <link href="http://www.miguelcoa.cl/"/>
+  <updated>2016-04-15T13:24:10-03:00</updated>
+  <id>http://www.miguelcoa.cl/</id>
   <author>
     <name><![CDATA[Miguel Angel Coa Morales]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Controlando la ejecución de Exec en Puppet]]></title>
-    <link href="http://mcoam.github.io/blog/2014/07/23/controlando-la-ejecucion-de-exec-en-puppet/"/>
+    <link href="http://www.miguelcoa.cl/blog/2014/07/23/controlando-la-ejecucion-de-exec-en-puppet/"/>
     <updated>2014-07-23T21:25:00-04:00</updated>
-    <id>http://mcoam.github.io/blog/2014/07/23/controlando-la-ejecucion-de-exec-en-puppet</id>
+    <id>http://www.miguelcoa.cl/blog/2014/07/23/controlando-la-ejecucion-de-exec-en-puppet</id>
     <content type="html"><![CDATA[<p>En Puppet podemos ejecutar comando a nivel del sistema operativo por medio de <code>Exec</code>, en ocasiones sucede que tenemos declarada la sintaxis a ejecutar pero sucede que esta se aplica cada vez que corre el agente Puppet, Ejemplo:
 ```ruby
 exec{&ldquo;install-rpm&rdquo;:</p>

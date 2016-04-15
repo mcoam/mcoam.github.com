@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: nagios | Bitácora]]></title>
-  <link href="http://mcoam.github.io/blog/categories/nagios/atom.xml" rel="self"/>
-  <link href="http://mcoam.github.io/"/>
-  <updated>2015-12-17T17:16:13-03:00</updated>
-  <id>http://mcoam.github.io/</id>
+  <link href="http://www.miguelcoa.cl/blog/categories/nagios/atom.xml" rel="self"/>
+  <link href="http://www.miguelcoa.cl/"/>
+  <updated>2016-04-15T13:24:10-03:00</updated>
+  <id>http://www.miguelcoa.cl/</id>
   <author>
     <name><![CDATA[Miguel Angel Coa Morales]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Configurar Nagios server y Pnp4nagios]]></title>
-    <link href="http://mcoam.github.io/blog/2013/11/29/configurar-nagios-server-y-pnp4nagios/"/>
+    <link href="http://www.miguelcoa.cl/blog/2013/11/29/configurar-nagios-server-y-pnp4nagios/"/>
     <updated>2013-11-29T10:46:00-03:00</updated>
-    <id>http://mcoam.github.io/blog/2013/11/29/configurar-nagios-server-y-pnp4nagios</id>
+    <id>http://www.miguelcoa.cl/blog/2013/11/29/configurar-nagios-server-y-pnp4nagios</id>
     <content type="html"><![CDATA[<p>Si tienes un servidor Nagios como plataforma de monitoreo de servidores, es posible que en alguna ocasión puedas necesitar generar reportes de la estadística (mensual, díaria, semanal, etc) para lo cual la versión open de Nagios Server no lo tiene integrado de forma nativa pero podemos solucionar con <a href="http://www.pnp4nagios.org/">pnp4nagios</a> y para realizarlo tenemos que hacer lo siguiente (asumiremos que ya tenemos nuestro Nagios Server funcionando)</p>
 
 <p>Tenemos que tener instalado en el servidor rrdtool, perl-rrdtool y una serie de paquetería</p>

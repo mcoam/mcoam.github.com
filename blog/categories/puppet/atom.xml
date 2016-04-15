@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: puppet | Bitácora]]></title>
-  <link href="http://mcoam.github.io/blog/categories/puppet/atom.xml" rel="self"/>
-  <link href="http://mcoam.github.io/"/>
-  <updated>2015-12-17T17:16:13-03:00</updated>
-  <id>http://mcoam.github.io/</id>
+  <link href="http://www.miguelcoa.cl/blog/categories/puppet/atom.xml" rel="self"/>
+  <link href="http://www.miguelcoa.cl/"/>
+  <updated>2016-04-15T13:24:10-03:00</updated>
+  <id>http://www.miguelcoa.cl/</id>
   <author>
     <name><![CDATA[Miguel Angel Coa Morales]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Creando un Box para Vagrant]]></title>
-    <link href="http://mcoam.github.io/blog/2014/08/02/creando-un-box-para-vagrant/"/>
+    <link href="http://www.miguelcoa.cl/blog/2014/08/02/creando-un-box-para-vagrant/"/>
     <updated>2014-08-02T23:50:00-04:00</updated>
-    <id>http://mcoam.github.io/blog/2014/08/02/creando-un-box-para-vagrant</id>
+    <id>http://www.miguelcoa.cl/blog/2014/08/02/creando-un-box-para-vagrant</id>
     <content type="html"><![CDATA[<p>En mi caso la máquina virtual no fue creada desde cero, ya que bajé un Box de Vagrant y lo customicé por lo que me salté los pasos previos de la creación del box <a href="https://docs.vagrantup.com/v2/boxes/base.html.">https://docs.vagrantup.com/v2/boxes/base.html.</a> Lo realizado para la creación del box fue lo siguiente:</p>
 
 <p><li> Optimización de tamaño de la VM </li>
