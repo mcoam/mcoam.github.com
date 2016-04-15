@@ -96,8 +96,7 @@ actionunban = /bin/true
 #
 name = REPEAT
 ```
-<li>Archivo <code>ip.blocklist.exim2</code>: Contiene las direcciones ip que se van bloqueando por intentos fallidos y que se va autocompletando con los bloqueos propios del `fail2ban` ej: <li>
-
+<li>Archivo <code>ip.blocklist.exim2</code>: Contiene las direcciones ip que se van bloqueando por intentos fallidos y que se va autocompletando con los bloqueos propios del <code>fail2ban</code> ej: <li>
 ```objc
 122.154.29.30 # fail2ban/2016-04-15 00:21:45: auto-add for repeat offender
 95.183.52.100 # fail2ban/2016-04-15 00:35:51: auto-add for repeat offender
