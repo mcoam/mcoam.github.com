@@ -96,7 +96,7 @@ actionunban = /bin/true
 #
 name = REPEAT
 ```
-<li>Archivo <code>ip.blocklist.exim2</code>: Contiene las direcciones ip que se van bloqueando por intentos fallidos y que se va autocompletando con los bloqueos propios del `fail2ban` ej:/li>
+<li>Archivo <code>ip.blocklist.exim2</code>: Contiene las direcciones ip que se van bloqueando por intentos fallidos y que se va autocompletando con los bloqueos propios del `fail2ban` ej: <li>
 
 ```objc
 122.154.29.30 # fail2ban/2016-04-15 00:21:45: auto-add for repeat offender
@@ -104,7 +104,7 @@ name = REPEAT
 110.84.129.110 # fail2ban/2016-04-15 02:11:53: auto-add for repeat offender
 86.98.40.247 # fail2ban/2016-04-15 09:07:46: auto-add for repeat offender
 91.106.93.21 # fail2ban/2016-04-15 13:36:51: auto-add for repeat offender
-```objc
+```
 </ol>
 
 La configuración del `jail` la realizamos dentro del archivo `/etc/fail2ban/jail.conf` , quedando así:
