@@ -173,20 +173,26 @@
         <lastmod>2016-04-15T13:23:39-03:00</lastmod>
     </url>
     <url>
+        <loc>
+            http://www.miguelcoa.cl/blog/2016/04/15/configurando-fail2ban-para-autentificaciones-smtp-fallidas-en-mailcleaner/
+        </loc>
+        <lastmod>2016-04-15T15:36:18-03:00</lastmod>
+    </url>
+    <url>
         <loc>http://www.miguelcoa.cl/about/</loc>
         <lastmod>2016-04-15T13:18:59-03:00</lastmod>
     </url>
     <url>
         <loc>http://www.miguelcoa.cl/archives/</loc>
-        <lastmod>2016-04-15T13:23:39-03:00</lastmod>
+        <lastmod>2016-04-15T15:36:18-03:00</lastmod>
     </url>
     <url>
         <loc>http://www.miguelcoa.cl/blog/archives/</loc>
-        <lastmod>2016-04-15T13:23:39-03:00</lastmod>
+        <lastmod>2016-04-15T15:36:18-03:00</lastmod>
     </url>
     <url>
         <loc>http://www.miguelcoa.cl/blog/</loc>
-        <lastmod>2016-04-15T13:23:39-03:00</lastmod>
+        <lastmod>2016-04-15T15:36:18-03:00</lastmod>
     </url>
     <url>
         <loc>http://www.miguelcoa.cl/contact/</loc>
@@ -194,7 +200,7 @@
     </url>
     <url>
         <loc>http://www.miguelcoa.cl/</loc>
-        <lastmod>2016-04-15T13:23:39-03:00</lastmod>
+        <lastmod>2016-04-15T15:36:18-03:00</lastmod>
     </url>
     <url>
         <loc>http://www.miguelcoa.cl/robots.txt</loc>

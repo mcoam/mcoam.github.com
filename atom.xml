@@ -4,13 +4,230 @@
   <title><![CDATA[Bitácora]]></title>
   <link href="http://www.miguelcoa.cl/atom.xml" rel="self"/>
   <link href="http://www.miguelcoa.cl/"/>
-  <updated>2016-04-15T13:24:10-03:00</updated>
+  <updated>2016-04-15T15:37:28-03:00</updated>
   <id>http://www.miguelcoa.cl/</id>
   <author>
     <name><![CDATA[Miguel Angel Coa Morales]]></name>
     
   </author>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Configurando fail2ban para autentificaciones SMTP fallidas en Mailcleaner]]></title>
+    <link href="http://www.miguelcoa.cl/blog/2016/04/15/configurando-fail2ban-para-autentificaciones-smtp-fallidas-en-mailcleaner/"/>
+    <updated>2016-04-15T13:30:00-03:00</updated>
+    <id>http://www.miguelcoa.cl/blog/2016/04/15/configurando-fail2ban-para-autentificaciones-smtp-fallidas-en-mailcleaner</id>
+    <content type="html"><![CDATA[<p>Para prevenir que estando nuestro servidor <code>SMTP</code> en internet tengamos bloqueos por ataques <code>DoS</code> al puerto 25 podemos implementar el servicio <code>fail2ban</code> para bloquear todo tipo de conexión que falle en la autentificación de forma reiterativa realizando lo siguiente:</p>
+
+<ul>
+<li>Instalar <code>fail2ban</code> en el servidor Mailcleaner</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">aptget</span> <span class="n">update</span><span class="p">;</span> <span class="n">aptget</span> <span class="n">install</span> <span class="n">fail2ban</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Nos dirigimos al directorio <code>/etc/fail2ban</code>, donde creamos/editamos los siguientes archivos:</p>
+
+<ol type="a">
+<li>Archivo <code>filter.d/exim2.conf</code>: Contiene la reglas para el match del jail</li>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="cp"># Fail2Ban filter for exim</span>
+</span><span class='line'><span class="cp">#</span>
+</span><span class='line'><span class="cp"># This includes the rejection messages of exim. For spam and filter</span>
+</span><span class='line'><span class="cp"># related bans use the exim-spam.conf</span>
+</span><span class='line'><span class="cp">#</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="p">[</span><span class="n">INCLUDES</span><span class="p">]</span>
+</span><span class='line'>
+</span><span class='line'><span class="cp"># Read common prefixes. If any customizations available -- read them from</span>
+</span><span class='line'><span class="cp"># exim-common.local</span>
+</span><span class='line'><span class="cp"># before = exim-common.conf</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">[</span><span class="n">Definition</span><span class="p">]</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">failregex</span> <span class="o">=</span> <span class="err">\</span><span class="p">[</span><span class="o">&lt;</span><span class="n">HOST</span><span class="o">&gt;</span><span class="err">\</span><span class="p">]</span><span class="o">:</span> <span class="mi">535</span> <span class="n">Incorrect</span> <span class="n">authentication</span> <span class="n">data</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">ignoreregex</span> <span class="o">=</span>
+</span></code></pre></td></tr></table></div></figure>
+<li>Archivo <code>action.d/iptables-repeater.conf</code>: Configura toda la acción a realizar con las ip que fallan con la auth</li>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="cp"># Fail2ban configuration file</span>
+</span><span class='line'><span class="cp">#</span>
+</span><span class='line'><span class="cp"># Author: Phil Hagen &lt;phil@identityvector.com&gt;</span>
+</span><span class='line'><span class="cp">#</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">[</span><span class="n">Definition</span><span class="p">]</span>
+</span><span class='line'>
+</span><span class='line'><span class="cp"># Option:  actionstart</span>
+</span><span class='line'><span class="cp"># Notes.:  command executed once at the start of Fail2Ban.</span>
+</span><span class='line'><span class="cp"># Values:  CMD</span>
+</span><span class='line'><span class="cp">#</span>
+</span><span class='line'><span class="n">actionstart</span> <span class="o">=</span> <span class="n">iptables</span> <span class="o">-</span><span class="n">N</span> <span class="n">fail2ban</span><span class="o">-</span><span class="n">REPEAT</span><span class="o">-&lt;</span><span class="n">name</span><span class="o">&gt;</span>
+</span><span class='line'>              <span class="n">iptables</span> <span class="o">-</span><span class="n">A</span> <span class="n">fail2ban</span><span class="o">-</span><span class="n">REPEAT</span><span class="o">-&lt;</span><span class="n">name</span><span class="o">&gt;</span> <span class="o">-</span><span class="n">j</span> <span class="n">RETURN</span>
+</span><span class='line'>              <span class="n">iptables</span> <span class="o">-</span><span class="n">I</span> <span class="n">INPUT</span> <span class="o">-</span><span class="n">j</span> <span class="n">fail2ban</span><span class="o">-</span><span class="n">REPEAT</span><span class="o">-&lt;</span><span class="n">name</span><span class="o">&gt;</span>
+</span><span class='line'>              <span class="err">#</span> <span class="n">set</span> <span class="n">up</span> <span class="n">from</span> <span class="n">the</span> <span class="k">static</span> <span class="n">file</span>
+</span><span class='line'>              <span class="n">cat</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">fail2ban</span><span class="o">/</span><span class="n">ip</span><span class="p">.</span><span class="n">blocklist</span><span class="p">.</span><span class="o">&lt;</span><span class="n">name</span><span class="o">&gt;</span> <span class="o">|</span><span class="n">grep</span> <span class="o">-</span><span class="n">v</span> <span class="o">^</span><span class="err">\</span><span class="n">s</span><span class="o">*</span><span class="err">#</span><span class="o">|</span><span class="n">awk</span> <span class="err">&#39;</span><span class="p">{</span><span class="n">print</span> <span class="n">$1</span><span class="p">}</span><span class="err">&#39;</span> <span class="o">|</span> <span class="k">while</span> <span class="n">read</span> <span class="n">IP</span><span class="p">;</span> <span class="k">do</span> <span class="n">iptables</span> <span class="o">-</span><span class="n">I</span> <span class="n">fail2ban</span><span class="o">-</span><span class="n">REPEAT</span><span class="o">-&lt;</span><span class="n">name</span><span class="o">&gt;</span> <span class="mi">1</span> <span class="o">-</span><span class="n">s</span> <span class="n">$IP</span> <span class="o">-</span><span class="n">j</span> <span class="n">DROP</span><span class="p">;</span> <span class="n">done</span>
+</span><span class='line'>
+</span><span class='line'><span class="cp"># Option:  actionstop</span>
+</span><span class='line'><span class="cp"># Notes.:  command executed once at the end of Fail2Ban</span>
+</span><span class='line'><span class="cp"># Values:  CMD</span>
+</span><span class='line'><span class="cp">#</span>
+</span><span class='line'><span class="n">actionstop</span> <span class="o">=</span> <span class="n">iptables</span> <span class="o">-</span><span class="n">D</span> <span class="n">INPUT</span> <span class="o">-</span><span class="n">j</span> <span class="n">fail2ban</span><span class="o">-</span><span class="n">REPEAT</span><span class="o">-&lt;</span><span class="n">name</span><span class="o">&gt;</span>
+</span><span class='line'>             <span class="n">iptables</span> <span class="o">-</span><span class="n">F</span> <span class="n">fail2ban</span><span class="o">-</span><span class="n">REPEAT</span><span class="o">-&lt;</span><span class="n">name</span><span class="o">&gt;</span>
+</span><span class='line'>             <span class="n">iptables</span> <span class="o">-</span><span class="n">X</span> <span class="n">fail2ban</span><span class="o">-</span><span class="n">REPEAT</span><span class="o">-&lt;</span><span class="n">name</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="cp"># Option:  actioncheck</span>
+</span><span class='line'><span class="cp"># Notes.:  command executed once before each actionban command</span>
+</span><span class='line'><span class="cp"># Values:  CMD</span>
+</span><span class='line'><span class="cp">#</span>
+</span><span class='line'><span class="n">actioncheck</span> <span class="o">=</span> <span class="n">iptables</span> <span class="o">-</span><span class="n">n</span> <span class="o">-</span><span class="n">L</span> <span class="n">INPUT</span> <span class="o">|</span> <span class="n">grep</span> <span class="o">-</span><span class="n">q</span> <span class="n">fail2ban</span><span class="o">-</span><span class="n">REPEAT</span><span class="o">-&lt;</span><span class="n">name</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="cp"># Option:  actionban</span>
+</span><span class='line'><span class="cp"># Notes.:  command executed when banning an IP. Take care that the</span>
+</span><span class='line'><span class="cp">#          command is executed with Fail2Ban user rights.</span>
+</span><span class='line'><span class="cp"># Tags:    &lt;ip&gt;  IP address</span>
+</span><span class='line'><span class="cp">#          &lt;failures&gt;  number of failures</span>
+</span><span class='line'><span class="cp">#          &lt;time&gt;  unix timestamp of the ban time</span>
+</span><span class='line'><span class="cp"># Values:  CMD</span>
+</span><span class='line'><span class="cp">#</span>
+</span><span class='line'><span class="n">actionban</span> <span class="o">=</span> <span class="n">iptables</span> <span class="o">-</span><span class="n">I</span> <span class="n">fail2ban</span><span class="o">-</span><span class="n">REPEAT</span><span class="o">-&lt;</span><span class="n">name</span><span class="o">&gt;</span> <span class="mi">1</span> <span class="o">-</span><span class="n">s</span> <span class="o">&lt;</span><span class="n">ip</span><span class="o">&gt;</span> <span class="o">-</span><span class="n">j</span> <span class="n">DROP</span>
+</span><span class='line'>            <span class="err">#</span> <span class="n">also</span> <span class="n">put</span> <span class="n">into</span> <span class="n">the</span> <span class="k">static</span> <span class="n">file</span> <span class="n">to</span> <span class="n">re</span><span class="o">-</span><span class="n">populate</span> <span class="n">after</span> <span class="n">a</span> <span class="n">restart</span>
+</span><span class='line'>            <span class="o">!</span> <span class="n">grep</span> <span class="o">-</span><span class="n">Fq</span> <span class="o">&lt;</span><span class="n">ip</span><span class="o">&gt;</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">fail2ban</span><span class="o">/</span><span class="n">ip</span><span class="p">.</span><span class="n">blocklist</span><span class="p">.</span><span class="o">&lt;</span><span class="n">name</span><span class="o">&gt;</span> <span class="o">&amp;&amp;</span> <span class="n">echo</span> <span class="s">&quot;&lt;ip&gt; # fail2ban/$( date &#39;+%%Y-%%m-%%d %%T&#39; ): auto-add for repeat offender&quot;</span> <span class="o">&gt;&gt;</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">fail2ban</span><span class="o">/</span><span class="n">ip</span><span class="p">.</span><span class="n">blocklist</span><span class="p">.</span><span class="o">&lt;</span><span class="n">name</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="cp"># Option:  actionunban</span>
+</span><span class='line'><span class="cp"># Notes.:  command executed when unbanning an IP. Take care that the</span>
+</span><span class='line'><span class="cp">#          command is executed with Fail2Ban user rights.</span>
+</span><span class='line'><span class="cp"># Tags:    &lt;ip&gt;  IP address</span>
+</span><span class='line'><span class="cp">#          &lt;failures&gt;  number of failures</span>
+</span><span class='line'><span class="cp">#          &lt;time&gt;  unix timestamp of the ban time</span>
+</span><span class='line'><span class="cp"># Values:  CMD</span>
+</span><span class='line'><span class="cp">#</span>
+</span><span class='line'><span class="n">actionunban</span> <span class="o">=</span> <span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">true</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">[</span><span class="n">Init</span><span class="p">]</span>
+</span><span class='line'>
+</span><span class='line'><span class="cp"># Defaut name of the chain</span>
+</span><span class='line'><span class="cp">#</span>
+</span><span class='line'><span class="n">name</span> <span class="o">=</span> <span class="n">REPEAT</span>
+</span></code></pre></td></tr></table></div></figure>
+<li>Archivo <code>ip.blocklist.exim2</code>: Contiene las direcciones ip que se van bloqueando por intentos fallidos y que se va autocompletando con los bloqueos propios del `fail2ban` ej:/li>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="mf">122.154.29.30</span> <span class="err">#</span> <span class="n">fail2ban</span><span class="o">/</span><span class="mi">2016</span><span class="o">-</span><span class="mo">04</span><span class="o">-</span><span class="mi">15</span> <span class="mo">00</span><span class="o">:</span><span class="mi">21</span><span class="o">:</span><span class="mi">45</span><span class="o">:</span> <span class="k">auto</span><span class="o">-</span><span class="n">add</span> <span class="k">for</span> <span class="n">repeat</span> <span class="n">offender</span>
+</span><span class='line'><span class="mf">95.183.52.100</span> <span class="err">#</span> <span class="n">fail2ban</span><span class="o">/</span><span class="mi">2016</span><span class="o">-</span><span class="mo">04</span><span class="o">-</span><span class="mi">15</span> <span class="mo">00</span><span class="o">:</span><span class="mi">35</span><span class="o">:</span><span class="mi">51</span><span class="o">:</span> <span class="k">auto</span><span class="o">-</span><span class="n">add</span> <span class="k">for</span> <span class="n">repeat</span> <span class="n">offender</span>
+</span><span class='line'><span class="mf">110.84.129.110</span> <span class="err">#</span> <span class="n">fail2ban</span><span class="o">/</span><span class="mi">2016</span><span class="o">-</span><span class="mo">04</span><span class="o">-</span><span class="mi">15</span> <span class="mo">02</span><span class="o">:</span><span class="mi">11</span><span class="o">:</span><span class="mi">53</span><span class="o">:</span> <span class="k">auto</span><span class="o">-</span><span class="n">add</span> <span class="k">for</span> <span class="n">repeat</span> <span class="n">offender</span>
+</span><span class='line'><span class="mf">86.98.40.247</span> <span class="err">#</span> <span class="n">fail2ban</span><span class="o">/</span><span class="mi">2016</span><span class="o">-</span><span class="mo">04</span><span class="o">-</span><span class="mi">15</span> <span class="mi">09</span><span class="o">:</span><span class="mo">07</span><span class="o">:</span><span class="mi">46</span><span class="o">:</span> <span class="k">auto</span><span class="o">-</span><span class="n">add</span> <span class="k">for</span> <span class="n">repeat</span> <span class="n">offender</span>
+</span><span class='line'><span class="mf">91.106.93.21</span> <span class="err">#</span> <span class="n">fail2ban</span><span class="o">/</span><span class="mi">2016</span><span class="o">-</span><span class="mo">04</span><span class="o">-</span><span class="mi">15</span> <span class="mi">13</span><span class="o">:</span><span class="mi">36</span><span class="o">:</span><span class="mi">51</span><span class="o">:</span> <span class="k">auto</span><span class="o">-</span><span class="n">add</span> <span class="k">for</span> <span class="n">repeat</span> <span class="n">offender</span>
+</span></code></pre></td></tr></table></div></figure>objc
+</ol>
+
+
+<p>La configuración del <code>jail</code> la realizamos dentro del archivo <code>/etc/fail2ban/jail.conf</code> , quedando así:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="p">[</span><span class="n">exim2</span><span class="o">-</span><span class="n">repeater</span><span class="p">]</span>
+</span><span class='line'>      <span class="n">enabled</span>  <span class="o">=</span> <span class="n">true</span>
+</span><span class='line'>      <span class="n">filter</span>   <span class="o">=</span> <span class="n">exim2</span>
+</span><span class='line'>      <span class="n">action</span>   <span class="o">=</span> <span class="n">iptables</span><span class="o">-</span><span class="n">repeater</span><span class="p">[</span><span class="n">name</span><span class="o">=</span><span class="n">exim2</span><span class="p">]</span>
+</span><span class='line'>      <span class="n">logpath</span>  <span class="o">=</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">mailcleaner</span><span class="o">/</span><span class="n">log</span><span class="o">/</span><span class="n">exim_stage1</span><span class="o">/</span><span class="n">mainlog</span>
+</span><span class='line'>      <span class="n">maxretry</span> <span class="o">=</span> <span class="mi">10</span>
+</span><span class='line'>      <span class="n">findtime</span> <span class="o">=</span> <span class="mi">31536000</span>
+</span><span class='line'>      <span class="n">bantime</span>  <span class="o">=</span> <span class="mi">31536000</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Lo anterior leerá del archivo <code>/var/mailcleaner/log/exim_stage1/mainlog</code> todos los errores del tipo <code>535 Incorrect authentication data</code> si la authenticación falla al intento 10 y además la ip será almacenada en el archivo <code>iptables-repeater.conf</code> .</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[New post]]></title>
@@ -1302,162 +1519,6 @@ Funciona del modo que para ejecutar el atributo <code>command</code> el resultad
 <p>Lo anterior dice que; para que se ejecute el <code>exec</code> la salida del <code>onlyif</code> debe retornar 0. Si el rpm ya lo tenemos instalado, este va a crear el directorio por lo que para evitar que se siga instalando solo vemos si este ya fue creado. Si el rpm fue instalado, el <code>onlyif</code> retornará un <i>1</i> por lo que no se volverá a ejecutar nuevamente.</p>
 
 <p>Link <a href="http://docs.puppetlabs.com/references/latest/type.html#exec-attribute">documentación</a></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Configurando Vagrant en OSX]]></title>
-    <link href="http://www.miguelcoa.cl/blog/2014/07/07/configurando-vagrant-en-osx/"/>
-    <updated>2014-07-07T15:30:00-04:00</updated>
-    <id>http://www.miguelcoa.cl/blog/2014/07/07/configurando-vagrant-en-osx</id>
-    <content type="html"><![CDATA[<p>En la búsqueda de correr máquinas virtuales de forma mas simple me he decidido instalar <code>Vagrant</code>, que es un entorno para la gestión de máquinas virtuales bajo mbiente VirtualBox. La mágia de Vagrant viene de la mano de VirtualBox ya que este tiene soporte para correr máquinas virtuales del tipo <i>headless</i> (algo así como máquinas que corren en un servidor pero no sabes donde).</p>
-
-<h4>Instalación de Vagrant en OSX 10.9.3</h4>
-
-<p>Lo primero es bajar la versión correspondiente de <a href="http://www.vagrantup.com/downloads">Vagrant</a> y lo mismo para <a href="https://www.virtualbox.org/wiki/Downloads">VirtualBox</a>. Una vez descargado ambos paquetes (dmg) se instalan como cualquier otra programa para mac.
-Es necesario tener instalado una librerias Ruby para el trabajo con Vagrant, proceso que se realiza con el comando:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">gem</span> <span class="n">install</span> <span class="n">vagrant</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>La gestión de las máquinas virtuales en Vagrant se realizan mediante el comando <code>vagrant</code> <i>(init, up, destroy, ssh, resume, suspend, halt y muchas más)</i>, todas las opciones que tiene este comando figuran en la <a href="http://docs.vagrantup.com/v2/cli/">documentación</a></p>
-
-<h4>Instalando nuestro primer Box</h4>
-
-<p>Lo primero que tenemos que hacer es bajar nuestro Box, que será la <i>imagen base</i> desde donde crearemos nuestras máquinas virtuales:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">vagrant</span> <span class="n">box</span> <span class="n">add</span> <span class="no">CentOS</span>  <span class="ss">https</span><span class="p">:</span><span class="sr">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="mi">2</span><span class="n">creatives</span><span class="o">/</span><span class="n">vagrant</span><span class="o">-</span><span class="n">centos</span><span class="o">/</span><span class="n">releases</span><span class="o">/</span><span class="n">download</span><span class="o">/</span><span class="n">v6</span><span class="o">.</span><span class="mi">4</span><span class="o">.</span><span class="mi">2</span><span class="o">/</span><span class="n">centos64</span><span class="o">-</span><span class="n">x86_64</span><span class="o">-</span><span class="mi">20140116</span><span class="o">.</span><span class="n">box</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Bajamos y agregamos un nuevo Box de sistema que se llama &ldquo;Centos&rdquo; que se encuentra hosteado remotamente, puedes ver la infinidad de Box disponibles <a href="http://www.vagrantbox.es/">acá</a>
-Podemos ver los Box instalados con el siguiente comando</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">vagrant</span> <span class="n">box</span> <span class="n">list</span>
-</span><span class='line'><span class="no">CentOS</span> <span class="p">(</span><span class="n">virtualbox</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h4>Corriendo nuesta máquina virtual</h4>
-
-<p>Teniendo nuestro Box, podemos instanciar nuesta primera máquina virtual para lo cual tenemos que ejecutar el comando <code>vagrant init</code></p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="ss">Miguel</span><span class="p">:</span><span class="no">Puppet</span><span class="err">$</span> <span class="n">vagrant</span> <span class="n">init</span>
-</span><span class='line'><span class="n">A</span> <span class="sb">`Vagrantfile`</span> <span class="n">has</span> <span class="n">been</span> <span class="n">placed</span> <span class="k">in</span> <span class="n">this</span> <span class="n">directory</span><span class="o">.</span> <span class="no">You</span> <span class="n">are</span> <span class="n">now</span>
-</span><span class='line'><span class="n">ready</span> <span class="n">to</span> <span class="sb">`vagrant up`</span> <span class="n">your</span> <span class="n">first</span> <span class="n">virtual</span> <span class="n">environment!</span> <span class="no">Please</span> <span class="n">read</span>
-</span><span class='line'><span class="n">the</span> <span class="n">comments</span> <span class="k">in</span> <span class="n">the</span> <span class="no">Vagrantfile</span> <span class="n">as</span> <span class="n">well</span> <span class="n">as</span> <span class="n">documentation</span> <span class="n">on</span>
-</span><span class='line'><span class="sb">`vagrantup.com`</span> <span class="k">for</span> <span class="n">more</span> <span class="n">information</span> <span class="n">on</span> <span class="n">using</span> <span class="no">Vagrant</span><span class="o">.</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Lo anterior creará un archivo de configuración base llamado Vagrantfile, donde se definieran una seríe de instrucción con las caracteristicas internas (ip, hostname, puertos, servicios) asociadas al SO, como las externas (memoria, cpu, etc) asociadas a VirtualBox, para el caso la dejaremos por defecto esta configurción.
-Luego de tener creado nuestro <code>Vagrantfile</code> creado, podemos iniciar nuestra nueva instancia de máquina virtual:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="ss">Miguel</span><span class="p">:</span><span class="no">Puppet</span><span class="err">$</span> <span class="n">vagrant</span> <span class="n">up</span>
-</span><span class='line'><span class="no">Bringing</span> <span class="n">machine</span> <span class="s1">&#39;default&#39;</span> <span class="n">up</span> <span class="n">with</span> <span class="s1">&#39;virtualbox&#39;</span> <span class="n">provider</span><span class="o">.</span><span class="n">.</span><span class="o">.</span>
-</span><span class='line'><span class="o">==&gt;</span> <span class="ss">default</span><span class="p">:</span> <span class="no">Importing</span> <span class="n">base</span> <span class="n">box</span> <span class="s1">&#39;Centos&#39;</span><span class="o">.</span><span class="n">.</span><span class="o">.</span>
-</span><span class='line'><span class="o">==&gt;</span> <span class="ss">default</span><span class="p">:</span> <span class="no">Matching</span> <span class="no">MAC</span> <span class="n">address</span> <span class="k">for</span> <span class="no">NAT</span> <span class="n">networking</span><span class="o">.</span><span class="n">.</span><span class="o">.</span>
-</span><span class='line'><span class="o">==&gt;</span> <span class="ss">default</span><span class="p">:</span> <span class="no">Setting</span> <span class="n">the</span> <span class="nb">name</span> <span class="n">of</span> <span class="n">the</span> <span class="ss">VM</span><span class="p">:</span> <span class="no">Puppet_default_1404758552103_56627</span>
-</span><span class='line'><span class="o">==&gt;</span> <span class="ss">default</span><span class="p">:</span> <span class="no">Clearing</span> <span class="n">any</span> <span class="n">previously</span> <span class="n">set</span> <span class="n">network</span> <span class="n">interfaces</span><span class="o">.</span><span class="n">.</span><span class="o">.</span>
-</span><span class='line'><span class="o">==&gt;</span> <span class="ss">default</span><span class="p">:</span> <span class="no">Preparing</span> <span class="n">network</span> <span class="n">interfaces</span> <span class="n">based</span> <span class="n">on</span> <span class="n">configuration</span><span class="o">.</span><span class="n">.</span><span class="o">.</span>
-</span><span class='line'>    <span class="ss">default</span><span class="p">:</span> <span class="no">Adapter</span> <span class="mi">1</span><span class="p">:</span> <span class="n">nat</span>
-</span><span class='line'><span class="o">==&gt;</span> <span class="ss">default</span><span class="p">:</span> <span class="no">Forwarding</span> <span class="n">ports</span><span class="o">.</span><span class="n">.</span><span class="o">.</span>
-</span><span class='line'>    <span class="ss">default</span><span class="p">:</span> <span class="mi">22</span> <span class="o">=&gt;</span> <span class="mi">2222</span> <span class="p">(</span><span class="n">adapter</span> <span class="mi">1</span><span class="p">)</span>
-</span><span class='line'><span class="o">==&gt;</span> <span class="ss">default</span><span class="p">:</span> <span class="no">Booting</span> <span class="no">VM</span><span class="o">.</span><span class="n">.</span><span class="o">.</span>
-</span><span class='line'><span class="o">==&gt;</span> <span class="ss">default</span><span class="p">:</span> <span class="no">Waiting</span> <span class="k">for</span> <span class="n">machine</span> <span class="n">to</span> <span class="n">boot</span><span class="o">.</span> <span class="no">This</span> <span class="n">may</span> <span class="n">take</span> <span class="n">a</span> <span class="n">few</span> <span class="n">minutes</span><span class="o">.</span><span class="n">.</span><span class="o">.</span>
-</span><span class='line'>    <span class="ss">default</span><span class="p">:</span> <span class="no">SSH</span> <span class="ss">address</span><span class="p">:</span> <span class="mi">127</span><span class="o">.</span><span class="mi">0</span><span class="o">.</span><span class="mi">0</span><span class="o">.</span><span class="mi">1</span><span class="p">:</span><span class="mi">2222</span>
-</span><span class='line'>    <span class="ss">default</span><span class="p">:</span> <span class="no">SSH</span> <span class="ss">username</span><span class="p">:</span> <span class="n">vagrant</span>
-</span><span class='line'>    <span class="ss">default</span><span class="p">:</span> <span class="no">SSH</span> <span class="n">auth</span> <span class="nb">method</span><span class="p">:</span> <span class="kp">private</span> <span class="n">key</span>
-</span><span class='line'>    <span class="ss">default</span><span class="p">:</span> <span class="ss">Warning</span><span class="p">:</span> <span class="no">Remote</span> <span class="n">connection</span> <span class="n">disconnect</span><span class="o">.</span> <span class="no">Retrying</span><span class="o">.</span><span class="n">.</span><span class="o">.</span>
-</span><span class='line'><span class="o">==&gt;</span> <span class="ss">default</span><span class="p">:</span> <span class="no">Machine</span> <span class="n">booted</span> <span class="ow">and</span> <span class="n">ready!</span>
-</span><span class='line'><span class="o">==&gt;</span> <span class="ss">default</span><span class="p">:</span> <span class="no">Checking</span> <span class="k">for</span> <span class="n">guest</span> <span class="n">additions</span> <span class="k">in</span> <span class="no">VM</span><span class="o">.</span><span class="n">.</span><span class="o">.</span>
-</span><span class='line'><span class="o">==&gt;</span> <span class="ss">default</span><span class="p">:</span> <span class="no">Mounting</span> <span class="n">shared</span> <span class="n">folders</span><span class="o">.</span><span class="n">.</span><span class="o">.</span>
-</span><span class='line'>    <span class="ss">default</span><span class="p">:</span> <span class="sr">/vagrant =&gt; /</span><span class="no">Users</span><span class="o">/</span><span class="no">Miguel</span><span class="o">/</span><span class="no">VagrantVM</span><span class="o">/</span><span class="no">Puppet</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Ahora, la VM se encuentra corriendo en nuestro equipo. Podemos conectarnos con el comando <code>vagrant ssh</code></p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="ss">Miguel</span><span class="p">:</span><span class="no">Puppet</span><span class="err">$</span> <span class="n">vagrant</span> <span class="n">ssh</span>
-</span><span class='line'><span class="o">[</span><span class="n">vagrant</span><span class="vi">@vagrant</span><span class="o">-</span><span class="n">centos64</span> <span class="o">~]</span><span class="err">$</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Por defecto el nombre con que queda la VM y se puede ver mediante la GUI de VirtualBox no es para nada descriptivo, pero puede ser modificado editando el archivo <code>Vagranfile</code> adicionando la variable <code>name</code> de la sección <code>config.vm.provider</code> (líneas nº 9,10,11)  .</p>
-
-<p><img class="center" src="http://www.miguelcoa.cl/images/vagrantDefaultName.png"></p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="ss">Miguel</span><span class="p">:</span><span class="no">Puppet</span><span class="err">$</span> <span class="n">cat</span> <span class="no">Vagrantfile</span>
-</span><span class='line'><span class="c1"># -*- mode: ruby -*-</span>
-</span><span class='line'><span class="c1"># vi: set ft=ruby :</span>
-</span><span class='line'>
-</span><span class='line'><span class="no">VAGRANTFILE_API_VERSION</span> <span class="o">=</span> <span class="s2">&quot;2&quot;</span>
-</span><span class='line'>
-</span><span class='line'><span class="no">Vagrant</span><span class="o">.</span><span class="n">configure</span><span class="p">(</span><span class="no">VAGRANTFILE_API_VERSION</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
-</span><span class='line'>  <span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">box</span> <span class="o">=</span> <span class="s2">&quot;Centos&quot;</span>
-</span><span class='line'>  <span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">provider</span> <span class="s2">&quot;virtualbox&quot;</span> <span class="k">do</span> <span class="o">|</span><span class="n">puppetmaster</span><span class="o">|</span>
-</span><span class='line'>     <span class="n">puppetmaster</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;puppetmaster&quot;</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Podemos ver el nuevo nombre por línea de comando (Nombre que será también el de la GUI de VirtualBox)</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="ss">Miguel</span><span class="p">:</span><span class="no">Puppet</span><span class="err">$</span> <span class="no">VBoxManage</span> <span class="n">list</span> <span class="n">runningvms</span>
-</span><span class='line'><span class="s2">&quot;puppetmaster&quot;</span> <span class="p">{</span><span class="n">c980cd9e</span><span class="o">-</span><span class="mi">3329</span><span class="o">-</span><span class="mi">4</span><span class="n">aa8</span><span class="o">-</span><span class="mi">8</span><span class="n">d58</span><span class="o">-</span><span class="n">b84e389fff68</span><span class="p">}</span>
-</span><span class='line'><span class="ss">Miguel</span><span class="p">:</span><span class="no">Puppet</span><span class="err">$</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>No esta demás el link de la <a href="https://docs.vagrantup.com">documentación</a></p>
 ]]></content>
   </entry>
   

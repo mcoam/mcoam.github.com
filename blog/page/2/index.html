@@ -53,6 +53,102 @@
 	<header>
 		<h2 class="title">
 			
+			<a href="/blog/2015/01/15/script-para-buscar-y-borrar-un-correo-en-zimbra/">
+			
+				Script Para Buscar Y Borrar Un Correo en Zimbra</a>
+		</h2>
+		<div class="meta date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-01-15T12:49:00-03:00" pubdate data-updated="true">Jan 15<span>th</span>, 2015</time></div>
+	</header>
+	<div class="entry-content">
+		<p>El siguiente script permite buscar y borrar un correo mediante consola desde los mailbox de los usuarios.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1">#!/bin/bash</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">zimbraAccounts</span><span class="o">=</span><span class="s1">&#39;/var/tmp/cuentas&#39;</span>
+</span><span class='line'><span class="n">zimbraCMD</span><span class="o">=</span><span class="s1">&#39;/opt/zimbra/bin/zmmailbox&#39;</span>
+</span><span class='line'> <span class="k">for</span> <span class="n">a</span> <span class="k">in</span> <span class="sb">`cat $zimbraAccounts`</span>
+</span><span class='line'>    <span class="k">do</span>
+</span><span class='line'>        <span class="c1">#user=`$a`</span>
+</span><span class='line'>        <span class="n">emailID</span><span class="o">=</span><span class="p">(</span> <span class="err">$</span><span class="p">(</span><span class="vg">$zimbraCMD</span> <span class="o">-</span><span class="n">z</span> <span class="o">-</span><span class="n">m</span> <span class="vg">$a</span> <span class="n">search</span> <span class="s2">&quot;de haber superado debido a la alta tasa de correos spam&quot;</span> <span class="o">|</span><span class="n">grep</span> <span class="n">conv</span> <span class="o">|</span><span class="n">awk</span> <span class="p">{</span><span class="s1">&#39;print $2&#39;</span><span class="p">}</span> <span class="o">|</span><span class="n">sed</span> <span class="s1">&#39;s/-//g&#39;</span><span class="p">)</span> <span class="p">)</span>
+</span><span class='line'>        <span class="n">echo</span> <span class="vg">$user</span>
+</span><span class='line'>        <span class="c1">#echo ${emailID[1]}</span>
+</span><span class='line'>            <span class="k">for</span> <span class="n">i</span> <span class="k">in</span> <span class="s2">&quot;${emailID[@]}&quot;</span>
+</span><span class='line'>                <span class="k">do</span>
+</span><span class='line'>                    <span class="vg">$zimbraCMD</span> <span class="o">-</span><span class="n">z</span> <span class="o">-</span><span class="n">m</span> <span class="vg">$a</span> <span class="n">dm</span> <span class="vg">$i</span>
+</span><span class='line'>          <span class="n">echo</span> <span class="s2">&quot;cuenta: $a&quot;</span> <span class="o">&gt;&gt;</span> <span class="sr">/var/</span><span class="n">tmp</span><span class="o">/</span><span class="n">casillasConEmail</span>
+</span><span class='line'>                <span class="n">done</span>
+</span><span class='line'>    <span class="n">done</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>En la línea nº8 tenemos que cambiar el texto a buscar, y que corresponde a lo que esta dentro de comillas.
+Para el caso, tenemos que tener las cuentas de correos en el archivo <code>/var/tmp/cuentas</code> que las podemos obtener con el comando:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">zmprov</span> <span class="o">-</span><span class="n">l</span> <span class="n">gaa</span> <span class="o">|</span><span class="n">egrep</span> <span class="o">-</span><span class="n">vi</span> <span class="s1">&#39;spam|virus|galsyn|archiv&#39;</span><span class="o">|</span> <span class="n">sort</span> <span class="o">&gt;</span> <span class="sr">/var/</span><span class="n">tmp</span><span class="o">/</span><span class="n">cuentas</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Demás esta decir que lo realizado en el comando anterior se puede hacer dentro del mismo script sin tener que hacer esto de forma separada.  Una vez ejecutado el script, podremos ver la información de las cuentas en donde fue borrado el correo:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[</span><span class="n">zimbra</span><span class="vi">@mail1</span> <span class="n">tmp</span><span class="o">]</span><span class="err">$</span> <span class="n">tail</span> <span class="o">-</span><span class="n">f</span> <span class="sr">/var/</span><span class="n">tmp</span><span class="o">/</span><span class="n">casillasConEmail</span>
+</span><span class='line'><span class="ss">cuenta</span><span class="p">:</span> <span class="n">ahidalgo</span><span class="vi">@example</span><span class="o">.</span><span class="n">com</span>
+</span><span class='line'><span class="ss">cuenta</span><span class="p">:</span> <span class="n">alinay</span><span class="vi">@example</span><span class="o">.</span><span class="n">com</span>
+</span><span class='line'><span class="ss">cuenta</span><span class="p">:</span> <span class="n">chernandez</span><span class="vi">@example</span><span class="o">.</span><span class="n">com</span>
+</span><span class='line'><span class="ss">cuenta</span><span class="p">:</span> <span class="n">currutia</span><span class="vi">@example</span><span class="o">.</span><span class="n">com</span>
+</span><span class='line'><span class="ss">cuenta</span><span class="p">:</span> <span class="n">cvaldes</span><span class="vi">@example</span><span class="o">.</span><span class="n">com</span>
+</span><span class='line'><span class="ss">cuenta</span><span class="p">:</span> <span class="n">evalencia</span><span class="vi">@example</span><span class="o">.</span><span class="n">com</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+		
+		
+	</div>
+
+</article>
+
+
+    <article class="post">
+	<header>
+		<h2 class="title">
+			
 			<a href="/blog/2014/11/28/atachando-sesion-screen-dropeada/">
 			
 				Error Screen: There Is No Screen to Be Resumed Matching</a>
@@ -1127,185 +1223,6 @@ Funciona del modo que para ejecutar el atributo <code>command</code> el resultad
 <p>Lo anterior dice que; para que se ejecute el <code>exec</code> la salida del <code>onlyif</code> debe retornar 0. Si el rpm ya lo tenemos instalado, este va a crear el directorio por lo que para evitar que se siga instalando solo vemos si este ya fue creado. Si el rpm fue instalado, el <code>onlyif</code> retornará un <i>1</i> por lo que no se volverá a ejecutar nuevamente.</p>
 
 <p>Link <a href="http://docs.puppetlabs.com/references/latest/type.html#exec-attribute">documentación</a></p>
-
-		
-		
-	</div>
-
-</article>
-
-
-    <article class="post">
-	<header>
-		<h2 class="title">
-			
-			<a href="/blog/2014/07/07/configurando-vagrant-en-osx/">
-			
-				Configurando Vagrant en OSX</a>
-		</h2>
-		<div class="meta date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-07-07T15:30:00-04:00" pubdate data-updated="true">Jul 7<span>th</span>, 2014</time></div>
-	</header>
-	<div class="entry-content">
-		<p>En la búsqueda de correr máquinas virtuales de forma mas simple me he decidido instalar <code>Vagrant</code>, que es un entorno para la gestión de máquinas virtuales bajo mbiente VirtualBox. La mágia de Vagrant viene de la mano de VirtualBox ya que este tiene soporte para correr máquinas virtuales del tipo <i>headless</i> (algo así como máquinas que corren en un servidor pero no sabes donde).</p>
-
-<h4>Instalación de Vagrant en OSX 10.9.3</h4>
-
-<p>Lo primero es bajar la versión correspondiente de <a href="http://www.vagrantup.com/downloads">Vagrant</a> y lo mismo para <a href="https://www.virtualbox.org/wiki/Downloads">VirtualBox</a>. Una vez descargado ambos paquetes (dmg) se instalan como cualquier otra programa para mac.
-Es necesario tener instalado una librerias Ruby para el trabajo con Vagrant, proceso que se realiza con el comando:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">gem</span> <span class="n">install</span> <span class="n">vagrant</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>La gestión de las máquinas virtuales en Vagrant se realizan mediante el comando <code>vagrant</code> <i>(init, up, destroy, ssh, resume, suspend, halt y muchas más)</i>, todas las opciones que tiene este comando figuran en la <a href="http://docs.vagrantup.com/v2/cli/">documentación</a></p>
-
-<h4>Instalando nuestro primer Box</h4>
-
-<p>Lo primero que tenemos que hacer es bajar nuestro Box, que será la <i>imagen base</i> desde donde crearemos nuestras máquinas virtuales:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">vagrant</span> <span class="n">box</span> <span class="n">add</span> <span class="no">CentOS</span>  <span class="ss">https</span><span class="p">:</span><span class="sr">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="mi">2</span><span class="n">creatives</span><span class="o">/</span><span class="n">vagrant</span><span class="o">-</span><span class="n">centos</span><span class="o">/</span><span class="n">releases</span><span class="o">/</span><span class="n">download</span><span class="o">/</span><span class="n">v6</span><span class="o">.</span><span class="mi">4</span><span class="o">.</span><span class="mi">2</span><span class="o">/</span><span class="n">centos64</span><span class="o">-</span><span class="n">x86_64</span><span class="o">-</span><span class="mi">20140116</span><span class="o">.</span><span class="n">box</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Bajamos y agregamos un nuevo Box de sistema que se llama &ldquo;Centos&rdquo; que se encuentra hosteado remotamente, puedes ver la infinidad de Box disponibles <a href="http://www.vagrantbox.es/">acá</a>
-Podemos ver los Box instalados con el siguiente comando</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">vagrant</span> <span class="n">box</span> <span class="n">list</span>
-</span><span class='line'><span class="no">CentOS</span> <span class="p">(</span><span class="n">virtualbox</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h4>Corriendo nuesta máquina virtual</h4>
-
-<p>Teniendo nuestro Box, podemos instanciar nuesta primera máquina virtual para lo cual tenemos que ejecutar el comando <code>vagrant init</code></p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="ss">Miguel</span><span class="p">:</span><span class="no">Puppet</span><span class="err">$</span> <span class="n">vagrant</span> <span class="n">init</span>
-</span><span class='line'><span class="n">A</span> <span class="sb">`Vagrantfile`</span> <span class="n">has</span> <span class="n">been</span> <span class="n">placed</span> <span class="k">in</span> <span class="n">this</span> <span class="n">directory</span><span class="o">.</span> <span class="no">You</span> <span class="n">are</span> <span class="n">now</span>
-</span><span class='line'><span class="n">ready</span> <span class="n">to</span> <span class="sb">`vagrant up`</span> <span class="n">your</span> <span class="n">first</span> <span class="n">virtual</span> <span class="n">environment!</span> <span class="no">Please</span> <span class="n">read</span>
-</span><span class='line'><span class="n">the</span> <span class="n">comments</span> <span class="k">in</span> <span class="n">the</span> <span class="no">Vagrantfile</span> <span class="n">as</span> <span class="n">well</span> <span class="n">as</span> <span class="n">documentation</span> <span class="n">on</span>
-</span><span class='line'><span class="sb">`vagrantup.com`</span> <span class="k">for</span> <span class="n">more</span> <span class="n">information</span> <span class="n">on</span> <span class="n">using</span> <span class="no">Vagrant</span><span class="o">.</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Lo anterior creará un archivo de configuración base llamado Vagrantfile, donde se definieran una seríe de instrucción con las caracteristicas internas (ip, hostname, puertos, servicios) asociadas al SO, como las externas (memoria, cpu, etc) asociadas a VirtualBox, para el caso la dejaremos por defecto esta configurción.
-Luego de tener creado nuestro <code>Vagrantfile</code> creado, podemos iniciar nuestra nueva instancia de máquina virtual:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="ss">Miguel</span><span class="p">:</span><span class="no">Puppet</span><span class="err">$</span> <span class="n">vagrant</span> <span class="n">up</span>
-</span><span class='line'><span class="no">Bringing</span> <span class="n">machine</span> <span class="s1">&#39;default&#39;</span> <span class="n">up</span> <span class="n">with</span> <span class="s1">&#39;virtualbox&#39;</span> <span class="n">provider</span><span class="o">.</span><span class="n">.</span><span class="o">.</span>
-</span><span class='line'><span class="o">==&gt;</span> <span class="ss">default</span><span class="p">:</span> <span class="no">Importing</span> <span class="n">base</span> <span class="n">box</span> <span class="s1">&#39;Centos&#39;</span><span class="o">.</span><span class="n">.</span><span class="o">.</span>
-</span><span class='line'><span class="o">==&gt;</span> <span class="ss">default</span><span class="p">:</span> <span class="no">Matching</span> <span class="no">MAC</span> <span class="n">address</span> <span class="k">for</span> <span class="no">NAT</span> <span class="n">networking</span><span class="o">.</span><span class="n">.</span><span class="o">.</span>
-</span><span class='line'><span class="o">==&gt;</span> <span class="ss">default</span><span class="p">:</span> <span class="no">Setting</span> <span class="n">the</span> <span class="nb">name</span> <span class="n">of</span> <span class="n">the</span> <span class="ss">VM</span><span class="p">:</span> <span class="no">Puppet_default_1404758552103_56627</span>
-</span><span class='line'><span class="o">==&gt;</span> <span class="ss">default</span><span class="p">:</span> <span class="no">Clearing</span> <span class="n">any</span> <span class="n">previously</span> <span class="n">set</span> <span class="n">network</span> <span class="n">interfaces</span><span class="o">.</span><span class="n">.</span><span class="o">.</span>
-</span><span class='line'><span class="o">==&gt;</span> <span class="ss">default</span><span class="p">:</span> <span class="no">Preparing</span> <span class="n">network</span> <span class="n">interfaces</span> <span class="n">based</span> <span class="n">on</span> <span class="n">configuration</span><span class="o">.</span><span class="n">.</span><span class="o">.</span>
-</span><span class='line'>    <span class="ss">default</span><span class="p">:</span> <span class="no">Adapter</span> <span class="mi">1</span><span class="p">:</span> <span class="n">nat</span>
-</span><span class='line'><span class="o">==&gt;</span> <span class="ss">default</span><span class="p">:</span> <span class="no">Forwarding</span> <span class="n">ports</span><span class="o">.</span><span class="n">.</span><span class="o">.</span>
-</span><span class='line'>    <span class="ss">default</span><span class="p">:</span> <span class="mi">22</span> <span class="o">=&gt;</span> <span class="mi">2222</span> <span class="p">(</span><span class="n">adapter</span> <span class="mi">1</span><span class="p">)</span>
-</span><span class='line'><span class="o">==&gt;</span> <span class="ss">default</span><span class="p">:</span> <span class="no">Booting</span> <span class="no">VM</span><span class="o">.</span><span class="n">.</span><span class="o">.</span>
-</span><span class='line'><span class="o">==&gt;</span> <span class="ss">default</span><span class="p">:</span> <span class="no">Waiting</span> <span class="k">for</span> <span class="n">machine</span> <span class="n">to</span> <span class="n">boot</span><span class="o">.</span> <span class="no">This</span> <span class="n">may</span> <span class="n">take</span> <span class="n">a</span> <span class="n">few</span> <span class="n">minutes</span><span class="o">.</span><span class="n">.</span><span class="o">.</span>
-</span><span class='line'>    <span class="ss">default</span><span class="p">:</span> <span class="no">SSH</span> <span class="ss">address</span><span class="p">:</span> <span class="mi">127</span><span class="o">.</span><span class="mi">0</span><span class="o">.</span><span class="mi">0</span><span class="o">.</span><span class="mi">1</span><span class="p">:</span><span class="mi">2222</span>
-</span><span class='line'>    <span class="ss">default</span><span class="p">:</span> <span class="no">SSH</span> <span class="ss">username</span><span class="p">:</span> <span class="n">vagrant</span>
-</span><span class='line'>    <span class="ss">default</span><span class="p">:</span> <span class="no">SSH</span> <span class="n">auth</span> <span class="nb">method</span><span class="p">:</span> <span class="kp">private</span> <span class="n">key</span>
-</span><span class='line'>    <span class="ss">default</span><span class="p">:</span> <span class="ss">Warning</span><span class="p">:</span> <span class="no">Remote</span> <span class="n">connection</span> <span class="n">disconnect</span><span class="o">.</span> <span class="no">Retrying</span><span class="o">.</span><span class="n">.</span><span class="o">.</span>
-</span><span class='line'><span class="o">==&gt;</span> <span class="ss">default</span><span class="p">:</span> <span class="no">Machine</span> <span class="n">booted</span> <span class="ow">and</span> <span class="n">ready!</span>
-</span><span class='line'><span class="o">==&gt;</span> <span class="ss">default</span><span class="p">:</span> <span class="no">Checking</span> <span class="k">for</span> <span class="n">guest</span> <span class="n">additions</span> <span class="k">in</span> <span class="no">VM</span><span class="o">.</span><span class="n">.</span><span class="o">.</span>
-</span><span class='line'><span class="o">==&gt;</span> <span class="ss">default</span><span class="p">:</span> <span class="no">Mounting</span> <span class="n">shared</span> <span class="n">folders</span><span class="o">.</span><span class="n">.</span><span class="o">.</span>
-</span><span class='line'>    <span class="ss">default</span><span class="p">:</span> <span class="sr">/vagrant =&gt; /</span><span class="no">Users</span><span class="o">/</span><span class="no">Miguel</span><span class="o">/</span><span class="no">VagrantVM</span><span class="o">/</span><span class="no">Puppet</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Ahora, la VM se encuentra corriendo en nuestro equipo. Podemos conectarnos con el comando <code>vagrant ssh</code></p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="ss">Miguel</span><span class="p">:</span><span class="no">Puppet</span><span class="err">$</span> <span class="n">vagrant</span> <span class="n">ssh</span>
-</span><span class='line'><span class="o">[</span><span class="n">vagrant</span><span class="vi">@vagrant</span><span class="o">-</span><span class="n">centos64</span> <span class="o">~]</span><span class="err">$</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Por defecto el nombre con que queda la VM y se puede ver mediante la GUI de VirtualBox no es para nada descriptivo, pero puede ser modificado editando el archivo <code>Vagranfile</code> adicionando la variable <code>name</code> de la sección <code>config.vm.provider</code> (líneas nº 9,10,11)  .</p>
-
-<p><img class="center" src="/images/vagrantDefaultName.png"></p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="ss">Miguel</span><span class="p">:</span><span class="no">Puppet</span><span class="err">$</span> <span class="n">cat</span> <span class="no">Vagrantfile</span>
-</span><span class='line'><span class="c1"># -*- mode: ruby -*-</span>
-</span><span class='line'><span class="c1"># vi: set ft=ruby :</span>
-</span><span class='line'>
-</span><span class='line'><span class="no">VAGRANTFILE_API_VERSION</span> <span class="o">=</span> <span class="s2">&quot;2&quot;</span>
-</span><span class='line'>
-</span><span class='line'><span class="no">Vagrant</span><span class="o">.</span><span class="n">configure</span><span class="p">(</span><span class="no">VAGRANTFILE_API_VERSION</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
-</span><span class='line'>  <span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">box</span> <span class="o">=</span> <span class="s2">&quot;Centos&quot;</span>
-</span><span class='line'>  <span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">provider</span> <span class="s2">&quot;virtualbox&quot;</span> <span class="k">do</span> <span class="o">|</span><span class="n">puppetmaster</span><span class="o">|</span>
-</span><span class='line'>     <span class="n">puppetmaster</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;puppetmaster&quot;</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Podemos ver el nuevo nombre por línea de comando (Nombre que será también el de la GUI de VirtualBox)</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="ss">Miguel</span><span class="p">:</span><span class="no">Puppet</span><span class="err">$</span> <span class="no">VBoxManage</span> <span class="n">list</span> <span class="n">runningvms</span>
-</span><span class='line'><span class="s2">&quot;puppetmaster&quot;</span> <span class="p">{</span><span class="n">c980cd9e</span><span class="o">-</span><span class="mi">3329</span><span class="o">-</span><span class="mi">4</span><span class="n">aa8</span><span class="o">-</span><span class="mi">8</span><span class="n">d58</span><span class="o">-</span><span class="n">b84e389fff68</span><span class="p">}</span>
-</span><span class='line'><span class="ss">Miguel</span><span class="p">:</span><span class="no">Puppet</span><span class="err">$</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>No esta demás el link de la <a href="https://docs.vagrantup.com">documentación</a></p>
 
 		
 		

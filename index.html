@@ -53,6 +53,246 @@
 	<header>
 		<h2 class="title">
 			
+			<a href="/blog/2016/04/15/configurando-fail2ban-para-autentificaciones-smtp-fallidas-en-mailcleaner/">
+			
+				Configurando Fail2ban Para Autentificaciones SMTP Fallidas en Mailcleaner</a>
+		</h2>
+		<div class="meta date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2016-04-15T13:30:00-03:00" pubdate data-updated="true">Apr 15<span>th</span>, 2016</time></div>
+	</header>
+	<div class="entry-content">
+		<p>Para prevenir que estando nuestro servidor <code>SMTP</code> en internet tengamos bloqueos por ataques <code>DoS</code> al puerto 25 podemos implementar el servicio <code>fail2ban</code> para bloquear todo tipo de conexión que falle en la autentificación de forma reiterativa realizando lo siguiente:</p>
+
+<ul>
+<li>Instalar <code>fail2ban</code> en el servidor Mailcleaner</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">aptget</span> <span class="n">update</span><span class="p">;</span> <span class="n">aptget</span> <span class="n">install</span> <span class="n">fail2ban</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Nos dirigimos al directorio <code>/etc/fail2ban</code>, donde creamos/editamos los siguientes archivos:</p>
+
+<ol type="a">
+<li>Archivo <code>filter.d/exim2.conf</code>: Contiene la reglas para el match del jail</li>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="cp"># Fail2Ban filter for exim</span>
+</span><span class='line'><span class="cp">#</span>
+</span><span class='line'><span class="cp"># This includes the rejection messages of exim. For spam and filter</span>
+</span><span class='line'><span class="cp"># related bans use the exim-spam.conf</span>
+</span><span class='line'><span class="cp">#</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="p">[</span><span class="n">INCLUDES</span><span class="p">]</span>
+</span><span class='line'>
+</span><span class='line'><span class="cp"># Read common prefixes. If any customizations available -- read them from</span>
+</span><span class='line'><span class="cp"># exim-common.local</span>
+</span><span class='line'><span class="cp"># before = exim-common.conf</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">[</span><span class="n">Definition</span><span class="p">]</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">failregex</span> <span class="o">=</span> <span class="err">\</span><span class="p">[</span><span class="o">&lt;</span><span class="n">HOST</span><span class="o">&gt;</span><span class="err">\</span><span class="p">]</span><span class="o">:</span> <span class="mi">535</span> <span class="n">Incorrect</span> <span class="n">authentication</span> <span class="n">data</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">ignoreregex</span> <span class="o">=</span>
+</span></code></pre></td></tr></table></div></figure>
+<li>Archivo <code>action.d/iptables-repeater.conf</code>: Configura toda la acción a realizar con las ip que fallan con la auth</li>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="cp"># Fail2ban configuration file</span>
+</span><span class='line'><span class="cp">#</span>
+</span><span class='line'><span class="cp"># Author: Phil Hagen &lt;phil@identityvector.com&gt;</span>
+</span><span class='line'><span class="cp">#</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">[</span><span class="n">Definition</span><span class="p">]</span>
+</span><span class='line'>
+</span><span class='line'><span class="cp"># Option:  actionstart</span>
+</span><span class='line'><span class="cp"># Notes.:  command executed once at the start of Fail2Ban.</span>
+</span><span class='line'><span class="cp"># Values:  CMD</span>
+</span><span class='line'><span class="cp">#</span>
+</span><span class='line'><span class="n">actionstart</span> <span class="o">=</span> <span class="n">iptables</span> <span class="o">-</span><span class="n">N</span> <span class="n">fail2ban</span><span class="o">-</span><span class="n">REPEAT</span><span class="o">-&lt;</span><span class="n">name</span><span class="o">&gt;</span>
+</span><span class='line'>              <span class="n">iptables</span> <span class="o">-</span><span class="n">A</span> <span class="n">fail2ban</span><span class="o">-</span><span class="n">REPEAT</span><span class="o">-&lt;</span><span class="n">name</span><span class="o">&gt;</span> <span class="o">-</span><span class="n">j</span> <span class="n">RETURN</span>
+</span><span class='line'>              <span class="n">iptables</span> <span class="o">-</span><span class="n">I</span> <span class="n">INPUT</span> <span class="o">-</span><span class="n">j</span> <span class="n">fail2ban</span><span class="o">-</span><span class="n">REPEAT</span><span class="o">-&lt;</span><span class="n">name</span><span class="o">&gt;</span>
+</span><span class='line'>              <span class="err">#</span> <span class="n">set</span> <span class="n">up</span> <span class="n">from</span> <span class="n">the</span> <span class="k">static</span> <span class="n">file</span>
+</span><span class='line'>              <span class="n">cat</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">fail2ban</span><span class="o">/</span><span class="n">ip</span><span class="p">.</span><span class="n">blocklist</span><span class="p">.</span><span class="o">&lt;</span><span class="n">name</span><span class="o">&gt;</span> <span class="o">|</span><span class="n">grep</span> <span class="o">-</span><span class="n">v</span> <span class="o">^</span><span class="err">\</span><span class="n">s</span><span class="o">*</span><span class="err">#</span><span class="o">|</span><span class="n">awk</span> <span class="err">&#39;</span><span class="p">{</span><span class="n">print</span> <span class="n">$1</span><span class="p">}</span><span class="err">&#39;</span> <span class="o">|</span> <span class="k">while</span> <span class="n">read</span> <span class="n">IP</span><span class="p">;</span> <span class="k">do</span> <span class="n">iptables</span> <span class="o">-</span><span class="n">I</span> <span class="n">fail2ban</span><span class="o">-</span><span class="n">REPEAT</span><span class="o">-&lt;</span><span class="n">name</span><span class="o">&gt;</span> <span class="mi">1</span> <span class="o">-</span><span class="n">s</span> <span class="n">$IP</span> <span class="o">-</span><span class="n">j</span> <span class="n">DROP</span><span class="p">;</span> <span class="n">done</span>
+</span><span class='line'>
+</span><span class='line'><span class="cp"># Option:  actionstop</span>
+</span><span class='line'><span class="cp"># Notes.:  command executed once at the end of Fail2Ban</span>
+</span><span class='line'><span class="cp"># Values:  CMD</span>
+</span><span class='line'><span class="cp">#</span>
+</span><span class='line'><span class="n">actionstop</span> <span class="o">=</span> <span class="n">iptables</span> <span class="o">-</span><span class="n">D</span> <span class="n">INPUT</span> <span class="o">-</span><span class="n">j</span> <span class="n">fail2ban</span><span class="o">-</span><span class="n">REPEAT</span><span class="o">-&lt;</span><span class="n">name</span><span class="o">&gt;</span>
+</span><span class='line'>             <span class="n">iptables</span> <span class="o">-</span><span class="n">F</span> <span class="n">fail2ban</span><span class="o">-</span><span class="n">REPEAT</span><span class="o">-&lt;</span><span class="n">name</span><span class="o">&gt;</span>
+</span><span class='line'>             <span class="n">iptables</span> <span class="o">-</span><span class="n">X</span> <span class="n">fail2ban</span><span class="o">-</span><span class="n">REPEAT</span><span class="o">-&lt;</span><span class="n">name</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="cp"># Option:  actioncheck</span>
+</span><span class='line'><span class="cp"># Notes.:  command executed once before each actionban command</span>
+</span><span class='line'><span class="cp"># Values:  CMD</span>
+</span><span class='line'><span class="cp">#</span>
+</span><span class='line'><span class="n">actioncheck</span> <span class="o">=</span> <span class="n">iptables</span> <span class="o">-</span><span class="n">n</span> <span class="o">-</span><span class="n">L</span> <span class="n">INPUT</span> <span class="o">|</span> <span class="n">grep</span> <span class="o">-</span><span class="n">q</span> <span class="n">fail2ban</span><span class="o">-</span><span class="n">REPEAT</span><span class="o">-&lt;</span><span class="n">name</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="cp"># Option:  actionban</span>
+</span><span class='line'><span class="cp"># Notes.:  command executed when banning an IP. Take care that the</span>
+</span><span class='line'><span class="cp">#          command is executed with Fail2Ban user rights.</span>
+</span><span class='line'><span class="cp"># Tags:    &lt;ip&gt;  IP address</span>
+</span><span class='line'><span class="cp">#          &lt;failures&gt;  number of failures</span>
+</span><span class='line'><span class="cp">#          &lt;time&gt;  unix timestamp of the ban time</span>
+</span><span class='line'><span class="cp"># Values:  CMD</span>
+</span><span class='line'><span class="cp">#</span>
+</span><span class='line'><span class="n">actionban</span> <span class="o">=</span> <span class="n">iptables</span> <span class="o">-</span><span class="n">I</span> <span class="n">fail2ban</span><span class="o">-</span><span class="n">REPEAT</span><span class="o">-&lt;</span><span class="n">name</span><span class="o">&gt;</span> <span class="mi">1</span> <span class="o">-</span><span class="n">s</span> <span class="o">&lt;</span><span class="n">ip</span><span class="o">&gt;</span> <span class="o">-</span><span class="n">j</span> <span class="n">DROP</span>
+</span><span class='line'>            <span class="err">#</span> <span class="n">also</span> <span class="n">put</span> <span class="n">into</span> <span class="n">the</span> <span class="k">static</span> <span class="n">file</span> <span class="n">to</span> <span class="n">re</span><span class="o">-</span><span class="n">populate</span> <span class="n">after</span> <span class="n">a</span> <span class="n">restart</span>
+</span><span class='line'>            <span class="o">!</span> <span class="n">grep</span> <span class="o">-</span><span class="n">Fq</span> <span class="o">&lt;</span><span class="n">ip</span><span class="o">&gt;</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">fail2ban</span><span class="o">/</span><span class="n">ip</span><span class="p">.</span><span class="n">blocklist</span><span class="p">.</span><span class="o">&lt;</span><span class="n">name</span><span class="o">&gt;</span> <span class="o">&amp;&amp;</span> <span class="n">echo</span> <span class="s">&quot;&lt;ip&gt; # fail2ban/$( date &#39;+%%Y-%%m-%%d %%T&#39; ): auto-add for repeat offender&quot;</span> <span class="o">&gt;&gt;</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">fail2ban</span><span class="o">/</span><span class="n">ip</span><span class="p">.</span><span class="n">blocklist</span><span class="p">.</span><span class="o">&lt;</span><span class="n">name</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="cp"># Option:  actionunban</span>
+</span><span class='line'><span class="cp"># Notes.:  command executed when unbanning an IP. Take care that the</span>
+</span><span class='line'><span class="cp">#          command is executed with Fail2Ban user rights.</span>
+</span><span class='line'><span class="cp"># Tags:    &lt;ip&gt;  IP address</span>
+</span><span class='line'><span class="cp">#          &lt;failures&gt;  number of failures</span>
+</span><span class='line'><span class="cp">#          &lt;time&gt;  unix timestamp of the ban time</span>
+</span><span class='line'><span class="cp"># Values:  CMD</span>
+</span><span class='line'><span class="cp">#</span>
+</span><span class='line'><span class="n">actionunban</span> <span class="o">=</span> <span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">true</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">[</span><span class="n">Init</span><span class="p">]</span>
+</span><span class='line'>
+</span><span class='line'><span class="cp"># Defaut name of the chain</span>
+</span><span class='line'><span class="cp">#</span>
+</span><span class='line'><span class="n">name</span> <span class="o">=</span> <span class="n">REPEAT</span>
+</span></code></pre></td></tr></table></div></figure>
+<li>Archivo <code>ip.blocklist.exim2</code>: Contiene las direcciones ip que se van bloqueando por intentos fallidos y que se va autocompletando con los bloqueos propios del `fail2ban` ej:/li>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="mf">122.154.29.30</span> <span class="err">#</span> <span class="n">fail2ban</span><span class="o">/</span><span class="mi">2016</span><span class="o">-</span><span class="mo">04</span><span class="o">-</span><span class="mi">15</span> <span class="mo">00</span><span class="o">:</span><span class="mi">21</span><span class="o">:</span><span class="mi">45</span><span class="o">:</span> <span class="k">auto</span><span class="o">-</span><span class="n">add</span> <span class="k">for</span> <span class="n">repeat</span> <span class="n">offender</span>
+</span><span class='line'><span class="mf">95.183.52.100</span> <span class="err">#</span> <span class="n">fail2ban</span><span class="o">/</span><span class="mi">2016</span><span class="o">-</span><span class="mo">04</span><span class="o">-</span><span class="mi">15</span> <span class="mo">00</span><span class="o">:</span><span class="mi">35</span><span class="o">:</span><span class="mi">51</span><span class="o">:</span> <span class="k">auto</span><span class="o">-</span><span class="n">add</span> <span class="k">for</span> <span class="n">repeat</span> <span class="n">offender</span>
+</span><span class='line'><span class="mf">110.84.129.110</span> <span class="err">#</span> <span class="n">fail2ban</span><span class="o">/</span><span class="mi">2016</span><span class="o">-</span><span class="mo">04</span><span class="o">-</span><span class="mi">15</span> <span class="mo">02</span><span class="o">:</span><span class="mi">11</span><span class="o">:</span><span class="mi">53</span><span class="o">:</span> <span class="k">auto</span><span class="o">-</span><span class="n">add</span> <span class="k">for</span> <span class="n">repeat</span> <span class="n">offender</span>
+</span><span class='line'><span class="mf">86.98.40.247</span> <span class="err">#</span> <span class="n">fail2ban</span><span class="o">/</span><span class="mi">2016</span><span class="o">-</span><span class="mo">04</span><span class="o">-</span><span class="mi">15</span> <span class="mi">09</span><span class="o">:</span><span class="mo">07</span><span class="o">:</span><span class="mi">46</span><span class="o">:</span> <span class="k">auto</span><span class="o">-</span><span class="n">add</span> <span class="k">for</span> <span class="n">repeat</span> <span class="n">offender</span>
+</span><span class='line'><span class="mf">91.106.93.21</span> <span class="err">#</span> <span class="n">fail2ban</span><span class="o">/</span><span class="mi">2016</span><span class="o">-</span><span class="mo">04</span><span class="o">-</span><span class="mi">15</span> <span class="mi">13</span><span class="o">:</span><span class="mi">36</span><span class="o">:</span><span class="mi">51</span><span class="o">:</span> <span class="k">auto</span><span class="o">-</span><span class="n">add</span> <span class="k">for</span> <span class="n">repeat</span> <span class="n">offender</span>
+</span></code></pre></td></tr></table></div></figure>objc
+</ol>
+
+
+<p>La configuración del <code>jail</code> la realizamos dentro del archivo <code>/etc/fail2ban/jail.conf</code> , quedando así:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="p">[</span><span class="n">exim2</span><span class="o">-</span><span class="n">repeater</span><span class="p">]</span>
+</span><span class='line'>      <span class="n">enabled</span>  <span class="o">=</span> <span class="n">true</span>
+</span><span class='line'>      <span class="n">filter</span>   <span class="o">=</span> <span class="n">exim2</span>
+</span><span class='line'>      <span class="n">action</span>   <span class="o">=</span> <span class="n">iptables</span><span class="o">-</span><span class="n">repeater</span><span class="p">[</span><span class="n">name</span><span class="o">=</span><span class="n">exim2</span><span class="p">]</span>
+</span><span class='line'>      <span class="n">logpath</span>  <span class="o">=</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">mailcleaner</span><span class="o">/</span><span class="n">log</span><span class="o">/</span><span class="n">exim_stage1</span><span class="o">/</span><span class="n">mainlog</span>
+</span><span class='line'>      <span class="n">maxretry</span> <span class="o">=</span> <span class="mi">10</span>
+</span><span class='line'>      <span class="n">findtime</span> <span class="o">=</span> <span class="mi">31536000</span>
+</span><span class='line'>      <span class="n">bantime</span>  <span class="o">=</span> <span class="mi">31536000</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Lo anterior leerá del archivo <code>/var/mailcleaner/log/exim_stage1/mainlog</code> todos los errores del tipo <code>535 Incorrect authentication data</code> si la authenticación falla al intento 10 y además la ip será almacenada en el archivo <code>iptables-repeater.conf</code> .</p>
+
+		
+		
+	</div>
+
+</article>
+
+
+    <article class="post">
+	<header>
+		<h2 class="title">
+			
 			<a href="/blog/2016/04/15/new-post/">
 			
 				New Post</a>
@@ -588,102 +828,6 @@ De todas formas, lo anterior se puede corregir configrando el <code>imapsyn</cod
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">smart</span> <span class="n">config</span> <span class="o">--</span><span class="n">set</span>  <span class="n">rpm</span><span class="o">-</span><span class="n">check</span><span class="o">-</span><span class="n">signatures</span><span class="o">=</span><span class="kp">false</span>
 </span></code></pre></td></tr></table></div></figure>
-
-
-		
-		
-	</div>
-
-</article>
-
-
-    <article class="post">
-	<header>
-		<h2 class="title">
-			
-			<a href="/blog/2015/01/15/script-para-buscar-y-borrar-un-correo-en-zimbra/">
-			
-				Script Para Buscar Y Borrar Un Correo en Zimbra</a>
-		</h2>
-		<div class="meta date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2015-01-15T12:49:00-03:00" pubdate data-updated="true">Jan 15<span>th</span>, 2015</time></div>
-	</header>
-	<div class="entry-content">
-		<p>El siguiente script permite buscar y borrar un correo mediante consola desde los mailbox de los usuarios.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1">#!/bin/bash</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">zimbraAccounts</span><span class="o">=</span><span class="s1">&#39;/var/tmp/cuentas&#39;</span>
-</span><span class='line'><span class="n">zimbraCMD</span><span class="o">=</span><span class="s1">&#39;/opt/zimbra/bin/zmmailbox&#39;</span>
-</span><span class='line'> <span class="k">for</span> <span class="n">a</span> <span class="k">in</span> <span class="sb">`cat $zimbraAccounts`</span>
-</span><span class='line'>    <span class="k">do</span>
-</span><span class='line'>        <span class="c1">#user=`$a`</span>
-</span><span class='line'>        <span class="n">emailID</span><span class="o">=</span><span class="p">(</span> <span class="err">$</span><span class="p">(</span><span class="vg">$zimbraCMD</span> <span class="o">-</span><span class="n">z</span> <span class="o">-</span><span class="n">m</span> <span class="vg">$a</span> <span class="n">search</span> <span class="s2">&quot;de haber superado debido a la alta tasa de correos spam&quot;</span> <span class="o">|</span><span class="n">grep</span> <span class="n">conv</span> <span class="o">|</span><span class="n">awk</span> <span class="p">{</span><span class="s1">&#39;print $2&#39;</span><span class="p">}</span> <span class="o">|</span><span class="n">sed</span> <span class="s1">&#39;s/-//g&#39;</span><span class="p">)</span> <span class="p">)</span>
-</span><span class='line'>        <span class="n">echo</span> <span class="vg">$user</span>
-</span><span class='line'>        <span class="c1">#echo ${emailID[1]}</span>
-</span><span class='line'>            <span class="k">for</span> <span class="n">i</span> <span class="k">in</span> <span class="s2">&quot;${emailID[@]}&quot;</span>
-</span><span class='line'>                <span class="k">do</span>
-</span><span class='line'>                    <span class="vg">$zimbraCMD</span> <span class="o">-</span><span class="n">z</span> <span class="o">-</span><span class="n">m</span> <span class="vg">$a</span> <span class="n">dm</span> <span class="vg">$i</span>
-</span><span class='line'>          <span class="n">echo</span> <span class="s2">&quot;cuenta: $a&quot;</span> <span class="o">&gt;&gt;</span> <span class="sr">/var/</span><span class="n">tmp</span><span class="o">/</span><span class="n">casillasConEmail</span>
-</span><span class='line'>                <span class="n">done</span>
-</span><span class='line'>    <span class="n">done</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>En la línea nº8 tenemos que cambiar el texto a buscar, y que corresponde a lo que esta dentro de comillas.
-Para el caso, tenemos que tener las cuentas de correos en el archivo <code>/var/tmp/cuentas</code> que las podemos obtener con el comando:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">zmprov</span> <span class="o">-</span><span class="n">l</span> <span class="n">gaa</span> <span class="o">|</span><span class="n">egrep</span> <span class="o">-</span><span class="n">vi</span> <span class="s1">&#39;spam|virus|galsyn|archiv&#39;</span><span class="o">|</span> <span class="n">sort</span> <span class="o">&gt;</span> <span class="sr">/var/</span><span class="n">tmp</span><span class="o">/</span><span class="n">cuentas</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Demás esta decir que lo realizado en el comando anterior se puede hacer dentro del mismo script sin tener que hacer esto de forma separada.  Una vez ejecutado el script, podremos ver la información de las cuentas en donde fue borrado el correo:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[</span><span class="n">zimbra</span><span class="vi">@mail1</span> <span class="n">tmp</span><span class="o">]</span><span class="err">$</span> <span class="n">tail</span> <span class="o">-</span><span class="n">f</span> <span class="sr">/var/</span><span class="n">tmp</span><span class="o">/</span><span class="n">casillasConEmail</span>
-</span><span class='line'><span class="ss">cuenta</span><span class="p">:</span> <span class="n">ahidalgo</span><span class="vi">@example</span><span class="o">.</span><span class="n">com</span>
-</span><span class='line'><span class="ss">cuenta</span><span class="p">:</span> <span class="n">alinay</span><span class="vi">@example</span><span class="o">.</span><span class="n">com</span>
-</span><span class='line'><span class="ss">cuenta</span><span class="p">:</span> <span class="n">chernandez</span><span class="vi">@example</span><span class="o">.</span><span class="n">com</span>
-</span><span class='line'><span class="ss">cuenta</span><span class="p">:</span> <span class="n">currutia</span><span class="vi">@example</span><span class="o">.</span><span class="n">com</span>
-</span><span class='line'><span class="ss">cuenta</span><span class="p">:</span> <span class="n">cvaldes</span><span class="vi">@example</span><span class="o">.</span><span class="n">com</span>
-</span><span class='line'><span class="ss">cuenta</span><span class="p">:</span> <span class="n">evalencia</span><span class="vi">@example</span><span class="o">.</span><span class="n">com</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
 
 
 		
