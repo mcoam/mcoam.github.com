@@ -4,7 +4,7 @@
   <title><![CDATA[Category: rirectory | Bitácora]]></title>
   <link href="http://www.miguelcoa.cl/blog/categories/rirectory/atom.xml" rel="self"/>
   <link href="http://www.miguelcoa.cl/"/>
-  <updated>2016-04-15T15:57:13-03:00</updated>
+  <updated>2016-04-15T16:59:18-03:00</updated>
   <id>http://www.miguelcoa.cl/</id>
   <author>
     <name><![CDATA[Miguel Angel Coa Morales]]></name>
@@ -141,7 +141,7 @@ Comprobamos el funcionamiento en kerberos
 <code>
 Comprobamos la autentificación contra kerberos
 </code>ruby
-[root@samba ~]# kinit <a href="&#x6d;&#x61;&#105;&#x6c;&#116;&#111;&#58;&#97;&#100;&#x6d;&#105;&#x6e;&#x69;&#x73;&#116;&#114;&#97;&#x74;&#x6f;&#114;&#64;&#69;&#x58;&#65;&#x4d;&#x50;&#76;&#69;&#46;&#76;&#x4f;&#x43;&#65;&#x4c;">&#97;&#100;&#x6d;&#x69;&#x6e;&#x69;&#115;&#x74;&#114;&#97;&#x74;&#x6f;&#114;&#x40;&#69;&#x58;&#x41;&#77;&#x50;&#x4c;&#69;&#46;&#76;&#x4f;&#x43;&#x41;&#x4c;</a>
+[root@samba ~]# kinit <a href="&#x6d;&#x61;&#105;&#108;&#116;&#x6f;&#58;&#x61;&#100;&#x6d;&#x69;&#110;&#x69;&#x73;&#x74;&#114;&#x61;&#116;&#x6f;&#114;&#64;&#69;&#x58;&#65;&#x4d;&#x50;&#76;&#69;&#x2e;&#76;&#79;&#67;&#65;&#76;">&#97;&#100;&#x6d;&#x69;&#110;&#105;&#115;&#x74;&#114;&#x61;&#116;&#x6f;&#114;&#64;&#69;&#x58;&#65;&#77;&#x50;&#x4c;&#69;&#46;&#76;&#79;&#67;&#x41;&#76;</a>
 Password for administrator@EXAMPLE.LOCAL:
 Warning: Your password will expire in 41 days on Wed Oct  1 16:28:11 2014
 ```</p>
