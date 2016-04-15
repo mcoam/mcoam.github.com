@@ -102,8 +102,6 @@ name = REPEAT
 122.154.29.30 # fail2ban/2016-04-15 00:21:45: auto-add for repeat offender
 95.183.52.100 # fail2ban/2016-04-15 00:35:51: auto-add for repeat offender
 110.84.129.110 # fail2ban/2016-04-15 02:11:53: auto-add for repeat offender
-86.98.40.247 # fail2ban/2016-04-15 09:07:46: auto-add for repeat offender
-91.106.93.21 # fail2ban/2016-04-15 13:36:51: auto-add for repeat offender
 ```
 </ol>
 
