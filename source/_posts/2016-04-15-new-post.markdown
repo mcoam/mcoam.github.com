@@ -3,5 +3,6 @@ layout: post
 title: "New post"
 date: 2016-04-15 13:23
 comments: true
-categories: 
+categories:
+published: false
 ---
